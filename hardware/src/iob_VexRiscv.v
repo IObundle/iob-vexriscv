@@ -95,8 +95,8 @@ module iob_VexRiscv
      .iBus_rsp_payload_data         (ibus_resp_data),
      .iBus_rsp_payload_error        (1'b0),
      .clk                           (clk),
-     .reset                         (rst),
-     .debugReset                    (1'b0)
+     .reset                         (~rst),
+     .debugReset                    (~rst)
      );
 
 endmodule
