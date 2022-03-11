@@ -30,17 +30,15 @@ module iob_VexRiscv
     input [`RESP_W-1:0] dbus_resp
     );
 
-    wire                ibus_req_valid;
-    wire                ibus_req_ready;
-    wire [ADDR_W-1:0] ibus_req_address;
-    wire [DATA_W-1:0]    ibus_req_data;
-    wire               ibus_resp_ready;
-    wire [DATA_W-1:0]   ibus_resp_data;
+    wire                 ibus_req_valid;
+    wire                 ibus_req_ready;
+    wire [ADDR_W-1:0]  ibus_req_address;
+    wire                ibus_resp_ready;
+    wire [DATA_W-1:0]    ibus_resp_data;
 
-    assign ibus_req_valid = ibus_req[`valid(0)];
-    assign ibus_req_ready = ibus_req_valid & ~ibus_resp_ready;
-    assign ibus_req_address = ibus_req[`address(0, `ADDR_W)];
-    assign ibus_req_data = ibus_req[`wdata(0)];
+    assign ibus_req[`valid(0)] = ibus_req_valid;
+    assign ibus_req_ready = ~ibus_resp_ready;
+    assign ibus_req[`address(0, `ADDR_W)] = ibus_req_address^32'h80000000;
     assign ibus_resp_ready = ibus_resp[`ready(0)];
     assign ibus_resp_data = ibus_resp[`rdata(0)];
 
@@ -48,17 +46,25 @@ module iob_VexRiscv
     wire                dbus_req_ready;
     wire [ADDR_W-1:0] dbus_req_address;
     wire [DATA_W-1:0]    dbus_req_data;
-    wire                 dbus_req_strb;
+    wire [DATA_W/8-1:0]  dbus_req_strb;
     wire               dbus_resp_ready;
     wire [DATA_W-1:0]   dbus_resp_data;
 
-    assign dbus_req_valid = dbus_req[`valid(0)];
-    assign dbus_req_ready = dbus_req_valid & ~dbus_resp_ready;
-    assign dbus_req_address = dbus_req[`address(0, `ADDR_W)];
-    assign dbus_req_data = dbus_req[`wdata(0)];
-    assign dbus_req_strb = dbus_req[`wstrb(0)];
+    assign dbus_req[`valid(0)] = dbus_req_valid;
+    assign dbus_req_ready = ~dbus_resp_ready;
+    assign dbus_req[`address(0, `ADDR_W)] = dbus_req_address;
+    assign dbus_req[`wdata(0)] = dbus_req_data;
+    assign dbus_req[`wstrb(0)] = dbus_req_strb;
     assign dbus_resp_ready = dbus_resp[`ready(0)];
     assign dbus_resp_data = dbus_resp[`rdata(0)];
+
+    wire                debug_valid;
+    wire                debug_ready;
+    wire [ADDR_W-1:0] debug_address;
+    wire [DATA_W-1:0]    debug_data;
+    wire [DATA_W/8-1:0]  debug_strb;
+
+    assign debug_valid = 1'b0;
 
    //intantiate VexRiscv
 
@@ -80,8 +86,8 @@ module iob_VexRiscv
      .externalInterrupt             (1'b0),
      .softwareInterrupt             (1'b0),
      .externalInterruptS            (1'b0),
-     .debug_bus_cmd_valid           (1'b0),
-     .debug_bus_cmd_ready           (),
+     .debug_bus_cmd_valid           (debug_valid),
+     .debug_bus_cmd_ready           (debug_ready),
      .debug_bus_cmd_payload_wr      (1'b0),
      .debug_bus_cmd_payload_address (8'd0),
      .debug_bus_cmd_payload_data    (32'd0),
@@ -95,8 +101,8 @@ module iob_VexRiscv
      .iBus_rsp_payload_data         (ibus_resp_data),
      .iBus_rsp_payload_error        (1'b0),
      .clk                           (clk),
-     .reset                         (~rst),
-     .debugReset                    (~rst)
+     .reset                         (rst),
+     .debugReset                    (1'b0)
      );
 
 endmodule
