@@ -52,7 +52,7 @@ module iob_VexRiscv
     wire               dbus_resp_ready;
     wire [DATA_W-1:0]   dbus_resp_data;
 
-    assign dbus_req[`valid(0)] = dbus_req_valid;
+    assign dbus_req[`valid(0)] = dbus_req_wr;
     assign dbus_req_ready = ~dbus_resp_ready;
     assign dbus_req[`address(0, `ADDR_W)] = dbus_req_address;
     assign dbus_req[`wdata(0)] = dbus_req_data;
@@ -85,7 +85,7 @@ module iob_VexRiscv
      .dBus_cmd_payload_size         (),
      .dBus_cmd_payload_last         (),
      .dBus_rsp_valid                (dbus_resp_ready),
-     .dBus_rsp_payload_last         (1'b0),
+     .dBus_rsp_payload_last         (dbus_resp_ready),
      .dBus_rsp_payload_data         (dbus_resp_data),
      .dBus_rsp_payload_error        (1'b0),
      .timerInterrupt                (1'b0),
