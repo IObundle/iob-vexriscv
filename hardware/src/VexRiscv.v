@@ -153,7 +153,7 @@ module VexRiscv (
   wire       [2:0]    _zz_IBusSimplePlugin_rspJoin_rspBuffer_discardCounter_2;
   wire       [0:0]    _zz_IBusSimplePlugin_rspJoin_rspBuffer_discardCounter_3;
   wire       [2:0]    _zz_DBusSimplePlugin_memoryExceptionPort_payload_code;
-  wire       [0:0]    _zz__zz_decode_RS2_2;
+  wire       [0:0]    _zz__zz_lastStageRegFileWrite_payload_data;
   wire       [31:0]   _zz__zz_decode_BRANCH_CTRL_2;
   wire       [31:0]   _zz__zz_decode_BRANCH_CTRL_2_1;
   wire       [31:0]   _zz__zz_decode_BRANCH_CTRL_2_2;
@@ -330,8 +330,8 @@ module VexRiscv (
   wire       [31:0]   _zz_execute_SrcPlugin_addSub_6;
   wire       [65:0]   _zz_writeBack_MulPlugin_result;
   wire       [65:0]   _zz_writeBack_MulPlugin_result_1;
-  wire       [31:0]   _zz__zz_decode_RS2_2_1;
-  wire       [31:0]   _zz__zz_decode_RS2_2_2;
+  wire       [31:0]   _zz__zz_lastStageRegFileWrite_payload_data_1;
+  wire       [31:0]   _zz__zz_lastStageRegFileWrite_payload_data_2;
   wire       [5:0]    _zz_memory_MulDivIterativePlugin_div_counter_valueNext;
   wire       [0:0]    _zz_memory_MulDivIterativePlugin_div_counter_valueNext_1;
   wire       [32:0]   _zz_memory_MulDivIterativePlugin_div_stage_0_remainderMinusDenominator;
@@ -485,6 +485,7 @@ module VexRiscv (
   wire       [31:0]   execute_PC;
   wire                execute_DO_EBREAK;
   wire                decode_IS_EBREAK;
+  reg        [31:0]   _zz_execute_to_memory_REGFILE_WRITE_DATA;
   wire                execute_CSR_READ_OPCODE;
   wire                execute_CSR_WRITE_OPCODE;
   wire                execute_IS_CSR;
@@ -508,7 +509,6 @@ module VexRiscv (
   (* keep , syn_keep *) wire       [31:0]   execute_RS1 /* synthesis syn_keep = 1 */ ;
   wire                decode_RS2_USE;
   wire                decode_RS1_USE;
-  reg        [31:0]   _zz_decode_RS2;
   wire                execute_REGFILE_WRITE_VALID;
   wire                execute_BYPASSABLE_EXECUTE_STAGE;
   wire                memory_REGFILE_WRITE_VALID;
@@ -518,7 +518,7 @@ module VexRiscv (
   reg        [31:0]   decode_RS2;
   reg        [31:0]   decode_RS1;
   wire       [31:0]   memory_SHIFT_RIGHT;
-  reg        [31:0]   _zz_decode_RS2_1;
+  reg        [31:0]   _zz_decode_RS2;
   wire       [1:0]    memory_SHIFT_CTRL;
   wire       [1:0]    _zz_memory_SHIFT_CTRL;
   wire       [1:0]    execute_SHIFT_CTRL;
@@ -559,7 +559,7 @@ module VexRiscv (
   wire                writeBack_ATOMIC_HIT;
   wire                writeBack_MEMORY_STORE;
   wire                writeBack_MEMORY_ATOMIC;
-  reg        [31:0]   _zz_decode_RS2_2;
+  reg        [31:0]   _zz_lastStageRegFileWrite_payload_data;
   wire                writeBack_MEMORY_ENABLE;
   wire       [1:0]    writeBack_MEMORY_ADDRESS_LOW;
   wire       [31:0]   writeBack_MEMORY_READ_DATA;
@@ -1121,7 +1121,7 @@ module VexRiscv (
   wire       [4:0]    execute_FullBarrelShifterPlugin_amplitude;
   reg        [31:0]   _zz_execute_FullBarrelShifterPlugin_reversed;
   wire       [31:0]   execute_FullBarrelShifterPlugin_reversed;
-  reg        [31:0]   _zz_decode_RS2_3;
+  reg        [31:0]   _zz_decode_RS2_1;
   reg                 HazardSimplePlugin_src0Hazard;
   reg                 HazardSimplePlugin_src1Hazard;
   wire                HazardSimplePlugin_writeBackWrites_valid;
@@ -1132,20 +1132,17 @@ module VexRiscv (
   reg        [31:0]   HazardSimplePlugin_writeBackBuffer_payload_data;
   wire                HazardSimplePlugin_addr0Match;
   wire                HazardSimplePlugin_addr1Match;
-  wire                when_HazardSimplePlugin_l47;
+  wire                when_HazardSimplePlugin_l59;
+  wire                when_HazardSimplePlugin_l62;
+  wire                when_HazardSimplePlugin_l57;
+  wire                when_HazardSimplePlugin_l58;
   wire                when_HazardSimplePlugin_l48;
   wire                when_HazardSimplePlugin_l51;
   wire                when_HazardSimplePlugin_l45;
-  wire                when_HazardSimplePlugin_l57;
-  wire                when_HazardSimplePlugin_l58;
-  wire                when_HazardSimplePlugin_l48_1;
-  wire                when_HazardSimplePlugin_l51_1;
-  wire                when_HazardSimplePlugin_l45_1;
   wire                when_HazardSimplePlugin_l57_1;
   wire                when_HazardSimplePlugin_l58_1;
-  wire                when_HazardSimplePlugin_l48_2;
-  wire                when_HazardSimplePlugin_l51_2;
-  wire                when_HazardSimplePlugin_l45_2;
+  wire                when_HazardSimplePlugin_l59_1;
+  wire                when_HazardSimplePlugin_l62_1;
   wire                when_HazardSimplePlugin_l57_2;
   wire                when_HazardSimplePlugin_l58_2;
   wire                when_HazardSimplePlugin_l105;
@@ -2004,7 +2001,7 @@ module VexRiscv (
   assign _zz_IBusSimplePlugin_rspJoin_rspBuffer_discardCounter_3 = IBusSimplePlugin_pending_dec;
   assign _zz_IBusSimplePlugin_rspJoin_rspBuffer_discardCounter_2 = {2'd0, _zz_IBusSimplePlugin_rspJoin_rspBuffer_discardCounter_3};
   assign _zz_DBusSimplePlugin_memoryExceptionPort_payload_code = (memory_MEMORY_STORE ? 3'b110 : 3'b100);
-  assign _zz__zz_decode_RS2_2 = (! writeBack_ATOMIC_HIT);
+  assign _zz__zz_lastStageRegFileWrite_payload_data = (! writeBack_ATOMIC_HIT);
   assign _zz__zz_execute_REGFILE_WRITE_DATA = execute_SRC_LESS;
   assign _zz__zz_decode_SRC1_1 = (decode_IS_RVC ? 3'b010 : 3'b100);
   assign _zz__zz_decode_SRC1_1_1 = decode_INSTRUCTION[19 : 15];
@@ -2018,8 +2015,8 @@ module VexRiscv (
   assign _zz_execute_SrcPlugin_addSub_6 = 32'h0;
   assign _zz_writeBack_MulPlugin_result = {{14{writeBack_MUL_LOW[51]}}, writeBack_MUL_LOW};
   assign _zz_writeBack_MulPlugin_result_1 = ({32'd0,writeBack_MUL_HH} <<< 32);
-  assign _zz__zz_decode_RS2_2_1 = writeBack_MUL_LOW[31 : 0];
-  assign _zz__zz_decode_RS2_2_2 = writeBack_MulPlugin_result[63 : 32];
+  assign _zz__zz_lastStageRegFileWrite_payload_data_1 = writeBack_MUL_LOW[31 : 0];
+  assign _zz__zz_lastStageRegFileWrite_payload_data_2 = writeBack_MulPlugin_result[63 : 32];
   assign _zz_memory_MulDivIterativePlugin_div_counter_valueNext_1 = memory_MulDivIterativePlugin_div_counter_willIncrement;
   assign _zz_memory_MulDivIterativePlugin_div_counter_valueNext = {5'd0, _zz_memory_MulDivIterativePlugin_div_counter_valueNext_1};
   assign _zz_memory_MulDivIterativePlugin_div_stage_0_remainderMinusDenominator = {1'd0, memory_MulDivIterativePlugin_rs2};
@@ -3100,6 +3097,13 @@ module VexRiscv (
   assign execute_PC = decode_to_execute_PC;
   assign execute_DO_EBREAK = decode_to_execute_DO_EBREAK;
   assign decode_IS_EBREAK = _zz_decode_BRANCH_CTRL_2[31];
+  always @(*) begin
+    _zz_execute_to_memory_REGFILE_WRITE_DATA = execute_REGFILE_WRITE_DATA;
+    if(when_CsrPlugin_l1176) begin
+      _zz_execute_to_memory_REGFILE_WRITE_DATA = CsrPlugin_csrMapping_readDataSignal;
+    end
+  end
+
   assign execute_CSR_READ_OPCODE = decode_to_execute_CSR_READ_OPCODE;
   assign execute_CSR_WRITE_OPCODE = decode_to_execute_CSR_WRITE_OPCODE;
   assign execute_IS_CSR = decode_to_execute_IS_CSR;
@@ -3120,13 +3124,6 @@ module VexRiscv (
   assign execute_RS1 = decode_to_execute_RS1;
   assign decode_RS2_USE = _zz_decode_BRANCH_CTRL_2[15];
   assign decode_RS1_USE = _zz_decode_BRANCH_CTRL_2[4];
-  always @(*) begin
-    _zz_decode_RS2 = execute_REGFILE_WRITE_DATA;
-    if(when_CsrPlugin_l1176) begin
-      _zz_decode_RS2 = CsrPlugin_csrMapping_readDataSignal;
-    end
-  end
-
   assign execute_REGFILE_WRITE_VALID = decode_to_execute_REGFILE_WRITE_VALID;
   assign execute_BYPASSABLE_EXECUTE_STAGE = decode_to_execute_BYPASSABLE_EXECUTE_STAGE;
   assign memory_REGFILE_WRITE_VALID = execute_to_memory_REGFILE_WRITE_VALID;
@@ -3141,22 +3138,8 @@ module VexRiscv (
       end
     end
     if(when_HazardSimplePlugin_l45) begin
-      if(when_HazardSimplePlugin_l47) begin
-        if(when_HazardSimplePlugin_l51) begin
-          decode_RS2 = _zz_decode_RS2_2;
-        end
-      end
-    end
-    if(when_HazardSimplePlugin_l45_1) begin
       if(memory_BYPASSABLE_MEMORY_STAGE) begin
-        if(when_HazardSimplePlugin_l51_1) begin
-          decode_RS2 = _zz_decode_RS2_1;
-        end
-      end
-    end
-    if(when_HazardSimplePlugin_l45_2) begin
-      if(execute_BYPASSABLE_EXECUTE_STAGE) begin
-        if(when_HazardSimplePlugin_l51_2) begin
+        if(when_HazardSimplePlugin_l51) begin
           decode_RS2 = _zz_decode_RS2;
         end
       end
@@ -3171,22 +3154,8 @@ module VexRiscv (
       end
     end
     if(when_HazardSimplePlugin_l45) begin
-      if(when_HazardSimplePlugin_l47) begin
-        if(when_HazardSimplePlugin_l48) begin
-          decode_RS1 = _zz_decode_RS2_2;
-        end
-      end
-    end
-    if(when_HazardSimplePlugin_l45_1) begin
       if(memory_BYPASSABLE_MEMORY_STAGE) begin
-        if(when_HazardSimplePlugin_l48_1) begin
-          decode_RS1 = _zz_decode_RS2_1;
-        end
-      end
-    end
-    if(when_HazardSimplePlugin_l45_2) begin
-      if(execute_BYPASSABLE_EXECUTE_STAGE) begin
-        if(when_HazardSimplePlugin_l48_2) begin
+        if(when_HazardSimplePlugin_l48) begin
           decode_RS1 = _zz_decode_RS2;
         end
       end
@@ -3195,21 +3164,21 @@ module VexRiscv (
 
   assign memory_SHIFT_RIGHT = execute_to_memory_SHIFT_RIGHT;
   always @(*) begin
-    _zz_decode_RS2_1 = memory_REGFILE_WRITE_DATA;
+    _zz_decode_RS2 = memory_REGFILE_WRITE_DATA;
     if(memory_arbitration_isValid) begin
       case(memory_SHIFT_CTRL)
         ShiftCtrlEnum_SLL_1 : begin
-          _zz_decode_RS2_1 = _zz_decode_RS2_3;
+          _zz_decode_RS2 = _zz_decode_RS2_1;
         end
         ShiftCtrlEnum_SRL_1, ShiftCtrlEnum_SRA_1 : begin
-          _zz_decode_RS2_1 = memory_SHIFT_RIGHT;
+          _zz_decode_RS2 = memory_SHIFT_RIGHT;
         end
         default : begin
         end
       endcase
     end
     if(when_MulDivIterativePlugin_l128) begin
-      _zz_decode_RS2_1 = memory_MulDivIterativePlugin_div_result;
+      _zz_decode_RS2 = memory_MulDivIterativePlugin_div_result;
     end
   end
 
@@ -3253,20 +3222,20 @@ module VexRiscv (
   assign writeBack_MEMORY_STORE = memory_to_writeBack_MEMORY_STORE;
   assign writeBack_MEMORY_ATOMIC = memory_to_writeBack_MEMORY_ATOMIC;
   always @(*) begin
-    _zz_decode_RS2_2 = writeBack_REGFILE_WRITE_DATA;
+    _zz_lastStageRegFileWrite_payload_data = writeBack_REGFILE_WRITE_DATA;
     if(when_DBusSimplePlugin_l558) begin
-      _zz_decode_RS2_2 = writeBack_DBusSimplePlugin_rspFormated;
+      _zz_lastStageRegFileWrite_payload_data = writeBack_DBusSimplePlugin_rspFormated;
       if(when_DBusSimplePlugin_l561) begin
-        _zz_decode_RS2_2 = {31'd0, _zz__zz_decode_RS2_2};
+        _zz_lastStageRegFileWrite_payload_data = {31'd0, _zz__zz_lastStageRegFileWrite_payload_data};
       end
     end
     if(when_MulPlugin_l147) begin
       case(switch_MulPlugin_l148)
         2'b00 : begin
-          _zz_decode_RS2_2 = _zz__zz_decode_RS2_2_1;
+          _zz_lastStageRegFileWrite_payload_data = _zz__zz_lastStageRegFileWrite_payload_data_1;
         end
         default : begin
-          _zz_decode_RS2_2 = _zz__zz_decode_RS2_2_2;
+          _zz_lastStageRegFileWrite_payload_data = _zz__zz_lastStageRegFileWrite_payload_data_2;
         end
       endcase
     end
@@ -4557,7 +4526,7 @@ module VexRiscv (
   end
 
   always @(*) begin
-    lastStageRegFileWrite_payload_data = _zz_decode_RS2_2;
+    lastStageRegFileWrite_payload_data = _zz_lastStageRegFileWrite_payload_data;
     if(_zz_4) begin
       lastStageRegFileWrite_payload_data = 32'h0;
     end
@@ -4719,59 +4688,59 @@ module VexRiscv (
 
   assign execute_FullBarrelShifterPlugin_reversed = ((execute_SHIFT_CTRL == ShiftCtrlEnum_SLL_1) ? _zz_execute_FullBarrelShifterPlugin_reversed : execute_SRC1);
   always @(*) begin
-    _zz_decode_RS2_3[0] = memory_SHIFT_RIGHT[31];
-    _zz_decode_RS2_3[1] = memory_SHIFT_RIGHT[30];
-    _zz_decode_RS2_3[2] = memory_SHIFT_RIGHT[29];
-    _zz_decode_RS2_3[3] = memory_SHIFT_RIGHT[28];
-    _zz_decode_RS2_3[4] = memory_SHIFT_RIGHT[27];
-    _zz_decode_RS2_3[5] = memory_SHIFT_RIGHT[26];
-    _zz_decode_RS2_3[6] = memory_SHIFT_RIGHT[25];
-    _zz_decode_RS2_3[7] = memory_SHIFT_RIGHT[24];
-    _zz_decode_RS2_3[8] = memory_SHIFT_RIGHT[23];
-    _zz_decode_RS2_3[9] = memory_SHIFT_RIGHT[22];
-    _zz_decode_RS2_3[10] = memory_SHIFT_RIGHT[21];
-    _zz_decode_RS2_3[11] = memory_SHIFT_RIGHT[20];
-    _zz_decode_RS2_3[12] = memory_SHIFT_RIGHT[19];
-    _zz_decode_RS2_3[13] = memory_SHIFT_RIGHT[18];
-    _zz_decode_RS2_3[14] = memory_SHIFT_RIGHT[17];
-    _zz_decode_RS2_3[15] = memory_SHIFT_RIGHT[16];
-    _zz_decode_RS2_3[16] = memory_SHIFT_RIGHT[15];
-    _zz_decode_RS2_3[17] = memory_SHIFT_RIGHT[14];
-    _zz_decode_RS2_3[18] = memory_SHIFT_RIGHT[13];
-    _zz_decode_RS2_3[19] = memory_SHIFT_RIGHT[12];
-    _zz_decode_RS2_3[20] = memory_SHIFT_RIGHT[11];
-    _zz_decode_RS2_3[21] = memory_SHIFT_RIGHT[10];
-    _zz_decode_RS2_3[22] = memory_SHIFT_RIGHT[9];
-    _zz_decode_RS2_3[23] = memory_SHIFT_RIGHT[8];
-    _zz_decode_RS2_3[24] = memory_SHIFT_RIGHT[7];
-    _zz_decode_RS2_3[25] = memory_SHIFT_RIGHT[6];
-    _zz_decode_RS2_3[26] = memory_SHIFT_RIGHT[5];
-    _zz_decode_RS2_3[27] = memory_SHIFT_RIGHT[4];
-    _zz_decode_RS2_3[28] = memory_SHIFT_RIGHT[3];
-    _zz_decode_RS2_3[29] = memory_SHIFT_RIGHT[2];
-    _zz_decode_RS2_3[30] = memory_SHIFT_RIGHT[1];
-    _zz_decode_RS2_3[31] = memory_SHIFT_RIGHT[0];
+    _zz_decode_RS2_1[0] = memory_SHIFT_RIGHT[31];
+    _zz_decode_RS2_1[1] = memory_SHIFT_RIGHT[30];
+    _zz_decode_RS2_1[2] = memory_SHIFT_RIGHT[29];
+    _zz_decode_RS2_1[3] = memory_SHIFT_RIGHT[28];
+    _zz_decode_RS2_1[4] = memory_SHIFT_RIGHT[27];
+    _zz_decode_RS2_1[5] = memory_SHIFT_RIGHT[26];
+    _zz_decode_RS2_1[6] = memory_SHIFT_RIGHT[25];
+    _zz_decode_RS2_1[7] = memory_SHIFT_RIGHT[24];
+    _zz_decode_RS2_1[8] = memory_SHIFT_RIGHT[23];
+    _zz_decode_RS2_1[9] = memory_SHIFT_RIGHT[22];
+    _zz_decode_RS2_1[10] = memory_SHIFT_RIGHT[21];
+    _zz_decode_RS2_1[11] = memory_SHIFT_RIGHT[20];
+    _zz_decode_RS2_1[12] = memory_SHIFT_RIGHT[19];
+    _zz_decode_RS2_1[13] = memory_SHIFT_RIGHT[18];
+    _zz_decode_RS2_1[14] = memory_SHIFT_RIGHT[17];
+    _zz_decode_RS2_1[15] = memory_SHIFT_RIGHT[16];
+    _zz_decode_RS2_1[16] = memory_SHIFT_RIGHT[15];
+    _zz_decode_RS2_1[17] = memory_SHIFT_RIGHT[14];
+    _zz_decode_RS2_1[18] = memory_SHIFT_RIGHT[13];
+    _zz_decode_RS2_1[19] = memory_SHIFT_RIGHT[12];
+    _zz_decode_RS2_1[20] = memory_SHIFT_RIGHT[11];
+    _zz_decode_RS2_1[21] = memory_SHIFT_RIGHT[10];
+    _zz_decode_RS2_1[22] = memory_SHIFT_RIGHT[9];
+    _zz_decode_RS2_1[23] = memory_SHIFT_RIGHT[8];
+    _zz_decode_RS2_1[24] = memory_SHIFT_RIGHT[7];
+    _zz_decode_RS2_1[25] = memory_SHIFT_RIGHT[6];
+    _zz_decode_RS2_1[26] = memory_SHIFT_RIGHT[5];
+    _zz_decode_RS2_1[27] = memory_SHIFT_RIGHT[4];
+    _zz_decode_RS2_1[28] = memory_SHIFT_RIGHT[3];
+    _zz_decode_RS2_1[29] = memory_SHIFT_RIGHT[2];
+    _zz_decode_RS2_1[30] = memory_SHIFT_RIGHT[1];
+    _zz_decode_RS2_1[31] = memory_SHIFT_RIGHT[0];
   end
 
   always @(*) begin
     HazardSimplePlugin_src0Hazard = 1'b0;
     if(when_HazardSimplePlugin_l57) begin
       if(when_HazardSimplePlugin_l58) begin
-        if(when_HazardSimplePlugin_l48) begin
+        if(when_HazardSimplePlugin_l59) begin
           HazardSimplePlugin_src0Hazard = 1'b1;
         end
       end
     end
     if(when_HazardSimplePlugin_l57_1) begin
       if(when_HazardSimplePlugin_l58_1) begin
-        if(when_HazardSimplePlugin_l48_1) begin
+        if(when_HazardSimplePlugin_l48) begin
           HazardSimplePlugin_src0Hazard = 1'b1;
         end
       end
     end
     if(when_HazardSimplePlugin_l57_2) begin
       if(when_HazardSimplePlugin_l58_2) begin
-        if(when_HazardSimplePlugin_l48_2) begin
+        if(when_HazardSimplePlugin_l59_1) begin
           HazardSimplePlugin_src0Hazard = 1'b1;
         end
       end
@@ -4785,21 +4754,21 @@ module VexRiscv (
     HazardSimplePlugin_src1Hazard = 1'b0;
     if(when_HazardSimplePlugin_l57) begin
       if(when_HazardSimplePlugin_l58) begin
-        if(when_HazardSimplePlugin_l51) begin
+        if(when_HazardSimplePlugin_l62) begin
           HazardSimplePlugin_src1Hazard = 1'b1;
         end
       end
     end
     if(when_HazardSimplePlugin_l57_1) begin
       if(when_HazardSimplePlugin_l58_1) begin
-        if(when_HazardSimplePlugin_l51_1) begin
+        if(when_HazardSimplePlugin_l51) begin
           HazardSimplePlugin_src1Hazard = 1'b1;
         end
       end
     end
     if(when_HazardSimplePlugin_l57_2) begin
       if(when_HazardSimplePlugin_l58_2) begin
-        if(when_HazardSimplePlugin_l51_2) begin
+        if(when_HazardSimplePlugin_l62_1) begin
           HazardSimplePlugin_src1Hazard = 1'b1;
         end
       end
@@ -4811,25 +4780,22 @@ module VexRiscv (
 
   assign HazardSimplePlugin_writeBackWrites_valid = (_zz_lastStageRegFileWrite_valid && writeBack_arbitration_isFiring);
   assign HazardSimplePlugin_writeBackWrites_payload_address = _zz_lastStageRegFileWrite_payload_address[11 : 7];
-  assign HazardSimplePlugin_writeBackWrites_payload_data = _zz_decode_RS2_2;
+  assign HazardSimplePlugin_writeBackWrites_payload_data = _zz_lastStageRegFileWrite_payload_data;
   assign HazardSimplePlugin_addr0Match = (HazardSimplePlugin_writeBackBuffer_payload_address == decode_INSTRUCTION[19 : 15]);
   assign HazardSimplePlugin_addr1Match = (HazardSimplePlugin_writeBackBuffer_payload_address == decode_INSTRUCTION[24 : 20]);
-  assign when_HazardSimplePlugin_l47 = 1'b1;
-  assign when_HazardSimplePlugin_l48 = (writeBack_INSTRUCTION[11 : 7] == decode_INSTRUCTION[19 : 15]);
-  assign when_HazardSimplePlugin_l51 = (writeBack_INSTRUCTION[11 : 7] == decode_INSTRUCTION[24 : 20]);
-  assign when_HazardSimplePlugin_l45 = (writeBack_arbitration_isValid && writeBack_REGFILE_WRITE_VALID);
+  assign when_HazardSimplePlugin_l59 = (writeBack_INSTRUCTION[11 : 7] == decode_INSTRUCTION[19 : 15]);
+  assign when_HazardSimplePlugin_l62 = (writeBack_INSTRUCTION[11 : 7] == decode_INSTRUCTION[24 : 20]);
   assign when_HazardSimplePlugin_l57 = (writeBack_arbitration_isValid && writeBack_REGFILE_WRITE_VALID);
-  assign when_HazardSimplePlugin_l58 = (1'b0 || (! when_HazardSimplePlugin_l47));
-  assign when_HazardSimplePlugin_l48_1 = (memory_INSTRUCTION[11 : 7] == decode_INSTRUCTION[19 : 15]);
-  assign when_HazardSimplePlugin_l51_1 = (memory_INSTRUCTION[11 : 7] == decode_INSTRUCTION[24 : 20]);
-  assign when_HazardSimplePlugin_l45_1 = (memory_arbitration_isValid && memory_REGFILE_WRITE_VALID);
+  assign when_HazardSimplePlugin_l58 = (1'b1 || (! 1'b1));
+  assign when_HazardSimplePlugin_l48 = (memory_INSTRUCTION[11 : 7] == decode_INSTRUCTION[19 : 15]);
+  assign when_HazardSimplePlugin_l51 = (memory_INSTRUCTION[11 : 7] == decode_INSTRUCTION[24 : 20]);
+  assign when_HazardSimplePlugin_l45 = (memory_arbitration_isValid && memory_REGFILE_WRITE_VALID);
   assign when_HazardSimplePlugin_l57_1 = (memory_arbitration_isValid && memory_REGFILE_WRITE_VALID);
   assign when_HazardSimplePlugin_l58_1 = (1'b0 || (! memory_BYPASSABLE_MEMORY_STAGE));
-  assign when_HazardSimplePlugin_l48_2 = (execute_INSTRUCTION[11 : 7] == decode_INSTRUCTION[19 : 15]);
-  assign when_HazardSimplePlugin_l51_2 = (execute_INSTRUCTION[11 : 7] == decode_INSTRUCTION[24 : 20]);
-  assign when_HazardSimplePlugin_l45_2 = (execute_arbitration_isValid && execute_REGFILE_WRITE_VALID);
+  assign when_HazardSimplePlugin_l59_1 = (execute_INSTRUCTION[11 : 7] == decode_INSTRUCTION[19 : 15]);
+  assign when_HazardSimplePlugin_l62_1 = (execute_INSTRUCTION[11 : 7] == decode_INSTRUCTION[24 : 20]);
   assign when_HazardSimplePlugin_l57_2 = (execute_arbitration_isValid && execute_REGFILE_WRITE_VALID);
-  assign when_HazardSimplePlugin_l58_2 = (1'b0 || (! execute_BYPASSABLE_EXECUTE_STAGE));
+  assign when_HazardSimplePlugin_l58_2 = (1'b1 || (! execute_BYPASSABLE_EXECUTE_STAGE));
   assign when_HazardSimplePlugin_l105 = (! decode_RS1_USE);
   assign when_HazardSimplePlugin_l108 = (! decode_RS2_USE);
   assign when_HazardSimplePlugin_l113 = (decode_arbitration_isValid && (HazardSimplePlugin_src0Hazard || HazardSimplePlugin_src1Hazard));
@@ -6339,7 +6305,7 @@ module VexRiscv (
       CsrPlugin_misa_base <= 2'b01;
       CsrPlugin_misa_extensions <= 26'h0;
       CsrPlugin_mtvec_mode <= 2'b00;
-      CsrPlugin_mtvec_base <= 30'h00000008;
+      CsrPlugin_mtvec_base <= 30'h20000008;
       CsrPlugin_mstatus_MIE <= 1'b0;
       CsrPlugin_mstatus_MPIE <= 1'b0;
       CsrPlugin_mstatus_MPP <= 2'b11;
@@ -7431,10 +7397,10 @@ module VexRiscv (
       memory_to_writeBack_ATOMIC_HIT <= memory_ATOMIC_HIT;
     end
     if(when_Pipeline_l124_63) begin
-      execute_to_memory_REGFILE_WRITE_DATA <= _zz_decode_RS2;
+      execute_to_memory_REGFILE_WRITE_DATA <= _zz_execute_to_memory_REGFILE_WRITE_DATA;
     end
     if(when_Pipeline_l124_64) begin
-      memory_to_writeBack_REGFILE_WRITE_DATA <= _zz_decode_RS2_1;
+      memory_to_writeBack_REGFILE_WRITE_DATA <= _zz_decode_RS2;
     end
     if(when_Pipeline_l124_65) begin
       execute_to_memory_SHIFT_RIGHT <= execute_SHIFT_RIGHT;
@@ -7640,7 +7606,7 @@ module VexRiscv (
     DebugPlugin_secondCycle <= DebugPlugin_firstCycle;
     DebugPlugin_isPipBusy <= (({writeBack_arbitration_isValid,{memory_arbitration_isValid,{execute_arbitration_isValid,decode_arbitration_isValid}}} != 4'b0000) || IBusSimplePlugin_incomingInstruction);
     if(writeBack_arbitration_isValid) begin
-      DebugPlugin_busReadDataReg <= _zz_decode_RS2_2;
+      DebugPlugin_busReadDataReg <= _zz_lastStageRegFileWrite_payload_data;
     end
     _zz_when_DebugPlugin_l244 <= debug_bus_cmd_payload_address[2];
     if(when_DebugPlugin_l295) begin
