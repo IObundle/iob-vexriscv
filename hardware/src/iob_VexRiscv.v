@@ -37,7 +37,7 @@ module iob_VexRiscv
     wire [DATA_W-1:0]    ibus_resp_data;
 
     assign ibus_req[`valid(0)] = ibus_req_valid;
-    assign ibus_req_ready = ~ibus_resp_ready;
+    assign ibus_req_ready = 1'b1;
     assign ibus_req[`address(0, `ADDR_W)] = ibus_req_address;
     assign ibus_resp_ready = ibus_resp[`ready(0)];
     assign ibus_resp_data = ibus_resp[`rdata(0)];
@@ -45,15 +45,15 @@ module iob_VexRiscv
     wire                dbus_req_valid;
     wire                dbus_req_ready;
     wire                   dbus_req_wr;
-    wire             dbus_req_uncached;
+    wire [1:0]           dbus_req_size;
     wire [ADDR_W-1:0] dbus_req_address;
     wire [DATA_W-1:0]    dbus_req_data;
     wire [DATA_W/8-1:0]  dbus_req_strb;
     wire               dbus_resp_ready;
     wire [DATA_W-1:0]   dbus_resp_data;
 
-    assign dbus_req[`valid(0)] = dbus_req_wr;
-    assign dbus_req_ready = ~dbus_resp_ready;
+    assign dbus_req[`valid(0)] = dbus_req_valid;
+    assign dbus_req_ready = 1'b1;
     assign dbus_req[`address(0, `ADDR_W)] = dbus_req_address;
     assign dbus_req[`wdata(0)] = dbus_req_data;
     assign dbus_req[`wstrb(0)] = dbus_req_strb;
@@ -75,19 +75,12 @@ module iob_VexRiscv
    //intantiate VexRiscv
 
    VexRiscv VexRiscv_core(
-     .dBus_cmd_valid                (dbus_req_valid),
-     .dBus_cmd_ready                (dbus_req_ready),
-     .dBus_cmd_payload_wr           (dbus_req_wr),
-     .dBus_cmd_payload_uncached     (dbus_req_uncached),
-     .dBus_cmd_payload_address      (dbus_req_address),
-     .dBus_cmd_payload_data         (dbus_req_data),
-     .dBus_cmd_payload_mask         (dbus_req_strb),
-     .dBus_cmd_payload_size         (),
-     .dBus_cmd_payload_last         (),
-     .dBus_rsp_valid                (dbus_resp_ready),
-     .dBus_rsp_payload_last         (dbus_resp_ready),
-     .dBus_rsp_payload_data         (dbus_resp_data),
-     .dBus_rsp_payload_error        (1'b0),
+     .iBus_cmd_valid                (ibus_req_valid),
+     .iBus_cmd_ready                (ibus_req_ready),
+     .iBus_cmd_payload_pc           (ibus_req_address),
+     .iBus_rsp_valid                (ibus_resp_ready),
+     .iBus_rsp_payload_error        (1'b0),
+     .iBus_rsp_payload_inst         (ibus_resp_data),
      .timerInterrupt                (1'b0),
      .externalInterrupt             (1'b0),
      .softwareInterrupt             (1'b0),
@@ -99,13 +92,15 @@ module iob_VexRiscv
      .debug_bus_cmd_payload_data    (debug_data),
      .debug_bus_rsp_data            (debug_data_resp),
      .debug_resetOut                (trap),
-     .iBus_cmd_valid                (ibus_req_valid),
-     .iBus_cmd_ready                (ibus_req_ready),
-     .iBus_cmd_payload_address      (ibus_req_address),
-     .iBus_cmd_payload_size         (),
-     .iBus_rsp_valid                (ibus_resp_ready),
-     .iBus_rsp_payload_data         (ibus_resp_data),
-     .iBus_rsp_payload_error        (1'b0),
+     .dBus_cmd_valid                (dbus_req_valid),
+     .dBus_cmd_ready                (dbus_req_ready),
+     .dBus_cmd_payload_wr           (dbus_req_wr),
+     .dBus_cmd_payload_address      (dbus_req_address),
+     .dBus_cmd_payload_data         (dbus_req_data),
+     .dBus_cmd_payload_size         (dbus_req_size),
+     .dBus_rsp_ready                (dbus_resp_ready),
+     .dBus_rsp_error                (1'b0),
+     .dBus_rsp_data                 (dbus_resp_data),
      .clk                           (clk),
      .reset                         (rst),
      .debugReset                    (1'b0)
