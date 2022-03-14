@@ -38,12 +38,14 @@ module iob_VexRiscv
 
     assign ibus_req[`valid(0)] = ibus_req_valid;
     assign ibus_req_ready = ~ibus_resp_ready;
-    assign ibus_req[`address(0, `ADDR_W)] = ibus_req_address^32'h80000000;
+    assign ibus_req[`address(0, `ADDR_W)] = ibus_req_address;
     assign ibus_resp_ready = ibus_resp[`ready(0)];
     assign ibus_resp_data = ibus_resp[`rdata(0)];
 
     wire                dbus_req_valid;
     wire                dbus_req_ready;
+    wire                   dbus_req_wr;
+    wire             dbus_req_uncached;
     wire [ADDR_W-1:0] dbus_req_address;
     wire [DATA_W-1:0]    dbus_req_data;
     wire [DATA_W/8-1:0]  dbus_req_strb;
@@ -58,21 +60,25 @@ module iob_VexRiscv
     assign dbus_resp_ready = dbus_resp[`ready(0)];
     assign dbus_resp_data = dbus_resp[`rdata(0)];
 
-    wire                debug_valid;
-    wire                debug_ready;
-    wire [ADDR_W-1:0] debug_address;
-    wire [DATA_W-1:0]    debug_data;
-    wire [DATA_W/8-1:0]  debug_strb;
+    wire                     debug_valid;
+    wire                     debug_ready;
+    wire                        debug_wr;
+    wire [ADDR_W/4-1:0]    debug_address;
+    wire [DATA_W-1:0]         debug_data;
+    wire [DATA_W-1:0]    debug_data_resp;
 
     assign debug_valid = 1'b0;
+    assign debug_wr = 1'b0;
+    assign debug_address = 8'h0;
+    assign debug_data = 32'h0;
 
    //intantiate VexRiscv
 
    VexRiscv VexRiscv_core(
      .dBus_cmd_valid                (dbus_req_valid),
      .dBus_cmd_ready                (dbus_req_ready),
-     .dBus_cmd_payload_wr           (),
-     .dBus_cmd_payload_uncached     (),
+     .dBus_cmd_payload_wr           (dbus_req_wr),
+     .dBus_cmd_payload_uncached     (dbus_req_uncached),
      .dBus_cmd_payload_address      (dbus_req_address),
      .dBus_cmd_payload_data         (dbus_req_data),
      .dBus_cmd_payload_mask         (dbus_req_strb),
@@ -88,10 +94,10 @@ module iob_VexRiscv
      .externalInterruptS            (1'b0),
      .debug_bus_cmd_valid           (debug_valid),
      .debug_bus_cmd_ready           (debug_ready),
-     .debug_bus_cmd_payload_wr      (1'b0),
-     .debug_bus_cmd_payload_address (8'd0),
-     .debug_bus_cmd_payload_data    (32'd0),
-     .debug_bus_rsp_data            (),
+     .debug_bus_cmd_payload_wr      (debug_wr),
+     .debug_bus_cmd_payload_address (debug_address),
+     .debug_bus_cmd_payload_data    (debug_data),
+     .debug_bus_rsp_data            (debug_data_resp),
      .debug_resetOut                (trap),
      .iBus_cmd_valid                (ibus_req_valid),
      .iBus_cmd_ready                (ibus_req_ready),
