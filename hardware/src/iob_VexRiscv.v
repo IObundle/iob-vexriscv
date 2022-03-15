@@ -57,6 +57,7 @@ module iob_VexRiscv
     assign dbus_req[`address(0, `ADDR_W)] = dbus_req_address;
     assign dbus_req[`wdata(0)] = dbus_req_data;
     assign dbus_req[`wstrb(0)] = dbus_req_strb;
+    assign dbus_req_strb = {4{dbus_req_wr}};
     assign dbus_resp_ready = dbus_resp[`ready(0)];
     assign dbus_resp_data = dbus_resp[`rdata(0)];
 
