@@ -51,6 +51,7 @@ module iob_VexRiscv
     wire [ADDR_W-1:0] dbus_req_address;
     wire [DATA_W-1:0]    dbus_req_data;
     wire [DATA_W/8-1:0]  dbus_req_strb;
+    wire [DATA_W/8-1:0]  dbus_req_mask;
     wire               dbus_resp_ready;
     wire [DATA_W-1:0]   dbus_resp_data;
 
@@ -59,8 +60,8 @@ module iob_VexRiscv
     assign dbus_req[`address(0, `ADDR_W)] = dbus_req_address;
     assign dbus_req[`wdata(0)] = dbus_req_data;
     assign dbus_req[`wstrb(0)] = dbus_req_strb;
-    assign dbus_req_strb = dbus_req_valid ? {4{dbus_req_wr}} : 4'h0;
-    //assign dbus_req_strb = dbus_req_size[0] ? (dbus_req_size[1] ? {4{dbus_req_wr}} : {1'b0, {3{dbus_req_wr}}}) : (dbus_req_size[1] ? {{2{1'b0}},{2{dbus_req_wr}}} : {{3{1'b0}}, dbus_req_wr});
+    assign dbus_req_strb = dbus_req_wr ? dbus_req_mask : 4'h0;
+    assign dbus_req_mask = dbus_req_size[1] ? (dbus_req_size[0] ? {4'h0} : {4'hF}) : (dbus_req_size[0] ? {4'h3} : {4'h1});
     assign dbus_resp_ready = dbus_resp[`ready(0)];
     assign dbus_resp_data = dbus_resp[`rdata(0)];
 
