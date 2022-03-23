@@ -1,6 +1,6 @@
 // Generator : SpinalHDL v1.6.4    git head : 598c18959149eb18e5eee5b0aa3eef01ecaa41a1
 // Component : VexRiscv
-// Git hash  : b63557f97f51b21462f8ec867d5a214b03cdbd03
+// Git hash  : 782436ed96a72b1e1b51bf30d4f98876982853cc
 
 `timescale 1ns/1ps 
 
@@ -75,6 +75,15 @@ module VexRiscv (
   wire                IBusSimplePlugin_rspJoin_rspBuffer_c_io_pop_payload_error;
   wire       [31:0]   IBusSimplePlugin_rspJoin_rspBuffer_c_io_pop_payload_inst;
   wire       [0:0]    IBusSimplePlugin_rspJoin_rspBuffer_c_io_occupancy;
+  wire       [51:0]   _zz_memory_MUL_LOW;
+  wire       [51:0]   _zz_memory_MUL_LOW_1;
+  wire       [51:0]   _zz_memory_MUL_LOW_2;
+  wire       [51:0]   _zz_memory_MUL_LOW_3;
+  wire       [32:0]   _zz_memory_MUL_LOW_4;
+  wire       [51:0]   _zz_memory_MUL_LOW_5;
+  wire       [49:0]   _zz_memory_MUL_LOW_6;
+  wire       [51:0]   _zz_memory_MUL_LOW_7;
+  wire       [49:0]   _zz_memory_MUL_LOW_8;
   wire       [31:0]   _zz_execute_SHIFT_RIGHT;
   wire       [32:0]   _zz_execute_SHIFT_RIGHT_1;
   wire       [32:0]   _zz_execute_SHIFT_RIGHT_2;
@@ -150,135 +159,149 @@ module VexRiscv (
   wire       [31:0]   _zz__zz_decode_IS_SFENCE_VMA2_13;
   wire       [31:0]   _zz__zz_decode_IS_SFENCE_VMA2_14;
   wire       [0:0]    _zz__zz_decode_IS_SFENCE_VMA2_15;
-  wire       [31:0]   _zz__zz_decode_IS_SFENCE_VMA2_16;
+  wire       [0:0]    _zz__zz_decode_IS_SFENCE_VMA2_16;
   wire       [0:0]    _zz__zz_decode_IS_SFENCE_VMA2_17;
-  wire       [31:0]   _zz__zz_decode_IS_SFENCE_VMA2_18;
+  wire                _zz__zz_decode_IS_SFENCE_VMA2_18;
   wire       [0:0]    _zz__zz_decode_IS_SFENCE_VMA2_19;
   wire       [31:0]   _zz__zz_decode_IS_SFENCE_VMA2_20;
-  wire                _zz__zz_decode_IS_SFENCE_VMA2_21;
-  wire       [0:0]    _zz__zz_decode_IS_SFENCE_VMA2_22;
-  wire       [0:0]    _zz__zz_decode_IS_SFENCE_VMA2_23;
+  wire       [31:0]   _zz__zz_decode_IS_SFENCE_VMA2_21;
+  wire       [22:0]   _zz__zz_decode_IS_SFENCE_VMA2_22;
+  wire                _zz__zz_decode_IS_SFENCE_VMA2_23;
   wire       [1:0]    _zz__zz_decode_IS_SFENCE_VMA2_24;
-  wire       [22:0]   _zz__zz_decode_IS_SFENCE_VMA2_25;
-  wire       [0:0]    _zz__zz_decode_IS_SFENCE_VMA2_26;
+  wire       [31:0]   _zz__zz_decode_IS_SFENCE_VMA2_25;
+  wire       [31:0]   _zz__zz_decode_IS_SFENCE_VMA2_26;
   wire                _zz__zz_decode_IS_SFENCE_VMA2_27;
   wire       [31:0]   _zz__zz_decode_IS_SFENCE_VMA2_28;
   wire       [31:0]   _zz__zz_decode_IS_SFENCE_VMA2_29;
-  wire       [31:0]   _zz__zz_decode_IS_SFENCE_VMA2_30;
-  wire       [31:0]   _zz__zz_decode_IS_SFENCE_VMA2_31;
+  wire                _zz__zz_decode_IS_SFENCE_VMA2_30;
+  wire                _zz__zz_decode_IS_SFENCE_VMA2_31;
   wire       [0:0]    _zz__zz_decode_IS_SFENCE_VMA2_32;
-  wire                _zz__zz_decode_IS_SFENCE_VMA2_33;
-  wire       [0:0]    _zz__zz_decode_IS_SFENCE_VMA2_34;
-  wire       [31:0]   _zz__zz_decode_IS_SFENCE_VMA2_35;
-  wire       [0:0]    _zz__zz_decode_IS_SFENCE_VMA2_36;
-  wire       [31:0]   _zz__zz_decode_IS_SFENCE_VMA2_37;
-  wire       [19:0]   _zz__zz_decode_IS_SFENCE_VMA2_38;
-  wire                _zz__zz_decode_IS_SFENCE_VMA2_39;
-  wire       [0:0]    _zz__zz_decode_IS_SFENCE_VMA2_40;
-  wire                _zz__zz_decode_IS_SFENCE_VMA2_41;
-  wire                _zz__zz_decode_IS_SFENCE_VMA2_42;
+  wire       [31:0]   _zz__zz_decode_IS_SFENCE_VMA2_33;
+  wire       [31:0]   _zz__zz_decode_IS_SFENCE_VMA2_34;
+  wire       [18:0]   _zz__zz_decode_IS_SFENCE_VMA2_35;
+  wire                _zz__zz_decode_IS_SFENCE_VMA2_36;
+  wire       [1:0]    _zz__zz_decode_IS_SFENCE_VMA2_37;
+  wire       [31:0]   _zz__zz_decode_IS_SFENCE_VMA2_38;
+  wire       [31:0]   _zz__zz_decode_IS_SFENCE_VMA2_39;
+  wire                _zz__zz_decode_IS_SFENCE_VMA2_40;
+  wire       [31:0]   _zz__zz_decode_IS_SFENCE_VMA2_41;
+  wire       [31:0]   _zz__zz_decode_IS_SFENCE_VMA2_42;
   wire       [0:0]    _zz__zz_decode_IS_SFENCE_VMA2_43;
-  wire                _zz__zz_decode_IS_SFENCE_VMA2_44;
-  wire       [15:0]   _zz__zz_decode_IS_SFENCE_VMA2_45;
-  wire       [2:0]    _zz__zz_decode_IS_SFENCE_VMA2_46;
+  wire       [0:0]    _zz__zz_decode_IS_SFENCE_VMA2_44;
+  wire       [31:0]   _zz__zz_decode_IS_SFENCE_VMA2_45;
+  wire       [1:0]    _zz__zz_decode_IS_SFENCE_VMA2_46;
   wire       [31:0]   _zz__zz_decode_IS_SFENCE_VMA2_47;
   wire       [31:0]   _zz__zz_decode_IS_SFENCE_VMA2_48;
-  wire                _zz__zz_decode_IS_SFENCE_VMA2_49;
-  wire                _zz__zz_decode_IS_SFENCE_VMA2_50;
-  wire                _zz__zz_decode_IS_SFENCE_VMA2_51;
-  wire       [31:0]   _zz__zz_decode_IS_SFENCE_VMA2_52;
+  wire       [31:0]   _zz__zz_decode_IS_SFENCE_VMA2_49;
+  wire       [31:0]   _zz__zz_decode_IS_SFENCE_VMA2_50;
+  wire       [14:0]   _zz__zz_decode_IS_SFENCE_VMA2_51;
+  wire       [0:0]    _zz__zz_decode_IS_SFENCE_VMA2_52;
   wire       [31:0]   _zz__zz_decode_IS_SFENCE_VMA2_53;
-  wire       [0:0]    _zz__zz_decode_IS_SFENCE_VMA2_54;
-  wire       [0:0]    _zz__zz_decode_IS_SFENCE_VMA2_55;
+  wire                _zz__zz_decode_IS_SFENCE_VMA2_54;
+  wire                _zz__zz_decode_IS_SFENCE_VMA2_55;
   wire       [31:0]   _zz__zz_decode_IS_SFENCE_VMA2_56;
-  wire       [4:0]    _zz__zz_decode_IS_SFENCE_VMA2_57;
+  wire       [0:0]    _zz__zz_decode_IS_SFENCE_VMA2_57;
   wire       [31:0]   _zz__zz_decode_IS_SFENCE_VMA2_58;
   wire       [31:0]   _zz__zz_decode_IS_SFENCE_VMA2_59;
-  wire                _zz__zz_decode_IS_SFENCE_VMA2_60;
-  wire       [31:0]   _zz__zz_decode_IS_SFENCE_VMA2_61;
-  wire       [0:0]    _zz__zz_decode_IS_SFENCE_VMA2_62;
-  wire       [1:0]    _zz__zz_decode_IS_SFENCE_VMA2_63;
-  wire                _zz__zz_decode_IS_SFENCE_VMA2_64;
-  wire       [31:0]   _zz__zz_decode_IS_SFENCE_VMA2_65;
-  wire       [12:0]   _zz__zz_decode_IS_SFENCE_VMA2_66;
-  wire       [1:0]    _zz__zz_decode_IS_SFENCE_VMA2_67;
-  wire       [31:0]   _zz__zz_decode_IS_SFENCE_VMA2_68;
+  wire       [3:0]    _zz__zz_decode_IS_SFENCE_VMA2_60;
+  wire                _zz__zz_decode_IS_SFENCE_VMA2_61;
+  wire       [31:0]   _zz__zz_decode_IS_SFENCE_VMA2_62;
+  wire       [0:0]    _zz__zz_decode_IS_SFENCE_VMA2_63;
+  wire       [1:0]    _zz__zz_decode_IS_SFENCE_VMA2_64;
+  wire                _zz__zz_decode_IS_SFENCE_VMA2_65;
+  wire       [31:0]   _zz__zz_decode_IS_SFENCE_VMA2_66;
+  wire       [0:0]    _zz__zz_decode_IS_SFENCE_VMA2_67;
+  wire       [0:0]    _zz__zz_decode_IS_SFENCE_VMA2_68;
   wire       [31:0]   _zz__zz_decode_IS_SFENCE_VMA2_69;
   wire       [31:0]   _zz__zz_decode_IS_SFENCE_VMA2_70;
-  wire       [31:0]   _zz__zz_decode_IS_SFENCE_VMA2_71;
-  wire                _zz__zz_decode_IS_SFENCE_VMA2_72;
+  wire       [0:0]    _zz__zz_decode_IS_SFENCE_VMA2_71;
+  wire       [31:0]   _zz__zz_decode_IS_SFENCE_VMA2_72;
   wire       [31:0]   _zz__zz_decode_IS_SFENCE_VMA2_73;
-  wire       [31:0]   _zz__zz_decode_IS_SFENCE_VMA2_74;
-  wire       [0:0]    _zz__zz_decode_IS_SFENCE_VMA2_75;
-  wire       [0:0]    _zz__zz_decode_IS_SFENCE_VMA2_76;
-  wire       [3:0]    _zz__zz_decode_IS_SFENCE_VMA2_77;
-  wire                _zz__zz_decode_IS_SFENCE_VMA2_78;
+  wire       [11:0]   _zz__zz_decode_IS_SFENCE_VMA2_74;
+  wire       [4:0]    _zz__zz_decode_IS_SFENCE_VMA2_75;
+  wire                _zz__zz_decode_IS_SFENCE_VMA2_76;
+  wire       [31:0]   _zz__zz_decode_IS_SFENCE_VMA2_77;
+  wire       [0:0]    _zz__zz_decode_IS_SFENCE_VMA2_78;
   wire       [31:0]   _zz__zz_decode_IS_SFENCE_VMA2_79;
-  wire       [0:0]    _zz__zz_decode_IS_SFENCE_VMA2_80;
-  wire       [31:0]   _zz__zz_decode_IS_SFENCE_VMA2_81;
-  wire       [31:0]   _zz__zz_decode_IS_SFENCE_VMA2_82;
-  wire       [1:0]    _zz__zz_decode_IS_SFENCE_VMA2_83;
-  wire                _zz__zz_decode_IS_SFENCE_VMA2_84;
-  wire       [31:0]   _zz__zz_decode_IS_SFENCE_VMA2_85;
-  wire                _zz__zz_decode_IS_SFENCE_VMA2_86;
+  wire       [31:0]   _zz__zz_decode_IS_SFENCE_VMA2_80;
+  wire       [2:0]    _zz__zz_decode_IS_SFENCE_VMA2_81;
+  wire                _zz__zz_decode_IS_SFENCE_VMA2_82;
+  wire       [31:0]   _zz__zz_decode_IS_SFENCE_VMA2_83;
+  wire       [0:0]    _zz__zz_decode_IS_SFENCE_VMA2_84;
+  wire       [0:0]    _zz__zz_decode_IS_SFENCE_VMA2_85;
+  wire       [31:0]   _zz__zz_decode_IS_SFENCE_VMA2_86;
   wire       [31:0]   _zz__zz_decode_IS_SFENCE_VMA2_87;
-  wire       [9:0]    _zz__zz_decode_IS_SFENCE_VMA2_88;
-  wire       [6:0]    _zz__zz_decode_IS_SFENCE_VMA2_89;
-  wire       [0:0]    _zz__zz_decode_IS_SFENCE_VMA2_90;
-  wire       [31:0]   _zz__zz_decode_IS_SFENCE_VMA2_91;
+  wire                _zz__zz_decode_IS_SFENCE_VMA2_88;
+  wire       [0:0]    _zz__zz_decode_IS_SFENCE_VMA2_89;
+  wire       [3:0]    _zz__zz_decode_IS_SFENCE_VMA2_90;
+  wire                _zz__zz_decode_IS_SFENCE_VMA2_91;
   wire       [31:0]   _zz__zz_decode_IS_SFENCE_VMA2_92;
-  wire       [4:0]    _zz__zz_decode_IS_SFENCE_VMA2_93;
-  wire                _zz__zz_decode_IS_SFENCE_VMA2_94;
+  wire       [0:0]    _zz__zz_decode_IS_SFENCE_VMA2_93;
+  wire       [31:0]   _zz__zz_decode_IS_SFENCE_VMA2_94;
   wire       [31:0]   _zz__zz_decode_IS_SFENCE_VMA2_95;
-  wire       [0:0]    _zz__zz_decode_IS_SFENCE_VMA2_96;
-  wire       [31:0]   _zz__zz_decode_IS_SFENCE_VMA2_97;
+  wire       [1:0]    _zz__zz_decode_IS_SFENCE_VMA2_96;
+  wire                _zz__zz_decode_IS_SFENCE_VMA2_97;
   wire       [31:0]   _zz__zz_decode_IS_SFENCE_VMA2_98;
-  wire       [2:0]    _zz__zz_decode_IS_SFENCE_VMA2_99;
-  wire                _zz__zz_decode_IS_SFENCE_VMA2_100;
+  wire                _zz__zz_decode_IS_SFENCE_VMA2_99;
+  wire       [31:0]   _zz__zz_decode_IS_SFENCE_VMA2_100;
   wire       [0:0]    _zz__zz_decode_IS_SFENCE_VMA2_101;
-  wire       [0:0]    _zz__zz_decode_IS_SFENCE_VMA2_102;
-  wire       [31:0]   _zz__zz_decode_IS_SFENCE_VMA2_103;
-  wire                _zz__zz_decode_IS_SFENCE_VMA2_104;
-  wire       [0:0]    _zz__zz_decode_IS_SFENCE_VMA2_105;
-  wire       [0:0]    _zz__zz_decode_IS_SFENCE_VMA2_106;
-  wire       [31:0]   _zz__zz_decode_IS_SFENCE_VMA2_107;
+  wire       [6:0]    _zz__zz_decode_IS_SFENCE_VMA2_102;
+  wire       [0:0]    _zz__zz_decode_IS_SFENCE_VMA2_103;
+  wire       [31:0]   _zz__zz_decode_IS_SFENCE_VMA2_104;
+  wire       [31:0]   _zz__zz_decode_IS_SFENCE_VMA2_105;
+  wire       [4:0]    _zz__zz_decode_IS_SFENCE_VMA2_106;
+  wire                _zz__zz_decode_IS_SFENCE_VMA2_107;
   wire       [31:0]   _zz__zz_decode_IS_SFENCE_VMA2_108;
   wire       [0:0]    _zz__zz_decode_IS_SFENCE_VMA2_109;
-  wire       [1:0]    _zz__zz_decode_IS_SFENCE_VMA2_110;
-  wire                _zz__zz_decode_IS_SFENCE_VMA2_111;
-  wire       [31:0]   _zz__zz_decode_IS_SFENCE_VMA2_112;
-  wire       [6:0]    _zz__zz_decode_IS_SFENCE_VMA2_113;
-  wire                _zz__zz_decode_IS_SFENCE_VMA2_114;
-  wire                _zz__zz_decode_IS_SFENCE_VMA2_115;
+  wire       [31:0]   _zz__zz_decode_IS_SFENCE_VMA2_110;
+  wire       [31:0]   _zz__zz_decode_IS_SFENCE_VMA2_111;
+  wire       [2:0]    _zz__zz_decode_IS_SFENCE_VMA2_112;
+  wire                _zz__zz_decode_IS_SFENCE_VMA2_113;
+  wire       [0:0]    _zz__zz_decode_IS_SFENCE_VMA2_114;
+  wire       [0:0]    _zz__zz_decode_IS_SFENCE_VMA2_115;
   wire       [31:0]   _zz__zz_decode_IS_SFENCE_VMA2_116;
-  wire       [0:0]    _zz__zz_decode_IS_SFENCE_VMA2_117;
-  wire       [0:0]    _zz__zz_decode_IS_SFENCE_VMA2_118;
-  wire       [31:0]   _zz__zz_decode_IS_SFENCE_VMA2_119;
-  wire       [31:0]   _zz__zz_decode_IS_SFENCE_VMA2_120;
-  wire       [4:0]    _zz__zz_decode_IS_SFENCE_VMA2_121;
-  wire                _zz__zz_decode_IS_SFENCE_VMA2_122;
+  wire       [8:0]    _zz__zz_decode_IS_SFENCE_VMA2_117;
+  wire                _zz__zz_decode_IS_SFENCE_VMA2_118;
+  wire       [0:0]    _zz__zz_decode_IS_SFENCE_VMA2_119;
+  wire       [0:0]    _zz__zz_decode_IS_SFENCE_VMA2_120;
+  wire       [31:0]   _zz__zz_decode_IS_SFENCE_VMA2_121;
+  wire       [31:0]   _zz__zz_decode_IS_SFENCE_VMA2_122;
   wire       [0:0]    _zz__zz_decode_IS_SFENCE_VMA2_123;
-  wire       [31:0]   _zz__zz_decode_IS_SFENCE_VMA2_124;
-  wire       [3:0]    _zz__zz_decode_IS_SFENCE_VMA2_125;
-  wire                _zz__zz_decode_IS_SFENCE_VMA2_126;
-  wire       [0:0]    _zz__zz_decode_IS_SFENCE_VMA2_127;
-  wire       [0:0]    _zz__zz_decode_IS_SFENCE_VMA2_128;
-  wire       [0:0]    _zz__zz_decode_IS_SFENCE_VMA2_129;
-  wire       [1:0]    _zz__zz_decode_IS_SFENCE_VMA2_130;
-  wire       [31:0]   _zz__zz_decode_IS_SFENCE_VMA2_131;
-  wire       [31:0]   _zz__zz_decode_IS_SFENCE_VMA2_132;
-  wire       [2:0]    _zz__zz_decode_IS_SFENCE_VMA2_133;
-  wire                _zz__zz_decode_IS_SFENCE_VMA2_134;
-  wire                _zz__zz_decode_IS_SFENCE_VMA2_135;
-  wire       [0:0]    _zz__zz_decode_IS_SFENCE_VMA2_136;
+  wire       [1:0]    _zz__zz_decode_IS_SFENCE_VMA2_124;
+  wire                _zz__zz_decode_IS_SFENCE_VMA2_125;
+  wire       [31:0]   _zz__zz_decode_IS_SFENCE_VMA2_126;
+  wire       [6:0]    _zz__zz_decode_IS_SFENCE_VMA2_127;
+  wire                _zz__zz_decode_IS_SFENCE_VMA2_128;
+  wire                _zz__zz_decode_IS_SFENCE_VMA2_129;
+  wire       [31:0]   _zz__zz_decode_IS_SFENCE_VMA2_130;
+  wire       [0:0]    _zz__zz_decode_IS_SFENCE_VMA2_131;
+  wire       [0:0]    _zz__zz_decode_IS_SFENCE_VMA2_132;
+  wire       [31:0]   _zz__zz_decode_IS_SFENCE_VMA2_133;
+  wire       [31:0]   _zz__zz_decode_IS_SFENCE_VMA2_134;
+  wire       [4:0]    _zz__zz_decode_IS_SFENCE_VMA2_135;
+  wire                _zz__zz_decode_IS_SFENCE_VMA2_136;
   wire       [0:0]    _zz__zz_decode_IS_SFENCE_VMA2_137;
-  wire       [0:0]    _zz__zz_decode_IS_SFENCE_VMA2_138;
-  wire       [0:0]    _zz__zz_decode_IS_SFENCE_VMA2_139;
-  wire       [1:0]    _zz__zz_decode_IS_SFENCE_VMA2_140;
-  wire       [31:0]   _zz__zz_decode_IS_SFENCE_VMA2_141;
+  wire       [31:0]   _zz__zz_decode_IS_SFENCE_VMA2_138;
+  wire       [3:0]    _zz__zz_decode_IS_SFENCE_VMA2_139;
+  wire                _zz__zz_decode_IS_SFENCE_VMA2_140;
+  wire       [0:0]    _zz__zz_decode_IS_SFENCE_VMA2_141;
   wire       [0:0]    _zz__zz_decode_IS_SFENCE_VMA2_142;
   wire       [0:0]    _zz__zz_decode_IS_SFENCE_VMA2_143;
-  wire       [0:0]    _zz__zz_decode_IS_SFENCE_VMA2_144;
+  wire       [1:0]    _zz__zz_decode_IS_SFENCE_VMA2_144;
+  wire       [31:0]   _zz__zz_decode_IS_SFENCE_VMA2_145;
+  wire       [31:0]   _zz__zz_decode_IS_SFENCE_VMA2_146;
+  wire       [2:0]    _zz__zz_decode_IS_SFENCE_VMA2_147;
+  wire                _zz__zz_decode_IS_SFENCE_VMA2_148;
+  wire                _zz__zz_decode_IS_SFENCE_VMA2_149;
+  wire       [0:0]    _zz__zz_decode_IS_SFENCE_VMA2_150;
+  wire       [0:0]    _zz__zz_decode_IS_SFENCE_VMA2_151;
+  wire       [0:0]    _zz__zz_decode_IS_SFENCE_VMA2_152;
+  wire       [0:0]    _zz__zz_decode_IS_SFENCE_VMA2_153;
+  wire       [1:0]    _zz__zz_decode_IS_SFENCE_VMA2_154;
+  wire       [31:0]   _zz__zz_decode_IS_SFENCE_VMA2_155;
+  wire       [0:0]    _zz__zz_decode_IS_SFENCE_VMA2_156;
+  wire       [0:0]    _zz__zz_decode_IS_SFENCE_VMA2_157;
+  wire       [0:0]    _zz__zz_decode_IS_SFENCE_VMA2_158;
   wire                _zz_RegFilePlugin_regFile_port;
   wire                _zz_decode_RegFilePlugin_rs1Data;
   wire                _zz_RegFilePlugin_regFile_port_1;
@@ -289,137 +312,11 @@ module VexRiscv (
   wire       [11:0]   _zz__zz_decode_SRC2_4;
   wire       [31:0]   _zz_execute_SrcPlugin_add;
   wire       [31:0]   _zz_execute_SrcPlugin_sub;
-  wire       [64:0]   _zz_memory_MulDivIterativePlugin_accumulator;
-  wire       [64:0]   _zz_memory_MulDivIterativePlugin_accumulator_1;
-  wire       [64:0]   _zz_memory_MulDivIterativePlugin_accumulator_2;
-  wire       [64:0]   _zz_memory_MulDivIterativePlugin_accumulator_3;
-  wire       [64:0]   _zz_memory_MulDivIterativePlugin_accumulator_4;
-  wire       [64:0]   _zz_memory_MulDivIterativePlugin_accumulator_5;
-  wire       [64:0]   _zz_memory_MulDivIterativePlugin_accumulator_6;
-  wire       [32:0]   _zz_memory_MulDivIterativePlugin_accumulator_7;
-  wire       [64:0]   _zz_memory_MulDivIterativePlugin_accumulator_8;
-  wire       [33:0]   _zz_memory_MulDivIterativePlugin_accumulator_9;
-  wire       [33:0]   _zz_memory_MulDivIterativePlugin_accumulator_10;
-  wire       [64:0]   _zz_memory_MulDivIterativePlugin_accumulator_11;
-  wire       [64:0]   _zz_memory_MulDivIterativePlugin_accumulator_12;
-  wire       [34:0]   _zz_memory_MulDivIterativePlugin_accumulator_13;
-  wire       [34:0]   _zz_memory_MulDivIterativePlugin_accumulator_14;
-  wire       [64:0]   _zz_memory_MulDivIterativePlugin_accumulator_15;
-  wire       [35:0]   _zz_memory_MulDivIterativePlugin_accumulator_16;
-  wire       [35:0]   _zz_memory_MulDivIterativePlugin_accumulator_17;
-  wire       [64:0]   _zz_memory_MulDivIterativePlugin_accumulator_18;
-  wire       [64:0]   _zz_memory_MulDivIterativePlugin_accumulator_19;
-  wire       [64:0]   _zz_memory_MulDivIterativePlugin_accumulator_20;
-  wire       [36:0]   _zz_memory_MulDivIterativePlugin_accumulator_21;
-  wire       [36:0]   _zz_memory_MulDivIterativePlugin_accumulator_22;
-  wire       [64:0]   _zz_memory_MulDivIterativePlugin_accumulator_23;
-  wire       [37:0]   _zz_memory_MulDivIterativePlugin_accumulator_24;
-  wire       [37:0]   _zz_memory_MulDivIterativePlugin_accumulator_25;
-  wire       [64:0]   _zz_memory_MulDivIterativePlugin_accumulator_26;
-  wire       [64:0]   _zz_memory_MulDivIterativePlugin_accumulator_27;
-  wire       [38:0]   _zz_memory_MulDivIterativePlugin_accumulator_28;
-  wire       [38:0]   _zz_memory_MulDivIterativePlugin_accumulator_29;
-  wire       [64:0]   _zz_memory_MulDivIterativePlugin_accumulator_30;
-  wire       [39:0]   _zz_memory_MulDivIterativePlugin_accumulator_31;
-  wire       [39:0]   _zz_memory_MulDivIterativePlugin_accumulator_32;
-  wire       [64:0]   _zz_memory_MulDivIterativePlugin_accumulator_33;
-  wire       [64:0]   _zz_memory_MulDivIterativePlugin_accumulator_34;
-  wire       [64:0]   _zz_memory_MulDivIterativePlugin_accumulator_35;
-  wire       [64:0]   _zz_memory_MulDivIterativePlugin_accumulator_36;
-  wire       [40:0]   _zz_memory_MulDivIterativePlugin_accumulator_37;
-  wire       [40:0]   _zz_memory_MulDivIterativePlugin_accumulator_38;
-  wire       [64:0]   _zz_memory_MulDivIterativePlugin_accumulator_39;
-  wire       [41:0]   _zz_memory_MulDivIterativePlugin_accumulator_40;
-  wire       [41:0]   _zz_memory_MulDivIterativePlugin_accumulator_41;
-  wire       [64:0]   _zz_memory_MulDivIterativePlugin_accumulator_42;
-  wire       [64:0]   _zz_memory_MulDivIterativePlugin_accumulator_43;
-  wire       [42:0]   _zz_memory_MulDivIterativePlugin_accumulator_44;
-  wire       [42:0]   _zz_memory_MulDivIterativePlugin_accumulator_45;
-  wire       [64:0]   _zz_memory_MulDivIterativePlugin_accumulator_46;
-  wire       [43:0]   _zz_memory_MulDivIterativePlugin_accumulator_47;
-  wire       [43:0]   _zz_memory_MulDivIterativePlugin_accumulator_48;
-  wire       [64:0]   _zz_memory_MulDivIterativePlugin_accumulator_49;
-  wire       [64:0]   _zz_memory_MulDivIterativePlugin_accumulator_50;
-  wire       [64:0]   _zz_memory_MulDivIterativePlugin_accumulator_51;
-  wire       [44:0]   _zz_memory_MulDivIterativePlugin_accumulator_52;
-  wire       [44:0]   _zz_memory_MulDivIterativePlugin_accumulator_53;
-  wire       [64:0]   _zz_memory_MulDivIterativePlugin_accumulator_54;
-  wire       [45:0]   _zz_memory_MulDivIterativePlugin_accumulator_55;
-  wire       [45:0]   _zz_memory_MulDivIterativePlugin_accumulator_56;
-  wire       [64:0]   _zz_memory_MulDivIterativePlugin_accumulator_57;
-  wire       [64:0]   _zz_memory_MulDivIterativePlugin_accumulator_58;
-  wire       [46:0]   _zz_memory_MulDivIterativePlugin_accumulator_59;
-  wire       [46:0]   _zz_memory_MulDivIterativePlugin_accumulator_60;
-  wire       [64:0]   _zz_memory_MulDivIterativePlugin_accumulator_61;
-  wire       [47:0]   _zz_memory_MulDivIterativePlugin_accumulator_62;
-  wire       [47:0]   _zz_memory_MulDivIterativePlugin_accumulator_63;
-  wire       [64:0]   _zz_memory_MulDivIterativePlugin_accumulator_64;
-  wire       [64:0]   _zz_memory_MulDivIterativePlugin_accumulator_65;
-  wire       [64:0]   _zz_memory_MulDivIterativePlugin_accumulator_66;
-  wire       [64:0]   _zz_memory_MulDivIterativePlugin_accumulator_67;
-  wire       [64:0]   _zz_memory_MulDivIterativePlugin_accumulator_68;
-  wire       [48:0]   _zz_memory_MulDivIterativePlugin_accumulator_69;
-  wire       [48:0]   _zz_memory_MulDivIterativePlugin_accumulator_70;
-  wire       [64:0]   _zz_memory_MulDivIterativePlugin_accumulator_71;
-  wire       [49:0]   _zz_memory_MulDivIterativePlugin_accumulator_72;
-  wire       [49:0]   _zz_memory_MulDivIterativePlugin_accumulator_73;
-  wire       [64:0]   _zz_memory_MulDivIterativePlugin_accumulator_74;
-  wire       [64:0]   _zz_memory_MulDivIterativePlugin_accumulator_75;
-  wire       [50:0]   _zz_memory_MulDivIterativePlugin_accumulator_76;
-  wire       [50:0]   _zz_memory_MulDivIterativePlugin_accumulator_77;
-  wire       [64:0]   _zz_memory_MulDivIterativePlugin_accumulator_78;
-  wire       [51:0]   _zz_memory_MulDivIterativePlugin_accumulator_79;
-  wire       [51:0]   _zz_memory_MulDivIterativePlugin_accumulator_80;
-  wire       [64:0]   _zz_memory_MulDivIterativePlugin_accumulator_81;
-  wire       [64:0]   _zz_memory_MulDivIterativePlugin_accumulator_82;
-  wire       [64:0]   _zz_memory_MulDivIterativePlugin_accumulator_83;
-  wire       [52:0]   _zz_memory_MulDivIterativePlugin_accumulator_84;
-  wire       [52:0]   _zz_memory_MulDivIterativePlugin_accumulator_85;
-  wire       [64:0]   _zz_memory_MulDivIterativePlugin_accumulator_86;
-  wire       [53:0]   _zz_memory_MulDivIterativePlugin_accumulator_87;
-  wire       [53:0]   _zz_memory_MulDivIterativePlugin_accumulator_88;
-  wire       [64:0]   _zz_memory_MulDivIterativePlugin_accumulator_89;
-  wire       [64:0]   _zz_memory_MulDivIterativePlugin_accumulator_90;
-  wire       [54:0]   _zz_memory_MulDivIterativePlugin_accumulator_91;
-  wire       [54:0]   _zz_memory_MulDivIterativePlugin_accumulator_92;
-  wire       [64:0]   _zz_memory_MulDivIterativePlugin_accumulator_93;
-  wire       [55:0]   _zz_memory_MulDivIterativePlugin_accumulator_94;
-  wire       [55:0]   _zz_memory_MulDivIterativePlugin_accumulator_95;
-  wire       [64:0]   _zz_memory_MulDivIterativePlugin_accumulator_96;
-  wire       [64:0]   _zz_memory_MulDivIterativePlugin_accumulator_97;
-  wire       [64:0]   _zz_memory_MulDivIterativePlugin_accumulator_98;
-  wire       [64:0]   _zz_memory_MulDivIterativePlugin_accumulator_99;
-  wire       [56:0]   _zz_memory_MulDivIterativePlugin_accumulator_100;
-  wire       [56:0]   _zz_memory_MulDivIterativePlugin_accumulator_101;
-  wire       [64:0]   _zz_memory_MulDivIterativePlugin_accumulator_102;
-  wire       [57:0]   _zz_memory_MulDivIterativePlugin_accumulator_103;
-  wire       [57:0]   _zz_memory_MulDivIterativePlugin_accumulator_104;
-  wire       [64:0]   _zz_memory_MulDivIterativePlugin_accumulator_105;
-  wire       [64:0]   _zz_memory_MulDivIterativePlugin_accumulator_106;
-  wire       [58:0]   _zz_memory_MulDivIterativePlugin_accumulator_107;
-  wire       [58:0]   _zz_memory_MulDivIterativePlugin_accumulator_108;
-  wire       [64:0]   _zz_memory_MulDivIterativePlugin_accumulator_109;
-  wire       [59:0]   _zz_memory_MulDivIterativePlugin_accumulator_110;
-  wire       [59:0]   _zz_memory_MulDivIterativePlugin_accumulator_111;
-  wire       [64:0]   _zz_memory_MulDivIterativePlugin_accumulator_112;
-  wire       [64:0]   _zz_memory_MulDivIterativePlugin_accumulator_113;
-  wire       [64:0]   _zz_memory_MulDivIterativePlugin_accumulator_114;
-  wire       [60:0]   _zz_memory_MulDivIterativePlugin_accumulator_115;
-  wire       [60:0]   _zz_memory_MulDivIterativePlugin_accumulator_116;
-  wire       [64:0]   _zz_memory_MulDivIterativePlugin_accumulator_117;
-  wire       [61:0]   _zz_memory_MulDivIterativePlugin_accumulator_118;
-  wire       [61:0]   _zz_memory_MulDivIterativePlugin_accumulator_119;
-  wire       [64:0]   _zz_memory_MulDivIterativePlugin_accumulator_120;
-  wire       [64:0]   _zz_memory_MulDivIterativePlugin_accumulator_121;
-  wire       [62:0]   _zz_memory_MulDivIterativePlugin_accumulator_122;
-  wire       [62:0]   _zz_memory_MulDivIterativePlugin_accumulator_123;
-  wire       [64:0]   _zz_memory_MulDivIterativePlugin_accumulator_124;
-  wire       [63:0]   _zz_memory_MulDivIterativePlugin_accumulator_125;
-  wire       [63:0]   _zz_memory_MulDivIterativePlugin_accumulator_126;
-  wire       [64:0]   _zz_memory_MulDivIterativePlugin_accumulator_127;
-  wire       [32:0]   _zz_memory_MulDivIterativePlugin_accumulator_128;
-  wire       [32:0]   _zz_memory_MulDivIterativePlugin_accumulator_129;
-  wire       [1:0]    _zz_memory_MulDivIterativePlugin_div_counter_valueNext;
+  wire       [65:0]   _zz_writeBack_MulPlugin_result;
+  wire       [65:0]   _zz_writeBack_MulPlugin_result_1;
+  wire       [31:0]   _zz__zz_decode_RS2_2_1;
+  wire       [31:0]   _zz__zz_decode_RS2_2_2;
+  wire       [3:0]    _zz_memory_MulDivIterativePlugin_div_counter_valueNext;
   wire       [0:0]    _zz_memory_MulDivIterativePlugin_div_counter_valueNext_1;
   wire       [32:0]   _zz_memory_MulDivIterativePlugin_div_stage_0_remainderMinusDenominator;
   wire       [31:0]   _zz_memory_MulDivIterativePlugin_div_stage_0_outRemainder;
@@ -437,127 +334,15 @@ module VexRiscv (
   wire       [31:0]   _zz_memory_MulDivIterativePlugin_div_stage_3_outRemainder;
   wire       [31:0]   _zz_memory_MulDivIterativePlugin_div_stage_3_outRemainder_1;
   wire       [32:0]   _zz_memory_MulDivIterativePlugin_div_stage_3_outNumerator;
-  wire       [32:0]   _zz_memory_MulDivIterativePlugin_div_stage_4_remainderMinusDenominator;
-  wire       [31:0]   _zz_memory_MulDivIterativePlugin_div_stage_4_outRemainder;
-  wire       [31:0]   _zz_memory_MulDivIterativePlugin_div_stage_4_outRemainder_1;
-  wire       [32:0]   _zz_memory_MulDivIterativePlugin_div_stage_4_outNumerator;
-  wire       [32:0]   _zz_memory_MulDivIterativePlugin_div_stage_5_remainderMinusDenominator;
-  wire       [31:0]   _zz_memory_MulDivIterativePlugin_div_stage_5_outRemainder;
-  wire       [31:0]   _zz_memory_MulDivIterativePlugin_div_stage_5_outRemainder_1;
-  wire       [32:0]   _zz_memory_MulDivIterativePlugin_div_stage_5_outNumerator;
-  wire       [32:0]   _zz_memory_MulDivIterativePlugin_div_stage_6_remainderMinusDenominator;
-  wire       [31:0]   _zz_memory_MulDivIterativePlugin_div_stage_6_outRemainder;
-  wire       [31:0]   _zz_memory_MulDivIterativePlugin_div_stage_6_outRemainder_1;
-  wire       [32:0]   _zz_memory_MulDivIterativePlugin_div_stage_6_outNumerator;
-  wire       [32:0]   _zz_memory_MulDivIterativePlugin_div_stage_7_remainderMinusDenominator;
-  wire       [31:0]   _zz_memory_MulDivIterativePlugin_div_stage_7_outRemainder;
-  wire       [31:0]   _zz_memory_MulDivIterativePlugin_div_stage_7_outRemainder_1;
-  wire       [32:0]   _zz_memory_MulDivIterativePlugin_div_stage_7_outNumerator;
-  wire       [32:0]   _zz_memory_MulDivIterativePlugin_div_stage_8_remainderMinusDenominator;
-  wire       [31:0]   _zz_memory_MulDivIterativePlugin_div_stage_8_outRemainder;
-  wire       [31:0]   _zz_memory_MulDivIterativePlugin_div_stage_8_outRemainder_1;
-  wire       [32:0]   _zz_memory_MulDivIterativePlugin_div_stage_8_outNumerator;
-  wire       [32:0]   _zz_memory_MulDivIterativePlugin_div_stage_9_remainderMinusDenominator;
-  wire       [31:0]   _zz_memory_MulDivIterativePlugin_div_stage_9_outRemainder;
-  wire       [31:0]   _zz_memory_MulDivIterativePlugin_div_stage_9_outRemainder_1;
-  wire       [32:0]   _zz_memory_MulDivIterativePlugin_div_stage_9_outNumerator;
-  wire       [32:0]   _zz_memory_MulDivIterativePlugin_div_stage_10_remainderMinusDenominator;
-  wire       [31:0]   _zz_memory_MulDivIterativePlugin_div_stage_10_outRemainder;
-  wire       [31:0]   _zz_memory_MulDivIterativePlugin_div_stage_10_outRemainder_1;
-  wire       [32:0]   _zz_memory_MulDivIterativePlugin_div_stage_10_outNumerator;
-  wire       [32:0]   _zz_memory_MulDivIterativePlugin_div_stage_11_remainderMinusDenominator;
-  wire       [31:0]   _zz_memory_MulDivIterativePlugin_div_stage_11_outRemainder;
-  wire       [31:0]   _zz_memory_MulDivIterativePlugin_div_stage_11_outRemainder_1;
-  wire       [32:0]   _zz_memory_MulDivIterativePlugin_div_stage_11_outNumerator;
-  wire       [32:0]   _zz_memory_MulDivIterativePlugin_div_stage_12_remainderMinusDenominator;
-  wire       [31:0]   _zz_memory_MulDivIterativePlugin_div_stage_12_outRemainder;
-  wire       [31:0]   _zz_memory_MulDivIterativePlugin_div_stage_12_outRemainder_1;
-  wire       [32:0]   _zz_memory_MulDivIterativePlugin_div_stage_12_outNumerator;
-  wire       [32:0]   _zz_memory_MulDivIterativePlugin_div_stage_13_remainderMinusDenominator;
-  wire       [31:0]   _zz_memory_MulDivIterativePlugin_div_stage_13_outRemainder;
-  wire       [31:0]   _zz_memory_MulDivIterativePlugin_div_stage_13_outRemainder_1;
-  wire       [32:0]   _zz_memory_MulDivIterativePlugin_div_stage_13_outNumerator;
-  wire       [32:0]   _zz_memory_MulDivIterativePlugin_div_stage_14_remainderMinusDenominator;
-  wire       [31:0]   _zz_memory_MulDivIterativePlugin_div_stage_14_outRemainder;
-  wire       [31:0]   _zz_memory_MulDivIterativePlugin_div_stage_14_outRemainder_1;
-  wire       [32:0]   _zz_memory_MulDivIterativePlugin_div_stage_14_outNumerator;
-  wire       [32:0]   _zz_memory_MulDivIterativePlugin_div_stage_15_remainderMinusDenominator;
-  wire       [31:0]   _zz_memory_MulDivIterativePlugin_div_stage_15_outRemainder;
-  wire       [31:0]   _zz_memory_MulDivIterativePlugin_div_stage_15_outRemainder_1;
-  wire       [32:0]   _zz_memory_MulDivIterativePlugin_div_stage_15_outNumerator;
-  wire       [32:0]   _zz_memory_MulDivIterativePlugin_div_stage_16_remainderMinusDenominator;
-  wire       [31:0]   _zz_memory_MulDivIterativePlugin_div_stage_16_outRemainder;
-  wire       [31:0]   _zz_memory_MulDivIterativePlugin_div_stage_16_outRemainder_1;
-  wire       [32:0]   _zz_memory_MulDivIterativePlugin_div_stage_16_outNumerator;
-  wire       [32:0]   _zz_memory_MulDivIterativePlugin_div_stage_17_remainderMinusDenominator;
-  wire       [31:0]   _zz_memory_MulDivIterativePlugin_div_stage_17_outRemainder;
-  wire       [31:0]   _zz_memory_MulDivIterativePlugin_div_stage_17_outRemainder_1;
-  wire       [32:0]   _zz_memory_MulDivIterativePlugin_div_stage_17_outNumerator;
-  wire       [32:0]   _zz_memory_MulDivIterativePlugin_div_stage_18_remainderMinusDenominator;
-  wire       [31:0]   _zz_memory_MulDivIterativePlugin_div_stage_18_outRemainder;
-  wire       [31:0]   _zz_memory_MulDivIterativePlugin_div_stage_18_outRemainder_1;
-  wire       [32:0]   _zz_memory_MulDivIterativePlugin_div_stage_18_outNumerator;
-  wire       [32:0]   _zz_memory_MulDivIterativePlugin_div_stage_19_remainderMinusDenominator;
-  wire       [31:0]   _zz_memory_MulDivIterativePlugin_div_stage_19_outRemainder;
-  wire       [31:0]   _zz_memory_MulDivIterativePlugin_div_stage_19_outRemainder_1;
-  wire       [32:0]   _zz_memory_MulDivIterativePlugin_div_stage_19_outNumerator;
-  wire       [32:0]   _zz_memory_MulDivIterativePlugin_div_stage_20_remainderMinusDenominator;
-  wire       [31:0]   _zz_memory_MulDivIterativePlugin_div_stage_20_outRemainder;
-  wire       [31:0]   _zz_memory_MulDivIterativePlugin_div_stage_20_outRemainder_1;
-  wire       [32:0]   _zz_memory_MulDivIterativePlugin_div_stage_20_outNumerator;
-  wire       [32:0]   _zz_memory_MulDivIterativePlugin_div_stage_21_remainderMinusDenominator;
-  wire       [31:0]   _zz_memory_MulDivIterativePlugin_div_stage_21_outRemainder;
-  wire       [31:0]   _zz_memory_MulDivIterativePlugin_div_stage_21_outRemainder_1;
-  wire       [32:0]   _zz_memory_MulDivIterativePlugin_div_stage_21_outNumerator;
-  wire       [32:0]   _zz_memory_MulDivIterativePlugin_div_stage_22_remainderMinusDenominator;
-  wire       [31:0]   _zz_memory_MulDivIterativePlugin_div_stage_22_outRemainder;
-  wire       [31:0]   _zz_memory_MulDivIterativePlugin_div_stage_22_outRemainder_1;
-  wire       [32:0]   _zz_memory_MulDivIterativePlugin_div_stage_22_outNumerator;
-  wire       [32:0]   _zz_memory_MulDivIterativePlugin_div_stage_23_remainderMinusDenominator;
-  wire       [31:0]   _zz_memory_MulDivIterativePlugin_div_stage_23_outRemainder;
-  wire       [31:0]   _zz_memory_MulDivIterativePlugin_div_stage_23_outRemainder_1;
-  wire       [32:0]   _zz_memory_MulDivIterativePlugin_div_stage_23_outNumerator;
-  wire       [32:0]   _zz_memory_MulDivIterativePlugin_div_stage_24_remainderMinusDenominator;
-  wire       [31:0]   _zz_memory_MulDivIterativePlugin_div_stage_24_outRemainder;
-  wire       [31:0]   _zz_memory_MulDivIterativePlugin_div_stage_24_outRemainder_1;
-  wire       [32:0]   _zz_memory_MulDivIterativePlugin_div_stage_24_outNumerator;
-  wire       [32:0]   _zz_memory_MulDivIterativePlugin_div_stage_25_remainderMinusDenominator;
-  wire       [31:0]   _zz_memory_MulDivIterativePlugin_div_stage_25_outRemainder;
-  wire       [31:0]   _zz_memory_MulDivIterativePlugin_div_stage_25_outRemainder_1;
-  wire       [32:0]   _zz_memory_MulDivIterativePlugin_div_stage_25_outNumerator;
-  wire       [32:0]   _zz_memory_MulDivIterativePlugin_div_stage_26_remainderMinusDenominator;
-  wire       [31:0]   _zz_memory_MulDivIterativePlugin_div_stage_26_outRemainder;
-  wire       [31:0]   _zz_memory_MulDivIterativePlugin_div_stage_26_outRemainder_1;
-  wire       [32:0]   _zz_memory_MulDivIterativePlugin_div_stage_26_outNumerator;
-  wire       [32:0]   _zz_memory_MulDivIterativePlugin_div_stage_27_remainderMinusDenominator;
-  wire       [31:0]   _zz_memory_MulDivIterativePlugin_div_stage_27_outRemainder;
-  wire       [31:0]   _zz_memory_MulDivIterativePlugin_div_stage_27_outRemainder_1;
-  wire       [32:0]   _zz_memory_MulDivIterativePlugin_div_stage_27_outNumerator;
-  wire       [32:0]   _zz_memory_MulDivIterativePlugin_div_stage_28_remainderMinusDenominator;
-  wire       [31:0]   _zz_memory_MulDivIterativePlugin_div_stage_28_outRemainder;
-  wire       [31:0]   _zz_memory_MulDivIterativePlugin_div_stage_28_outRemainder_1;
-  wire       [32:0]   _zz_memory_MulDivIterativePlugin_div_stage_28_outNumerator;
-  wire       [32:0]   _zz_memory_MulDivIterativePlugin_div_stage_29_remainderMinusDenominator;
-  wire       [31:0]   _zz_memory_MulDivIterativePlugin_div_stage_29_outRemainder;
-  wire       [31:0]   _zz_memory_MulDivIterativePlugin_div_stage_29_outRemainder_1;
-  wire       [32:0]   _zz_memory_MulDivIterativePlugin_div_stage_29_outNumerator;
-  wire       [32:0]   _zz_memory_MulDivIterativePlugin_div_stage_30_remainderMinusDenominator;
-  wire       [31:0]   _zz_memory_MulDivIterativePlugin_div_stage_30_outRemainder;
-  wire       [31:0]   _zz_memory_MulDivIterativePlugin_div_stage_30_outRemainder_1;
-  wire       [32:0]   _zz_memory_MulDivIterativePlugin_div_stage_30_outNumerator;
-  wire       [32:0]   _zz_memory_MulDivIterativePlugin_div_stage_31_remainderMinusDenominator;
-  wire       [31:0]   _zz_memory_MulDivIterativePlugin_div_stage_31_outRemainder;
-  wire       [31:0]   _zz_memory_MulDivIterativePlugin_div_stage_31_outRemainder_1;
-  wire       [32:0]   _zz_memory_MulDivIterativePlugin_div_stage_31_outNumerator;
   wire       [32:0]   _zz_memory_MulDivIterativePlugin_div_result_1;
   wire       [32:0]   _zz_memory_MulDivIterativePlugin_div_result_2;
   wire       [32:0]   _zz_memory_MulDivIterativePlugin_div_result_3;
   wire       [32:0]   _zz_memory_MulDivIterativePlugin_div_result_4;
   wire       [0:0]    _zz_memory_MulDivIterativePlugin_div_result_5;
-  wire       [32:0]   _zz_memory_MulDivIterativePlugin_rs1_3;
-  wire       [0:0]    _zz_memory_MulDivIterativePlugin_rs1_4;
-  wire       [31:0]   _zz_memory_MulDivIterativePlugin_rs2;
-  wire       [0:0]    _zz_memory_MulDivIterativePlugin_rs2_1;
+  wire       [32:0]   _zz_memory_MulDivIterativePlugin_rs1_2;
+  wire       [0:0]    _zz_memory_MulDivIterativePlugin_rs1_3;
+  wire       [31:0]   _zz_memory_MulDivIterativePlugin_rs2_1;
+  wire       [0:0]    _zz_memory_MulDivIterativePlugin_rs2_2;
   wire       [1:0]    _zz__zz_CsrPlugin_exceptionPortCtrl_exceptionContext_code_1;
   wire       [1:0]    _zz__zz_CsrPlugin_exceptionPortCtrl_exceptionContext_code_1_1;
   wire                _zz_when;
@@ -607,9 +392,15 @@ module VexRiscv (
   wire       [0:0]    _zz_MmuPlugin_ports_1_entryToReplace_valueNext_1;
   wire       [1:0]    _zz__zz_MmuPlugin_shared_refills_2;
   wire       [31:0]   _zz_CsrPlugin_csrMapping_readDataInit_31;
+  wire       [51:0]   memory_MUL_LOW;
   wire       [31:0]   memory_MEMORY_READ_DATA;
   wire       [31:0]   execute_BRANCH_CALC;
   wire                execute_BRANCH_DO;
+  wire       [33:0]   memory_MUL_HH;
+  wire       [33:0]   execute_MUL_HH;
+  wire       [33:0]   execute_MUL_HL;
+  wire       [33:0]   execute_MUL_LH;
+  wire       [31:0]   execute_MUL_LL;
   wire       [31:0]   execute_SHIFT_RIGHT;
   wire       [31:0]   writeBack_REGFILE_WRITE_DATA;
   wire       [31:0]   execute_REGFILE_WRITE_DATA;
@@ -635,9 +426,11 @@ module VexRiscv (
   wire       [1:0]    _zz_decode_to_execute_ENV_CTRL;
   wire       [1:0]    _zz_decode_to_execute_ENV_CTRL_1;
   wire                decode_IS_CSR;
-  wire                decode_IS_DIV;
   wire                decode_IS_RS2_SIGNED;
   wire                decode_IS_RS1_SIGNED;
+  wire                decode_IS_DIV;
+  wire                memory_IS_MUL;
+  wire                execute_IS_MUL;
   wire                decode_IS_MUL;
   wire       [1:0]    _zz_execute_to_memory_SHIFT_CTRL;
   wire       [1:0]    _zz_execute_to_memory_SHIFT_CTRL_1;
@@ -686,12 +479,16 @@ module VexRiscv (
   wire       [1:0]    _zz_writeBack_ENV_CTRL;
   wire                execute_IS_SFENCE_VMA;
   wire                execute_IS_RS1_SIGNED;
-  wire       [31:0]   execute_RS1;
   wire                execute_IS_DIV;
-  wire                execute_IS_MUL;
   wire                execute_IS_RS2_SIGNED;
   wire                memory_IS_DIV;
-  wire                memory_IS_MUL;
+  wire                writeBack_IS_MUL;
+  wire       [33:0]   writeBack_MUL_HH;
+  wire       [51:0]   writeBack_MUL_LOW;
+  wire       [33:0]   memory_MUL_HL;
+  wire       [33:0]   memory_MUL_LH;
+  wire       [31:0]   memory_MUL_LL;
+  (* keep , syn_keep *) wire       [31:0]   execute_RS1 /* synthesis syn_keep = 1 */ ;
   wire                decode_RS2_USE;
   wire                decode_RS1_USE;
   reg        [31:0]   _zz_decode_RS2;
@@ -793,7 +590,7 @@ module VexRiscv (
   wire                execute_MMU_RSP2_ways_3_sel;
   wire       [31:0]   execute_MMU_RSP2_ways_3_physical;
   wire       [31:0]   execute_SRC_ADD;
-  wire       [31:0]   execute_RS2;
+  (* keep , syn_keep *) wire       [31:0]   execute_RS2 /* synthesis syn_keep = 1 */ ;
   wire       [31:0]   execute_INSTRUCTION;
   wire                execute_MEMORY_STORE;
   wire                execute_MEMORY_ENABLE;
@@ -1207,8 +1004,6 @@ module VexRiscv (
   wire                _zz_decode_IS_SFENCE_VMA2_7;
   wire                _zz_decode_IS_SFENCE_VMA2_8;
   wire                _zz_decode_IS_SFENCE_VMA2_9;
-  wire                _zz_decode_IS_SFENCE_VMA2_10;
-  wire                _zz_decode_IS_SFENCE_VMA2_11;
   wire       [1:0]    _zz_decode_SRC1_CTRL_2;
   wire       [1:0]    _zz_decode_ALU_CTRL_2;
   wire       [1:0]    _zz_decode_SRC2_CTRL_2;
@@ -1269,25 +1064,29 @@ module VexRiscv (
   wire                when_HazardSimplePlugin_l105;
   wire                when_HazardSimplePlugin_l108;
   wire                when_HazardSimplePlugin_l113;
+  reg                 execute_MulPlugin_aSigned;
+  reg                 execute_MulPlugin_bSigned;
+  wire       [31:0]   execute_MulPlugin_a;
+  wire       [31:0]   execute_MulPlugin_b;
+  wire       [1:0]    switch_MulPlugin_l87;
+  wire       [15:0]   execute_MulPlugin_aULow;
+  wire       [15:0]   execute_MulPlugin_bULow;
+  wire       [16:0]   execute_MulPlugin_aSLow;
+  wire       [16:0]   execute_MulPlugin_bSLow;
+  wire       [16:0]   execute_MulPlugin_aHigh;
+  wire       [16:0]   execute_MulPlugin_bHigh;
+  wire       [65:0]   writeBack_MulPlugin_result;
+  wire                when_MulPlugin_l147;
+  wire       [1:0]    switch_MulPlugin_l148;
   reg        [32:0]   memory_MulDivIterativePlugin_rs1;
   reg        [31:0]   memory_MulDivIterativePlugin_rs2;
   reg        [64:0]   memory_MulDivIterativePlugin_accumulator;
   wire                memory_MulDivIterativePlugin_frontendOk;
-  reg                 memory_MulDivIterativePlugin_mul_counter_willIncrement;
-  reg                 memory_MulDivIterativePlugin_mul_counter_willClear;
-  reg        [0:0]    memory_MulDivIterativePlugin_mul_counter_valueNext;
-  reg        [0:0]    memory_MulDivIterativePlugin_mul_counter_value;
-  wire                memory_MulDivIterativePlugin_mul_counter_willOverflowIfInc;
-  wire                memory_MulDivIterativePlugin_mul_counter_willOverflow;
-  wire                when_MulDivIterativePlugin_l96;
-  wire                when_MulDivIterativePlugin_l97;
-  wire                when_MulDivIterativePlugin_l100;
-  wire                when_MulDivIterativePlugin_l110;
   reg                 memory_MulDivIterativePlugin_div_needRevert;
   reg                 memory_MulDivIterativePlugin_div_counter_willIncrement;
   reg                 memory_MulDivIterativePlugin_div_counter_willClear;
-  reg        [1:0]    memory_MulDivIterativePlugin_div_counter_valueNext;
-  reg        [1:0]    memory_MulDivIterativePlugin_div_counter_value;
+  reg        [3:0]    memory_MulDivIterativePlugin_div_counter_valueNext;
+  reg        [3:0]    memory_MulDivIterativePlugin_div_counter_value;
   wire                memory_MulDivIterativePlugin_div_counter_willOverflowIfInc;
   wire                memory_MulDivIterativePlugin_div_counter_willOverflow;
   reg                 memory_MulDivIterativePlugin_div_done;
@@ -1314,124 +1113,12 @@ module VexRiscv (
   wire       [32:0]   memory_MulDivIterativePlugin_div_stage_3_remainderMinusDenominator;
   wire       [31:0]   memory_MulDivIterativePlugin_div_stage_3_outRemainder;
   wire       [31:0]   memory_MulDivIterativePlugin_div_stage_3_outNumerator;
-  wire       [32:0]   memory_MulDivIterativePlugin_div_stage_4_remainderShifted;
-  wire       [32:0]   memory_MulDivIterativePlugin_div_stage_4_remainderMinusDenominator;
-  wire       [31:0]   memory_MulDivIterativePlugin_div_stage_4_outRemainder;
-  wire       [31:0]   memory_MulDivIterativePlugin_div_stage_4_outNumerator;
-  wire       [32:0]   memory_MulDivIterativePlugin_div_stage_5_remainderShifted;
-  wire       [32:0]   memory_MulDivIterativePlugin_div_stage_5_remainderMinusDenominator;
-  wire       [31:0]   memory_MulDivIterativePlugin_div_stage_5_outRemainder;
-  wire       [31:0]   memory_MulDivIterativePlugin_div_stage_5_outNumerator;
-  wire       [32:0]   memory_MulDivIterativePlugin_div_stage_6_remainderShifted;
-  wire       [32:0]   memory_MulDivIterativePlugin_div_stage_6_remainderMinusDenominator;
-  wire       [31:0]   memory_MulDivIterativePlugin_div_stage_6_outRemainder;
-  wire       [31:0]   memory_MulDivIterativePlugin_div_stage_6_outNumerator;
-  wire       [32:0]   memory_MulDivIterativePlugin_div_stage_7_remainderShifted;
-  wire       [32:0]   memory_MulDivIterativePlugin_div_stage_7_remainderMinusDenominator;
-  wire       [31:0]   memory_MulDivIterativePlugin_div_stage_7_outRemainder;
-  wire       [31:0]   memory_MulDivIterativePlugin_div_stage_7_outNumerator;
-  wire       [32:0]   memory_MulDivIterativePlugin_div_stage_8_remainderShifted;
-  wire       [32:0]   memory_MulDivIterativePlugin_div_stage_8_remainderMinusDenominator;
-  wire       [31:0]   memory_MulDivIterativePlugin_div_stage_8_outRemainder;
-  wire       [31:0]   memory_MulDivIterativePlugin_div_stage_8_outNumerator;
-  wire       [32:0]   memory_MulDivIterativePlugin_div_stage_9_remainderShifted;
-  wire       [32:0]   memory_MulDivIterativePlugin_div_stage_9_remainderMinusDenominator;
-  wire       [31:0]   memory_MulDivIterativePlugin_div_stage_9_outRemainder;
-  wire       [31:0]   memory_MulDivIterativePlugin_div_stage_9_outNumerator;
-  wire       [32:0]   memory_MulDivIterativePlugin_div_stage_10_remainderShifted;
-  wire       [32:0]   memory_MulDivIterativePlugin_div_stage_10_remainderMinusDenominator;
-  wire       [31:0]   memory_MulDivIterativePlugin_div_stage_10_outRemainder;
-  wire       [31:0]   memory_MulDivIterativePlugin_div_stage_10_outNumerator;
-  wire       [32:0]   memory_MulDivIterativePlugin_div_stage_11_remainderShifted;
-  wire       [32:0]   memory_MulDivIterativePlugin_div_stage_11_remainderMinusDenominator;
-  wire       [31:0]   memory_MulDivIterativePlugin_div_stage_11_outRemainder;
-  wire       [31:0]   memory_MulDivIterativePlugin_div_stage_11_outNumerator;
-  wire       [32:0]   memory_MulDivIterativePlugin_div_stage_12_remainderShifted;
-  wire       [32:0]   memory_MulDivIterativePlugin_div_stage_12_remainderMinusDenominator;
-  wire       [31:0]   memory_MulDivIterativePlugin_div_stage_12_outRemainder;
-  wire       [31:0]   memory_MulDivIterativePlugin_div_stage_12_outNumerator;
-  wire       [32:0]   memory_MulDivIterativePlugin_div_stage_13_remainderShifted;
-  wire       [32:0]   memory_MulDivIterativePlugin_div_stage_13_remainderMinusDenominator;
-  wire       [31:0]   memory_MulDivIterativePlugin_div_stage_13_outRemainder;
-  wire       [31:0]   memory_MulDivIterativePlugin_div_stage_13_outNumerator;
-  wire       [32:0]   memory_MulDivIterativePlugin_div_stage_14_remainderShifted;
-  wire       [32:0]   memory_MulDivIterativePlugin_div_stage_14_remainderMinusDenominator;
-  wire       [31:0]   memory_MulDivIterativePlugin_div_stage_14_outRemainder;
-  wire       [31:0]   memory_MulDivIterativePlugin_div_stage_14_outNumerator;
-  wire       [32:0]   memory_MulDivIterativePlugin_div_stage_15_remainderShifted;
-  wire       [32:0]   memory_MulDivIterativePlugin_div_stage_15_remainderMinusDenominator;
-  wire       [31:0]   memory_MulDivIterativePlugin_div_stage_15_outRemainder;
-  wire       [31:0]   memory_MulDivIterativePlugin_div_stage_15_outNumerator;
-  wire       [32:0]   memory_MulDivIterativePlugin_div_stage_16_remainderShifted;
-  wire       [32:0]   memory_MulDivIterativePlugin_div_stage_16_remainderMinusDenominator;
-  wire       [31:0]   memory_MulDivIterativePlugin_div_stage_16_outRemainder;
-  wire       [31:0]   memory_MulDivIterativePlugin_div_stage_16_outNumerator;
-  wire       [32:0]   memory_MulDivIterativePlugin_div_stage_17_remainderShifted;
-  wire       [32:0]   memory_MulDivIterativePlugin_div_stage_17_remainderMinusDenominator;
-  wire       [31:0]   memory_MulDivIterativePlugin_div_stage_17_outRemainder;
-  wire       [31:0]   memory_MulDivIterativePlugin_div_stage_17_outNumerator;
-  wire       [32:0]   memory_MulDivIterativePlugin_div_stage_18_remainderShifted;
-  wire       [32:0]   memory_MulDivIterativePlugin_div_stage_18_remainderMinusDenominator;
-  wire       [31:0]   memory_MulDivIterativePlugin_div_stage_18_outRemainder;
-  wire       [31:0]   memory_MulDivIterativePlugin_div_stage_18_outNumerator;
-  wire       [32:0]   memory_MulDivIterativePlugin_div_stage_19_remainderShifted;
-  wire       [32:0]   memory_MulDivIterativePlugin_div_stage_19_remainderMinusDenominator;
-  wire       [31:0]   memory_MulDivIterativePlugin_div_stage_19_outRemainder;
-  wire       [31:0]   memory_MulDivIterativePlugin_div_stage_19_outNumerator;
-  wire       [32:0]   memory_MulDivIterativePlugin_div_stage_20_remainderShifted;
-  wire       [32:0]   memory_MulDivIterativePlugin_div_stage_20_remainderMinusDenominator;
-  wire       [31:0]   memory_MulDivIterativePlugin_div_stage_20_outRemainder;
-  wire       [31:0]   memory_MulDivIterativePlugin_div_stage_20_outNumerator;
-  wire       [32:0]   memory_MulDivIterativePlugin_div_stage_21_remainderShifted;
-  wire       [32:0]   memory_MulDivIterativePlugin_div_stage_21_remainderMinusDenominator;
-  wire       [31:0]   memory_MulDivIterativePlugin_div_stage_21_outRemainder;
-  wire       [31:0]   memory_MulDivIterativePlugin_div_stage_21_outNumerator;
-  wire       [32:0]   memory_MulDivIterativePlugin_div_stage_22_remainderShifted;
-  wire       [32:0]   memory_MulDivIterativePlugin_div_stage_22_remainderMinusDenominator;
-  wire       [31:0]   memory_MulDivIterativePlugin_div_stage_22_outRemainder;
-  wire       [31:0]   memory_MulDivIterativePlugin_div_stage_22_outNumerator;
-  wire       [32:0]   memory_MulDivIterativePlugin_div_stage_23_remainderShifted;
-  wire       [32:0]   memory_MulDivIterativePlugin_div_stage_23_remainderMinusDenominator;
-  wire       [31:0]   memory_MulDivIterativePlugin_div_stage_23_outRemainder;
-  wire       [31:0]   memory_MulDivIterativePlugin_div_stage_23_outNumerator;
-  wire       [32:0]   memory_MulDivIterativePlugin_div_stage_24_remainderShifted;
-  wire       [32:0]   memory_MulDivIterativePlugin_div_stage_24_remainderMinusDenominator;
-  wire       [31:0]   memory_MulDivIterativePlugin_div_stage_24_outRemainder;
-  wire       [31:0]   memory_MulDivIterativePlugin_div_stage_24_outNumerator;
-  wire       [32:0]   memory_MulDivIterativePlugin_div_stage_25_remainderShifted;
-  wire       [32:0]   memory_MulDivIterativePlugin_div_stage_25_remainderMinusDenominator;
-  wire       [31:0]   memory_MulDivIterativePlugin_div_stage_25_outRemainder;
-  wire       [31:0]   memory_MulDivIterativePlugin_div_stage_25_outNumerator;
-  wire       [32:0]   memory_MulDivIterativePlugin_div_stage_26_remainderShifted;
-  wire       [32:0]   memory_MulDivIterativePlugin_div_stage_26_remainderMinusDenominator;
-  wire       [31:0]   memory_MulDivIterativePlugin_div_stage_26_outRemainder;
-  wire       [31:0]   memory_MulDivIterativePlugin_div_stage_26_outNumerator;
-  wire       [32:0]   memory_MulDivIterativePlugin_div_stage_27_remainderShifted;
-  wire       [32:0]   memory_MulDivIterativePlugin_div_stage_27_remainderMinusDenominator;
-  wire       [31:0]   memory_MulDivIterativePlugin_div_stage_27_outRemainder;
-  wire       [31:0]   memory_MulDivIterativePlugin_div_stage_27_outNumerator;
-  wire       [32:0]   memory_MulDivIterativePlugin_div_stage_28_remainderShifted;
-  wire       [32:0]   memory_MulDivIterativePlugin_div_stage_28_remainderMinusDenominator;
-  wire       [31:0]   memory_MulDivIterativePlugin_div_stage_28_outRemainder;
-  wire       [31:0]   memory_MulDivIterativePlugin_div_stage_28_outNumerator;
-  wire       [32:0]   memory_MulDivIterativePlugin_div_stage_29_remainderShifted;
-  wire       [32:0]   memory_MulDivIterativePlugin_div_stage_29_remainderMinusDenominator;
-  wire       [31:0]   memory_MulDivIterativePlugin_div_stage_29_outRemainder;
-  wire       [31:0]   memory_MulDivIterativePlugin_div_stage_29_outNumerator;
-  wire       [32:0]   memory_MulDivIterativePlugin_div_stage_30_remainderShifted;
-  wire       [32:0]   memory_MulDivIterativePlugin_div_stage_30_remainderMinusDenominator;
-  wire       [31:0]   memory_MulDivIterativePlugin_div_stage_30_outRemainder;
-  wire       [31:0]   memory_MulDivIterativePlugin_div_stage_30_outNumerator;
-  wire       [32:0]   memory_MulDivIterativePlugin_div_stage_31_remainderShifted;
-  wire       [32:0]   memory_MulDivIterativePlugin_div_stage_31_remainderMinusDenominator;
-  wire       [31:0]   memory_MulDivIterativePlugin_div_stage_31_outRemainder;
-  wire       [31:0]   memory_MulDivIterativePlugin_div_stage_31_outNumerator;
   wire                when_MulDivIterativePlugin_l151;
   wire       [31:0]   _zz_memory_MulDivIterativePlugin_div_result;
   wire                when_MulDivIterativePlugin_l162;
+  wire                _zz_memory_MulDivIterativePlugin_rs2;
   wire                _zz_memory_MulDivIterativePlugin_rs1;
-  wire                _zz_memory_MulDivIterativePlugin_rs1_1;
-  reg        [32:0]   _zz_memory_MulDivIterativePlugin_rs1_2;
+  reg        [32:0]   _zz_memory_MulDivIterativePlugin_rs1_1;
   reg        [1:0]    _zz_CsrPlugin_privilege;
   reg        [1:0]    CsrPlugin_misa_base;
   reg        [25:0]   CsrPlugin_misa_extensions;
@@ -1899,52 +1586,54 @@ module VexRiscv (
   wire                when_Pipeline_l124_33;
   reg                 execute_to_memory_IS_MUL;
   wire                when_Pipeline_l124_34;
-  reg                 decode_to_execute_IS_RS1_SIGNED;
+  reg                 memory_to_writeBack_IS_MUL;
   wire                when_Pipeline_l124_35;
-  reg                 decode_to_execute_IS_RS2_SIGNED;
-  wire                when_Pipeline_l124_36;
   reg                 decode_to_execute_IS_DIV;
-  wire                when_Pipeline_l124_37;
+  wire                when_Pipeline_l124_36;
   reg                 execute_to_memory_IS_DIV;
+  wire                when_Pipeline_l124_37;
+  reg                 decode_to_execute_IS_RS1_SIGNED;
   wire                when_Pipeline_l124_38;
-  reg                 decode_to_execute_IS_CSR;
+  reg                 decode_to_execute_IS_RS2_SIGNED;
   wire                when_Pipeline_l124_39;
-  reg        [1:0]    decode_to_execute_ENV_CTRL;
+  reg                 decode_to_execute_IS_CSR;
   wire                when_Pipeline_l124_40;
-  reg        [1:0]    execute_to_memory_ENV_CTRL;
+  reg        [1:0]    decode_to_execute_ENV_CTRL;
   wire                when_Pipeline_l124_41;
-  reg        [1:0]    memory_to_writeBack_ENV_CTRL;
+  reg        [1:0]    execute_to_memory_ENV_CTRL;
   wire                when_Pipeline_l124_42;
-  reg                 decode_to_execute_IS_SFENCE_VMA;
+  reg        [1:0]    memory_to_writeBack_ENV_CTRL;
   wire                when_Pipeline_l124_43;
-  reg                 decode_to_execute_IS_SFENCE_VMA2;
+  reg                 decode_to_execute_IS_SFENCE_VMA;
   wire                when_Pipeline_l124_44;
-  reg        [1:0]    decode_to_execute_BRANCH_CTRL;
+  reg                 decode_to_execute_IS_SFENCE_VMA2;
   wire                when_Pipeline_l124_45;
-  reg        [31:0]   decode_to_execute_RS1;
+  reg        [1:0]    decode_to_execute_BRANCH_CTRL;
   wire                when_Pipeline_l124_46;
-  reg        [31:0]   decode_to_execute_RS2;
+  reg        [31:0]   decode_to_execute_RS1;
   wire                when_Pipeline_l124_47;
-  reg        [31:0]   decode_to_execute_SRC1;
+  reg        [31:0]   decode_to_execute_RS2;
   wire                when_Pipeline_l124_48;
-  reg        [31:0]   decode_to_execute_SRC2;
+  reg        [31:0]   decode_to_execute_SRC1;
   wire                when_Pipeline_l124_49;
-  reg                 decode_to_execute_CSR_WRITE_OPCODE;
+  reg        [31:0]   decode_to_execute_SRC2;
   wire                when_Pipeline_l124_50;
-  reg                 decode_to_execute_CSR_READ_OPCODE;
+  reg                 decode_to_execute_CSR_WRITE_OPCODE;
   wire                when_Pipeline_l124_51;
-  reg                 decode_to_execute_DO_EBREAK;
+  reg                 decode_to_execute_CSR_READ_OPCODE;
   wire                when_Pipeline_l124_52;
-  reg                 decode_to_execute_PREDICTION_HAD_BRANCHED2;
+  reg                 decode_to_execute_DO_EBREAK;
   wire                when_Pipeline_l124_53;
-  reg                 execute_to_memory_ALIGNEMENT_FAULT;
+  reg                 decode_to_execute_PREDICTION_HAD_BRANCHED2;
   wire                when_Pipeline_l124_54;
-  reg        [1:0]    execute_to_memory_MEMORY_ADDRESS_LOW;
+  reg                 execute_to_memory_ALIGNEMENT_FAULT;
   wire                when_Pipeline_l124_55;
-  reg        [1:0]    memory_to_writeBack_MEMORY_ADDRESS_LOW;
+  reg        [1:0]    execute_to_memory_MEMORY_ADDRESS_LOW;
   wire                when_Pipeline_l124_56;
-  reg                 execute_to_memory_MMU_FAULT;
+  reg        [1:0]    memory_to_writeBack_MEMORY_ADDRESS_LOW;
   wire                when_Pipeline_l124_57;
+  reg                 execute_to_memory_MMU_FAULT;
+  wire                when_Pipeline_l124_58;
   reg        [31:0]   execute_to_memory_MMU_RSP2_physicalAddress;
   reg                 execute_to_memory_MMU_RSP2_isIoAccess;
   reg                 execute_to_memory_MMU_RSP2_isPaging;
@@ -1962,22 +1651,34 @@ module VexRiscv (
   reg        [31:0]   execute_to_memory_MMU_RSP2_ways_2_physical;
   reg                 execute_to_memory_MMU_RSP2_ways_3_sel;
   reg        [31:0]   execute_to_memory_MMU_RSP2_ways_3_physical;
-  wire                when_Pipeline_l124_58;
-  reg                 execute_to_memory_ATOMIC_HIT;
   wire                when_Pipeline_l124_59;
-  reg                 memory_to_writeBack_ATOMIC_HIT;
+  reg                 execute_to_memory_ATOMIC_HIT;
   wire                when_Pipeline_l124_60;
-  reg        [31:0]   execute_to_memory_REGFILE_WRITE_DATA;
+  reg                 memory_to_writeBack_ATOMIC_HIT;
   wire                when_Pipeline_l124_61;
-  reg        [31:0]   memory_to_writeBack_REGFILE_WRITE_DATA;
+  reg        [31:0]   execute_to_memory_REGFILE_WRITE_DATA;
   wire                when_Pipeline_l124_62;
-  reg        [31:0]   execute_to_memory_SHIFT_RIGHT;
+  reg        [31:0]   memory_to_writeBack_REGFILE_WRITE_DATA;
   wire                when_Pipeline_l124_63;
-  reg                 execute_to_memory_BRANCH_DO;
+  reg        [31:0]   execute_to_memory_SHIFT_RIGHT;
   wire                when_Pipeline_l124_64;
-  reg        [31:0]   execute_to_memory_BRANCH_CALC;
+  reg        [31:0]   execute_to_memory_MUL_LL;
   wire                when_Pipeline_l124_65;
+  reg        [33:0]   execute_to_memory_MUL_LH;
+  wire                when_Pipeline_l124_66;
+  reg        [33:0]   execute_to_memory_MUL_HL;
+  wire                when_Pipeline_l124_67;
+  reg        [33:0]   execute_to_memory_MUL_HH;
+  wire                when_Pipeline_l124_68;
+  reg        [33:0]   memory_to_writeBack_MUL_HH;
+  wire                when_Pipeline_l124_69;
+  reg                 execute_to_memory_BRANCH_DO;
+  wire                when_Pipeline_l124_70;
+  reg        [31:0]   execute_to_memory_BRANCH_CALC;
+  wire                when_Pipeline_l124_71;
   reg        [31:0]   memory_to_writeBack_MEMORY_READ_DATA;
+  wire                when_Pipeline_l124_72;
+  reg        [51:0]   memory_to_writeBack_MUL_LOW;
   wire                when_Pipeline_l151;
   wire                when_Pipeline_l154;
   wire                when_Pipeline_l151_1;
@@ -2160,6 +1861,15 @@ module VexRiscv (
   reg [31:0] RegFilePlugin_regFile [0:31] /* verilator public */ ;
 
   assign _zz_when = ({decodeExceptionPort_valid,IBusSimplePlugin_decodeExceptionPort_valid} != 2'b00);
+  assign _zz_memory_MUL_LOW = ($signed(_zz_memory_MUL_LOW_1) + $signed(_zz_memory_MUL_LOW_5));
+  assign _zz_memory_MUL_LOW_1 = ($signed(_zz_memory_MUL_LOW_2) + $signed(_zz_memory_MUL_LOW_3));
+  assign _zz_memory_MUL_LOW_2 = 52'h0;
+  assign _zz_memory_MUL_LOW_4 = {1'b0,memory_MUL_LL};
+  assign _zz_memory_MUL_LOW_3 = {{19{_zz_memory_MUL_LOW_4[32]}}, _zz_memory_MUL_LOW_4};
+  assign _zz_memory_MUL_LOW_6 = ({16'd0,memory_MUL_LH} <<< 16);
+  assign _zz_memory_MUL_LOW_5 = {{2{_zz_memory_MUL_LOW_6[49]}}, _zz_memory_MUL_LOW_6};
+  assign _zz_memory_MUL_LOW_8 = ({16'd0,memory_MUL_HL} <<< 16);
+  assign _zz_memory_MUL_LOW_7 = {{2{_zz_memory_MUL_LOW_8[49]}}, _zz_memory_MUL_LOW_8};
   assign _zz_execute_SHIFT_RIGHT_1 = ($signed(_zz_execute_SHIFT_RIGHT_2) >>> execute_FullBarrelShifterPlugin_amplitude);
   assign _zz_execute_SHIFT_RIGHT = _zz_execute_SHIFT_RIGHT_1[31 : 0];
   assign _zz_execute_SHIFT_RIGHT_2 = {((execute_SHIFT_CTRL == ShiftCtrlEnum_SRA_1) && execute_FullBarrelShifterPlugin_reversed[31]),execute_FullBarrelShifterPlugin_reversed};
@@ -2194,138 +1904,12 @@ module VexRiscv (
   assign _zz__zz_decode_SRC2_4 = {decode_INSTRUCTION[31 : 25],decode_INSTRUCTION[11 : 7]};
   assign _zz_execute_SrcPlugin_add = (execute_SRC1 + execute_SRC2);
   assign _zz_execute_SrcPlugin_sub = (execute_SRC1 - execute_SRC2);
-  assign _zz_memory_MulDivIterativePlugin_accumulator = (_zz_memory_MulDivIterativePlugin_accumulator_1 + _zz_memory_MulDivIterativePlugin_accumulator_127);
-  assign _zz_memory_MulDivIterativePlugin_accumulator_1 = (_zz_memory_MulDivIterativePlugin_accumulator_2 + _zz_memory_MulDivIterativePlugin_accumulator_64);
-  assign _zz_memory_MulDivIterativePlugin_accumulator_2 = (_zz_memory_MulDivIterativePlugin_accumulator_3 + _zz_memory_MulDivIterativePlugin_accumulator_33);
-  assign _zz_memory_MulDivIterativePlugin_accumulator_3 = (_zz_memory_MulDivIterativePlugin_accumulator_4 + _zz_memory_MulDivIterativePlugin_accumulator_18);
-  assign _zz_memory_MulDivIterativePlugin_accumulator_4 = (_zz_memory_MulDivIterativePlugin_accumulator_5 + _zz_memory_MulDivIterativePlugin_accumulator_11);
-  assign _zz_memory_MulDivIterativePlugin_accumulator_5 = (_zz_memory_MulDivIterativePlugin_accumulator_6 + _zz_memory_MulDivIterativePlugin_accumulator_8);
-  assign _zz_memory_MulDivIterativePlugin_accumulator_7 = (memory_MulDivIterativePlugin_rs2[0] ? memory_MulDivIterativePlugin_rs1 : 33'h0);
-  assign _zz_memory_MulDivIterativePlugin_accumulator_6 = {{32{_zz_memory_MulDivIterativePlugin_accumulator_7[32]}}, _zz_memory_MulDivIterativePlugin_accumulator_7};
-  assign _zz_memory_MulDivIterativePlugin_accumulator_9 = (memory_MulDivIterativePlugin_rs2[1] ? _zz_memory_MulDivIterativePlugin_accumulator_10 : 34'h0);
-  assign _zz_memory_MulDivIterativePlugin_accumulator_8 = {{31{_zz_memory_MulDivIterativePlugin_accumulator_9[33]}}, _zz_memory_MulDivIterativePlugin_accumulator_9};
-  assign _zz_memory_MulDivIterativePlugin_accumulator_10 = ({1'd0,memory_MulDivIterativePlugin_rs1} <<< 1);
-  assign _zz_memory_MulDivIterativePlugin_accumulator_11 = (_zz_memory_MulDivIterativePlugin_accumulator_12 + _zz_memory_MulDivIterativePlugin_accumulator_15);
-  assign _zz_memory_MulDivIterativePlugin_accumulator_13 = (memory_MulDivIterativePlugin_rs2[2] ? _zz_memory_MulDivIterativePlugin_accumulator_14 : 35'h0);
-  assign _zz_memory_MulDivIterativePlugin_accumulator_12 = {{30{_zz_memory_MulDivIterativePlugin_accumulator_13[34]}}, _zz_memory_MulDivIterativePlugin_accumulator_13};
-  assign _zz_memory_MulDivIterativePlugin_accumulator_14 = ({2'd0,memory_MulDivIterativePlugin_rs1} <<< 2);
-  assign _zz_memory_MulDivIterativePlugin_accumulator_16 = (memory_MulDivIterativePlugin_rs2[3] ? _zz_memory_MulDivIterativePlugin_accumulator_17 : 36'h0);
-  assign _zz_memory_MulDivIterativePlugin_accumulator_15 = {{29{_zz_memory_MulDivIterativePlugin_accumulator_16[35]}}, _zz_memory_MulDivIterativePlugin_accumulator_16};
-  assign _zz_memory_MulDivIterativePlugin_accumulator_17 = ({3'd0,memory_MulDivIterativePlugin_rs1} <<< 3);
-  assign _zz_memory_MulDivIterativePlugin_accumulator_18 = (_zz_memory_MulDivIterativePlugin_accumulator_19 + _zz_memory_MulDivIterativePlugin_accumulator_26);
-  assign _zz_memory_MulDivIterativePlugin_accumulator_19 = (_zz_memory_MulDivIterativePlugin_accumulator_20 + _zz_memory_MulDivIterativePlugin_accumulator_23);
-  assign _zz_memory_MulDivIterativePlugin_accumulator_21 = (memory_MulDivIterativePlugin_rs2[4] ? _zz_memory_MulDivIterativePlugin_accumulator_22 : 37'h0);
-  assign _zz_memory_MulDivIterativePlugin_accumulator_20 = {{28{_zz_memory_MulDivIterativePlugin_accumulator_21[36]}}, _zz_memory_MulDivIterativePlugin_accumulator_21};
-  assign _zz_memory_MulDivIterativePlugin_accumulator_22 = ({4'd0,memory_MulDivIterativePlugin_rs1} <<< 4);
-  assign _zz_memory_MulDivIterativePlugin_accumulator_24 = (memory_MulDivIterativePlugin_rs2[5] ? _zz_memory_MulDivIterativePlugin_accumulator_25 : 38'h0);
-  assign _zz_memory_MulDivIterativePlugin_accumulator_23 = {{27{_zz_memory_MulDivIterativePlugin_accumulator_24[37]}}, _zz_memory_MulDivIterativePlugin_accumulator_24};
-  assign _zz_memory_MulDivIterativePlugin_accumulator_25 = ({5'd0,memory_MulDivIterativePlugin_rs1} <<< 5);
-  assign _zz_memory_MulDivIterativePlugin_accumulator_26 = (_zz_memory_MulDivIterativePlugin_accumulator_27 + _zz_memory_MulDivIterativePlugin_accumulator_30);
-  assign _zz_memory_MulDivIterativePlugin_accumulator_28 = (memory_MulDivIterativePlugin_rs2[6] ? _zz_memory_MulDivIterativePlugin_accumulator_29 : 39'h0);
-  assign _zz_memory_MulDivIterativePlugin_accumulator_27 = {{26{_zz_memory_MulDivIterativePlugin_accumulator_28[38]}}, _zz_memory_MulDivIterativePlugin_accumulator_28};
-  assign _zz_memory_MulDivIterativePlugin_accumulator_29 = ({6'd0,memory_MulDivIterativePlugin_rs1} <<< 6);
-  assign _zz_memory_MulDivIterativePlugin_accumulator_31 = (memory_MulDivIterativePlugin_rs2[7] ? _zz_memory_MulDivIterativePlugin_accumulator_32 : 40'h0);
-  assign _zz_memory_MulDivIterativePlugin_accumulator_30 = {{25{_zz_memory_MulDivIterativePlugin_accumulator_31[39]}}, _zz_memory_MulDivIterativePlugin_accumulator_31};
-  assign _zz_memory_MulDivIterativePlugin_accumulator_32 = ({7'd0,memory_MulDivIterativePlugin_rs1} <<< 7);
-  assign _zz_memory_MulDivIterativePlugin_accumulator_33 = (_zz_memory_MulDivIterativePlugin_accumulator_34 + _zz_memory_MulDivIterativePlugin_accumulator_49);
-  assign _zz_memory_MulDivIterativePlugin_accumulator_34 = (_zz_memory_MulDivIterativePlugin_accumulator_35 + _zz_memory_MulDivIterativePlugin_accumulator_42);
-  assign _zz_memory_MulDivIterativePlugin_accumulator_35 = (_zz_memory_MulDivIterativePlugin_accumulator_36 + _zz_memory_MulDivIterativePlugin_accumulator_39);
-  assign _zz_memory_MulDivIterativePlugin_accumulator_37 = (memory_MulDivIterativePlugin_rs2[8] ? _zz_memory_MulDivIterativePlugin_accumulator_38 : 41'h0);
-  assign _zz_memory_MulDivIterativePlugin_accumulator_36 = {{24{_zz_memory_MulDivIterativePlugin_accumulator_37[40]}}, _zz_memory_MulDivIterativePlugin_accumulator_37};
-  assign _zz_memory_MulDivIterativePlugin_accumulator_38 = ({8'd0,memory_MulDivIterativePlugin_rs1} <<< 8);
-  assign _zz_memory_MulDivIterativePlugin_accumulator_40 = (memory_MulDivIterativePlugin_rs2[9] ? _zz_memory_MulDivIterativePlugin_accumulator_41 : 42'h0);
-  assign _zz_memory_MulDivIterativePlugin_accumulator_39 = {{23{_zz_memory_MulDivIterativePlugin_accumulator_40[41]}}, _zz_memory_MulDivIterativePlugin_accumulator_40};
-  assign _zz_memory_MulDivIterativePlugin_accumulator_41 = ({9'd0,memory_MulDivIterativePlugin_rs1} <<< 9);
-  assign _zz_memory_MulDivIterativePlugin_accumulator_42 = (_zz_memory_MulDivIterativePlugin_accumulator_43 + _zz_memory_MulDivIterativePlugin_accumulator_46);
-  assign _zz_memory_MulDivIterativePlugin_accumulator_44 = (memory_MulDivIterativePlugin_rs2[10] ? _zz_memory_MulDivIterativePlugin_accumulator_45 : 43'h0);
-  assign _zz_memory_MulDivIterativePlugin_accumulator_43 = {{22{_zz_memory_MulDivIterativePlugin_accumulator_44[42]}}, _zz_memory_MulDivIterativePlugin_accumulator_44};
-  assign _zz_memory_MulDivIterativePlugin_accumulator_45 = ({10'd0,memory_MulDivIterativePlugin_rs1} <<< 10);
-  assign _zz_memory_MulDivIterativePlugin_accumulator_47 = (memory_MulDivIterativePlugin_rs2[11] ? _zz_memory_MulDivIterativePlugin_accumulator_48 : 44'h0);
-  assign _zz_memory_MulDivIterativePlugin_accumulator_46 = {{21{_zz_memory_MulDivIterativePlugin_accumulator_47[43]}}, _zz_memory_MulDivIterativePlugin_accumulator_47};
-  assign _zz_memory_MulDivIterativePlugin_accumulator_48 = ({11'd0,memory_MulDivIterativePlugin_rs1} <<< 11);
-  assign _zz_memory_MulDivIterativePlugin_accumulator_49 = (_zz_memory_MulDivIterativePlugin_accumulator_50 + _zz_memory_MulDivIterativePlugin_accumulator_57);
-  assign _zz_memory_MulDivIterativePlugin_accumulator_50 = (_zz_memory_MulDivIterativePlugin_accumulator_51 + _zz_memory_MulDivIterativePlugin_accumulator_54);
-  assign _zz_memory_MulDivIterativePlugin_accumulator_52 = (memory_MulDivIterativePlugin_rs2[12] ? _zz_memory_MulDivIterativePlugin_accumulator_53 : 45'h0);
-  assign _zz_memory_MulDivIterativePlugin_accumulator_51 = {{20{_zz_memory_MulDivIterativePlugin_accumulator_52[44]}}, _zz_memory_MulDivIterativePlugin_accumulator_52};
-  assign _zz_memory_MulDivIterativePlugin_accumulator_53 = ({12'd0,memory_MulDivIterativePlugin_rs1} <<< 12);
-  assign _zz_memory_MulDivIterativePlugin_accumulator_55 = (memory_MulDivIterativePlugin_rs2[13] ? _zz_memory_MulDivIterativePlugin_accumulator_56 : 46'h0);
-  assign _zz_memory_MulDivIterativePlugin_accumulator_54 = {{19{_zz_memory_MulDivIterativePlugin_accumulator_55[45]}}, _zz_memory_MulDivIterativePlugin_accumulator_55};
-  assign _zz_memory_MulDivIterativePlugin_accumulator_56 = ({13'd0,memory_MulDivIterativePlugin_rs1} <<< 13);
-  assign _zz_memory_MulDivIterativePlugin_accumulator_57 = (_zz_memory_MulDivIterativePlugin_accumulator_58 + _zz_memory_MulDivIterativePlugin_accumulator_61);
-  assign _zz_memory_MulDivIterativePlugin_accumulator_59 = (memory_MulDivIterativePlugin_rs2[14] ? _zz_memory_MulDivIterativePlugin_accumulator_60 : 47'h0);
-  assign _zz_memory_MulDivIterativePlugin_accumulator_58 = {{18{_zz_memory_MulDivIterativePlugin_accumulator_59[46]}}, _zz_memory_MulDivIterativePlugin_accumulator_59};
-  assign _zz_memory_MulDivIterativePlugin_accumulator_60 = ({14'd0,memory_MulDivIterativePlugin_rs1} <<< 14);
-  assign _zz_memory_MulDivIterativePlugin_accumulator_62 = (memory_MulDivIterativePlugin_rs2[15] ? _zz_memory_MulDivIterativePlugin_accumulator_63 : 48'h0);
-  assign _zz_memory_MulDivIterativePlugin_accumulator_61 = {{17{_zz_memory_MulDivIterativePlugin_accumulator_62[47]}}, _zz_memory_MulDivIterativePlugin_accumulator_62};
-  assign _zz_memory_MulDivIterativePlugin_accumulator_63 = ({15'd0,memory_MulDivIterativePlugin_rs1} <<< 15);
-  assign _zz_memory_MulDivIterativePlugin_accumulator_64 = (_zz_memory_MulDivIterativePlugin_accumulator_65 + _zz_memory_MulDivIterativePlugin_accumulator_96);
-  assign _zz_memory_MulDivIterativePlugin_accumulator_65 = (_zz_memory_MulDivIterativePlugin_accumulator_66 + _zz_memory_MulDivIterativePlugin_accumulator_81);
-  assign _zz_memory_MulDivIterativePlugin_accumulator_66 = (_zz_memory_MulDivIterativePlugin_accumulator_67 + _zz_memory_MulDivIterativePlugin_accumulator_74);
-  assign _zz_memory_MulDivIterativePlugin_accumulator_67 = (_zz_memory_MulDivIterativePlugin_accumulator_68 + _zz_memory_MulDivIterativePlugin_accumulator_71);
-  assign _zz_memory_MulDivIterativePlugin_accumulator_69 = (memory_MulDivIterativePlugin_rs2[16] ? _zz_memory_MulDivIterativePlugin_accumulator_70 : 49'h0);
-  assign _zz_memory_MulDivIterativePlugin_accumulator_68 = {{16{_zz_memory_MulDivIterativePlugin_accumulator_69[48]}}, _zz_memory_MulDivIterativePlugin_accumulator_69};
-  assign _zz_memory_MulDivIterativePlugin_accumulator_70 = ({16'd0,memory_MulDivIterativePlugin_rs1} <<< 16);
-  assign _zz_memory_MulDivIterativePlugin_accumulator_72 = (memory_MulDivIterativePlugin_rs2[17] ? _zz_memory_MulDivIterativePlugin_accumulator_73 : 50'h0);
-  assign _zz_memory_MulDivIterativePlugin_accumulator_71 = {{15{_zz_memory_MulDivIterativePlugin_accumulator_72[49]}}, _zz_memory_MulDivIterativePlugin_accumulator_72};
-  assign _zz_memory_MulDivIterativePlugin_accumulator_73 = ({17'd0,memory_MulDivIterativePlugin_rs1} <<< 17);
-  assign _zz_memory_MulDivIterativePlugin_accumulator_74 = (_zz_memory_MulDivIterativePlugin_accumulator_75 + _zz_memory_MulDivIterativePlugin_accumulator_78);
-  assign _zz_memory_MulDivIterativePlugin_accumulator_76 = (memory_MulDivIterativePlugin_rs2[18] ? _zz_memory_MulDivIterativePlugin_accumulator_77 : 51'h0);
-  assign _zz_memory_MulDivIterativePlugin_accumulator_75 = {{14{_zz_memory_MulDivIterativePlugin_accumulator_76[50]}}, _zz_memory_MulDivIterativePlugin_accumulator_76};
-  assign _zz_memory_MulDivIterativePlugin_accumulator_77 = ({18'd0,memory_MulDivIterativePlugin_rs1} <<< 18);
-  assign _zz_memory_MulDivIterativePlugin_accumulator_79 = (memory_MulDivIterativePlugin_rs2[19] ? _zz_memory_MulDivIterativePlugin_accumulator_80 : 52'h0);
-  assign _zz_memory_MulDivIterativePlugin_accumulator_78 = {{13{_zz_memory_MulDivIterativePlugin_accumulator_79[51]}}, _zz_memory_MulDivIterativePlugin_accumulator_79};
-  assign _zz_memory_MulDivIterativePlugin_accumulator_80 = ({19'd0,memory_MulDivIterativePlugin_rs1} <<< 19);
-  assign _zz_memory_MulDivIterativePlugin_accumulator_81 = (_zz_memory_MulDivIterativePlugin_accumulator_82 + _zz_memory_MulDivIterativePlugin_accumulator_89);
-  assign _zz_memory_MulDivIterativePlugin_accumulator_82 = (_zz_memory_MulDivIterativePlugin_accumulator_83 + _zz_memory_MulDivIterativePlugin_accumulator_86);
-  assign _zz_memory_MulDivIterativePlugin_accumulator_84 = (memory_MulDivIterativePlugin_rs2[20] ? _zz_memory_MulDivIterativePlugin_accumulator_85 : 53'h0);
-  assign _zz_memory_MulDivIterativePlugin_accumulator_83 = {{12{_zz_memory_MulDivIterativePlugin_accumulator_84[52]}}, _zz_memory_MulDivIterativePlugin_accumulator_84};
-  assign _zz_memory_MulDivIterativePlugin_accumulator_85 = ({20'd0,memory_MulDivIterativePlugin_rs1} <<< 20);
-  assign _zz_memory_MulDivIterativePlugin_accumulator_87 = (memory_MulDivIterativePlugin_rs2[21] ? _zz_memory_MulDivIterativePlugin_accumulator_88 : 54'h0);
-  assign _zz_memory_MulDivIterativePlugin_accumulator_86 = {{11{_zz_memory_MulDivIterativePlugin_accumulator_87[53]}}, _zz_memory_MulDivIterativePlugin_accumulator_87};
-  assign _zz_memory_MulDivIterativePlugin_accumulator_88 = ({21'd0,memory_MulDivIterativePlugin_rs1} <<< 21);
-  assign _zz_memory_MulDivIterativePlugin_accumulator_89 = (_zz_memory_MulDivIterativePlugin_accumulator_90 + _zz_memory_MulDivIterativePlugin_accumulator_93);
-  assign _zz_memory_MulDivIterativePlugin_accumulator_91 = (memory_MulDivIterativePlugin_rs2[22] ? _zz_memory_MulDivIterativePlugin_accumulator_92 : 55'h0);
-  assign _zz_memory_MulDivIterativePlugin_accumulator_90 = {{10{_zz_memory_MulDivIterativePlugin_accumulator_91[54]}}, _zz_memory_MulDivIterativePlugin_accumulator_91};
-  assign _zz_memory_MulDivIterativePlugin_accumulator_92 = ({22'd0,memory_MulDivIterativePlugin_rs1} <<< 22);
-  assign _zz_memory_MulDivIterativePlugin_accumulator_94 = (memory_MulDivIterativePlugin_rs2[23] ? _zz_memory_MulDivIterativePlugin_accumulator_95 : 56'h0);
-  assign _zz_memory_MulDivIterativePlugin_accumulator_93 = {{9{_zz_memory_MulDivIterativePlugin_accumulator_94[55]}}, _zz_memory_MulDivIterativePlugin_accumulator_94};
-  assign _zz_memory_MulDivIterativePlugin_accumulator_95 = ({23'd0,memory_MulDivIterativePlugin_rs1} <<< 23);
-  assign _zz_memory_MulDivIterativePlugin_accumulator_96 = (_zz_memory_MulDivIterativePlugin_accumulator_97 + _zz_memory_MulDivIterativePlugin_accumulator_112);
-  assign _zz_memory_MulDivIterativePlugin_accumulator_97 = (_zz_memory_MulDivIterativePlugin_accumulator_98 + _zz_memory_MulDivIterativePlugin_accumulator_105);
-  assign _zz_memory_MulDivIterativePlugin_accumulator_98 = (_zz_memory_MulDivIterativePlugin_accumulator_99 + _zz_memory_MulDivIterativePlugin_accumulator_102);
-  assign _zz_memory_MulDivIterativePlugin_accumulator_100 = (memory_MulDivIterativePlugin_rs2[24] ? _zz_memory_MulDivIterativePlugin_accumulator_101 : 57'h0);
-  assign _zz_memory_MulDivIterativePlugin_accumulator_99 = {{8{_zz_memory_MulDivIterativePlugin_accumulator_100[56]}}, _zz_memory_MulDivIterativePlugin_accumulator_100};
-  assign _zz_memory_MulDivIterativePlugin_accumulator_101 = ({24'd0,memory_MulDivIterativePlugin_rs1} <<< 24);
-  assign _zz_memory_MulDivIterativePlugin_accumulator_103 = (memory_MulDivIterativePlugin_rs2[25] ? _zz_memory_MulDivIterativePlugin_accumulator_104 : 58'h0);
-  assign _zz_memory_MulDivIterativePlugin_accumulator_102 = {{7{_zz_memory_MulDivIterativePlugin_accumulator_103[57]}}, _zz_memory_MulDivIterativePlugin_accumulator_103};
-  assign _zz_memory_MulDivIterativePlugin_accumulator_104 = ({25'd0,memory_MulDivIterativePlugin_rs1} <<< 25);
-  assign _zz_memory_MulDivIterativePlugin_accumulator_105 = (_zz_memory_MulDivIterativePlugin_accumulator_106 + _zz_memory_MulDivIterativePlugin_accumulator_109);
-  assign _zz_memory_MulDivIterativePlugin_accumulator_107 = (memory_MulDivIterativePlugin_rs2[26] ? _zz_memory_MulDivIterativePlugin_accumulator_108 : 59'h0);
-  assign _zz_memory_MulDivIterativePlugin_accumulator_106 = {{6{_zz_memory_MulDivIterativePlugin_accumulator_107[58]}}, _zz_memory_MulDivIterativePlugin_accumulator_107};
-  assign _zz_memory_MulDivIterativePlugin_accumulator_108 = ({26'd0,memory_MulDivIterativePlugin_rs1} <<< 26);
-  assign _zz_memory_MulDivIterativePlugin_accumulator_110 = (memory_MulDivIterativePlugin_rs2[27] ? _zz_memory_MulDivIterativePlugin_accumulator_111 : 60'h0);
-  assign _zz_memory_MulDivIterativePlugin_accumulator_109 = {{5{_zz_memory_MulDivIterativePlugin_accumulator_110[59]}}, _zz_memory_MulDivIterativePlugin_accumulator_110};
-  assign _zz_memory_MulDivIterativePlugin_accumulator_111 = ({27'd0,memory_MulDivIterativePlugin_rs1} <<< 27);
-  assign _zz_memory_MulDivIterativePlugin_accumulator_112 = (_zz_memory_MulDivIterativePlugin_accumulator_113 + _zz_memory_MulDivIterativePlugin_accumulator_120);
-  assign _zz_memory_MulDivIterativePlugin_accumulator_113 = (_zz_memory_MulDivIterativePlugin_accumulator_114 + _zz_memory_MulDivIterativePlugin_accumulator_117);
-  assign _zz_memory_MulDivIterativePlugin_accumulator_115 = (memory_MulDivIterativePlugin_rs2[28] ? _zz_memory_MulDivIterativePlugin_accumulator_116 : 61'h0);
-  assign _zz_memory_MulDivIterativePlugin_accumulator_114 = {{4{_zz_memory_MulDivIterativePlugin_accumulator_115[60]}}, _zz_memory_MulDivIterativePlugin_accumulator_115};
-  assign _zz_memory_MulDivIterativePlugin_accumulator_116 = ({28'd0,memory_MulDivIterativePlugin_rs1} <<< 28);
-  assign _zz_memory_MulDivIterativePlugin_accumulator_118 = (memory_MulDivIterativePlugin_rs2[29] ? _zz_memory_MulDivIterativePlugin_accumulator_119 : 62'h0);
-  assign _zz_memory_MulDivIterativePlugin_accumulator_117 = {{3{_zz_memory_MulDivIterativePlugin_accumulator_118[61]}}, _zz_memory_MulDivIterativePlugin_accumulator_118};
-  assign _zz_memory_MulDivIterativePlugin_accumulator_119 = ({29'd0,memory_MulDivIterativePlugin_rs1} <<< 29);
-  assign _zz_memory_MulDivIterativePlugin_accumulator_120 = (_zz_memory_MulDivIterativePlugin_accumulator_121 + _zz_memory_MulDivIterativePlugin_accumulator_124);
-  assign _zz_memory_MulDivIterativePlugin_accumulator_122 = (memory_MulDivIterativePlugin_rs2[30] ? _zz_memory_MulDivIterativePlugin_accumulator_123 : 63'h0);
-  assign _zz_memory_MulDivIterativePlugin_accumulator_121 = {{2{_zz_memory_MulDivIterativePlugin_accumulator_122[62]}}, _zz_memory_MulDivIterativePlugin_accumulator_122};
-  assign _zz_memory_MulDivIterativePlugin_accumulator_123 = ({30'd0,memory_MulDivIterativePlugin_rs1} <<< 30);
-  assign _zz_memory_MulDivIterativePlugin_accumulator_125 = (memory_MulDivIterativePlugin_rs2[31] ? _zz_memory_MulDivIterativePlugin_accumulator_126 : 64'h0);
-  assign _zz_memory_MulDivIterativePlugin_accumulator_124 = {{1{_zz_memory_MulDivIterativePlugin_accumulator_125[63]}}, _zz_memory_MulDivIterativePlugin_accumulator_125};
-  assign _zz_memory_MulDivIterativePlugin_accumulator_126 = ({31'd0,memory_MulDivIterativePlugin_rs1} <<< 31);
-  assign _zz_memory_MulDivIterativePlugin_accumulator_128 = _zz_memory_MulDivIterativePlugin_accumulator_129;
-  assign _zz_memory_MulDivIterativePlugin_accumulator_127 = {{32{_zz_memory_MulDivIterativePlugin_accumulator_128[32]}}, _zz_memory_MulDivIterativePlugin_accumulator_128};
-  assign _zz_memory_MulDivIterativePlugin_accumulator_129 = (memory_MulDivIterativePlugin_accumulator >>> 32);
+  assign _zz_writeBack_MulPlugin_result = {{14{writeBack_MUL_LOW[51]}}, writeBack_MUL_LOW};
+  assign _zz_writeBack_MulPlugin_result_1 = ({32'd0,writeBack_MUL_HH} <<< 32);
+  assign _zz__zz_decode_RS2_2_1 = writeBack_MUL_LOW[31 : 0];
+  assign _zz__zz_decode_RS2_2_2 = writeBack_MulPlugin_result[63 : 32];
   assign _zz_memory_MulDivIterativePlugin_div_counter_valueNext_1 = memory_MulDivIterativePlugin_div_counter_willIncrement;
-  assign _zz_memory_MulDivIterativePlugin_div_counter_valueNext = {1'd0, _zz_memory_MulDivIterativePlugin_div_counter_valueNext_1};
+  assign _zz_memory_MulDivIterativePlugin_div_counter_valueNext = {3'd0, _zz_memory_MulDivIterativePlugin_div_counter_valueNext_1};
   assign _zz_memory_MulDivIterativePlugin_div_stage_0_remainderMinusDenominator = {1'd0, memory_MulDivIterativePlugin_rs2};
   assign _zz_memory_MulDivIterativePlugin_div_stage_0_outRemainder = memory_MulDivIterativePlugin_div_stage_0_remainderMinusDenominator[31:0];
   assign _zz_memory_MulDivIterativePlugin_div_stage_0_outRemainder_1 = memory_MulDivIterativePlugin_div_stage_0_remainderShifted[31:0];
@@ -2342,127 +1926,15 @@ module VexRiscv (
   assign _zz_memory_MulDivIterativePlugin_div_stage_3_outRemainder = memory_MulDivIterativePlugin_div_stage_3_remainderMinusDenominator[31:0];
   assign _zz_memory_MulDivIterativePlugin_div_stage_3_outRemainder_1 = memory_MulDivIterativePlugin_div_stage_3_remainderShifted[31:0];
   assign _zz_memory_MulDivIterativePlugin_div_stage_3_outNumerator = {memory_MulDivIterativePlugin_div_stage_2_outNumerator,(! memory_MulDivIterativePlugin_div_stage_3_remainderMinusDenominator[32])};
-  assign _zz_memory_MulDivIterativePlugin_div_stage_4_remainderMinusDenominator = {1'd0, memory_MulDivIterativePlugin_rs2};
-  assign _zz_memory_MulDivIterativePlugin_div_stage_4_outRemainder = memory_MulDivIterativePlugin_div_stage_4_remainderMinusDenominator[31:0];
-  assign _zz_memory_MulDivIterativePlugin_div_stage_4_outRemainder_1 = memory_MulDivIterativePlugin_div_stage_4_remainderShifted[31:0];
-  assign _zz_memory_MulDivIterativePlugin_div_stage_4_outNumerator = {memory_MulDivIterativePlugin_div_stage_3_outNumerator,(! memory_MulDivIterativePlugin_div_stage_4_remainderMinusDenominator[32])};
-  assign _zz_memory_MulDivIterativePlugin_div_stage_5_remainderMinusDenominator = {1'd0, memory_MulDivIterativePlugin_rs2};
-  assign _zz_memory_MulDivIterativePlugin_div_stage_5_outRemainder = memory_MulDivIterativePlugin_div_stage_5_remainderMinusDenominator[31:0];
-  assign _zz_memory_MulDivIterativePlugin_div_stage_5_outRemainder_1 = memory_MulDivIterativePlugin_div_stage_5_remainderShifted[31:0];
-  assign _zz_memory_MulDivIterativePlugin_div_stage_5_outNumerator = {memory_MulDivIterativePlugin_div_stage_4_outNumerator,(! memory_MulDivIterativePlugin_div_stage_5_remainderMinusDenominator[32])};
-  assign _zz_memory_MulDivIterativePlugin_div_stage_6_remainderMinusDenominator = {1'd0, memory_MulDivIterativePlugin_rs2};
-  assign _zz_memory_MulDivIterativePlugin_div_stage_6_outRemainder = memory_MulDivIterativePlugin_div_stage_6_remainderMinusDenominator[31:0];
-  assign _zz_memory_MulDivIterativePlugin_div_stage_6_outRemainder_1 = memory_MulDivIterativePlugin_div_stage_6_remainderShifted[31:0];
-  assign _zz_memory_MulDivIterativePlugin_div_stage_6_outNumerator = {memory_MulDivIterativePlugin_div_stage_5_outNumerator,(! memory_MulDivIterativePlugin_div_stage_6_remainderMinusDenominator[32])};
-  assign _zz_memory_MulDivIterativePlugin_div_stage_7_remainderMinusDenominator = {1'd0, memory_MulDivIterativePlugin_rs2};
-  assign _zz_memory_MulDivIterativePlugin_div_stage_7_outRemainder = memory_MulDivIterativePlugin_div_stage_7_remainderMinusDenominator[31:0];
-  assign _zz_memory_MulDivIterativePlugin_div_stage_7_outRemainder_1 = memory_MulDivIterativePlugin_div_stage_7_remainderShifted[31:0];
-  assign _zz_memory_MulDivIterativePlugin_div_stage_7_outNumerator = {memory_MulDivIterativePlugin_div_stage_6_outNumerator,(! memory_MulDivIterativePlugin_div_stage_7_remainderMinusDenominator[32])};
-  assign _zz_memory_MulDivIterativePlugin_div_stage_8_remainderMinusDenominator = {1'd0, memory_MulDivIterativePlugin_rs2};
-  assign _zz_memory_MulDivIterativePlugin_div_stage_8_outRemainder = memory_MulDivIterativePlugin_div_stage_8_remainderMinusDenominator[31:0];
-  assign _zz_memory_MulDivIterativePlugin_div_stage_8_outRemainder_1 = memory_MulDivIterativePlugin_div_stage_8_remainderShifted[31:0];
-  assign _zz_memory_MulDivIterativePlugin_div_stage_8_outNumerator = {memory_MulDivIterativePlugin_div_stage_7_outNumerator,(! memory_MulDivIterativePlugin_div_stage_8_remainderMinusDenominator[32])};
-  assign _zz_memory_MulDivIterativePlugin_div_stage_9_remainderMinusDenominator = {1'd0, memory_MulDivIterativePlugin_rs2};
-  assign _zz_memory_MulDivIterativePlugin_div_stage_9_outRemainder = memory_MulDivIterativePlugin_div_stage_9_remainderMinusDenominator[31:0];
-  assign _zz_memory_MulDivIterativePlugin_div_stage_9_outRemainder_1 = memory_MulDivIterativePlugin_div_stage_9_remainderShifted[31:0];
-  assign _zz_memory_MulDivIterativePlugin_div_stage_9_outNumerator = {memory_MulDivIterativePlugin_div_stage_8_outNumerator,(! memory_MulDivIterativePlugin_div_stage_9_remainderMinusDenominator[32])};
-  assign _zz_memory_MulDivIterativePlugin_div_stage_10_remainderMinusDenominator = {1'd0, memory_MulDivIterativePlugin_rs2};
-  assign _zz_memory_MulDivIterativePlugin_div_stage_10_outRemainder = memory_MulDivIterativePlugin_div_stage_10_remainderMinusDenominator[31:0];
-  assign _zz_memory_MulDivIterativePlugin_div_stage_10_outRemainder_1 = memory_MulDivIterativePlugin_div_stage_10_remainderShifted[31:0];
-  assign _zz_memory_MulDivIterativePlugin_div_stage_10_outNumerator = {memory_MulDivIterativePlugin_div_stage_9_outNumerator,(! memory_MulDivIterativePlugin_div_stage_10_remainderMinusDenominator[32])};
-  assign _zz_memory_MulDivIterativePlugin_div_stage_11_remainderMinusDenominator = {1'd0, memory_MulDivIterativePlugin_rs2};
-  assign _zz_memory_MulDivIterativePlugin_div_stage_11_outRemainder = memory_MulDivIterativePlugin_div_stage_11_remainderMinusDenominator[31:0];
-  assign _zz_memory_MulDivIterativePlugin_div_stage_11_outRemainder_1 = memory_MulDivIterativePlugin_div_stage_11_remainderShifted[31:0];
-  assign _zz_memory_MulDivIterativePlugin_div_stage_11_outNumerator = {memory_MulDivIterativePlugin_div_stage_10_outNumerator,(! memory_MulDivIterativePlugin_div_stage_11_remainderMinusDenominator[32])};
-  assign _zz_memory_MulDivIterativePlugin_div_stage_12_remainderMinusDenominator = {1'd0, memory_MulDivIterativePlugin_rs2};
-  assign _zz_memory_MulDivIterativePlugin_div_stage_12_outRemainder = memory_MulDivIterativePlugin_div_stage_12_remainderMinusDenominator[31:0];
-  assign _zz_memory_MulDivIterativePlugin_div_stage_12_outRemainder_1 = memory_MulDivIterativePlugin_div_stage_12_remainderShifted[31:0];
-  assign _zz_memory_MulDivIterativePlugin_div_stage_12_outNumerator = {memory_MulDivIterativePlugin_div_stage_11_outNumerator,(! memory_MulDivIterativePlugin_div_stage_12_remainderMinusDenominator[32])};
-  assign _zz_memory_MulDivIterativePlugin_div_stage_13_remainderMinusDenominator = {1'd0, memory_MulDivIterativePlugin_rs2};
-  assign _zz_memory_MulDivIterativePlugin_div_stage_13_outRemainder = memory_MulDivIterativePlugin_div_stage_13_remainderMinusDenominator[31:0];
-  assign _zz_memory_MulDivIterativePlugin_div_stage_13_outRemainder_1 = memory_MulDivIterativePlugin_div_stage_13_remainderShifted[31:0];
-  assign _zz_memory_MulDivIterativePlugin_div_stage_13_outNumerator = {memory_MulDivIterativePlugin_div_stage_12_outNumerator,(! memory_MulDivIterativePlugin_div_stage_13_remainderMinusDenominator[32])};
-  assign _zz_memory_MulDivIterativePlugin_div_stage_14_remainderMinusDenominator = {1'd0, memory_MulDivIterativePlugin_rs2};
-  assign _zz_memory_MulDivIterativePlugin_div_stage_14_outRemainder = memory_MulDivIterativePlugin_div_stage_14_remainderMinusDenominator[31:0];
-  assign _zz_memory_MulDivIterativePlugin_div_stage_14_outRemainder_1 = memory_MulDivIterativePlugin_div_stage_14_remainderShifted[31:0];
-  assign _zz_memory_MulDivIterativePlugin_div_stage_14_outNumerator = {memory_MulDivIterativePlugin_div_stage_13_outNumerator,(! memory_MulDivIterativePlugin_div_stage_14_remainderMinusDenominator[32])};
-  assign _zz_memory_MulDivIterativePlugin_div_stage_15_remainderMinusDenominator = {1'd0, memory_MulDivIterativePlugin_rs2};
-  assign _zz_memory_MulDivIterativePlugin_div_stage_15_outRemainder = memory_MulDivIterativePlugin_div_stage_15_remainderMinusDenominator[31:0];
-  assign _zz_memory_MulDivIterativePlugin_div_stage_15_outRemainder_1 = memory_MulDivIterativePlugin_div_stage_15_remainderShifted[31:0];
-  assign _zz_memory_MulDivIterativePlugin_div_stage_15_outNumerator = {memory_MulDivIterativePlugin_div_stage_14_outNumerator,(! memory_MulDivIterativePlugin_div_stage_15_remainderMinusDenominator[32])};
-  assign _zz_memory_MulDivIterativePlugin_div_stage_16_remainderMinusDenominator = {1'd0, memory_MulDivIterativePlugin_rs2};
-  assign _zz_memory_MulDivIterativePlugin_div_stage_16_outRemainder = memory_MulDivIterativePlugin_div_stage_16_remainderMinusDenominator[31:0];
-  assign _zz_memory_MulDivIterativePlugin_div_stage_16_outRemainder_1 = memory_MulDivIterativePlugin_div_stage_16_remainderShifted[31:0];
-  assign _zz_memory_MulDivIterativePlugin_div_stage_16_outNumerator = {memory_MulDivIterativePlugin_div_stage_15_outNumerator,(! memory_MulDivIterativePlugin_div_stage_16_remainderMinusDenominator[32])};
-  assign _zz_memory_MulDivIterativePlugin_div_stage_17_remainderMinusDenominator = {1'd0, memory_MulDivIterativePlugin_rs2};
-  assign _zz_memory_MulDivIterativePlugin_div_stage_17_outRemainder = memory_MulDivIterativePlugin_div_stage_17_remainderMinusDenominator[31:0];
-  assign _zz_memory_MulDivIterativePlugin_div_stage_17_outRemainder_1 = memory_MulDivIterativePlugin_div_stage_17_remainderShifted[31:0];
-  assign _zz_memory_MulDivIterativePlugin_div_stage_17_outNumerator = {memory_MulDivIterativePlugin_div_stage_16_outNumerator,(! memory_MulDivIterativePlugin_div_stage_17_remainderMinusDenominator[32])};
-  assign _zz_memory_MulDivIterativePlugin_div_stage_18_remainderMinusDenominator = {1'd0, memory_MulDivIterativePlugin_rs2};
-  assign _zz_memory_MulDivIterativePlugin_div_stage_18_outRemainder = memory_MulDivIterativePlugin_div_stage_18_remainderMinusDenominator[31:0];
-  assign _zz_memory_MulDivIterativePlugin_div_stage_18_outRemainder_1 = memory_MulDivIterativePlugin_div_stage_18_remainderShifted[31:0];
-  assign _zz_memory_MulDivIterativePlugin_div_stage_18_outNumerator = {memory_MulDivIterativePlugin_div_stage_17_outNumerator,(! memory_MulDivIterativePlugin_div_stage_18_remainderMinusDenominator[32])};
-  assign _zz_memory_MulDivIterativePlugin_div_stage_19_remainderMinusDenominator = {1'd0, memory_MulDivIterativePlugin_rs2};
-  assign _zz_memory_MulDivIterativePlugin_div_stage_19_outRemainder = memory_MulDivIterativePlugin_div_stage_19_remainderMinusDenominator[31:0];
-  assign _zz_memory_MulDivIterativePlugin_div_stage_19_outRemainder_1 = memory_MulDivIterativePlugin_div_stage_19_remainderShifted[31:0];
-  assign _zz_memory_MulDivIterativePlugin_div_stage_19_outNumerator = {memory_MulDivIterativePlugin_div_stage_18_outNumerator,(! memory_MulDivIterativePlugin_div_stage_19_remainderMinusDenominator[32])};
-  assign _zz_memory_MulDivIterativePlugin_div_stage_20_remainderMinusDenominator = {1'd0, memory_MulDivIterativePlugin_rs2};
-  assign _zz_memory_MulDivIterativePlugin_div_stage_20_outRemainder = memory_MulDivIterativePlugin_div_stage_20_remainderMinusDenominator[31:0];
-  assign _zz_memory_MulDivIterativePlugin_div_stage_20_outRemainder_1 = memory_MulDivIterativePlugin_div_stage_20_remainderShifted[31:0];
-  assign _zz_memory_MulDivIterativePlugin_div_stage_20_outNumerator = {memory_MulDivIterativePlugin_div_stage_19_outNumerator,(! memory_MulDivIterativePlugin_div_stage_20_remainderMinusDenominator[32])};
-  assign _zz_memory_MulDivIterativePlugin_div_stage_21_remainderMinusDenominator = {1'd0, memory_MulDivIterativePlugin_rs2};
-  assign _zz_memory_MulDivIterativePlugin_div_stage_21_outRemainder = memory_MulDivIterativePlugin_div_stage_21_remainderMinusDenominator[31:0];
-  assign _zz_memory_MulDivIterativePlugin_div_stage_21_outRemainder_1 = memory_MulDivIterativePlugin_div_stage_21_remainderShifted[31:0];
-  assign _zz_memory_MulDivIterativePlugin_div_stage_21_outNumerator = {memory_MulDivIterativePlugin_div_stage_20_outNumerator,(! memory_MulDivIterativePlugin_div_stage_21_remainderMinusDenominator[32])};
-  assign _zz_memory_MulDivIterativePlugin_div_stage_22_remainderMinusDenominator = {1'd0, memory_MulDivIterativePlugin_rs2};
-  assign _zz_memory_MulDivIterativePlugin_div_stage_22_outRemainder = memory_MulDivIterativePlugin_div_stage_22_remainderMinusDenominator[31:0];
-  assign _zz_memory_MulDivIterativePlugin_div_stage_22_outRemainder_1 = memory_MulDivIterativePlugin_div_stage_22_remainderShifted[31:0];
-  assign _zz_memory_MulDivIterativePlugin_div_stage_22_outNumerator = {memory_MulDivIterativePlugin_div_stage_21_outNumerator,(! memory_MulDivIterativePlugin_div_stage_22_remainderMinusDenominator[32])};
-  assign _zz_memory_MulDivIterativePlugin_div_stage_23_remainderMinusDenominator = {1'd0, memory_MulDivIterativePlugin_rs2};
-  assign _zz_memory_MulDivIterativePlugin_div_stage_23_outRemainder = memory_MulDivIterativePlugin_div_stage_23_remainderMinusDenominator[31:0];
-  assign _zz_memory_MulDivIterativePlugin_div_stage_23_outRemainder_1 = memory_MulDivIterativePlugin_div_stage_23_remainderShifted[31:0];
-  assign _zz_memory_MulDivIterativePlugin_div_stage_23_outNumerator = {memory_MulDivIterativePlugin_div_stage_22_outNumerator,(! memory_MulDivIterativePlugin_div_stage_23_remainderMinusDenominator[32])};
-  assign _zz_memory_MulDivIterativePlugin_div_stage_24_remainderMinusDenominator = {1'd0, memory_MulDivIterativePlugin_rs2};
-  assign _zz_memory_MulDivIterativePlugin_div_stage_24_outRemainder = memory_MulDivIterativePlugin_div_stage_24_remainderMinusDenominator[31:0];
-  assign _zz_memory_MulDivIterativePlugin_div_stage_24_outRemainder_1 = memory_MulDivIterativePlugin_div_stage_24_remainderShifted[31:0];
-  assign _zz_memory_MulDivIterativePlugin_div_stage_24_outNumerator = {memory_MulDivIterativePlugin_div_stage_23_outNumerator,(! memory_MulDivIterativePlugin_div_stage_24_remainderMinusDenominator[32])};
-  assign _zz_memory_MulDivIterativePlugin_div_stage_25_remainderMinusDenominator = {1'd0, memory_MulDivIterativePlugin_rs2};
-  assign _zz_memory_MulDivIterativePlugin_div_stage_25_outRemainder = memory_MulDivIterativePlugin_div_stage_25_remainderMinusDenominator[31:0];
-  assign _zz_memory_MulDivIterativePlugin_div_stage_25_outRemainder_1 = memory_MulDivIterativePlugin_div_stage_25_remainderShifted[31:0];
-  assign _zz_memory_MulDivIterativePlugin_div_stage_25_outNumerator = {memory_MulDivIterativePlugin_div_stage_24_outNumerator,(! memory_MulDivIterativePlugin_div_stage_25_remainderMinusDenominator[32])};
-  assign _zz_memory_MulDivIterativePlugin_div_stage_26_remainderMinusDenominator = {1'd0, memory_MulDivIterativePlugin_rs2};
-  assign _zz_memory_MulDivIterativePlugin_div_stage_26_outRemainder = memory_MulDivIterativePlugin_div_stage_26_remainderMinusDenominator[31:0];
-  assign _zz_memory_MulDivIterativePlugin_div_stage_26_outRemainder_1 = memory_MulDivIterativePlugin_div_stage_26_remainderShifted[31:0];
-  assign _zz_memory_MulDivIterativePlugin_div_stage_26_outNumerator = {memory_MulDivIterativePlugin_div_stage_25_outNumerator,(! memory_MulDivIterativePlugin_div_stage_26_remainderMinusDenominator[32])};
-  assign _zz_memory_MulDivIterativePlugin_div_stage_27_remainderMinusDenominator = {1'd0, memory_MulDivIterativePlugin_rs2};
-  assign _zz_memory_MulDivIterativePlugin_div_stage_27_outRemainder = memory_MulDivIterativePlugin_div_stage_27_remainderMinusDenominator[31:0];
-  assign _zz_memory_MulDivIterativePlugin_div_stage_27_outRemainder_1 = memory_MulDivIterativePlugin_div_stage_27_remainderShifted[31:0];
-  assign _zz_memory_MulDivIterativePlugin_div_stage_27_outNumerator = {memory_MulDivIterativePlugin_div_stage_26_outNumerator,(! memory_MulDivIterativePlugin_div_stage_27_remainderMinusDenominator[32])};
-  assign _zz_memory_MulDivIterativePlugin_div_stage_28_remainderMinusDenominator = {1'd0, memory_MulDivIterativePlugin_rs2};
-  assign _zz_memory_MulDivIterativePlugin_div_stage_28_outRemainder = memory_MulDivIterativePlugin_div_stage_28_remainderMinusDenominator[31:0];
-  assign _zz_memory_MulDivIterativePlugin_div_stage_28_outRemainder_1 = memory_MulDivIterativePlugin_div_stage_28_remainderShifted[31:0];
-  assign _zz_memory_MulDivIterativePlugin_div_stage_28_outNumerator = {memory_MulDivIterativePlugin_div_stage_27_outNumerator,(! memory_MulDivIterativePlugin_div_stage_28_remainderMinusDenominator[32])};
-  assign _zz_memory_MulDivIterativePlugin_div_stage_29_remainderMinusDenominator = {1'd0, memory_MulDivIterativePlugin_rs2};
-  assign _zz_memory_MulDivIterativePlugin_div_stage_29_outRemainder = memory_MulDivIterativePlugin_div_stage_29_remainderMinusDenominator[31:0];
-  assign _zz_memory_MulDivIterativePlugin_div_stage_29_outRemainder_1 = memory_MulDivIterativePlugin_div_stage_29_remainderShifted[31:0];
-  assign _zz_memory_MulDivIterativePlugin_div_stage_29_outNumerator = {memory_MulDivIterativePlugin_div_stage_28_outNumerator,(! memory_MulDivIterativePlugin_div_stage_29_remainderMinusDenominator[32])};
-  assign _zz_memory_MulDivIterativePlugin_div_stage_30_remainderMinusDenominator = {1'd0, memory_MulDivIterativePlugin_rs2};
-  assign _zz_memory_MulDivIterativePlugin_div_stage_30_outRemainder = memory_MulDivIterativePlugin_div_stage_30_remainderMinusDenominator[31:0];
-  assign _zz_memory_MulDivIterativePlugin_div_stage_30_outRemainder_1 = memory_MulDivIterativePlugin_div_stage_30_remainderShifted[31:0];
-  assign _zz_memory_MulDivIterativePlugin_div_stage_30_outNumerator = {memory_MulDivIterativePlugin_div_stage_29_outNumerator,(! memory_MulDivIterativePlugin_div_stage_30_remainderMinusDenominator[32])};
-  assign _zz_memory_MulDivIterativePlugin_div_stage_31_remainderMinusDenominator = {1'd0, memory_MulDivIterativePlugin_rs2};
-  assign _zz_memory_MulDivIterativePlugin_div_stage_31_outRemainder = memory_MulDivIterativePlugin_div_stage_31_remainderMinusDenominator[31:0];
-  assign _zz_memory_MulDivIterativePlugin_div_stage_31_outRemainder_1 = memory_MulDivIterativePlugin_div_stage_31_remainderShifted[31:0];
-  assign _zz_memory_MulDivIterativePlugin_div_stage_31_outNumerator = {memory_MulDivIterativePlugin_div_stage_30_outNumerator,(! memory_MulDivIterativePlugin_div_stage_31_remainderMinusDenominator[32])};
   assign _zz_memory_MulDivIterativePlugin_div_result_1 = _zz_memory_MulDivIterativePlugin_div_result_2;
   assign _zz_memory_MulDivIterativePlugin_div_result_2 = _zz_memory_MulDivIterativePlugin_div_result_3;
   assign _zz_memory_MulDivIterativePlugin_div_result_3 = ({memory_MulDivIterativePlugin_div_needRevert,(memory_MulDivIterativePlugin_div_needRevert ? (~ _zz_memory_MulDivIterativePlugin_div_result) : _zz_memory_MulDivIterativePlugin_div_result)} + _zz_memory_MulDivIterativePlugin_div_result_4);
   assign _zz_memory_MulDivIterativePlugin_div_result_5 = memory_MulDivIterativePlugin_div_needRevert;
   assign _zz_memory_MulDivIterativePlugin_div_result_4 = {32'd0, _zz_memory_MulDivIterativePlugin_div_result_5};
-  assign _zz_memory_MulDivIterativePlugin_rs1_4 = _zz_memory_MulDivIterativePlugin_rs1_1;
-  assign _zz_memory_MulDivIterativePlugin_rs1_3 = {32'd0, _zz_memory_MulDivIterativePlugin_rs1_4};
-  assign _zz_memory_MulDivIterativePlugin_rs2_1 = _zz_memory_MulDivIterativePlugin_rs1;
-  assign _zz_memory_MulDivIterativePlugin_rs2 = {31'd0, _zz_memory_MulDivIterativePlugin_rs2_1};
+  assign _zz_memory_MulDivIterativePlugin_rs1_3 = _zz_memory_MulDivIterativePlugin_rs1;
+  assign _zz_memory_MulDivIterativePlugin_rs1_2 = {32'd0, _zz_memory_MulDivIterativePlugin_rs1_3};
+  assign _zz_memory_MulDivIterativePlugin_rs2_2 = _zz_memory_MulDivIterativePlugin_rs2;
+  assign _zz_memory_MulDivIterativePlugin_rs2_1 = {31'd0, _zz_memory_MulDivIterativePlugin_rs2_2};
   assign _zz__zz_CsrPlugin_exceptionPortCtrl_exceptionContext_code_1 = (_zz_CsrPlugin_exceptionPortCtrl_exceptionContext_code & (~ _zz__zz_CsrPlugin_exceptionPortCtrl_exceptionContext_code_1_1));
   assign _zz__zz_CsrPlugin_exceptionPortCtrl_exceptionContext_code_1_1 = (_zz_CsrPlugin_exceptionPortCtrl_exceptionContext_code - 2'b01);
   assign _zz__zz_execute_BranchPlugin_branch_src2_2 = {{{execute_INSTRUCTION[31],execute_INSTRUCTION[19 : 12]},execute_INSTRUCTION[20]},execute_INSTRUCTION[30 : 21]};
@@ -2487,8 +1959,8 @@ module VexRiscv (
   assign _zz_decode_LEGAL_INSTRUCTION_8 = 32'h00000063;
   assign _zz_decode_LEGAL_INSTRUCTION_9 = ((decode_INSTRUCTION & 32'h0000607f) == 32'h0000000f);
   assign _zz_decode_LEGAL_INSTRUCTION_10 = ((decode_INSTRUCTION & 32'hfc00007f) == 32'h00000033);
-  assign _zz_decode_LEGAL_INSTRUCTION_11 = {((decode_INSTRUCTION & 32'hfc00305f) == 32'h00001013),{((decode_INSTRUCTION & 32'hf800707f) == 32'h1800202f),{((decode_INSTRUCTION & _zz_decode_LEGAL_INSTRUCTION_12) == 32'h00005013),{(_zz_decode_LEGAL_INSTRUCTION_13 == _zz_decode_LEGAL_INSTRUCTION_14),{_zz_decode_LEGAL_INSTRUCTION_15,{_zz_decode_LEGAL_INSTRUCTION_16,_zz_decode_LEGAL_INSTRUCTION_17}}}}}};
-  assign _zz_decode_LEGAL_INSTRUCTION_12 = 32'hbc00707f;
+  assign _zz_decode_LEGAL_INSTRUCTION_11 = {((decode_INSTRUCTION & 32'hf800707f) == 32'h1800202f),{((decode_INSTRUCTION & 32'hbc00707f) == 32'h00005013),{((decode_INSTRUCTION & _zz_decode_LEGAL_INSTRUCTION_12) == 32'h00001013),{(_zz_decode_LEGAL_INSTRUCTION_13 == _zz_decode_LEGAL_INSTRUCTION_14),{_zz_decode_LEGAL_INSTRUCTION_15,{_zz_decode_LEGAL_INSTRUCTION_16,_zz_decode_LEGAL_INSTRUCTION_17}}}}}};
+  assign _zz_decode_LEGAL_INSTRUCTION_12 = 32'hfc00307f;
   assign _zz_decode_LEGAL_INSTRUCTION_13 = (decode_INSTRUCTION & 32'hbe00707f);
   assign _zz_decode_LEGAL_INSTRUCTION_14 = 32'h00005033;
   assign _zz_decode_LEGAL_INSTRUCTION_15 = ((decode_INSTRUCTION & 32'hbe00707f) == 32'h00000033);
@@ -2510,146 +1982,160 @@ module VexRiscv (
   assign _zz__zz_decode_IS_SFENCE_VMA2_2 = (decode_INSTRUCTION & 32'h00000058);
   assign _zz__zz_decode_IS_SFENCE_VMA2_3 = 32'h00000040;
   assign _zz__zz_decode_IS_SFENCE_VMA2_4 = ((decode_INSTRUCTION & 32'h10103050) == 32'h00100050);
-  assign _zz__zz_decode_IS_SFENCE_VMA2_5 = _zz_decode_IS_SFENCE_VMA2_11;
-  assign _zz__zz_decode_IS_SFENCE_VMA2_6 = (|_zz_decode_IS_SFENCE_VMA2_11);
+  assign _zz__zz_decode_IS_SFENCE_VMA2_5 = _zz_decode_IS_SFENCE_VMA2_9;
+  assign _zz__zz_decode_IS_SFENCE_VMA2_6 = (|_zz_decode_IS_SFENCE_VMA2_9);
   assign _zz__zz_decode_IS_SFENCE_VMA2_7 = (|{(_zz__zz_decode_IS_SFENCE_VMA2_8 == _zz__zz_decode_IS_SFENCE_VMA2_9),(_zz__zz_decode_IS_SFENCE_VMA2_10 == _zz__zz_decode_IS_SFENCE_VMA2_11)});
-  assign _zz__zz_decode_IS_SFENCE_VMA2_12 = {(|(_zz__zz_decode_IS_SFENCE_VMA2_13 == _zz__zz_decode_IS_SFENCE_VMA2_14)),{(|{_zz__zz_decode_IS_SFENCE_VMA2_15,_zz__zz_decode_IS_SFENCE_VMA2_17}),{(|_zz__zz_decode_IS_SFENCE_VMA2_19),{_zz__zz_decode_IS_SFENCE_VMA2_21,{_zz__zz_decode_IS_SFENCE_VMA2_22,_zz__zz_decode_IS_SFENCE_VMA2_25}}}}};
+  assign _zz__zz_decode_IS_SFENCE_VMA2_12 = {(|(_zz__zz_decode_IS_SFENCE_VMA2_13 == _zz__zz_decode_IS_SFENCE_VMA2_14)),{(|{_zz__zz_decode_IS_SFENCE_VMA2_15,_zz__zz_decode_IS_SFENCE_VMA2_16}),{(|_zz__zz_decode_IS_SFENCE_VMA2_17),{_zz__zz_decode_IS_SFENCE_VMA2_18,{_zz__zz_decode_IS_SFENCE_VMA2_19,_zz__zz_decode_IS_SFENCE_VMA2_22}}}}};
   assign _zz__zz_decode_IS_SFENCE_VMA2_8 = (decode_INSTRUCTION & 32'h10103050);
   assign _zz__zz_decode_IS_SFENCE_VMA2_9 = 32'h00000050;
   assign _zz__zz_decode_IS_SFENCE_VMA2_10 = (decode_INSTRUCTION & 32'h12203050);
   assign _zz__zz_decode_IS_SFENCE_VMA2_11 = 32'h10000050;
   assign _zz__zz_decode_IS_SFENCE_VMA2_13 = (decode_INSTRUCTION & 32'h02103050);
   assign _zz__zz_decode_IS_SFENCE_VMA2_14 = 32'h00000050;
-  assign _zz__zz_decode_IS_SFENCE_VMA2_15 = ((decode_INSTRUCTION & _zz__zz_decode_IS_SFENCE_VMA2_16) == 32'h00001050);
-  assign _zz__zz_decode_IS_SFENCE_VMA2_17 = ((decode_INSTRUCTION & _zz__zz_decode_IS_SFENCE_VMA2_18) == 32'h00002050);
-  assign _zz__zz_decode_IS_SFENCE_VMA2_19 = ((decode_INSTRUCTION & _zz__zz_decode_IS_SFENCE_VMA2_20) == 32'h02004020);
-  assign _zz__zz_decode_IS_SFENCE_VMA2_21 = (|{_zz_decode_IS_SFENCE_VMA2_10,_zz_decode_IS_SFENCE_VMA2_9});
-  assign _zz__zz_decode_IS_SFENCE_VMA2_22 = (|{_zz__zz_decode_IS_SFENCE_VMA2_23,_zz__zz_decode_IS_SFENCE_VMA2_24});
-  assign _zz__zz_decode_IS_SFENCE_VMA2_25 = {(|_zz__zz_decode_IS_SFENCE_VMA2_26),{_zz__zz_decode_IS_SFENCE_VMA2_27,{_zz__zz_decode_IS_SFENCE_VMA2_32,_zz__zz_decode_IS_SFENCE_VMA2_38}}};
-  assign _zz__zz_decode_IS_SFENCE_VMA2_16 = 32'h00001050;
-  assign _zz__zz_decode_IS_SFENCE_VMA2_18 = 32'h00002050;
-  assign _zz__zz_decode_IS_SFENCE_VMA2_20 = 32'h02004064;
-  assign _zz__zz_decode_IS_SFENCE_VMA2_23 = _zz_decode_IS_SFENCE_VMA2_10;
-  assign _zz__zz_decode_IS_SFENCE_VMA2_24 = {_zz_decode_IS_SFENCE_VMA2_8,_zz_decode_IS_SFENCE_VMA2_9};
-  assign _zz__zz_decode_IS_SFENCE_VMA2_26 = ((decode_INSTRUCTION & 32'h02004074) == 32'h02000030);
-  assign _zz__zz_decode_IS_SFENCE_VMA2_27 = (|{(_zz__zz_decode_IS_SFENCE_VMA2_28 == _zz__zz_decode_IS_SFENCE_VMA2_29),(_zz__zz_decode_IS_SFENCE_VMA2_30 == _zz__zz_decode_IS_SFENCE_VMA2_31)});
-  assign _zz__zz_decode_IS_SFENCE_VMA2_32 = (|{_zz__zz_decode_IS_SFENCE_VMA2_33,{_zz__zz_decode_IS_SFENCE_VMA2_34,_zz__zz_decode_IS_SFENCE_VMA2_36}});
-  assign _zz__zz_decode_IS_SFENCE_VMA2_38 = {(|_zz__zz_decode_IS_SFENCE_VMA2_39),{(|_zz__zz_decode_IS_SFENCE_VMA2_40),{_zz__zz_decode_IS_SFENCE_VMA2_41,{_zz__zz_decode_IS_SFENCE_VMA2_43,_zz__zz_decode_IS_SFENCE_VMA2_45}}}};
-  assign _zz__zz_decode_IS_SFENCE_VMA2_28 = (decode_INSTRUCTION & 32'h00007034);
-  assign _zz__zz_decode_IS_SFENCE_VMA2_29 = 32'h00005010;
-  assign _zz__zz_decode_IS_SFENCE_VMA2_30 = (decode_INSTRUCTION & 32'h02007064);
-  assign _zz__zz_decode_IS_SFENCE_VMA2_31 = 32'h00005020;
-  assign _zz__zz_decode_IS_SFENCE_VMA2_33 = ((decode_INSTRUCTION & 32'h40003054) == 32'h40001010);
-  assign _zz__zz_decode_IS_SFENCE_VMA2_34 = ((decode_INSTRUCTION & _zz__zz_decode_IS_SFENCE_VMA2_35) == 32'h00001010);
-  assign _zz__zz_decode_IS_SFENCE_VMA2_36 = ((decode_INSTRUCTION & _zz__zz_decode_IS_SFENCE_VMA2_37) == 32'h00001010);
-  assign _zz__zz_decode_IS_SFENCE_VMA2_39 = ((decode_INSTRUCTION & 32'h00001000) == 32'h00001000);
-  assign _zz__zz_decode_IS_SFENCE_VMA2_40 = _zz_decode_IS_SFENCE_VMA2_8;
-  assign _zz__zz_decode_IS_SFENCE_VMA2_41 = (|{_zz_decode_IS_SFENCE_VMA2_7,_zz__zz_decode_IS_SFENCE_VMA2_42});
-  assign _zz__zz_decode_IS_SFENCE_VMA2_43 = (|_zz__zz_decode_IS_SFENCE_VMA2_44);
-  assign _zz__zz_decode_IS_SFENCE_VMA2_45 = {(|_zz__zz_decode_IS_SFENCE_VMA2_46),{_zz__zz_decode_IS_SFENCE_VMA2_51,{_zz__zz_decode_IS_SFENCE_VMA2_54,_zz__zz_decode_IS_SFENCE_VMA2_66}}};
-  assign _zz__zz_decode_IS_SFENCE_VMA2_35 = 32'h00007034;
-  assign _zz__zz_decode_IS_SFENCE_VMA2_37 = 32'h02007054;
-  assign _zz__zz_decode_IS_SFENCE_VMA2_42 = ((decode_INSTRUCTION & 32'h00005000) == 32'h00001000);
-  assign _zz__zz_decode_IS_SFENCE_VMA2_44 = ((decode_INSTRUCTION & 32'h00000064) == 32'h00000024);
-  assign _zz__zz_decode_IS_SFENCE_VMA2_46 = {(_zz__zz_decode_IS_SFENCE_VMA2_47 == _zz__zz_decode_IS_SFENCE_VMA2_48),{_zz__zz_decode_IS_SFENCE_VMA2_49,_zz__zz_decode_IS_SFENCE_VMA2_50}};
-  assign _zz__zz_decode_IS_SFENCE_VMA2_51 = (|(_zz__zz_decode_IS_SFENCE_VMA2_52 == _zz__zz_decode_IS_SFENCE_VMA2_53));
-  assign _zz__zz_decode_IS_SFENCE_VMA2_54 = (|{_zz__zz_decode_IS_SFENCE_VMA2_55,_zz__zz_decode_IS_SFENCE_VMA2_57});
-  assign _zz__zz_decode_IS_SFENCE_VMA2_66 = {(|_zz__zz_decode_IS_SFENCE_VMA2_67),{_zz__zz_decode_IS_SFENCE_VMA2_72,{_zz__zz_decode_IS_SFENCE_VMA2_75,_zz__zz_decode_IS_SFENCE_VMA2_88}}};
-  assign _zz__zz_decode_IS_SFENCE_VMA2_47 = (decode_INSTRUCTION & 32'h00000034);
+  assign _zz__zz_decode_IS_SFENCE_VMA2_15 = ((decode_INSTRUCTION & 32'h00001050) == 32'h00001050);
+  assign _zz__zz_decode_IS_SFENCE_VMA2_16 = ((decode_INSTRUCTION & 32'h00002050) == 32'h00002050);
+  assign _zz__zz_decode_IS_SFENCE_VMA2_17 = _zz_decode_IS_SFENCE_VMA2_8;
+  assign _zz__zz_decode_IS_SFENCE_VMA2_18 = (|_zz_decode_IS_SFENCE_VMA2_8);
+  assign _zz__zz_decode_IS_SFENCE_VMA2_19 = (|(_zz__zz_decode_IS_SFENCE_VMA2_20 == _zz__zz_decode_IS_SFENCE_VMA2_21));
+  assign _zz__zz_decode_IS_SFENCE_VMA2_22 = {(|_zz__zz_decode_IS_SFENCE_VMA2_23),{(|_zz__zz_decode_IS_SFENCE_VMA2_24),{_zz__zz_decode_IS_SFENCE_VMA2_27,{_zz__zz_decode_IS_SFENCE_VMA2_32,_zz__zz_decode_IS_SFENCE_VMA2_35}}}};
+  assign _zz__zz_decode_IS_SFENCE_VMA2_20 = (decode_INSTRUCTION & 32'h02004064);
+  assign _zz__zz_decode_IS_SFENCE_VMA2_21 = 32'h02004020;
+  assign _zz__zz_decode_IS_SFENCE_VMA2_23 = ((decode_INSTRUCTION & 32'h02004074) == 32'h02000030);
+  assign _zz__zz_decode_IS_SFENCE_VMA2_24 = {((decode_INSTRUCTION & _zz__zz_decode_IS_SFENCE_VMA2_25) == 32'h00005010),((decode_INSTRUCTION & _zz__zz_decode_IS_SFENCE_VMA2_26) == 32'h00005020)};
+  assign _zz__zz_decode_IS_SFENCE_VMA2_27 = (|{(_zz__zz_decode_IS_SFENCE_VMA2_28 == _zz__zz_decode_IS_SFENCE_VMA2_29),{_zz__zz_decode_IS_SFENCE_VMA2_30,_zz__zz_decode_IS_SFENCE_VMA2_31}});
+  assign _zz__zz_decode_IS_SFENCE_VMA2_32 = (|(_zz__zz_decode_IS_SFENCE_VMA2_33 == _zz__zz_decode_IS_SFENCE_VMA2_34));
+  assign _zz__zz_decode_IS_SFENCE_VMA2_35 = {(|_zz__zz_decode_IS_SFENCE_VMA2_36),{(|_zz__zz_decode_IS_SFENCE_VMA2_37),{_zz__zz_decode_IS_SFENCE_VMA2_40,{_zz__zz_decode_IS_SFENCE_VMA2_43,_zz__zz_decode_IS_SFENCE_VMA2_51}}}};
+  assign _zz__zz_decode_IS_SFENCE_VMA2_25 = 32'h00007034;
+  assign _zz__zz_decode_IS_SFENCE_VMA2_26 = 32'h02007064;
+  assign _zz__zz_decode_IS_SFENCE_VMA2_28 = (decode_INSTRUCTION & 32'h40003054);
+  assign _zz__zz_decode_IS_SFENCE_VMA2_29 = 32'h40001010;
+  assign _zz__zz_decode_IS_SFENCE_VMA2_30 = ((decode_INSTRUCTION & 32'h00007034) == 32'h00001010);
+  assign _zz__zz_decode_IS_SFENCE_VMA2_31 = ((decode_INSTRUCTION & 32'h02007054) == 32'h00001010);
+  assign _zz__zz_decode_IS_SFENCE_VMA2_33 = (decode_INSTRUCTION & 32'h00001000);
+  assign _zz__zz_decode_IS_SFENCE_VMA2_34 = 32'h00001000;
+  assign _zz__zz_decode_IS_SFENCE_VMA2_36 = ((decode_INSTRUCTION & 32'h00003000) == 32'h00002000);
+  assign _zz__zz_decode_IS_SFENCE_VMA2_37 = {_zz_decode_IS_SFENCE_VMA2_7,(_zz__zz_decode_IS_SFENCE_VMA2_38 == _zz__zz_decode_IS_SFENCE_VMA2_39)};
+  assign _zz__zz_decode_IS_SFENCE_VMA2_40 = (|(_zz__zz_decode_IS_SFENCE_VMA2_41 == _zz__zz_decode_IS_SFENCE_VMA2_42));
+  assign _zz__zz_decode_IS_SFENCE_VMA2_43 = (|{_zz__zz_decode_IS_SFENCE_VMA2_44,_zz__zz_decode_IS_SFENCE_VMA2_46});
+  assign _zz__zz_decode_IS_SFENCE_VMA2_51 = {(|_zz__zz_decode_IS_SFENCE_VMA2_52),{_zz__zz_decode_IS_SFENCE_VMA2_54,{_zz__zz_decode_IS_SFENCE_VMA2_67,_zz__zz_decode_IS_SFENCE_VMA2_74}}};
+  assign _zz__zz_decode_IS_SFENCE_VMA2_38 = (decode_INSTRUCTION & 32'h00005000);
+  assign _zz__zz_decode_IS_SFENCE_VMA2_39 = 32'h00001000;
+  assign _zz__zz_decode_IS_SFENCE_VMA2_41 = (decode_INSTRUCTION & 32'h00000064);
+  assign _zz__zz_decode_IS_SFENCE_VMA2_42 = 32'h00000024;
+  assign _zz__zz_decode_IS_SFENCE_VMA2_44 = ((decode_INSTRUCTION & _zz__zz_decode_IS_SFENCE_VMA2_45) == 32'h00000020);
+  assign _zz__zz_decode_IS_SFENCE_VMA2_46 = {(_zz__zz_decode_IS_SFENCE_VMA2_47 == _zz__zz_decode_IS_SFENCE_VMA2_48),(_zz__zz_decode_IS_SFENCE_VMA2_49 == _zz__zz_decode_IS_SFENCE_VMA2_50)};
+  assign _zz__zz_decode_IS_SFENCE_VMA2_52 = ((decode_INSTRUCTION & _zz__zz_decode_IS_SFENCE_VMA2_53) == 32'h00000008);
+  assign _zz__zz_decode_IS_SFENCE_VMA2_54 = (|{_zz__zz_decode_IS_SFENCE_VMA2_55,{_zz__zz_decode_IS_SFENCE_VMA2_57,_zz__zz_decode_IS_SFENCE_VMA2_60}});
+  assign _zz__zz_decode_IS_SFENCE_VMA2_67 = (|{_zz__zz_decode_IS_SFENCE_VMA2_68,_zz__zz_decode_IS_SFENCE_VMA2_71});
+  assign _zz__zz_decode_IS_SFENCE_VMA2_74 = {(|_zz__zz_decode_IS_SFENCE_VMA2_75),{_zz__zz_decode_IS_SFENCE_VMA2_88,{_zz__zz_decode_IS_SFENCE_VMA2_101,_zz__zz_decode_IS_SFENCE_VMA2_117}}};
+  assign _zz__zz_decode_IS_SFENCE_VMA2_45 = 32'h00000034;
+  assign _zz__zz_decode_IS_SFENCE_VMA2_47 = (decode_INSTRUCTION & 32'h00000064);
   assign _zz__zz_decode_IS_SFENCE_VMA2_48 = 32'h00000020;
-  assign _zz__zz_decode_IS_SFENCE_VMA2_49 = ((decode_INSTRUCTION & 32'h00000064) == 32'h00000020);
-  assign _zz__zz_decode_IS_SFENCE_VMA2_50 = ((decode_INSTRUCTION & 32'h08000070) == 32'h08000020);
-  assign _zz__zz_decode_IS_SFENCE_VMA2_52 = (decode_INSTRUCTION & 32'h00000008);
+  assign _zz__zz_decode_IS_SFENCE_VMA2_49 = (decode_INSTRUCTION & 32'h08000070);
+  assign _zz__zz_decode_IS_SFENCE_VMA2_50 = 32'h08000020;
   assign _zz__zz_decode_IS_SFENCE_VMA2_53 = 32'h00000008;
   assign _zz__zz_decode_IS_SFENCE_VMA2_55 = ((decode_INSTRUCTION & _zz__zz_decode_IS_SFENCE_VMA2_56) == 32'h00002040);
-  assign _zz__zz_decode_IS_SFENCE_VMA2_57 = {(_zz__zz_decode_IS_SFENCE_VMA2_58 == _zz__zz_decode_IS_SFENCE_VMA2_59),{_zz__zz_decode_IS_SFENCE_VMA2_60,{_zz__zz_decode_IS_SFENCE_VMA2_62,_zz__zz_decode_IS_SFENCE_VMA2_63}}};
-  assign _zz__zz_decode_IS_SFENCE_VMA2_67 = {(_zz__zz_decode_IS_SFENCE_VMA2_68 == _zz__zz_decode_IS_SFENCE_VMA2_69),(_zz__zz_decode_IS_SFENCE_VMA2_70 == _zz__zz_decode_IS_SFENCE_VMA2_71)};
-  assign _zz__zz_decode_IS_SFENCE_VMA2_72 = (|(_zz__zz_decode_IS_SFENCE_VMA2_73 == _zz__zz_decode_IS_SFENCE_VMA2_74));
-  assign _zz__zz_decode_IS_SFENCE_VMA2_75 = (|{_zz__zz_decode_IS_SFENCE_VMA2_76,_zz__zz_decode_IS_SFENCE_VMA2_77});
-  assign _zz__zz_decode_IS_SFENCE_VMA2_88 = {(|_zz__zz_decode_IS_SFENCE_VMA2_89),{_zz__zz_decode_IS_SFENCE_VMA2_104,{_zz__zz_decode_IS_SFENCE_VMA2_109,_zz__zz_decode_IS_SFENCE_VMA2_113}}};
+  assign _zz__zz_decode_IS_SFENCE_VMA2_57 = (_zz__zz_decode_IS_SFENCE_VMA2_58 == _zz__zz_decode_IS_SFENCE_VMA2_59);
+  assign _zz__zz_decode_IS_SFENCE_VMA2_60 = {_zz__zz_decode_IS_SFENCE_VMA2_61,{_zz__zz_decode_IS_SFENCE_VMA2_63,_zz__zz_decode_IS_SFENCE_VMA2_64}};
+  assign _zz__zz_decode_IS_SFENCE_VMA2_68 = (_zz__zz_decode_IS_SFENCE_VMA2_69 == _zz__zz_decode_IS_SFENCE_VMA2_70);
+  assign _zz__zz_decode_IS_SFENCE_VMA2_71 = (_zz__zz_decode_IS_SFENCE_VMA2_72 == _zz__zz_decode_IS_SFENCE_VMA2_73);
+  assign _zz__zz_decode_IS_SFENCE_VMA2_75 = {_zz__zz_decode_IS_SFENCE_VMA2_76,{_zz__zz_decode_IS_SFENCE_VMA2_78,_zz__zz_decode_IS_SFENCE_VMA2_81}};
+  assign _zz__zz_decode_IS_SFENCE_VMA2_88 = (|{_zz__zz_decode_IS_SFENCE_VMA2_89,_zz__zz_decode_IS_SFENCE_VMA2_90});
+  assign _zz__zz_decode_IS_SFENCE_VMA2_101 = (|_zz__zz_decode_IS_SFENCE_VMA2_102);
+  assign _zz__zz_decode_IS_SFENCE_VMA2_117 = {_zz__zz_decode_IS_SFENCE_VMA2_118,{_zz__zz_decode_IS_SFENCE_VMA2_123,_zz__zz_decode_IS_SFENCE_VMA2_127}};
   assign _zz__zz_decode_IS_SFENCE_VMA2_56 = 32'h00002040;
   assign _zz__zz_decode_IS_SFENCE_VMA2_58 = (decode_INSTRUCTION & 32'h00001040);
   assign _zz__zz_decode_IS_SFENCE_VMA2_59 = 32'h00001040;
-  assign _zz__zz_decode_IS_SFENCE_VMA2_60 = ((decode_INSTRUCTION & _zz__zz_decode_IS_SFENCE_VMA2_61) == 32'h00000040);
-  assign _zz__zz_decode_IS_SFENCE_VMA2_62 = _zz_decode_IS_SFENCE_VMA2_7;
-  assign _zz__zz_decode_IS_SFENCE_VMA2_63 = {_zz_decode_IS_SFENCE_VMA2_4,_zz__zz_decode_IS_SFENCE_VMA2_64};
-  assign _zz__zz_decode_IS_SFENCE_VMA2_68 = (decode_INSTRUCTION & 32'h08000020);
-  assign _zz__zz_decode_IS_SFENCE_VMA2_69 = 32'h08000020;
-  assign _zz__zz_decode_IS_SFENCE_VMA2_70 = (decode_INSTRUCTION & 32'h00000028);
-  assign _zz__zz_decode_IS_SFENCE_VMA2_71 = 32'h00000020;
-  assign _zz__zz_decode_IS_SFENCE_VMA2_73 = (decode_INSTRUCTION & 32'h00000010);
-  assign _zz__zz_decode_IS_SFENCE_VMA2_74 = 32'h00000010;
-  assign _zz__zz_decode_IS_SFENCE_VMA2_76 = _zz_decode_IS_SFENCE_VMA2_6;
-  assign _zz__zz_decode_IS_SFENCE_VMA2_77 = {_zz__zz_decode_IS_SFENCE_VMA2_78,{_zz__zz_decode_IS_SFENCE_VMA2_80,_zz__zz_decode_IS_SFENCE_VMA2_83}};
-  assign _zz__zz_decode_IS_SFENCE_VMA2_89 = {_zz_decode_IS_SFENCE_VMA2_2,{_zz__zz_decode_IS_SFENCE_VMA2_90,_zz__zz_decode_IS_SFENCE_VMA2_93}};
-  assign _zz__zz_decode_IS_SFENCE_VMA2_104 = (|{_zz__zz_decode_IS_SFENCE_VMA2_105,_zz__zz_decode_IS_SFENCE_VMA2_106});
-  assign _zz__zz_decode_IS_SFENCE_VMA2_109 = (|_zz__zz_decode_IS_SFENCE_VMA2_110);
-  assign _zz__zz_decode_IS_SFENCE_VMA2_113 = {_zz__zz_decode_IS_SFENCE_VMA2_114,{_zz__zz_decode_IS_SFENCE_VMA2_117,_zz__zz_decode_IS_SFENCE_VMA2_121}};
-  assign _zz__zz_decode_IS_SFENCE_VMA2_61 = 32'h00000050;
-  assign _zz__zz_decode_IS_SFENCE_VMA2_64 = ((decode_INSTRUCTION & _zz__zz_decode_IS_SFENCE_VMA2_65) == 32'h00000040);
-  assign _zz__zz_decode_IS_SFENCE_VMA2_78 = ((decode_INSTRUCTION & _zz__zz_decode_IS_SFENCE_VMA2_79) == 32'h00002010);
-  assign _zz__zz_decode_IS_SFENCE_VMA2_80 = (_zz__zz_decode_IS_SFENCE_VMA2_81 == _zz__zz_decode_IS_SFENCE_VMA2_82);
-  assign _zz__zz_decode_IS_SFENCE_VMA2_83 = {_zz__zz_decode_IS_SFENCE_VMA2_84,_zz__zz_decode_IS_SFENCE_VMA2_86};
-  assign _zz__zz_decode_IS_SFENCE_VMA2_90 = (_zz__zz_decode_IS_SFENCE_VMA2_91 == _zz__zz_decode_IS_SFENCE_VMA2_92);
-  assign _zz__zz_decode_IS_SFENCE_VMA2_93 = {_zz__zz_decode_IS_SFENCE_VMA2_94,{_zz__zz_decode_IS_SFENCE_VMA2_96,_zz__zz_decode_IS_SFENCE_VMA2_99}};
-  assign _zz__zz_decode_IS_SFENCE_VMA2_105 = _zz_decode_IS_SFENCE_VMA2_5;
-  assign _zz__zz_decode_IS_SFENCE_VMA2_106 = (_zz__zz_decode_IS_SFENCE_VMA2_107 == _zz__zz_decode_IS_SFENCE_VMA2_108);
-  assign _zz__zz_decode_IS_SFENCE_VMA2_110 = {_zz_decode_IS_SFENCE_VMA2_5,_zz__zz_decode_IS_SFENCE_VMA2_111};
-  assign _zz__zz_decode_IS_SFENCE_VMA2_114 = (|_zz__zz_decode_IS_SFENCE_VMA2_115);
-  assign _zz__zz_decode_IS_SFENCE_VMA2_117 = (|_zz__zz_decode_IS_SFENCE_VMA2_118);
-  assign _zz__zz_decode_IS_SFENCE_VMA2_121 = {_zz__zz_decode_IS_SFENCE_VMA2_122,{_zz__zz_decode_IS_SFENCE_VMA2_129,_zz__zz_decode_IS_SFENCE_VMA2_133}};
-  assign _zz__zz_decode_IS_SFENCE_VMA2_65 = 32'h02100040;
-  assign _zz__zz_decode_IS_SFENCE_VMA2_79 = 32'h00002030;
-  assign _zz__zz_decode_IS_SFENCE_VMA2_81 = (decode_INSTRUCTION & 32'h00001030);
-  assign _zz__zz_decode_IS_SFENCE_VMA2_82 = 32'h00000010;
-  assign _zz__zz_decode_IS_SFENCE_VMA2_84 = ((decode_INSTRUCTION & _zz__zz_decode_IS_SFENCE_VMA2_85) == 32'h00000020);
-  assign _zz__zz_decode_IS_SFENCE_VMA2_86 = ((decode_INSTRUCTION & _zz__zz_decode_IS_SFENCE_VMA2_87) == 32'h00002020);
-  assign _zz__zz_decode_IS_SFENCE_VMA2_91 = (decode_INSTRUCTION & 32'h00001010);
-  assign _zz__zz_decode_IS_SFENCE_VMA2_92 = 32'h00001010;
-  assign _zz__zz_decode_IS_SFENCE_VMA2_94 = ((decode_INSTRUCTION & _zz__zz_decode_IS_SFENCE_VMA2_95) == 32'h00002010);
-  assign _zz__zz_decode_IS_SFENCE_VMA2_96 = (_zz__zz_decode_IS_SFENCE_VMA2_97 == _zz__zz_decode_IS_SFENCE_VMA2_98);
-  assign _zz__zz_decode_IS_SFENCE_VMA2_99 = {_zz__zz_decode_IS_SFENCE_VMA2_100,{_zz__zz_decode_IS_SFENCE_VMA2_101,_zz__zz_decode_IS_SFENCE_VMA2_102}};
-  assign _zz__zz_decode_IS_SFENCE_VMA2_107 = (decode_INSTRUCTION & 32'h00000070);
-  assign _zz__zz_decode_IS_SFENCE_VMA2_108 = 32'h00000020;
-  assign _zz__zz_decode_IS_SFENCE_VMA2_111 = ((decode_INSTRUCTION & _zz__zz_decode_IS_SFENCE_VMA2_112) == 32'h0);
-  assign _zz__zz_decode_IS_SFENCE_VMA2_115 = ((decode_INSTRUCTION & _zz__zz_decode_IS_SFENCE_VMA2_116) == 32'h00004010);
-  assign _zz__zz_decode_IS_SFENCE_VMA2_118 = (_zz__zz_decode_IS_SFENCE_VMA2_119 == _zz__zz_decode_IS_SFENCE_VMA2_120);
-  assign _zz__zz_decode_IS_SFENCE_VMA2_122 = (|{_zz__zz_decode_IS_SFENCE_VMA2_123,_zz__zz_decode_IS_SFENCE_VMA2_125});
-  assign _zz__zz_decode_IS_SFENCE_VMA2_129 = (|_zz__zz_decode_IS_SFENCE_VMA2_130);
-  assign _zz__zz_decode_IS_SFENCE_VMA2_133 = {_zz__zz_decode_IS_SFENCE_VMA2_134,{_zz__zz_decode_IS_SFENCE_VMA2_138,_zz__zz_decode_IS_SFENCE_VMA2_142}};
-  assign _zz__zz_decode_IS_SFENCE_VMA2_85 = 32'h02003020;
-  assign _zz__zz_decode_IS_SFENCE_VMA2_87 = 32'h12002060;
-  assign _zz__zz_decode_IS_SFENCE_VMA2_95 = 32'h00002010;
-  assign _zz__zz_decode_IS_SFENCE_VMA2_97 = (decode_INSTRUCTION & 32'h00002008);
-  assign _zz__zz_decode_IS_SFENCE_VMA2_98 = 32'h00002008;
-  assign _zz__zz_decode_IS_SFENCE_VMA2_100 = ((decode_INSTRUCTION & 32'h00000050) == 32'h00000010);
-  assign _zz__zz_decode_IS_SFENCE_VMA2_101 = _zz_decode_IS_SFENCE_VMA2_6;
-  assign _zz__zz_decode_IS_SFENCE_VMA2_102 = ((decode_INSTRUCTION & _zz__zz_decode_IS_SFENCE_VMA2_103) == 32'h0);
-  assign _zz__zz_decode_IS_SFENCE_VMA2_112 = 32'h00000020;
-  assign _zz__zz_decode_IS_SFENCE_VMA2_116 = 32'h00004014;
-  assign _zz__zz_decode_IS_SFENCE_VMA2_119 = (decode_INSTRUCTION & 32'h00006014);
-  assign _zz__zz_decode_IS_SFENCE_VMA2_120 = 32'h00002010;
-  assign _zz__zz_decode_IS_SFENCE_VMA2_123 = ((decode_INSTRUCTION & _zz__zz_decode_IS_SFENCE_VMA2_124) == 32'h0);
-  assign _zz__zz_decode_IS_SFENCE_VMA2_125 = {_zz_decode_IS_SFENCE_VMA2_4,{_zz__zz_decode_IS_SFENCE_VMA2_126,{_zz__zz_decode_IS_SFENCE_VMA2_127,_zz__zz_decode_IS_SFENCE_VMA2_128}}};
-  assign _zz__zz_decode_IS_SFENCE_VMA2_130 = {_zz_decode_IS_SFENCE_VMA2_3,(_zz__zz_decode_IS_SFENCE_VMA2_131 == _zz__zz_decode_IS_SFENCE_VMA2_132)};
-  assign _zz__zz_decode_IS_SFENCE_VMA2_134 = (|{_zz__zz_decode_IS_SFENCE_VMA2_135,{_zz__zz_decode_IS_SFENCE_VMA2_136,_zz__zz_decode_IS_SFENCE_VMA2_137}});
-  assign _zz__zz_decode_IS_SFENCE_VMA2_138 = (|{_zz__zz_decode_IS_SFENCE_VMA2_139,_zz__zz_decode_IS_SFENCE_VMA2_140});
-  assign _zz__zz_decode_IS_SFENCE_VMA2_142 = (|{_zz__zz_decode_IS_SFENCE_VMA2_143,_zz__zz_decode_IS_SFENCE_VMA2_144});
-  assign _zz__zz_decode_IS_SFENCE_VMA2_103 = 32'h00000028;
-  assign _zz__zz_decode_IS_SFENCE_VMA2_124 = 32'h00000044;
-  assign _zz__zz_decode_IS_SFENCE_VMA2_126 = ((decode_INSTRUCTION & 32'h00006004) == 32'h00002000);
-  assign _zz__zz_decode_IS_SFENCE_VMA2_127 = ((decode_INSTRUCTION & 32'h00005004) == 32'h00001000);
-  assign _zz__zz_decode_IS_SFENCE_VMA2_128 = _zz_decode_IS_SFENCE_VMA2_3;
-  assign _zz__zz_decode_IS_SFENCE_VMA2_131 = (decode_INSTRUCTION & 32'h00000058);
-  assign _zz__zz_decode_IS_SFENCE_VMA2_132 = 32'h0;
-  assign _zz__zz_decode_IS_SFENCE_VMA2_135 = ((decode_INSTRUCTION & 32'h00000044) == 32'h00000040);
-  assign _zz__zz_decode_IS_SFENCE_VMA2_136 = ((decode_INSTRUCTION & 32'h00002014) == 32'h00002010);
-  assign _zz__zz_decode_IS_SFENCE_VMA2_137 = ((decode_INSTRUCTION & 32'h40000034) == 32'h40000030);
-  assign _zz__zz_decode_IS_SFENCE_VMA2_139 = _zz_decode_IS_SFENCE_VMA2_2;
-  assign _zz__zz_decode_IS_SFENCE_VMA2_140 = {_zz_decode_IS_SFENCE_VMA2_1,((decode_INSTRUCTION & _zz__zz_decode_IS_SFENCE_VMA2_141) == 32'h00000004)};
-  assign _zz__zz_decode_IS_SFENCE_VMA2_143 = _zz_decode_IS_SFENCE_VMA2_1;
-  assign _zz__zz_decode_IS_SFENCE_VMA2_144 = ((decode_INSTRUCTION & 32'h0000004c) == 32'h00000004);
-  assign _zz__zz_decode_IS_SFENCE_VMA2_141 = 32'h00002014;
+  assign _zz__zz_decode_IS_SFENCE_VMA2_61 = ((decode_INSTRUCTION & _zz__zz_decode_IS_SFENCE_VMA2_62) == 32'h00000040);
+  assign _zz__zz_decode_IS_SFENCE_VMA2_63 = _zz_decode_IS_SFENCE_VMA2_7;
+  assign _zz__zz_decode_IS_SFENCE_VMA2_64 = {_zz_decode_IS_SFENCE_VMA2_4,_zz__zz_decode_IS_SFENCE_VMA2_65};
+  assign _zz__zz_decode_IS_SFENCE_VMA2_69 = (decode_INSTRUCTION & 32'h08000020);
+  assign _zz__zz_decode_IS_SFENCE_VMA2_70 = 32'h08000020;
+  assign _zz__zz_decode_IS_SFENCE_VMA2_72 = (decode_INSTRUCTION & 32'h00000028);
+  assign _zz__zz_decode_IS_SFENCE_VMA2_73 = 32'h00000020;
+  assign _zz__zz_decode_IS_SFENCE_VMA2_76 = ((decode_INSTRUCTION & _zz__zz_decode_IS_SFENCE_VMA2_77) == 32'h00000040);
+  assign _zz__zz_decode_IS_SFENCE_VMA2_78 = (_zz__zz_decode_IS_SFENCE_VMA2_79 == _zz__zz_decode_IS_SFENCE_VMA2_80);
+  assign _zz__zz_decode_IS_SFENCE_VMA2_81 = {_zz__zz_decode_IS_SFENCE_VMA2_82,{_zz__zz_decode_IS_SFENCE_VMA2_84,_zz__zz_decode_IS_SFENCE_VMA2_85}};
+  assign _zz__zz_decode_IS_SFENCE_VMA2_89 = _zz_decode_IS_SFENCE_VMA2_6;
+  assign _zz__zz_decode_IS_SFENCE_VMA2_90 = {_zz__zz_decode_IS_SFENCE_VMA2_91,{_zz__zz_decode_IS_SFENCE_VMA2_93,_zz__zz_decode_IS_SFENCE_VMA2_96}};
+  assign _zz__zz_decode_IS_SFENCE_VMA2_102 = {_zz_decode_IS_SFENCE_VMA2_2,{_zz__zz_decode_IS_SFENCE_VMA2_103,_zz__zz_decode_IS_SFENCE_VMA2_106}};
+  assign _zz__zz_decode_IS_SFENCE_VMA2_118 = (|{_zz__zz_decode_IS_SFENCE_VMA2_119,_zz__zz_decode_IS_SFENCE_VMA2_120});
+  assign _zz__zz_decode_IS_SFENCE_VMA2_123 = (|_zz__zz_decode_IS_SFENCE_VMA2_124);
+  assign _zz__zz_decode_IS_SFENCE_VMA2_127 = {_zz__zz_decode_IS_SFENCE_VMA2_128,{_zz__zz_decode_IS_SFENCE_VMA2_131,_zz__zz_decode_IS_SFENCE_VMA2_135}};
+  assign _zz__zz_decode_IS_SFENCE_VMA2_62 = 32'h00000050;
+  assign _zz__zz_decode_IS_SFENCE_VMA2_65 = ((decode_INSTRUCTION & _zz__zz_decode_IS_SFENCE_VMA2_66) == 32'h00000040);
+  assign _zz__zz_decode_IS_SFENCE_VMA2_77 = 32'h00000040;
+  assign _zz__zz_decode_IS_SFENCE_VMA2_79 = (decode_INSTRUCTION & 32'h00004020);
+  assign _zz__zz_decode_IS_SFENCE_VMA2_80 = 32'h00004020;
+  assign _zz__zz_decode_IS_SFENCE_VMA2_82 = ((decode_INSTRUCTION & _zz__zz_decode_IS_SFENCE_VMA2_83) == 32'h00000010);
+  assign _zz__zz_decode_IS_SFENCE_VMA2_84 = _zz_decode_IS_SFENCE_VMA2_6;
+  assign _zz__zz_decode_IS_SFENCE_VMA2_85 = (_zz__zz_decode_IS_SFENCE_VMA2_86 == _zz__zz_decode_IS_SFENCE_VMA2_87);
+  assign _zz__zz_decode_IS_SFENCE_VMA2_91 = ((decode_INSTRUCTION & _zz__zz_decode_IS_SFENCE_VMA2_92) == 32'h00002010);
+  assign _zz__zz_decode_IS_SFENCE_VMA2_93 = (_zz__zz_decode_IS_SFENCE_VMA2_94 == _zz__zz_decode_IS_SFENCE_VMA2_95);
+  assign _zz__zz_decode_IS_SFENCE_VMA2_96 = {_zz__zz_decode_IS_SFENCE_VMA2_97,_zz__zz_decode_IS_SFENCE_VMA2_99};
+  assign _zz__zz_decode_IS_SFENCE_VMA2_103 = (_zz__zz_decode_IS_SFENCE_VMA2_104 == _zz__zz_decode_IS_SFENCE_VMA2_105);
+  assign _zz__zz_decode_IS_SFENCE_VMA2_106 = {_zz__zz_decode_IS_SFENCE_VMA2_107,{_zz__zz_decode_IS_SFENCE_VMA2_109,_zz__zz_decode_IS_SFENCE_VMA2_112}};
+  assign _zz__zz_decode_IS_SFENCE_VMA2_119 = _zz_decode_IS_SFENCE_VMA2_5;
+  assign _zz__zz_decode_IS_SFENCE_VMA2_120 = (_zz__zz_decode_IS_SFENCE_VMA2_121 == _zz__zz_decode_IS_SFENCE_VMA2_122);
+  assign _zz__zz_decode_IS_SFENCE_VMA2_124 = {_zz_decode_IS_SFENCE_VMA2_5,_zz__zz_decode_IS_SFENCE_VMA2_125};
+  assign _zz__zz_decode_IS_SFENCE_VMA2_128 = (|_zz__zz_decode_IS_SFENCE_VMA2_129);
+  assign _zz__zz_decode_IS_SFENCE_VMA2_131 = (|_zz__zz_decode_IS_SFENCE_VMA2_132);
+  assign _zz__zz_decode_IS_SFENCE_VMA2_135 = {_zz__zz_decode_IS_SFENCE_VMA2_136,{_zz__zz_decode_IS_SFENCE_VMA2_143,_zz__zz_decode_IS_SFENCE_VMA2_147}};
+  assign _zz__zz_decode_IS_SFENCE_VMA2_66 = 32'h02100040;
+  assign _zz__zz_decode_IS_SFENCE_VMA2_83 = 32'h00000030;
+  assign _zz__zz_decode_IS_SFENCE_VMA2_86 = (decode_INSTRUCTION & 32'h12000020);
+  assign _zz__zz_decode_IS_SFENCE_VMA2_87 = 32'h00000020;
+  assign _zz__zz_decode_IS_SFENCE_VMA2_92 = 32'h00002030;
+  assign _zz__zz_decode_IS_SFENCE_VMA2_94 = (decode_INSTRUCTION & 32'h00001030);
+  assign _zz__zz_decode_IS_SFENCE_VMA2_95 = 32'h00000010;
+  assign _zz__zz_decode_IS_SFENCE_VMA2_97 = ((decode_INSTRUCTION & _zz__zz_decode_IS_SFENCE_VMA2_98) == 32'h00000020);
+  assign _zz__zz_decode_IS_SFENCE_VMA2_99 = ((decode_INSTRUCTION & _zz__zz_decode_IS_SFENCE_VMA2_100) == 32'h00002020);
+  assign _zz__zz_decode_IS_SFENCE_VMA2_104 = (decode_INSTRUCTION & 32'h00001010);
+  assign _zz__zz_decode_IS_SFENCE_VMA2_105 = 32'h00001010;
+  assign _zz__zz_decode_IS_SFENCE_VMA2_107 = ((decode_INSTRUCTION & _zz__zz_decode_IS_SFENCE_VMA2_108) == 32'h00002010);
+  assign _zz__zz_decode_IS_SFENCE_VMA2_109 = (_zz__zz_decode_IS_SFENCE_VMA2_110 == _zz__zz_decode_IS_SFENCE_VMA2_111);
+  assign _zz__zz_decode_IS_SFENCE_VMA2_112 = {_zz__zz_decode_IS_SFENCE_VMA2_113,{_zz__zz_decode_IS_SFENCE_VMA2_114,_zz__zz_decode_IS_SFENCE_VMA2_115}};
+  assign _zz__zz_decode_IS_SFENCE_VMA2_121 = (decode_INSTRUCTION & 32'h00000070);
+  assign _zz__zz_decode_IS_SFENCE_VMA2_122 = 32'h00000020;
+  assign _zz__zz_decode_IS_SFENCE_VMA2_125 = ((decode_INSTRUCTION & _zz__zz_decode_IS_SFENCE_VMA2_126) == 32'h0);
+  assign _zz__zz_decode_IS_SFENCE_VMA2_129 = ((decode_INSTRUCTION & _zz__zz_decode_IS_SFENCE_VMA2_130) == 32'h00004010);
+  assign _zz__zz_decode_IS_SFENCE_VMA2_132 = (_zz__zz_decode_IS_SFENCE_VMA2_133 == _zz__zz_decode_IS_SFENCE_VMA2_134);
+  assign _zz__zz_decode_IS_SFENCE_VMA2_136 = (|{_zz__zz_decode_IS_SFENCE_VMA2_137,_zz__zz_decode_IS_SFENCE_VMA2_139});
+  assign _zz__zz_decode_IS_SFENCE_VMA2_143 = (|_zz__zz_decode_IS_SFENCE_VMA2_144);
+  assign _zz__zz_decode_IS_SFENCE_VMA2_147 = {_zz__zz_decode_IS_SFENCE_VMA2_148,{_zz__zz_decode_IS_SFENCE_VMA2_152,_zz__zz_decode_IS_SFENCE_VMA2_156}};
+  assign _zz__zz_decode_IS_SFENCE_VMA2_98 = 32'h02003020;
+  assign _zz__zz_decode_IS_SFENCE_VMA2_100 = 32'h12002060;
+  assign _zz__zz_decode_IS_SFENCE_VMA2_108 = 32'h00002010;
+  assign _zz__zz_decode_IS_SFENCE_VMA2_110 = (decode_INSTRUCTION & 32'h00002008);
+  assign _zz__zz_decode_IS_SFENCE_VMA2_111 = 32'h00002008;
+  assign _zz__zz_decode_IS_SFENCE_VMA2_113 = ((decode_INSTRUCTION & 32'h00000050) == 32'h00000010);
+  assign _zz__zz_decode_IS_SFENCE_VMA2_114 = _zz_decode_IS_SFENCE_VMA2_6;
+  assign _zz__zz_decode_IS_SFENCE_VMA2_115 = ((decode_INSTRUCTION & _zz__zz_decode_IS_SFENCE_VMA2_116) == 32'h0);
+  assign _zz__zz_decode_IS_SFENCE_VMA2_126 = 32'h00000020;
+  assign _zz__zz_decode_IS_SFENCE_VMA2_130 = 32'h00004014;
+  assign _zz__zz_decode_IS_SFENCE_VMA2_133 = (decode_INSTRUCTION & 32'h00006014);
+  assign _zz__zz_decode_IS_SFENCE_VMA2_134 = 32'h00002010;
+  assign _zz__zz_decode_IS_SFENCE_VMA2_137 = ((decode_INSTRUCTION & _zz__zz_decode_IS_SFENCE_VMA2_138) == 32'h0);
+  assign _zz__zz_decode_IS_SFENCE_VMA2_139 = {_zz_decode_IS_SFENCE_VMA2_4,{_zz__zz_decode_IS_SFENCE_VMA2_140,{_zz__zz_decode_IS_SFENCE_VMA2_141,_zz__zz_decode_IS_SFENCE_VMA2_142}}};
+  assign _zz__zz_decode_IS_SFENCE_VMA2_144 = {_zz_decode_IS_SFENCE_VMA2_3,(_zz__zz_decode_IS_SFENCE_VMA2_145 == _zz__zz_decode_IS_SFENCE_VMA2_146)};
+  assign _zz__zz_decode_IS_SFENCE_VMA2_148 = (|{_zz__zz_decode_IS_SFENCE_VMA2_149,{_zz__zz_decode_IS_SFENCE_VMA2_150,_zz__zz_decode_IS_SFENCE_VMA2_151}});
+  assign _zz__zz_decode_IS_SFENCE_VMA2_152 = (|{_zz__zz_decode_IS_SFENCE_VMA2_153,_zz__zz_decode_IS_SFENCE_VMA2_154});
+  assign _zz__zz_decode_IS_SFENCE_VMA2_156 = (|{_zz__zz_decode_IS_SFENCE_VMA2_157,_zz__zz_decode_IS_SFENCE_VMA2_158});
+  assign _zz__zz_decode_IS_SFENCE_VMA2_116 = 32'h00000028;
+  assign _zz__zz_decode_IS_SFENCE_VMA2_138 = 32'h00000044;
+  assign _zz__zz_decode_IS_SFENCE_VMA2_140 = ((decode_INSTRUCTION & 32'h00006004) == 32'h00002000);
+  assign _zz__zz_decode_IS_SFENCE_VMA2_141 = ((decode_INSTRUCTION & 32'h00005004) == 32'h00001000);
+  assign _zz__zz_decode_IS_SFENCE_VMA2_142 = _zz_decode_IS_SFENCE_VMA2_3;
+  assign _zz__zz_decode_IS_SFENCE_VMA2_145 = (decode_INSTRUCTION & 32'h00000058);
+  assign _zz__zz_decode_IS_SFENCE_VMA2_146 = 32'h0;
+  assign _zz__zz_decode_IS_SFENCE_VMA2_149 = ((decode_INSTRUCTION & 32'h00000044) == 32'h00000040);
+  assign _zz__zz_decode_IS_SFENCE_VMA2_150 = ((decode_INSTRUCTION & 32'h00002014) == 32'h00002010);
+  assign _zz__zz_decode_IS_SFENCE_VMA2_151 = ((decode_INSTRUCTION & 32'h40000034) == 32'h40000030);
+  assign _zz__zz_decode_IS_SFENCE_VMA2_153 = _zz_decode_IS_SFENCE_VMA2_2;
+  assign _zz__zz_decode_IS_SFENCE_VMA2_154 = {_zz_decode_IS_SFENCE_VMA2_1,((decode_INSTRUCTION & _zz__zz_decode_IS_SFENCE_VMA2_155) == 32'h00000004)};
+  assign _zz__zz_decode_IS_SFENCE_VMA2_157 = _zz_decode_IS_SFENCE_VMA2_1;
+  assign _zz__zz_decode_IS_SFENCE_VMA2_158 = ((decode_INSTRUCTION & 32'h0000004c) == 32'h00000004);
+  assign _zz__zz_decode_IS_SFENCE_VMA2_155 = 32'h00002014;
   assign _zz_execute_BranchPlugin_branch_src2_6 = execute_INSTRUCTION[31];
   assign _zz_execute_BranchPlugin_branch_src2_7 = execute_INSTRUCTION[31];
   assign _zz_execute_BranchPlugin_branch_src2_8 = execute_INSTRUCTION[7];
@@ -3432,9 +2918,15 @@ module VexRiscv (
   end
   `endif
 
+  assign memory_MUL_LOW = ($signed(_zz_memory_MUL_LOW) + $signed(_zz_memory_MUL_LOW_7));
   assign memory_MEMORY_READ_DATA = dBus_rsp_data;
   assign execute_BRANCH_CALC = {execute_BranchPlugin_branchAdder[31 : 1],1'b0};
   assign execute_BRANCH_DO = ((execute_PREDICTION_HAD_BRANCHED2 != execute_BRANCH_COND_RESULT) || execute_BranchPlugin_missAlignedTarget);
+  assign memory_MUL_HH = execute_to_memory_MUL_HH;
+  assign execute_MUL_HH = ($signed(execute_MulPlugin_aHigh) * $signed(execute_MulPlugin_bHigh));
+  assign execute_MUL_HL = ($signed(execute_MulPlugin_aHigh) * $signed(execute_MulPlugin_bSLow));
+  assign execute_MUL_LH = ($signed(execute_MulPlugin_aSLow) * $signed(execute_MulPlugin_bHigh));
+  assign execute_MUL_LL = (execute_MulPlugin_aULow * execute_MulPlugin_bULow);
   assign execute_SHIFT_RIGHT = _zz_execute_SHIFT_RIGHT;
   assign writeBack_REGFILE_WRITE_DATA = memory_to_writeBack_REGFILE_WRITE_DATA;
   assign execute_REGFILE_WRITE_DATA = _zz_execute_REGFILE_WRITE_DATA;
@@ -3455,9 +2947,11 @@ module VexRiscv (
   assign decode_ENV_CTRL = _zz_decode_ENV_CTRL;
   assign _zz_decode_to_execute_ENV_CTRL = _zz_decode_to_execute_ENV_CTRL_1;
   assign decode_IS_CSR = _zz_decode_IS_SFENCE_VMA2[26];
-  assign decode_IS_DIV = _zz_decode_IS_SFENCE_VMA2[25];
-  assign decode_IS_RS2_SIGNED = _zz_decode_IS_SFENCE_VMA2[24];
-  assign decode_IS_RS1_SIGNED = _zz_decode_IS_SFENCE_VMA2[23];
+  assign decode_IS_RS2_SIGNED = _zz_decode_IS_SFENCE_VMA2[25];
+  assign decode_IS_RS1_SIGNED = _zz_decode_IS_SFENCE_VMA2[24];
+  assign decode_IS_DIV = _zz_decode_IS_SFENCE_VMA2[23];
+  assign memory_IS_MUL = execute_to_memory_IS_MUL;
+  assign execute_IS_MUL = decode_to_execute_IS_MUL;
   assign decode_IS_MUL = _zz_decode_IS_SFENCE_VMA2[22];
   assign _zz_execute_to_memory_SHIFT_CTRL = _zz_execute_to_memory_SHIFT_CTRL_1;
   assign decode_SHIFT_CTRL = _zz_decode_SHIFT_CTRL;
@@ -3495,12 +2989,16 @@ module VexRiscv (
   assign writeBack_ENV_CTRL = _zz_writeBack_ENV_CTRL;
   assign execute_IS_SFENCE_VMA = decode_to_execute_IS_SFENCE_VMA;
   assign execute_IS_RS1_SIGNED = decode_to_execute_IS_RS1_SIGNED;
-  assign execute_RS1 = decode_to_execute_RS1;
   assign execute_IS_DIV = decode_to_execute_IS_DIV;
-  assign execute_IS_MUL = decode_to_execute_IS_MUL;
   assign execute_IS_RS2_SIGNED = decode_to_execute_IS_RS2_SIGNED;
   assign memory_IS_DIV = execute_to_memory_IS_DIV;
-  assign memory_IS_MUL = execute_to_memory_IS_MUL;
+  assign writeBack_IS_MUL = memory_to_writeBack_IS_MUL;
+  assign writeBack_MUL_HH = memory_to_writeBack_MUL_HH;
+  assign writeBack_MUL_LOW = memory_to_writeBack_MUL_LOW;
+  assign memory_MUL_HL = execute_to_memory_MUL_HL;
+  assign memory_MUL_LH = execute_to_memory_MUL_LH;
+  assign memory_MUL_LL = execute_to_memory_MUL_LL;
+  assign execute_RS1 = decode_to_execute_RS1;
   assign decode_RS2_USE = _zz_decode_IS_SFENCE_VMA2[15];
   assign decode_RS1_USE = _zz_decode_IS_SFENCE_VMA2[4];
   always @(*) begin
@@ -3591,9 +3089,6 @@ module VexRiscv (
         end
       endcase
     end
-    if(when_MulDivIterativePlugin_l96) begin
-      _zz_decode_RS2_1 = ((memory_INSTRUCTION[13 : 12] == 2'b00) ? memory_MulDivIterativePlugin_accumulator[31 : 0] : memory_MulDivIterativePlugin_accumulator[63 : 32]);
-    end
     if(when_MulDivIterativePlugin_l128) begin
       _zz_decode_RS2_1 = memory_MulDivIterativePlugin_div_result;
     end
@@ -3645,6 +3140,16 @@ module VexRiscv (
       if(when_DBusSimplePlugin_l561) begin
         _zz_decode_RS2_2 = {31'd0, _zz__zz_decode_RS2_2};
       end
+    end
+    if(when_MulPlugin_l147) begin
+      case(switch_MulPlugin_l148)
+        2'b00 : begin
+          _zz_decode_RS2_2 = _zz__zz_decode_RS2_2_1;
+        end
+        default : begin
+          _zz_decode_RS2_2 = _zz__zz_decode_RS2_2_2;
+        end
+      endcase
     end
   end
 
@@ -3862,14 +3367,6 @@ module VexRiscv (
     memory_arbitration_haltItself = 1'b0;
     if(when_DBusSimplePlugin_l482) begin
       memory_arbitration_haltItself = 1'b1;
-    end
-    if(when_MulDivIterativePlugin_l96) begin
-      if(when_MulDivIterativePlugin_l97) begin
-        memory_arbitration_haltItself = 1'b1;
-      end
-      if(when_MulDivIterativePlugin_l100) begin
-        memory_arbitration_haltItself = 1'b1;
-      end
     end
     if(when_MulDivIterativePlugin_l128) begin
       if(when_MulDivIterativePlugin_l129) begin
@@ -4843,10 +4340,8 @@ module VexRiscv (
   assign _zz_decode_IS_SFENCE_VMA2_5 = ((decode_INSTRUCTION & 32'h00000004) == 32'h00000004);
   assign _zz_decode_IS_SFENCE_VMA2_6 = ((decode_INSTRUCTION & 32'h0000000c) == 32'h00000004);
   assign _zz_decode_IS_SFENCE_VMA2_7 = ((decode_INSTRUCTION & 32'h00002010) == 32'h00002000);
-  assign _zz_decode_IS_SFENCE_VMA2_8 = ((decode_INSTRUCTION & 32'h00003000) == 32'h00002000);
-  assign _zz_decode_IS_SFENCE_VMA2_9 = ((decode_INSTRUCTION & 32'h00007000) == 32'h00001000);
-  assign _zz_decode_IS_SFENCE_VMA2_10 = ((decode_INSTRUCTION & 32'h00005000) == 32'h00004000);
-  assign _zz_decode_IS_SFENCE_VMA2_11 = ((decode_INSTRUCTION & 32'h02003050) == 32'h02000050);
+  assign _zz_decode_IS_SFENCE_VMA2_8 = ((decode_INSTRUCTION & 32'h00001000) == 32'h0);
+  assign _zz_decode_IS_SFENCE_VMA2_9 = ((decode_INSTRUCTION & 32'h02003050) == 32'h02000050);
   assign _zz_decode_IS_SFENCE_VMA2 = {(|{_zz_decode_IS_SFENCE_VMA2_2,(_zz__zz_decode_IS_SFENCE_VMA2 == _zz__zz_decode_IS_SFENCE_VMA2_1)}),{(|(_zz__zz_decode_IS_SFENCE_VMA2_2 == _zz__zz_decode_IS_SFENCE_VMA2_3)),{(|_zz__zz_decode_IS_SFENCE_VMA2_4),{(|_zz__zz_decode_IS_SFENCE_VMA2_5),{_zz__zz_decode_IS_SFENCE_VMA2_6,{_zz__zz_decode_IS_SFENCE_VMA2_7,_zz__zz_decode_IS_SFENCE_VMA2_12}}}}}};
   assign _zz_decode_SRC1_CTRL_2 = _zz_decode_IS_SFENCE_VMA2[1 : 0];
   assign _zz_decode_SRC1_CTRL_1 = _zz_decode_SRC1_CTRL_2;
@@ -5162,36 +4657,47 @@ module VexRiscv (
   assign when_HazardSimplePlugin_l105 = (! decode_RS1_USE);
   assign when_HazardSimplePlugin_l108 = (! decode_RS2_USE);
   assign when_HazardSimplePlugin_l113 = (decode_arbitration_isValid && (HazardSimplePlugin_src0Hazard || HazardSimplePlugin_src1Hazard));
-  assign memory_MulDivIterativePlugin_frontendOk = 1'b1;
+  assign execute_MulPlugin_a = execute_RS1;
+  assign execute_MulPlugin_b = execute_RS2;
+  assign switch_MulPlugin_l87 = execute_INSTRUCTION[13 : 12];
   always @(*) begin
-    memory_MulDivIterativePlugin_mul_counter_willIncrement = 1'b0;
-    if(when_MulDivIterativePlugin_l96) begin
-      if(when_MulDivIterativePlugin_l100) begin
-        memory_MulDivIterativePlugin_mul_counter_willIncrement = 1'b1;
+    case(switch_MulPlugin_l87)
+      2'b01 : begin
+        execute_MulPlugin_aSigned = 1'b1;
       end
-    end
+      2'b10 : begin
+        execute_MulPlugin_aSigned = 1'b1;
+      end
+      default : begin
+        execute_MulPlugin_aSigned = 1'b0;
+      end
+    endcase
   end
 
   always @(*) begin
-    memory_MulDivIterativePlugin_mul_counter_willClear = 1'b0;
-    if(when_MulDivIterativePlugin_l110) begin
-      memory_MulDivIterativePlugin_mul_counter_willClear = 1'b1;
-    end
+    case(switch_MulPlugin_l87)
+      2'b01 : begin
+        execute_MulPlugin_bSigned = 1'b1;
+      end
+      2'b10 : begin
+        execute_MulPlugin_bSigned = 1'b0;
+      end
+      default : begin
+        execute_MulPlugin_bSigned = 1'b0;
+      end
+    endcase
   end
 
-  assign memory_MulDivIterativePlugin_mul_counter_willOverflowIfInc = (memory_MulDivIterativePlugin_mul_counter_value == 1'b1);
-  assign memory_MulDivIterativePlugin_mul_counter_willOverflow = (memory_MulDivIterativePlugin_mul_counter_willOverflowIfInc && memory_MulDivIterativePlugin_mul_counter_willIncrement);
-  always @(*) begin
-    memory_MulDivIterativePlugin_mul_counter_valueNext = (memory_MulDivIterativePlugin_mul_counter_value + memory_MulDivIterativePlugin_mul_counter_willIncrement);
-    if(memory_MulDivIterativePlugin_mul_counter_willClear) begin
-      memory_MulDivIterativePlugin_mul_counter_valueNext = 1'b0;
-    end
-  end
-
-  assign when_MulDivIterativePlugin_l96 = (memory_arbitration_isValid && memory_IS_MUL);
-  assign when_MulDivIterativePlugin_l97 = ((! memory_MulDivIterativePlugin_frontendOk) || (! memory_MulDivIterativePlugin_mul_counter_willOverflowIfInc));
-  assign when_MulDivIterativePlugin_l100 = (memory_MulDivIterativePlugin_frontendOk && (! memory_MulDivIterativePlugin_mul_counter_willOverflowIfInc));
-  assign when_MulDivIterativePlugin_l110 = (! memory_arbitration_isStuck);
+  assign execute_MulPlugin_aULow = execute_MulPlugin_a[15 : 0];
+  assign execute_MulPlugin_bULow = execute_MulPlugin_b[15 : 0];
+  assign execute_MulPlugin_aSLow = {1'b0,execute_MulPlugin_a[15 : 0]};
+  assign execute_MulPlugin_bSLow = {1'b0,execute_MulPlugin_b[15 : 0]};
+  assign execute_MulPlugin_aHigh = {(execute_MulPlugin_aSigned && execute_MulPlugin_a[31]),execute_MulPlugin_a[31 : 16]};
+  assign execute_MulPlugin_bHigh = {(execute_MulPlugin_bSigned && execute_MulPlugin_b[31]),execute_MulPlugin_b[31 : 16]};
+  assign writeBack_MulPlugin_result = ($signed(_zz_writeBack_MulPlugin_result) + $signed(_zz_writeBack_MulPlugin_result_1));
+  assign when_MulPlugin_l147 = (writeBack_arbitration_isValid && writeBack_IS_MUL);
+  assign switch_MulPlugin_l148 = writeBack_INSTRUCTION[13 : 12];
+  assign memory_MulDivIterativePlugin_frontendOk = 1'b1;
   always @(*) begin
     memory_MulDivIterativePlugin_div_counter_willIncrement = 1'b0;
     if(when_MulDivIterativePlugin_l128) begin
@@ -5208,20 +4714,20 @@ module VexRiscv (
     end
   end
 
-  assign memory_MulDivIterativePlugin_div_counter_willOverflowIfInc = (memory_MulDivIterativePlugin_div_counter_value == 2'b10);
+  assign memory_MulDivIterativePlugin_div_counter_willOverflowIfInc = (memory_MulDivIterativePlugin_div_counter_value == 4'b1001);
   assign memory_MulDivIterativePlugin_div_counter_willOverflow = (memory_MulDivIterativePlugin_div_counter_willOverflowIfInc && memory_MulDivIterativePlugin_div_counter_willIncrement);
   always @(*) begin
     if(memory_MulDivIterativePlugin_div_counter_willOverflow) begin
-      memory_MulDivIterativePlugin_div_counter_valueNext = 2'b00;
+      memory_MulDivIterativePlugin_div_counter_valueNext = 4'b0000;
     end else begin
       memory_MulDivIterativePlugin_div_counter_valueNext = (memory_MulDivIterativePlugin_div_counter_value + _zz_memory_MulDivIterativePlugin_div_counter_valueNext);
     end
     if(memory_MulDivIterativePlugin_div_counter_willClear) begin
-      memory_MulDivIterativePlugin_div_counter_valueNext = 2'b00;
+      memory_MulDivIterativePlugin_div_counter_valueNext = 4'b0000;
     end
   end
 
-  assign when_MulDivIterativePlugin_l126 = (memory_MulDivIterativePlugin_div_counter_value == 2'b01);
+  assign when_MulDivIterativePlugin_l126 = (memory_MulDivIterativePlugin_div_counter_value == 4'b1000);
   assign when_MulDivIterativePlugin_l126_1 = (! memory_arbitration_isStuck);
   assign when_MulDivIterativePlugin_l128 = (memory_arbitration_isValid && memory_IS_DIV);
   assign when_MulDivIterativePlugin_l129 = ((! memory_MulDivIterativePlugin_frontendOk) || (! memory_MulDivIterativePlugin_div_done));
@@ -5243,126 +4749,14 @@ module VexRiscv (
   assign memory_MulDivIterativePlugin_div_stage_3_remainderMinusDenominator = (memory_MulDivIterativePlugin_div_stage_3_remainderShifted - _zz_memory_MulDivIterativePlugin_div_stage_3_remainderMinusDenominator);
   assign memory_MulDivIterativePlugin_div_stage_3_outRemainder = ((! memory_MulDivIterativePlugin_div_stage_3_remainderMinusDenominator[32]) ? _zz_memory_MulDivIterativePlugin_div_stage_3_outRemainder : _zz_memory_MulDivIterativePlugin_div_stage_3_outRemainder_1);
   assign memory_MulDivIterativePlugin_div_stage_3_outNumerator = _zz_memory_MulDivIterativePlugin_div_stage_3_outNumerator[31:0];
-  assign memory_MulDivIterativePlugin_div_stage_4_remainderShifted = {memory_MulDivIterativePlugin_div_stage_3_outRemainder,memory_MulDivIterativePlugin_div_stage_3_outNumerator[31]};
-  assign memory_MulDivIterativePlugin_div_stage_4_remainderMinusDenominator = (memory_MulDivIterativePlugin_div_stage_4_remainderShifted - _zz_memory_MulDivIterativePlugin_div_stage_4_remainderMinusDenominator);
-  assign memory_MulDivIterativePlugin_div_stage_4_outRemainder = ((! memory_MulDivIterativePlugin_div_stage_4_remainderMinusDenominator[32]) ? _zz_memory_MulDivIterativePlugin_div_stage_4_outRemainder : _zz_memory_MulDivIterativePlugin_div_stage_4_outRemainder_1);
-  assign memory_MulDivIterativePlugin_div_stage_4_outNumerator = _zz_memory_MulDivIterativePlugin_div_stage_4_outNumerator[31:0];
-  assign memory_MulDivIterativePlugin_div_stage_5_remainderShifted = {memory_MulDivIterativePlugin_div_stage_4_outRemainder,memory_MulDivIterativePlugin_div_stage_4_outNumerator[31]};
-  assign memory_MulDivIterativePlugin_div_stage_5_remainderMinusDenominator = (memory_MulDivIterativePlugin_div_stage_5_remainderShifted - _zz_memory_MulDivIterativePlugin_div_stage_5_remainderMinusDenominator);
-  assign memory_MulDivIterativePlugin_div_stage_5_outRemainder = ((! memory_MulDivIterativePlugin_div_stage_5_remainderMinusDenominator[32]) ? _zz_memory_MulDivIterativePlugin_div_stage_5_outRemainder : _zz_memory_MulDivIterativePlugin_div_stage_5_outRemainder_1);
-  assign memory_MulDivIterativePlugin_div_stage_5_outNumerator = _zz_memory_MulDivIterativePlugin_div_stage_5_outNumerator[31:0];
-  assign memory_MulDivIterativePlugin_div_stage_6_remainderShifted = {memory_MulDivIterativePlugin_div_stage_5_outRemainder,memory_MulDivIterativePlugin_div_stage_5_outNumerator[31]};
-  assign memory_MulDivIterativePlugin_div_stage_6_remainderMinusDenominator = (memory_MulDivIterativePlugin_div_stage_6_remainderShifted - _zz_memory_MulDivIterativePlugin_div_stage_6_remainderMinusDenominator);
-  assign memory_MulDivIterativePlugin_div_stage_6_outRemainder = ((! memory_MulDivIterativePlugin_div_stage_6_remainderMinusDenominator[32]) ? _zz_memory_MulDivIterativePlugin_div_stage_6_outRemainder : _zz_memory_MulDivIterativePlugin_div_stage_6_outRemainder_1);
-  assign memory_MulDivIterativePlugin_div_stage_6_outNumerator = _zz_memory_MulDivIterativePlugin_div_stage_6_outNumerator[31:0];
-  assign memory_MulDivIterativePlugin_div_stage_7_remainderShifted = {memory_MulDivIterativePlugin_div_stage_6_outRemainder,memory_MulDivIterativePlugin_div_stage_6_outNumerator[31]};
-  assign memory_MulDivIterativePlugin_div_stage_7_remainderMinusDenominator = (memory_MulDivIterativePlugin_div_stage_7_remainderShifted - _zz_memory_MulDivIterativePlugin_div_stage_7_remainderMinusDenominator);
-  assign memory_MulDivIterativePlugin_div_stage_7_outRemainder = ((! memory_MulDivIterativePlugin_div_stage_7_remainderMinusDenominator[32]) ? _zz_memory_MulDivIterativePlugin_div_stage_7_outRemainder : _zz_memory_MulDivIterativePlugin_div_stage_7_outRemainder_1);
-  assign memory_MulDivIterativePlugin_div_stage_7_outNumerator = _zz_memory_MulDivIterativePlugin_div_stage_7_outNumerator[31:0];
-  assign memory_MulDivIterativePlugin_div_stage_8_remainderShifted = {memory_MulDivIterativePlugin_div_stage_7_outRemainder,memory_MulDivIterativePlugin_div_stage_7_outNumerator[31]};
-  assign memory_MulDivIterativePlugin_div_stage_8_remainderMinusDenominator = (memory_MulDivIterativePlugin_div_stage_8_remainderShifted - _zz_memory_MulDivIterativePlugin_div_stage_8_remainderMinusDenominator);
-  assign memory_MulDivIterativePlugin_div_stage_8_outRemainder = ((! memory_MulDivIterativePlugin_div_stage_8_remainderMinusDenominator[32]) ? _zz_memory_MulDivIterativePlugin_div_stage_8_outRemainder : _zz_memory_MulDivIterativePlugin_div_stage_8_outRemainder_1);
-  assign memory_MulDivIterativePlugin_div_stage_8_outNumerator = _zz_memory_MulDivIterativePlugin_div_stage_8_outNumerator[31:0];
-  assign memory_MulDivIterativePlugin_div_stage_9_remainderShifted = {memory_MulDivIterativePlugin_div_stage_8_outRemainder,memory_MulDivIterativePlugin_div_stage_8_outNumerator[31]};
-  assign memory_MulDivIterativePlugin_div_stage_9_remainderMinusDenominator = (memory_MulDivIterativePlugin_div_stage_9_remainderShifted - _zz_memory_MulDivIterativePlugin_div_stage_9_remainderMinusDenominator);
-  assign memory_MulDivIterativePlugin_div_stage_9_outRemainder = ((! memory_MulDivIterativePlugin_div_stage_9_remainderMinusDenominator[32]) ? _zz_memory_MulDivIterativePlugin_div_stage_9_outRemainder : _zz_memory_MulDivIterativePlugin_div_stage_9_outRemainder_1);
-  assign memory_MulDivIterativePlugin_div_stage_9_outNumerator = _zz_memory_MulDivIterativePlugin_div_stage_9_outNumerator[31:0];
-  assign memory_MulDivIterativePlugin_div_stage_10_remainderShifted = {memory_MulDivIterativePlugin_div_stage_9_outRemainder,memory_MulDivIterativePlugin_div_stage_9_outNumerator[31]};
-  assign memory_MulDivIterativePlugin_div_stage_10_remainderMinusDenominator = (memory_MulDivIterativePlugin_div_stage_10_remainderShifted - _zz_memory_MulDivIterativePlugin_div_stage_10_remainderMinusDenominator);
-  assign memory_MulDivIterativePlugin_div_stage_10_outRemainder = ((! memory_MulDivIterativePlugin_div_stage_10_remainderMinusDenominator[32]) ? _zz_memory_MulDivIterativePlugin_div_stage_10_outRemainder : _zz_memory_MulDivIterativePlugin_div_stage_10_outRemainder_1);
-  assign memory_MulDivIterativePlugin_div_stage_10_outNumerator = _zz_memory_MulDivIterativePlugin_div_stage_10_outNumerator[31:0];
-  assign memory_MulDivIterativePlugin_div_stage_11_remainderShifted = {memory_MulDivIterativePlugin_div_stage_10_outRemainder,memory_MulDivIterativePlugin_div_stage_10_outNumerator[31]};
-  assign memory_MulDivIterativePlugin_div_stage_11_remainderMinusDenominator = (memory_MulDivIterativePlugin_div_stage_11_remainderShifted - _zz_memory_MulDivIterativePlugin_div_stage_11_remainderMinusDenominator);
-  assign memory_MulDivIterativePlugin_div_stage_11_outRemainder = ((! memory_MulDivIterativePlugin_div_stage_11_remainderMinusDenominator[32]) ? _zz_memory_MulDivIterativePlugin_div_stage_11_outRemainder : _zz_memory_MulDivIterativePlugin_div_stage_11_outRemainder_1);
-  assign memory_MulDivIterativePlugin_div_stage_11_outNumerator = _zz_memory_MulDivIterativePlugin_div_stage_11_outNumerator[31:0];
-  assign memory_MulDivIterativePlugin_div_stage_12_remainderShifted = {memory_MulDivIterativePlugin_div_stage_11_outRemainder,memory_MulDivIterativePlugin_div_stage_11_outNumerator[31]};
-  assign memory_MulDivIterativePlugin_div_stage_12_remainderMinusDenominator = (memory_MulDivIterativePlugin_div_stage_12_remainderShifted - _zz_memory_MulDivIterativePlugin_div_stage_12_remainderMinusDenominator);
-  assign memory_MulDivIterativePlugin_div_stage_12_outRemainder = ((! memory_MulDivIterativePlugin_div_stage_12_remainderMinusDenominator[32]) ? _zz_memory_MulDivIterativePlugin_div_stage_12_outRemainder : _zz_memory_MulDivIterativePlugin_div_stage_12_outRemainder_1);
-  assign memory_MulDivIterativePlugin_div_stage_12_outNumerator = _zz_memory_MulDivIterativePlugin_div_stage_12_outNumerator[31:0];
-  assign memory_MulDivIterativePlugin_div_stage_13_remainderShifted = {memory_MulDivIterativePlugin_div_stage_12_outRemainder,memory_MulDivIterativePlugin_div_stage_12_outNumerator[31]};
-  assign memory_MulDivIterativePlugin_div_stage_13_remainderMinusDenominator = (memory_MulDivIterativePlugin_div_stage_13_remainderShifted - _zz_memory_MulDivIterativePlugin_div_stage_13_remainderMinusDenominator);
-  assign memory_MulDivIterativePlugin_div_stage_13_outRemainder = ((! memory_MulDivIterativePlugin_div_stage_13_remainderMinusDenominator[32]) ? _zz_memory_MulDivIterativePlugin_div_stage_13_outRemainder : _zz_memory_MulDivIterativePlugin_div_stage_13_outRemainder_1);
-  assign memory_MulDivIterativePlugin_div_stage_13_outNumerator = _zz_memory_MulDivIterativePlugin_div_stage_13_outNumerator[31:0];
-  assign memory_MulDivIterativePlugin_div_stage_14_remainderShifted = {memory_MulDivIterativePlugin_div_stage_13_outRemainder,memory_MulDivIterativePlugin_div_stage_13_outNumerator[31]};
-  assign memory_MulDivIterativePlugin_div_stage_14_remainderMinusDenominator = (memory_MulDivIterativePlugin_div_stage_14_remainderShifted - _zz_memory_MulDivIterativePlugin_div_stage_14_remainderMinusDenominator);
-  assign memory_MulDivIterativePlugin_div_stage_14_outRemainder = ((! memory_MulDivIterativePlugin_div_stage_14_remainderMinusDenominator[32]) ? _zz_memory_MulDivIterativePlugin_div_stage_14_outRemainder : _zz_memory_MulDivIterativePlugin_div_stage_14_outRemainder_1);
-  assign memory_MulDivIterativePlugin_div_stage_14_outNumerator = _zz_memory_MulDivIterativePlugin_div_stage_14_outNumerator[31:0];
-  assign memory_MulDivIterativePlugin_div_stage_15_remainderShifted = {memory_MulDivIterativePlugin_div_stage_14_outRemainder,memory_MulDivIterativePlugin_div_stage_14_outNumerator[31]};
-  assign memory_MulDivIterativePlugin_div_stage_15_remainderMinusDenominator = (memory_MulDivIterativePlugin_div_stage_15_remainderShifted - _zz_memory_MulDivIterativePlugin_div_stage_15_remainderMinusDenominator);
-  assign memory_MulDivIterativePlugin_div_stage_15_outRemainder = ((! memory_MulDivIterativePlugin_div_stage_15_remainderMinusDenominator[32]) ? _zz_memory_MulDivIterativePlugin_div_stage_15_outRemainder : _zz_memory_MulDivIterativePlugin_div_stage_15_outRemainder_1);
-  assign memory_MulDivIterativePlugin_div_stage_15_outNumerator = _zz_memory_MulDivIterativePlugin_div_stage_15_outNumerator[31:0];
-  assign memory_MulDivIterativePlugin_div_stage_16_remainderShifted = {memory_MulDivIterativePlugin_div_stage_15_outRemainder,memory_MulDivIterativePlugin_div_stage_15_outNumerator[31]};
-  assign memory_MulDivIterativePlugin_div_stage_16_remainderMinusDenominator = (memory_MulDivIterativePlugin_div_stage_16_remainderShifted - _zz_memory_MulDivIterativePlugin_div_stage_16_remainderMinusDenominator);
-  assign memory_MulDivIterativePlugin_div_stage_16_outRemainder = ((! memory_MulDivIterativePlugin_div_stage_16_remainderMinusDenominator[32]) ? _zz_memory_MulDivIterativePlugin_div_stage_16_outRemainder : _zz_memory_MulDivIterativePlugin_div_stage_16_outRemainder_1);
-  assign memory_MulDivIterativePlugin_div_stage_16_outNumerator = _zz_memory_MulDivIterativePlugin_div_stage_16_outNumerator[31:0];
-  assign memory_MulDivIterativePlugin_div_stage_17_remainderShifted = {memory_MulDivIterativePlugin_div_stage_16_outRemainder,memory_MulDivIterativePlugin_div_stage_16_outNumerator[31]};
-  assign memory_MulDivIterativePlugin_div_stage_17_remainderMinusDenominator = (memory_MulDivIterativePlugin_div_stage_17_remainderShifted - _zz_memory_MulDivIterativePlugin_div_stage_17_remainderMinusDenominator);
-  assign memory_MulDivIterativePlugin_div_stage_17_outRemainder = ((! memory_MulDivIterativePlugin_div_stage_17_remainderMinusDenominator[32]) ? _zz_memory_MulDivIterativePlugin_div_stage_17_outRemainder : _zz_memory_MulDivIterativePlugin_div_stage_17_outRemainder_1);
-  assign memory_MulDivIterativePlugin_div_stage_17_outNumerator = _zz_memory_MulDivIterativePlugin_div_stage_17_outNumerator[31:0];
-  assign memory_MulDivIterativePlugin_div_stage_18_remainderShifted = {memory_MulDivIterativePlugin_div_stage_17_outRemainder,memory_MulDivIterativePlugin_div_stage_17_outNumerator[31]};
-  assign memory_MulDivIterativePlugin_div_stage_18_remainderMinusDenominator = (memory_MulDivIterativePlugin_div_stage_18_remainderShifted - _zz_memory_MulDivIterativePlugin_div_stage_18_remainderMinusDenominator);
-  assign memory_MulDivIterativePlugin_div_stage_18_outRemainder = ((! memory_MulDivIterativePlugin_div_stage_18_remainderMinusDenominator[32]) ? _zz_memory_MulDivIterativePlugin_div_stage_18_outRemainder : _zz_memory_MulDivIterativePlugin_div_stage_18_outRemainder_1);
-  assign memory_MulDivIterativePlugin_div_stage_18_outNumerator = _zz_memory_MulDivIterativePlugin_div_stage_18_outNumerator[31:0];
-  assign memory_MulDivIterativePlugin_div_stage_19_remainderShifted = {memory_MulDivIterativePlugin_div_stage_18_outRemainder,memory_MulDivIterativePlugin_div_stage_18_outNumerator[31]};
-  assign memory_MulDivIterativePlugin_div_stage_19_remainderMinusDenominator = (memory_MulDivIterativePlugin_div_stage_19_remainderShifted - _zz_memory_MulDivIterativePlugin_div_stage_19_remainderMinusDenominator);
-  assign memory_MulDivIterativePlugin_div_stage_19_outRemainder = ((! memory_MulDivIterativePlugin_div_stage_19_remainderMinusDenominator[32]) ? _zz_memory_MulDivIterativePlugin_div_stage_19_outRemainder : _zz_memory_MulDivIterativePlugin_div_stage_19_outRemainder_1);
-  assign memory_MulDivIterativePlugin_div_stage_19_outNumerator = _zz_memory_MulDivIterativePlugin_div_stage_19_outNumerator[31:0];
-  assign memory_MulDivIterativePlugin_div_stage_20_remainderShifted = {memory_MulDivIterativePlugin_div_stage_19_outRemainder,memory_MulDivIterativePlugin_div_stage_19_outNumerator[31]};
-  assign memory_MulDivIterativePlugin_div_stage_20_remainderMinusDenominator = (memory_MulDivIterativePlugin_div_stage_20_remainderShifted - _zz_memory_MulDivIterativePlugin_div_stage_20_remainderMinusDenominator);
-  assign memory_MulDivIterativePlugin_div_stage_20_outRemainder = ((! memory_MulDivIterativePlugin_div_stage_20_remainderMinusDenominator[32]) ? _zz_memory_MulDivIterativePlugin_div_stage_20_outRemainder : _zz_memory_MulDivIterativePlugin_div_stage_20_outRemainder_1);
-  assign memory_MulDivIterativePlugin_div_stage_20_outNumerator = _zz_memory_MulDivIterativePlugin_div_stage_20_outNumerator[31:0];
-  assign memory_MulDivIterativePlugin_div_stage_21_remainderShifted = {memory_MulDivIterativePlugin_div_stage_20_outRemainder,memory_MulDivIterativePlugin_div_stage_20_outNumerator[31]};
-  assign memory_MulDivIterativePlugin_div_stage_21_remainderMinusDenominator = (memory_MulDivIterativePlugin_div_stage_21_remainderShifted - _zz_memory_MulDivIterativePlugin_div_stage_21_remainderMinusDenominator);
-  assign memory_MulDivIterativePlugin_div_stage_21_outRemainder = ((! memory_MulDivIterativePlugin_div_stage_21_remainderMinusDenominator[32]) ? _zz_memory_MulDivIterativePlugin_div_stage_21_outRemainder : _zz_memory_MulDivIterativePlugin_div_stage_21_outRemainder_1);
-  assign memory_MulDivIterativePlugin_div_stage_21_outNumerator = _zz_memory_MulDivIterativePlugin_div_stage_21_outNumerator[31:0];
-  assign memory_MulDivIterativePlugin_div_stage_22_remainderShifted = {memory_MulDivIterativePlugin_div_stage_21_outRemainder,memory_MulDivIterativePlugin_div_stage_21_outNumerator[31]};
-  assign memory_MulDivIterativePlugin_div_stage_22_remainderMinusDenominator = (memory_MulDivIterativePlugin_div_stage_22_remainderShifted - _zz_memory_MulDivIterativePlugin_div_stage_22_remainderMinusDenominator);
-  assign memory_MulDivIterativePlugin_div_stage_22_outRemainder = ((! memory_MulDivIterativePlugin_div_stage_22_remainderMinusDenominator[32]) ? _zz_memory_MulDivIterativePlugin_div_stage_22_outRemainder : _zz_memory_MulDivIterativePlugin_div_stage_22_outRemainder_1);
-  assign memory_MulDivIterativePlugin_div_stage_22_outNumerator = _zz_memory_MulDivIterativePlugin_div_stage_22_outNumerator[31:0];
-  assign memory_MulDivIterativePlugin_div_stage_23_remainderShifted = {memory_MulDivIterativePlugin_div_stage_22_outRemainder,memory_MulDivIterativePlugin_div_stage_22_outNumerator[31]};
-  assign memory_MulDivIterativePlugin_div_stage_23_remainderMinusDenominator = (memory_MulDivIterativePlugin_div_stage_23_remainderShifted - _zz_memory_MulDivIterativePlugin_div_stage_23_remainderMinusDenominator);
-  assign memory_MulDivIterativePlugin_div_stage_23_outRemainder = ((! memory_MulDivIterativePlugin_div_stage_23_remainderMinusDenominator[32]) ? _zz_memory_MulDivIterativePlugin_div_stage_23_outRemainder : _zz_memory_MulDivIterativePlugin_div_stage_23_outRemainder_1);
-  assign memory_MulDivIterativePlugin_div_stage_23_outNumerator = _zz_memory_MulDivIterativePlugin_div_stage_23_outNumerator[31:0];
-  assign memory_MulDivIterativePlugin_div_stage_24_remainderShifted = {memory_MulDivIterativePlugin_div_stage_23_outRemainder,memory_MulDivIterativePlugin_div_stage_23_outNumerator[31]};
-  assign memory_MulDivIterativePlugin_div_stage_24_remainderMinusDenominator = (memory_MulDivIterativePlugin_div_stage_24_remainderShifted - _zz_memory_MulDivIterativePlugin_div_stage_24_remainderMinusDenominator);
-  assign memory_MulDivIterativePlugin_div_stage_24_outRemainder = ((! memory_MulDivIterativePlugin_div_stage_24_remainderMinusDenominator[32]) ? _zz_memory_MulDivIterativePlugin_div_stage_24_outRemainder : _zz_memory_MulDivIterativePlugin_div_stage_24_outRemainder_1);
-  assign memory_MulDivIterativePlugin_div_stage_24_outNumerator = _zz_memory_MulDivIterativePlugin_div_stage_24_outNumerator[31:0];
-  assign memory_MulDivIterativePlugin_div_stage_25_remainderShifted = {memory_MulDivIterativePlugin_div_stage_24_outRemainder,memory_MulDivIterativePlugin_div_stage_24_outNumerator[31]};
-  assign memory_MulDivIterativePlugin_div_stage_25_remainderMinusDenominator = (memory_MulDivIterativePlugin_div_stage_25_remainderShifted - _zz_memory_MulDivIterativePlugin_div_stage_25_remainderMinusDenominator);
-  assign memory_MulDivIterativePlugin_div_stage_25_outRemainder = ((! memory_MulDivIterativePlugin_div_stage_25_remainderMinusDenominator[32]) ? _zz_memory_MulDivIterativePlugin_div_stage_25_outRemainder : _zz_memory_MulDivIterativePlugin_div_stage_25_outRemainder_1);
-  assign memory_MulDivIterativePlugin_div_stage_25_outNumerator = _zz_memory_MulDivIterativePlugin_div_stage_25_outNumerator[31:0];
-  assign memory_MulDivIterativePlugin_div_stage_26_remainderShifted = {memory_MulDivIterativePlugin_div_stage_25_outRemainder,memory_MulDivIterativePlugin_div_stage_25_outNumerator[31]};
-  assign memory_MulDivIterativePlugin_div_stage_26_remainderMinusDenominator = (memory_MulDivIterativePlugin_div_stage_26_remainderShifted - _zz_memory_MulDivIterativePlugin_div_stage_26_remainderMinusDenominator);
-  assign memory_MulDivIterativePlugin_div_stage_26_outRemainder = ((! memory_MulDivIterativePlugin_div_stage_26_remainderMinusDenominator[32]) ? _zz_memory_MulDivIterativePlugin_div_stage_26_outRemainder : _zz_memory_MulDivIterativePlugin_div_stage_26_outRemainder_1);
-  assign memory_MulDivIterativePlugin_div_stage_26_outNumerator = _zz_memory_MulDivIterativePlugin_div_stage_26_outNumerator[31:0];
-  assign memory_MulDivIterativePlugin_div_stage_27_remainderShifted = {memory_MulDivIterativePlugin_div_stage_26_outRemainder,memory_MulDivIterativePlugin_div_stage_26_outNumerator[31]};
-  assign memory_MulDivIterativePlugin_div_stage_27_remainderMinusDenominator = (memory_MulDivIterativePlugin_div_stage_27_remainderShifted - _zz_memory_MulDivIterativePlugin_div_stage_27_remainderMinusDenominator);
-  assign memory_MulDivIterativePlugin_div_stage_27_outRemainder = ((! memory_MulDivIterativePlugin_div_stage_27_remainderMinusDenominator[32]) ? _zz_memory_MulDivIterativePlugin_div_stage_27_outRemainder : _zz_memory_MulDivIterativePlugin_div_stage_27_outRemainder_1);
-  assign memory_MulDivIterativePlugin_div_stage_27_outNumerator = _zz_memory_MulDivIterativePlugin_div_stage_27_outNumerator[31:0];
-  assign memory_MulDivIterativePlugin_div_stage_28_remainderShifted = {memory_MulDivIterativePlugin_div_stage_27_outRemainder,memory_MulDivIterativePlugin_div_stage_27_outNumerator[31]};
-  assign memory_MulDivIterativePlugin_div_stage_28_remainderMinusDenominator = (memory_MulDivIterativePlugin_div_stage_28_remainderShifted - _zz_memory_MulDivIterativePlugin_div_stage_28_remainderMinusDenominator);
-  assign memory_MulDivIterativePlugin_div_stage_28_outRemainder = ((! memory_MulDivIterativePlugin_div_stage_28_remainderMinusDenominator[32]) ? _zz_memory_MulDivIterativePlugin_div_stage_28_outRemainder : _zz_memory_MulDivIterativePlugin_div_stage_28_outRemainder_1);
-  assign memory_MulDivIterativePlugin_div_stage_28_outNumerator = _zz_memory_MulDivIterativePlugin_div_stage_28_outNumerator[31:0];
-  assign memory_MulDivIterativePlugin_div_stage_29_remainderShifted = {memory_MulDivIterativePlugin_div_stage_28_outRemainder,memory_MulDivIterativePlugin_div_stage_28_outNumerator[31]};
-  assign memory_MulDivIterativePlugin_div_stage_29_remainderMinusDenominator = (memory_MulDivIterativePlugin_div_stage_29_remainderShifted - _zz_memory_MulDivIterativePlugin_div_stage_29_remainderMinusDenominator);
-  assign memory_MulDivIterativePlugin_div_stage_29_outRemainder = ((! memory_MulDivIterativePlugin_div_stage_29_remainderMinusDenominator[32]) ? _zz_memory_MulDivIterativePlugin_div_stage_29_outRemainder : _zz_memory_MulDivIterativePlugin_div_stage_29_outRemainder_1);
-  assign memory_MulDivIterativePlugin_div_stage_29_outNumerator = _zz_memory_MulDivIterativePlugin_div_stage_29_outNumerator[31:0];
-  assign memory_MulDivIterativePlugin_div_stage_30_remainderShifted = {memory_MulDivIterativePlugin_div_stage_29_outRemainder,memory_MulDivIterativePlugin_div_stage_29_outNumerator[31]};
-  assign memory_MulDivIterativePlugin_div_stage_30_remainderMinusDenominator = (memory_MulDivIterativePlugin_div_stage_30_remainderShifted - _zz_memory_MulDivIterativePlugin_div_stage_30_remainderMinusDenominator);
-  assign memory_MulDivIterativePlugin_div_stage_30_outRemainder = ((! memory_MulDivIterativePlugin_div_stage_30_remainderMinusDenominator[32]) ? _zz_memory_MulDivIterativePlugin_div_stage_30_outRemainder : _zz_memory_MulDivIterativePlugin_div_stage_30_outRemainder_1);
-  assign memory_MulDivIterativePlugin_div_stage_30_outNumerator = _zz_memory_MulDivIterativePlugin_div_stage_30_outNumerator[31:0];
-  assign memory_MulDivIterativePlugin_div_stage_31_remainderShifted = {memory_MulDivIterativePlugin_div_stage_30_outRemainder,memory_MulDivIterativePlugin_div_stage_30_outNumerator[31]};
-  assign memory_MulDivIterativePlugin_div_stage_31_remainderMinusDenominator = (memory_MulDivIterativePlugin_div_stage_31_remainderShifted - _zz_memory_MulDivIterativePlugin_div_stage_31_remainderMinusDenominator);
-  assign memory_MulDivIterativePlugin_div_stage_31_outRemainder = ((! memory_MulDivIterativePlugin_div_stage_31_remainderMinusDenominator[32]) ? _zz_memory_MulDivIterativePlugin_div_stage_31_outRemainder : _zz_memory_MulDivIterativePlugin_div_stage_31_outRemainder_1);
-  assign memory_MulDivIterativePlugin_div_stage_31_outNumerator = _zz_memory_MulDivIterativePlugin_div_stage_31_outNumerator[31:0];
-  assign when_MulDivIterativePlugin_l151 = (memory_MulDivIterativePlugin_div_counter_value == 2'b01);
+  assign when_MulDivIterativePlugin_l151 = (memory_MulDivIterativePlugin_div_counter_value == 4'b1000);
   assign _zz_memory_MulDivIterativePlugin_div_result = (memory_INSTRUCTION[13] ? memory_MulDivIterativePlugin_accumulator[31 : 0] : memory_MulDivIterativePlugin_rs1[31 : 0]);
   assign when_MulDivIterativePlugin_l162 = (! memory_arbitration_isStuck);
-  assign _zz_memory_MulDivIterativePlugin_rs1 = (execute_RS2[31] && execute_IS_RS2_SIGNED);
-  assign _zz_memory_MulDivIterativePlugin_rs1_1 = ((execute_IS_MUL && _zz_memory_MulDivIterativePlugin_rs1) || ((execute_IS_DIV && execute_RS1[31]) && execute_IS_RS1_SIGNED));
+  assign _zz_memory_MulDivIterativePlugin_rs2 = (execute_RS2[31] && execute_IS_RS2_SIGNED);
+  assign _zz_memory_MulDivIterativePlugin_rs1 = (1'b0 || ((execute_IS_DIV && execute_RS1[31]) && execute_IS_RS1_SIGNED));
   always @(*) begin
-    _zz_memory_MulDivIterativePlugin_rs1_2[32] = (execute_IS_RS1_SIGNED && execute_RS1[31]);
-    _zz_memory_MulDivIterativePlugin_rs1_2[31 : 0] = execute_RS1;
+    _zz_memory_MulDivIterativePlugin_rs1_1[32] = (execute_IS_RS1_SIGNED && execute_RS1[31]);
+    _zz_memory_MulDivIterativePlugin_rs1_1[31 : 0] = execute_RS1;
   end
 
   always @(*) begin
@@ -6112,7 +5506,7 @@ module VexRiscv (
     end
   end
 
-  assign IBusSimplePlugin_mmuBus_rsp_isIoAccess = (IBusSimplePlugin_mmuBus_rsp_physicalAddress[31 : 31] == 1'b1);
+  assign IBusSimplePlugin_mmuBus_rsp_isIoAccess = ((IBusSimplePlugin_mmuBus_rsp_physicalAddress[31 : 31] == 1'b1) || (IBusSimplePlugin_mmuBus_rsp_physicalAddress[31 : 30] == 2'b01));
   assign IBusSimplePlugin_mmuBus_rsp_bypassTranslation = (! MmuPlugin_ports_0_requireMmuLockupCalc);
   assign IBusSimplePlugin_mmuBus_rsp_ways_0_sel = MmuPlugin_ports_0_cacheHitsCalc[0];
   assign IBusSimplePlugin_mmuBus_rsp_ways_0_physical = {{MmuPlugin_ports_0_cache_0_physicalAddress_1,(MmuPlugin_ports_0_cache_0_superPage ? IBusSimplePlugin_mmuBus_cmd_0_virtualAddress[21 : 12] : MmuPlugin_ports_0_cache_0_physicalAddress_0)},IBusSimplePlugin_mmuBus_cmd_0_virtualAddress[11 : 0]};
@@ -6230,7 +5624,7 @@ module VexRiscv (
     end
   end
 
-  assign DBusSimplePlugin_mmuBus_rsp_isIoAccess = (DBusSimplePlugin_mmuBus_rsp_physicalAddress[31 : 31] == 1'b1);
+  assign DBusSimplePlugin_mmuBus_rsp_isIoAccess = ((DBusSimplePlugin_mmuBus_rsp_physicalAddress[31 : 31] == 1'b1) || (DBusSimplePlugin_mmuBus_rsp_physicalAddress[31 : 30] == 2'b01));
   assign DBusSimplePlugin_mmuBus_rsp_bypassTranslation = (! MmuPlugin_ports_1_requireMmuLockupCalc);
   assign DBusSimplePlugin_mmuBus_rsp_ways_0_sel = MmuPlugin_ports_1_cacheHitsCalc[0];
   assign DBusSimplePlugin_mmuBus_rsp_ways_0_physical = {{MmuPlugin_ports_1_cache_0_physicalAddress_1,(MmuPlugin_ports_1_cache_0_superPage ? DBusSimplePlugin_mmuBus_cmd_0_virtualAddress[21 : 12] : MmuPlugin_ports_1_cache_0_physicalAddress_0)},DBusSimplePlugin_mmuBus_cmd_0_virtualAddress[11 : 0]};
@@ -6371,28 +5765,28 @@ module VexRiscv (
   assign _zz_memory_SHIFT_CTRL = execute_to_memory_SHIFT_CTRL;
   assign when_Pipeline_l124_32 = (! execute_arbitration_isStuck);
   assign when_Pipeline_l124_33 = (! memory_arbitration_isStuck);
-  assign when_Pipeline_l124_34 = (! execute_arbitration_isStuck);
+  assign when_Pipeline_l124_34 = (! writeBack_arbitration_isStuck);
   assign when_Pipeline_l124_35 = (! execute_arbitration_isStuck);
-  assign when_Pipeline_l124_36 = (! execute_arbitration_isStuck);
-  assign when_Pipeline_l124_37 = (! memory_arbitration_isStuck);
+  assign when_Pipeline_l124_36 = (! memory_arbitration_isStuck);
+  assign when_Pipeline_l124_37 = (! execute_arbitration_isStuck);
   assign when_Pipeline_l124_38 = (! execute_arbitration_isStuck);
+  assign when_Pipeline_l124_39 = (! execute_arbitration_isStuck);
   assign _zz_decode_to_execute_ENV_CTRL_1 = decode_ENV_CTRL;
   assign _zz_execute_to_memory_ENV_CTRL_1 = execute_ENV_CTRL;
   assign _zz_memory_to_writeBack_ENV_CTRL_1 = memory_ENV_CTRL;
   assign _zz_decode_ENV_CTRL = _zz_decode_ENV_CTRL_1;
-  assign when_Pipeline_l124_39 = (! execute_arbitration_isStuck);
+  assign when_Pipeline_l124_40 = (! execute_arbitration_isStuck);
   assign _zz_execute_ENV_CTRL = decode_to_execute_ENV_CTRL;
-  assign when_Pipeline_l124_40 = (! memory_arbitration_isStuck);
+  assign when_Pipeline_l124_41 = (! memory_arbitration_isStuck);
   assign _zz_memory_ENV_CTRL = execute_to_memory_ENV_CTRL;
-  assign when_Pipeline_l124_41 = (! writeBack_arbitration_isStuck);
+  assign when_Pipeline_l124_42 = (! writeBack_arbitration_isStuck);
   assign _zz_writeBack_ENV_CTRL = memory_to_writeBack_ENV_CTRL;
-  assign when_Pipeline_l124_42 = (! execute_arbitration_isStuck);
   assign when_Pipeline_l124_43 = (! execute_arbitration_isStuck);
+  assign when_Pipeline_l124_44 = (! execute_arbitration_isStuck);
   assign _zz_decode_to_execute_BRANCH_CTRL_1 = decode_BRANCH_CTRL;
   assign _zz_decode_BRANCH_CTRL_1 = _zz_decode_BRANCH_CTRL;
-  assign when_Pipeline_l124_44 = (! execute_arbitration_isStuck);
-  assign _zz_execute_BRANCH_CTRL = decode_to_execute_BRANCH_CTRL;
   assign when_Pipeline_l124_45 = (! execute_arbitration_isStuck);
+  assign _zz_execute_BRANCH_CTRL = decode_to_execute_BRANCH_CTRL;
   assign when_Pipeline_l124_46 = (! execute_arbitration_isStuck);
   assign when_Pipeline_l124_47 = (! execute_arbitration_isStuck);
   assign when_Pipeline_l124_48 = (! execute_arbitration_isStuck);
@@ -6400,19 +5794,26 @@ module VexRiscv (
   assign when_Pipeline_l124_50 = (! execute_arbitration_isStuck);
   assign when_Pipeline_l124_51 = (! execute_arbitration_isStuck);
   assign when_Pipeline_l124_52 = (! execute_arbitration_isStuck);
-  assign when_Pipeline_l124_53 = (! memory_arbitration_isStuck);
+  assign when_Pipeline_l124_53 = (! execute_arbitration_isStuck);
   assign when_Pipeline_l124_54 = (! memory_arbitration_isStuck);
-  assign when_Pipeline_l124_55 = (! writeBack_arbitration_isStuck);
-  assign when_Pipeline_l124_56 = (! memory_arbitration_isStuck);
+  assign when_Pipeline_l124_55 = (! memory_arbitration_isStuck);
+  assign when_Pipeline_l124_56 = (! writeBack_arbitration_isStuck);
   assign when_Pipeline_l124_57 = (! memory_arbitration_isStuck);
   assign when_Pipeline_l124_58 = (! memory_arbitration_isStuck);
-  assign when_Pipeline_l124_59 = (! writeBack_arbitration_isStuck);
-  assign when_Pipeline_l124_60 = (! memory_arbitration_isStuck);
-  assign when_Pipeline_l124_61 = (! writeBack_arbitration_isStuck);
-  assign when_Pipeline_l124_62 = (! memory_arbitration_isStuck);
+  assign when_Pipeline_l124_59 = (! memory_arbitration_isStuck);
+  assign when_Pipeline_l124_60 = (! writeBack_arbitration_isStuck);
+  assign when_Pipeline_l124_61 = (! memory_arbitration_isStuck);
+  assign when_Pipeline_l124_62 = (! writeBack_arbitration_isStuck);
   assign when_Pipeline_l124_63 = (! memory_arbitration_isStuck);
   assign when_Pipeline_l124_64 = (! memory_arbitration_isStuck);
-  assign when_Pipeline_l124_65 = (! writeBack_arbitration_isStuck);
+  assign when_Pipeline_l124_65 = (! memory_arbitration_isStuck);
+  assign when_Pipeline_l124_66 = (! memory_arbitration_isStuck);
+  assign when_Pipeline_l124_67 = (! memory_arbitration_isStuck);
+  assign when_Pipeline_l124_68 = (! writeBack_arbitration_isStuck);
+  assign when_Pipeline_l124_69 = (! memory_arbitration_isStuck);
+  assign when_Pipeline_l124_70 = (! memory_arbitration_isStuck);
+  assign when_Pipeline_l124_71 = (! writeBack_arbitration_isStuck);
+  assign when_Pipeline_l124_72 = (! writeBack_arbitration_isStuck);
   assign decode_arbitration_isFlushed = (({writeBack_arbitration_flushNext,{memory_arbitration_flushNext,execute_arbitration_flushNext}} != 3'b000) || ({writeBack_arbitration_flushIt,{memory_arbitration_flushIt,{execute_arbitration_flushIt,decode_arbitration_flushIt}}} != 4'b0000));
   assign execute_arbitration_isFlushed = (({writeBack_arbitration_flushNext,memory_arbitration_flushNext} != 2'b00) || ({writeBack_arbitration_flushIt,{memory_arbitration_flushIt,execute_arbitration_flushIt}} != 3'b000));
   assign memory_arbitration_isFlushed = ((writeBack_arbitration_flushNext != 1'b0) || ({writeBack_arbitration_flushIt,memory_arbitration_flushIt} != 2'b00));
@@ -6773,8 +6174,7 @@ module VexRiscv (
       _zz_2 <= 2'b00;
       _zz_3 <= 1'b1;
       HazardSimplePlugin_writeBackBuffer_valid <= 1'b0;
-      memory_MulDivIterativePlugin_mul_counter_value <= 1'b0;
-      memory_MulDivIterativePlugin_div_counter_value <= 2'b00;
+      memory_MulDivIterativePlugin_div_counter_value <= 4'b0000;
       _zz_CsrPlugin_privilege <= 2'b11;
       CsrPlugin_misa_base <= 2'b01;
       CsrPlugin_misa_extensions <= 26'h0;
@@ -6956,7 +6356,6 @@ module VexRiscv (
       endcase
       _zz_3 <= 1'b0;
       HazardSimplePlugin_writeBackBuffer_valid <= HazardSimplePlugin_writeBackWrites_valid;
-      memory_MulDivIterativePlugin_mul_counter_value <= memory_MulDivIterativePlugin_mul_counter_valueNext;
       memory_MulDivIterativePlugin_div_counter_value <= memory_MulDivIterativePlugin_div_counter_valueNext;
       CsrPlugin_mcycle <= (CsrPlugin_mcycle + 64'h0000000000000001);
       if(writeBack_arbitration_isFiring) begin
@@ -7384,12 +6783,6 @@ module VexRiscv (
     end
     HazardSimplePlugin_writeBackBuffer_payload_address <= HazardSimplePlugin_writeBackWrites_payload_address;
     HazardSimplePlugin_writeBackBuffer_payload_data <= HazardSimplePlugin_writeBackWrites_payload_data;
-    if(when_MulDivIterativePlugin_l96) begin
-      if(when_MulDivIterativePlugin_l100) begin
-        memory_MulDivIterativePlugin_rs2 <= (memory_MulDivIterativePlugin_rs2 >>> 32);
-        memory_MulDivIterativePlugin_accumulator <= ({_zz_memory_MulDivIterativePlugin_accumulator,memory_MulDivIterativePlugin_accumulator[31 : 0]} >>> 32);
-      end
-    end
     if(when_MulDivIterativePlugin_l126) begin
       memory_MulDivIterativePlugin_div_done <= 1'b1;
     end
@@ -7398,8 +6791,8 @@ module VexRiscv (
     end
     if(when_MulDivIterativePlugin_l128) begin
       if(when_MulDivIterativePlugin_l132) begin
-        memory_MulDivIterativePlugin_rs1[31 : 0] <= memory_MulDivIterativePlugin_div_stage_31_outNumerator;
-        memory_MulDivIterativePlugin_accumulator[31 : 0] <= memory_MulDivIterativePlugin_div_stage_31_outRemainder;
+        memory_MulDivIterativePlugin_rs1[31 : 0] <= memory_MulDivIterativePlugin_div_stage_3_outNumerator;
+        memory_MulDivIterativePlugin_accumulator[31 : 0] <= memory_MulDivIterativePlugin_div_stage_3_outRemainder;
         if(when_MulDivIterativePlugin_l151) begin
           memory_MulDivIterativePlugin_div_result <= _zz_memory_MulDivIterativePlugin_div_result_1[31:0];
         end
@@ -7407,9 +6800,9 @@ module VexRiscv (
     end
     if(when_MulDivIterativePlugin_l162) begin
       memory_MulDivIterativePlugin_accumulator <= 65'h0;
-      memory_MulDivIterativePlugin_rs1 <= ((_zz_memory_MulDivIterativePlugin_rs1_1 ? (~ _zz_memory_MulDivIterativePlugin_rs1_2) : _zz_memory_MulDivIterativePlugin_rs1_2) + _zz_memory_MulDivIterativePlugin_rs1_3);
-      memory_MulDivIterativePlugin_rs2 <= ((_zz_memory_MulDivIterativePlugin_rs1 ? (~ execute_RS2) : execute_RS2) + _zz_memory_MulDivIterativePlugin_rs2);
-      memory_MulDivIterativePlugin_div_needRevert <= ((_zz_memory_MulDivIterativePlugin_rs1_1 ^ (_zz_memory_MulDivIterativePlugin_rs1 && (! execute_INSTRUCTION[13]))) && (! (((execute_RS2 == 32'h0) && execute_IS_RS2_SIGNED) && (! execute_INSTRUCTION[13]))));
+      memory_MulDivIterativePlugin_rs1 <= ((_zz_memory_MulDivIterativePlugin_rs1 ? (~ _zz_memory_MulDivIterativePlugin_rs1_1) : _zz_memory_MulDivIterativePlugin_rs1_1) + _zz_memory_MulDivIterativePlugin_rs1_2);
+      memory_MulDivIterativePlugin_rs2 <= ((_zz_memory_MulDivIterativePlugin_rs2 ? (~ execute_RS2) : execute_RS2) + _zz_memory_MulDivIterativePlugin_rs2_1);
+      memory_MulDivIterativePlugin_div_needRevert <= ((_zz_memory_MulDivIterativePlugin_rs1 ^ (_zz_memory_MulDivIterativePlugin_rs2 && (! execute_INSTRUCTION[13]))) && (! (((execute_RS2 == 32'h0) && execute_IS_RS2_SIGNED) && (! execute_INSTRUCTION[13]))));
     end
     CsrPlugin_mip_MEIP <= externalInterrupt;
     CsrPlugin_mip_MTIP <= timerInterrupt;
@@ -7727,75 +7120,78 @@ module VexRiscv (
       execute_to_memory_IS_MUL <= execute_IS_MUL;
     end
     if(when_Pipeline_l124_34) begin
-      decode_to_execute_IS_RS1_SIGNED <= decode_IS_RS1_SIGNED;
+      memory_to_writeBack_IS_MUL <= memory_IS_MUL;
     end
     if(when_Pipeline_l124_35) begin
-      decode_to_execute_IS_RS2_SIGNED <= decode_IS_RS2_SIGNED;
-    end
-    if(when_Pipeline_l124_36) begin
       decode_to_execute_IS_DIV <= decode_IS_DIV;
     end
-    if(when_Pipeline_l124_37) begin
+    if(when_Pipeline_l124_36) begin
       execute_to_memory_IS_DIV <= execute_IS_DIV;
     end
+    if(when_Pipeline_l124_37) begin
+      decode_to_execute_IS_RS1_SIGNED <= decode_IS_RS1_SIGNED;
+    end
     if(when_Pipeline_l124_38) begin
-      decode_to_execute_IS_CSR <= decode_IS_CSR;
+      decode_to_execute_IS_RS2_SIGNED <= decode_IS_RS2_SIGNED;
     end
     if(when_Pipeline_l124_39) begin
-      decode_to_execute_ENV_CTRL <= _zz_decode_to_execute_ENV_CTRL;
+      decode_to_execute_IS_CSR <= decode_IS_CSR;
     end
     if(when_Pipeline_l124_40) begin
-      execute_to_memory_ENV_CTRL <= _zz_execute_to_memory_ENV_CTRL;
+      decode_to_execute_ENV_CTRL <= _zz_decode_to_execute_ENV_CTRL;
     end
     if(when_Pipeline_l124_41) begin
-      memory_to_writeBack_ENV_CTRL <= _zz_memory_to_writeBack_ENV_CTRL;
+      execute_to_memory_ENV_CTRL <= _zz_execute_to_memory_ENV_CTRL;
     end
     if(when_Pipeline_l124_42) begin
-      decode_to_execute_IS_SFENCE_VMA <= decode_IS_SFENCE_VMA;
+      memory_to_writeBack_ENV_CTRL <= _zz_memory_to_writeBack_ENV_CTRL;
     end
     if(when_Pipeline_l124_43) begin
-      decode_to_execute_IS_SFENCE_VMA2 <= decode_IS_SFENCE_VMA2;
+      decode_to_execute_IS_SFENCE_VMA <= decode_IS_SFENCE_VMA;
     end
     if(when_Pipeline_l124_44) begin
-      decode_to_execute_BRANCH_CTRL <= _zz_decode_to_execute_BRANCH_CTRL;
+      decode_to_execute_IS_SFENCE_VMA2 <= decode_IS_SFENCE_VMA2;
     end
     if(when_Pipeline_l124_45) begin
-      decode_to_execute_RS1 <= _zz_decode_SRC1;
+      decode_to_execute_BRANCH_CTRL <= _zz_decode_to_execute_BRANCH_CTRL;
     end
     if(when_Pipeline_l124_46) begin
-      decode_to_execute_RS2 <= _zz_decode_SRC2_1;
+      decode_to_execute_RS1 <= _zz_decode_SRC1;
     end
     if(when_Pipeline_l124_47) begin
-      decode_to_execute_SRC1 <= decode_SRC1;
+      decode_to_execute_RS2 <= _zz_decode_SRC2_1;
     end
     if(when_Pipeline_l124_48) begin
-      decode_to_execute_SRC2 <= decode_SRC2;
+      decode_to_execute_SRC1 <= decode_SRC1;
     end
     if(when_Pipeline_l124_49) begin
-      decode_to_execute_CSR_WRITE_OPCODE <= decode_CSR_WRITE_OPCODE;
+      decode_to_execute_SRC2 <= decode_SRC2;
     end
     if(when_Pipeline_l124_50) begin
-      decode_to_execute_CSR_READ_OPCODE <= decode_CSR_READ_OPCODE;
+      decode_to_execute_CSR_WRITE_OPCODE <= decode_CSR_WRITE_OPCODE;
     end
     if(when_Pipeline_l124_51) begin
-      decode_to_execute_DO_EBREAK <= decode_DO_EBREAK;
+      decode_to_execute_CSR_READ_OPCODE <= decode_CSR_READ_OPCODE;
     end
     if(when_Pipeline_l124_52) begin
-      decode_to_execute_PREDICTION_HAD_BRANCHED2 <= decode_PREDICTION_HAD_BRANCHED2;
+      decode_to_execute_DO_EBREAK <= decode_DO_EBREAK;
     end
     if(when_Pipeline_l124_53) begin
-      execute_to_memory_ALIGNEMENT_FAULT <= execute_ALIGNEMENT_FAULT;
+      decode_to_execute_PREDICTION_HAD_BRANCHED2 <= decode_PREDICTION_HAD_BRANCHED2;
     end
     if(when_Pipeline_l124_54) begin
-      execute_to_memory_MEMORY_ADDRESS_LOW <= execute_MEMORY_ADDRESS_LOW;
+      execute_to_memory_ALIGNEMENT_FAULT <= execute_ALIGNEMENT_FAULT;
     end
     if(when_Pipeline_l124_55) begin
-      memory_to_writeBack_MEMORY_ADDRESS_LOW <= memory_MEMORY_ADDRESS_LOW;
+      execute_to_memory_MEMORY_ADDRESS_LOW <= execute_MEMORY_ADDRESS_LOW;
     end
     if(when_Pipeline_l124_56) begin
-      execute_to_memory_MMU_FAULT <= execute_MMU_FAULT;
+      memory_to_writeBack_MEMORY_ADDRESS_LOW <= memory_MEMORY_ADDRESS_LOW;
     end
     if(when_Pipeline_l124_57) begin
+      execute_to_memory_MMU_FAULT <= execute_MMU_FAULT;
+    end
+    if(when_Pipeline_l124_58) begin
       execute_to_memory_MMU_RSP2_physicalAddress <= execute_MMU_RSP2_physicalAddress;
       execute_to_memory_MMU_RSP2_isIoAccess <= execute_MMU_RSP2_isIoAccess;
       execute_to_memory_MMU_RSP2_isPaging <= execute_MMU_RSP2_isPaging;
@@ -7814,29 +7210,47 @@ module VexRiscv (
       execute_to_memory_MMU_RSP2_ways_3_sel <= execute_MMU_RSP2_ways_3_sel;
       execute_to_memory_MMU_RSP2_ways_3_physical <= execute_MMU_RSP2_ways_3_physical;
     end
-    if(when_Pipeline_l124_58) begin
+    if(when_Pipeline_l124_59) begin
       execute_to_memory_ATOMIC_HIT <= execute_ATOMIC_HIT;
     end
-    if(when_Pipeline_l124_59) begin
+    if(when_Pipeline_l124_60) begin
       memory_to_writeBack_ATOMIC_HIT <= memory_ATOMIC_HIT;
     end
-    if(when_Pipeline_l124_60) begin
+    if(when_Pipeline_l124_61) begin
       execute_to_memory_REGFILE_WRITE_DATA <= _zz_decode_RS2;
     end
-    if(when_Pipeline_l124_61) begin
+    if(when_Pipeline_l124_62) begin
       memory_to_writeBack_REGFILE_WRITE_DATA <= _zz_decode_RS2_1;
     end
-    if(when_Pipeline_l124_62) begin
+    if(when_Pipeline_l124_63) begin
       execute_to_memory_SHIFT_RIGHT <= execute_SHIFT_RIGHT;
     end
-    if(when_Pipeline_l124_63) begin
-      execute_to_memory_BRANCH_DO <= execute_BRANCH_DO;
-    end
     if(when_Pipeline_l124_64) begin
-      execute_to_memory_BRANCH_CALC <= execute_BRANCH_CALC;
+      execute_to_memory_MUL_LL <= execute_MUL_LL;
     end
     if(when_Pipeline_l124_65) begin
+      execute_to_memory_MUL_LH <= execute_MUL_LH;
+    end
+    if(when_Pipeline_l124_66) begin
+      execute_to_memory_MUL_HL <= execute_MUL_HL;
+    end
+    if(when_Pipeline_l124_67) begin
+      execute_to_memory_MUL_HH <= execute_MUL_HH;
+    end
+    if(when_Pipeline_l124_68) begin
+      memory_to_writeBack_MUL_HH <= memory_MUL_HH;
+    end
+    if(when_Pipeline_l124_69) begin
+      execute_to_memory_BRANCH_DO <= execute_BRANCH_DO;
+    end
+    if(when_Pipeline_l124_70) begin
+      execute_to_memory_BRANCH_CALC <= execute_BRANCH_CALC;
+    end
+    if(when_Pipeline_l124_71) begin
       memory_to_writeBack_MEMORY_READ_DATA <= memory_MEMORY_READ_DATA;
+    end
+    if(when_Pipeline_l124_72) begin
+      memory_to_writeBack_MUL_LOW <= memory_MUL_LOW;
     end
     if(when_Fetcher_l398) begin
       _zz_IBusSimplePlugin_injector_decodeInput_payload_rsp_inst <= IBusSimplePlugin_injectionPort_payload;
