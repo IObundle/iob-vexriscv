@@ -1,0 +1,6 @@
+[submodule "VexRiscv"]
+	path = VexRiscv
+	url = git@github.com:PedroAntunes178/VexRiscv.git
+[submodule "buildroot"]
+	path = buildroot
+	url = git@github.com:PedroAntunes178/buildroot.git
