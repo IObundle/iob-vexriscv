@@ -71,7 +71,7 @@ module iob_VexRiscv
     assign dbus_req[`wstrb(0)] = dbus_req_strb;
   `endif
     assign dbus_req_ready = dbus_req_valid;
-    assign dbus_req_strb = dbus_req_wr ? dbus_req_mask : 4'h0;
+    assign dbus_req_strb = dbus_req_wr&dbus_req_valid ? dbus_req_mask : 4'h0;
     assign dbus_req_mask = dbus_req_mask2 << dbus_req_address[1:0];
     assign dbus_req_mask2 = dbus_req_size[1] ? (dbus_req_size[0] ? {4'h0} : {4'hF}) : (dbus_req_size[0] ? {4'h3} : {4'h1});
     assign dbus_resp_ready = dbus_resp[`ready(0)];
@@ -83,6 +83,7 @@ module iob_VexRiscv
     wire [ADDR_W/4-1:0]    debug_address;
     wire [DATA_W-1:0]         debug_data;
     wire [DATA_W-1:0]    debug_data_resp;
+    wire                  debug_resetOut;
 
     assign debug_valid = 1'b0;
     assign debug_wr = 1'b0;
@@ -108,7 +109,7 @@ module iob_VexRiscv
      .debug_bus_cmd_payload_address (debug_address),
      .debug_bus_cmd_payload_data    (debug_data),
      .debug_bus_rsp_data            (debug_data_resp),
-     .debug_resetOut                (trap),
+     .debug_resetOut                (debug_resetOut),
      .dBus_cmd_valid                (dbus_req_valid),
      .dBus_cmd_ready                (dbus_req_ready),
      .dBus_cmd_payload_wr           (dbus_req_wr),
