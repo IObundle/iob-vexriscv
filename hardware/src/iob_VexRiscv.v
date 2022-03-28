@@ -32,15 +32,15 @@ module iob_VexRiscv
 
     wire                 ibus_req_valid;
     wire                 ibus_req_ready;
-    wire [ADDR_W-1:0]  ibus_req_address;
+    wire [`ADDR_W-1:0]  ibus_req_address;
     wire                ibus_resp_ready;
-    wire [DATA_W-1:0]    ibus_resp_data;
+    wire [`DATA_W-1:0]    ibus_resp_data;
 
   //modify addresses if DDR used according to boot status
   `ifdef RUN_EXTMEM_USE_SRAM
-     assign ibus_req = {ibus_req_valid, ~boot, ibus_req_address[ADDR_W-2:0], 32'h0, 4'h0};
+     assign ibus_req = {ibus_req_valid, ~boot, ibus_req_address[`ADDR_W-2:0], `DATA_W'h0, {`DATA_W/8{1'b0}}};
   `else
-    assign ibus_req = {ibus_req_valid, ibus_req_address, 32'h0, 4'h0};
+    assign ibus_req = {ibus_req_valid, ibus_req_address, `DATA_W'h0, {`DATA_W/8{1'b0}}};
   `endif
     assign ibus_req_ready = ibus_req_valid;
     assign ibus_resp_ready = ibus_resp[`ready(0)];
@@ -50,13 +50,13 @@ module iob_VexRiscv
     wire                dbus_req_ready;
     wire                   dbus_req_wr;
     wire [1:0]           dbus_req_size;
-    wire [ADDR_W-1:0] dbus_req_address;
-    wire [DATA_W-1:0]    dbus_req_data;
-    wire [DATA_W/8-1:0]  dbus_req_strb;
-    wire [DATA_W/8-1:0]  dbus_req_mask;
-    wire [DATA_W/8-1:0] dbus_req_mask2;
+    wire [`ADDR_W-1:0] dbus_req_address;
+    wire [`DATA_W-1:0]    dbus_req_data;
+    wire [`DATA_W/8-1:0]  dbus_req_strb;
+    wire [`DATA_W/8-1:0]  dbus_req_mask;
+    wire [`DATA_W/8-1:0] dbus_req_mask2;
     wire               dbus_resp_ready;
-    wire [DATA_W-1:0]   dbus_resp_data;
+    wire [`DATA_W-1:0]   dbus_resp_data;
 
   //modify addresses if DDR used according to boot status
   `ifdef RUN_EXTMEM_USE_SRAM
@@ -74,9 +74,9 @@ module iob_VexRiscv
     wire                     debug_valid;
     wire                     debug_ready;
     wire                        debug_wr;
-    wire [ADDR_W/4-1:0]    debug_address;
-    wire [DATA_W-1:0]         debug_data;
-    wire [DATA_W-1:0]    debug_data_resp;
+    wire [`ADDR_W/4-1:0]    debug_address;
+    wire [`DATA_W-1:0]         debug_data;
+    wire [`DATA_W-1:0]    debug_data_resp;
     wire                  debug_resetOut;
 
     assign debug_valid = 1'b0;
