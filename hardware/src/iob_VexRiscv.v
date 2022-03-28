@@ -40,10 +40,7 @@ module iob_VexRiscv
   `ifdef RUN_EXTMEM_USE_SRAM
      assign ibus_req = {ibus_req_valid, ~boot, ibus_req_address[ADDR_W-2:0], 32'h0, 4'h0};
   `else
-    assign ibus_req[`valid(0)] = ibus_req_valid;
-    assign ibus_req[`address(0, `ADDR_W)] = ibus_req_address;
-    assign ibus_req[`wdata(0)] = 32'h0;
-    assign ibus_req[`wstrb(0)] = 4'h0;
+    assign ibus_req = {ibus_req_valid, ibus_req_address, 32'h0, 4'h0};
   `endif
     assign ibus_req_ready = ibus_req_valid;
     assign ibus_resp_ready = ibus_resp[`ready(0)];
@@ -65,15 +62,12 @@ module iob_VexRiscv
   `ifdef RUN_EXTMEM_USE_SRAM
     assign dbus_req = {dbus_req_valid, (dbus_req_address[`E]^~boot)&~dbus_req_address[`P], dbus_req_address[ADDR_W-2:0], dbus_req_data, dbus_req_strb};
   `else
-    assign dbus_req[`valid(0)] = dbus_req_valid;
-    assign dbus_req[`address(0, `ADDR_W)] = dbus_req_address;
-    assign dbus_req[`wdata(0)] = dbus_req_data;
-    assign dbus_req[`wstrb(0)] = dbus_req_strb;
+    assign dbus_req = {dbus_req_valid, dbus_req_address, dbus_req_data, dbus_req_strb};
   `endif
     assign dbus_req_ready = dbus_req_valid;
-    assign dbus_req_strb = dbus_req_wr&dbus_req_valid ? dbus_req_mask : 4'h0;
+    assign dbus_req_strb = dbus_req_wr ? dbus_req_mask : 4'h0;
     assign dbus_req_mask = dbus_req_mask2 << dbus_req_address[1:0];
-    assign dbus_req_mask2 = dbus_req_size[1] ? (dbus_req_size[0] ? {dbus_req_mask2} : {4'hF}) : (dbus_req_size[0] ? {4'h3} : {4'h1});
+    assign dbus_req_mask2 = dbus_req_size[1] ? (dbus_req_size[0] ? {4'h0} : {4'hF}) : (dbus_req_size[0] ? {4'h3} : {4'h1});
     assign dbus_resp_ready = dbus_resp[`ready(0)];
     assign dbus_resp_data = dbus_resp[`rdata(0)];
 
