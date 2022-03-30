@@ -1,8 +1,13 @@
+include config.mk
+
 # Rules
 .PHONY: vexriscv clean qemu
 
+CPU ?= LinuxGen
+#CPU ?= GenFullNoMmuNoCache
+
 vexriscv:
-	cd VexRiscv && sbt "runMain vexriscv.demo.LinuxGen" && cp VexRiscv.v ../hardware/src/
+	cd VexRiscv && sbt "runMain vexriscv.demo.$(CPU)" && cp VexRiscv.v ../hardware/src/
 
 qemu:
 	mkdir LinuxOS
