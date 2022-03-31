@@ -1,6 +1,6 @@
 // Generator : SpinalHDL v1.6.4    git head : 598c18959149eb18e5eee5b0aa3eef01ecaa41a1
 // Component : VexRiscv
-// Git hash  : 782436ed96a72b1e1b51bf30d4f98876982853cc
+// Git hash  : eafc56d9d51b0486a0ef7ef65ebfb77fc3be4abe
 
 `timescale 1ns/1ps 
 
@@ -5506,7 +5506,7 @@ module VexRiscv (
     end
   end
 
-  assign IBusSimplePlugin_mmuBus_rsp_isIoAccess = ((IBusSimplePlugin_mmuBus_rsp_physicalAddress[31 : 31] == 1'b1) || (IBusSimplePlugin_mmuBus_rsp_physicalAddress[31 : 30] == 2'b01));
+  assign IBusSimplePlugin_mmuBus_rsp_isIoAccess = ((IBusSimplePlugin_mmuBus_rsp_physicalAddress[31 : 30] == 2'b11) || (IBusSimplePlugin_mmuBus_rsp_physicalAddress[31 : 30] == 2'b01));
   assign IBusSimplePlugin_mmuBus_rsp_bypassTranslation = (! MmuPlugin_ports_0_requireMmuLockupCalc);
   assign IBusSimplePlugin_mmuBus_rsp_ways_0_sel = MmuPlugin_ports_0_cacheHitsCalc[0];
   assign IBusSimplePlugin_mmuBus_rsp_ways_0_physical = {{MmuPlugin_ports_0_cache_0_physicalAddress_1,(MmuPlugin_ports_0_cache_0_superPage ? IBusSimplePlugin_mmuBus_cmd_0_virtualAddress[21 : 12] : MmuPlugin_ports_0_cache_0_physicalAddress_0)},IBusSimplePlugin_mmuBus_cmd_0_virtualAddress[11 : 0]};
@@ -5624,7 +5624,7 @@ module VexRiscv (
     end
   end
 
-  assign DBusSimplePlugin_mmuBus_rsp_isIoAccess = ((DBusSimplePlugin_mmuBus_rsp_physicalAddress[31 : 31] == 1'b1) || (DBusSimplePlugin_mmuBus_rsp_physicalAddress[31 : 30] == 2'b01));
+  assign DBusSimplePlugin_mmuBus_rsp_isIoAccess = ((DBusSimplePlugin_mmuBus_rsp_physicalAddress[31 : 30] == 2'b11) || (DBusSimplePlugin_mmuBus_rsp_physicalAddress[31 : 30] == 2'b01));
   assign DBusSimplePlugin_mmuBus_rsp_bypassTranslation = (! MmuPlugin_ports_1_requireMmuLockupCalc);
   assign DBusSimplePlugin_mmuBus_rsp_ways_0_sel = MmuPlugin_ports_1_cacheHitsCalc[0];
   assign DBusSimplePlugin_mmuBus_rsp_ways_0_physical = {{MmuPlugin_ports_1_cache_0_physicalAddress_1,(MmuPlugin_ports_1_cache_0_superPage ? DBusSimplePlugin_mmuBus_cmd_0_virtualAddress[21 : 12] : MmuPlugin_ports_1_cache_0_physicalAddress_0)},DBusSimplePlugin_mmuBus_cmd_0_virtualAddress[11 : 0]};
