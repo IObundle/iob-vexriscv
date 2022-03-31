@@ -38,11 +38,11 @@ module iob_VexRiscv
 
   //modify addresses if DDR used according to boot status
   `ifdef RUN_EXTMEM_USE_SRAM
-     assign ibus_req = {ibus_req_valid, ~boot, ibus_req_address[`ADDR_W-2:0], `DATA_W'h0, {`DATA_W/8{1'b0}}};
+     assign ibus_req = dbus_req_ready|(!ibus_req_valid) ? {`REQ_W{1'b0}} : {ibus_req_valid, ~boot, ibus_req_address[`ADDR_W-2:0], `DATA_W'h0, {`DATA_W/8{1'b0}}};
   `else
-    assign ibus_req = {ibus_req_valid, ibus_req_address, `DATA_W'h0, {`DATA_W/8{1'b0}}};
+    assign ibus_req = dbus_req_ready|(!ibus_req_valid) ? {`REQ_W{1'b0}} : {ibus_req_valid, ibus_req_address, `DATA_W'h0, {`DATA_W/8{1'b0}}};
   `endif
-    assign ibus_req_ready = ibus_req_valid;
+    assign ibus_req_ready = ibus_req_valid&(!dbus_req_valid);
     assign ibus_resp_ready = ibus_resp[`ready(0)];
     assign ibus_resp_data = ibus_resp[`rdata(0)];
 
@@ -60,9 +60,9 @@ module iob_VexRiscv
 
   //modify addresses if DDR used according to boot status
   `ifdef RUN_EXTMEM_USE_SRAM
-    assign dbus_req = {dbus_req_valid, (dbus_req_address[`E]^~boot)&~dbus_req_address[`P], dbus_req_address[ADDR_W-2:0], dbus_req_data, dbus_req_strb};
+    assign dbus_req = ibus_req_ready|(!dbus_req_valid) ? {`REQ_W{1'b0}} : {dbus_req_valid, (dbus_req_address[`E]^~boot)&~dbus_req_address[`P], dbus_req_address[ADDR_W-2:0], dbus_req_data, dbus_req_strb};
   `else
-    assign dbus_req = {dbus_req_valid, dbus_req_address, dbus_req_data, dbus_req_strb};
+    assign dbus_req = ibus_req_ready|(!dbus_req_valid) ? {`REQ_W{1'b0}} : {dbus_req_valid, dbus_req_address, dbus_req_data, dbus_req_strb};
   `endif
     assign dbus_req_ready = dbus_req_valid;
     assign dbus_req_strb = dbus_req_wr ? dbus_req_mask : 4'h0;
