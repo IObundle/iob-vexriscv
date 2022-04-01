@@ -61,11 +61,11 @@ module iob_VexRiscv
         ibus_req_ready_reg <= 1'b0;
       else if(ibus_req_valid|ibus_resp_ready)
         ibus_req_ready_reg <= ibus_req_ready;
-      else
-        ibus_req_ready_reg <= ibus_req_ready_reg;
     //compute address for interface
-    always @(posedge clk)
-      if(ibus_req_valid)
+    always @(posedge clk, posedge rst)
+      if(rst)
+        ibus_req_addr_reg <= 1'b0;
+      else if(ibus_req_valid)
         ibus_req_addr_reg <= ibus_req_address;
 
 
@@ -115,20 +115,25 @@ module iob_VexRiscv
         dbus_req_ready_reg <= 1'b0;
       else if(dbus_req_valid|dbus_resp_ready)
         dbus_req_ready_reg <= dbus_req_ready;
-      else
-        dbus_req_ready_reg <= dbus_req_ready_reg;
     //compute address for interface
-    always @(posedge clk)
-      if (dbus_req_valid)
+    always @(posedge clk, posedge rst)
+      if(rst)
+        dbus_req_addr_reg <= 1'b0;
+      else if (dbus_req_valid)
         dbus_req_addr_reg <= dbus_req_address;
     //compute write data for interface
-    always @(posedge clk)
-      if (dbus_req_valid)
+    always @(posedge clk, posedge rst)
+      if(rst)
+        dbus_req_data_reg <= 1'b0;
+      else if (dbus_req_valid)
         dbus_req_data_reg <= dbus_req_data_int;
     //compute write strb for interface
-    always @(posedge clk)
-      if(dbus_req_valid)
+    always @(posedge clk, posedge rst)
+      if(rst)
+        dbus_req_strb_reg <= 1'b0;
+      else if(dbus_req_valid)
         dbus_req_strb_reg <= dbus_req_strb;
+
 
     // DEBUG BUS
     wire                     debug_valid;
@@ -146,8 +151,7 @@ module iob_VexRiscv
 
     //assign trap = (ibus_req_address==32'h08000020);
 
-   //intantiate VexRiscv
-
+   // VexRiscv instantiation
    VexRiscv VexRiscv_core(
      .iBus_cmd_valid                (ibus_req_valid),
      .iBus_cmd_ready                (ibus_req_ready),
