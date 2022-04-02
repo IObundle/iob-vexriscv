@@ -74,7 +74,7 @@ module VexRiscv (
   wire                IBusSimplePlugin_rspJoin_rspBuffer_c_io_pop_valid;
   wire                IBusSimplePlugin_rspJoin_rspBuffer_c_io_pop_payload_error;
   wire       [31:0]   IBusSimplePlugin_rspJoin_rspBuffer_c_io_pop_payload_inst;
-  wire       [0:0]    IBusSimplePlugin_rspJoin_rspBuffer_c_io_occupancy;
+  wire       [1:0]    IBusSimplePlugin_rspJoin_rspBuffer_c_io_occupancy;
   wire       [51:0]   _zz_memory_MUL_LOW;
   wire       [51:0]   _zz_memory_MUL_LOW_1;
   wire       [51:0]   _zz_memory_MUL_LOW_2;
@@ -130,8 +130,6 @@ module VexRiscv (
   wire       [0:0]    _zz_IBusSimplePlugin_pending_next_4;
   wire       [2:0]    _zz_IBusSimplePlugin_rspJoin_rspBuffer_discardCounter;
   wire       [0:0]    _zz_IBusSimplePlugin_rspJoin_rspBuffer_discardCounter_1;
-  wire       [2:0]    _zz_IBusSimplePlugin_rspJoin_rspBuffer_discardCounter_2;
-  wire       [0:0]    _zz_IBusSimplePlugin_rspJoin_rspBuffer_discardCounter_3;
   wire       [2:0]    _zz_DBusSimplePlugin_memoryExceptionPort_payload_code;
   wire       [0:0]    _zz__zz_decode_RS2_2;
   wire       [31:0]   _zz__zz_decode_BRANCH_CTRL_2;
@@ -755,7 +753,7 @@ module VexRiscv (
   reg                 IBusSimplePlugin_fetchPc_correctionReg;
   wire                IBusSimplePlugin_fetchPc_output_fire;
   wire                IBusSimplePlugin_fetchPc_corrected;
-  reg                 IBusSimplePlugin_fetchPc_pcRegPropagate;
+  wire                IBusSimplePlugin_fetchPc_pcRegPropagate;
   reg                 IBusSimplePlugin_fetchPc_booted;
   reg                 IBusSimplePlugin_fetchPc_inc;
   wire                when_Fetcher_l131;
@@ -779,20 +777,35 @@ module VexRiscv (
   wire                IBusSimplePlugin_iBusRsp_stages_0_output_valid;
   wire                IBusSimplePlugin_iBusRsp_stages_0_output_ready;
   wire       [31:0]   IBusSimplePlugin_iBusRsp_stages_0_output_payload;
-  reg                 IBusSimplePlugin_iBusRsp_stages_0_halt;
+  wire                IBusSimplePlugin_iBusRsp_stages_0_halt;
   wire                IBusSimplePlugin_iBusRsp_stages_1_input_valid;
   wire                IBusSimplePlugin_iBusRsp_stages_1_input_ready;
   wire       [31:0]   IBusSimplePlugin_iBusRsp_stages_1_input_payload;
   wire                IBusSimplePlugin_iBusRsp_stages_1_output_valid;
   wire                IBusSimplePlugin_iBusRsp_stages_1_output_ready;
   wire       [31:0]   IBusSimplePlugin_iBusRsp_stages_1_output_payload;
-  wire                IBusSimplePlugin_iBusRsp_stages_1_halt;
+  reg                 IBusSimplePlugin_iBusRsp_stages_1_halt;
+  wire                IBusSimplePlugin_iBusRsp_stages_2_input_valid;
+  wire                IBusSimplePlugin_iBusRsp_stages_2_input_ready;
+  wire       [31:0]   IBusSimplePlugin_iBusRsp_stages_2_input_payload;
+  wire                IBusSimplePlugin_iBusRsp_stages_2_output_valid;
+  wire                IBusSimplePlugin_iBusRsp_stages_2_output_ready;
+  wire       [31:0]   IBusSimplePlugin_iBusRsp_stages_2_output_payload;
+  wire                IBusSimplePlugin_iBusRsp_stages_2_halt;
   wire                _zz_IBusSimplePlugin_iBusRsp_stages_0_input_ready;
   wire                _zz_IBusSimplePlugin_iBusRsp_stages_1_input_ready;
+  wire                _zz_IBusSimplePlugin_iBusRsp_stages_2_input_ready;
   wire                IBusSimplePlugin_iBusRsp_flush;
-  wire                _zz_IBusSimplePlugin_iBusRsp_stages_0_output_ready;
-  wire                _zz_IBusSimplePlugin_iBusRsp_stages_0_output_ready_1;
-  reg                 _zz_IBusSimplePlugin_iBusRsp_stages_0_output_ready_2;
+  wire                IBusSimplePlugin_iBusRsp_stages_0_output_m2sPipe_valid;
+  wire                IBusSimplePlugin_iBusRsp_stages_0_output_m2sPipe_ready;
+  wire       [31:0]   IBusSimplePlugin_iBusRsp_stages_0_output_m2sPipe_payload;
+  reg                 _zz_IBusSimplePlugin_iBusRsp_stages_0_output_m2sPipe_valid;
+  reg        [31:0]   _zz_IBusSimplePlugin_iBusRsp_stages_0_output_m2sPipe_payload;
+  wire                IBusSimplePlugin_iBusRsp_stages_1_output_m2sPipe_valid;
+  wire                IBusSimplePlugin_iBusRsp_stages_1_output_m2sPipe_ready;
+  wire       [31:0]   IBusSimplePlugin_iBusRsp_stages_1_output_m2sPipe_payload;
+  reg                 _zz_IBusSimplePlugin_iBusRsp_stages_1_output_m2sPipe_valid;
+  reg        [31:0]   _zz_IBusSimplePlugin_iBusRsp_stages_1_output_m2sPipe_payload;
   reg                 IBusSimplePlugin_iBusRsp_readyForError;
   wire                IBusSimplePlugin_iBusRsp_output_valid;
   wire                IBusSimplePlugin_iBusRsp_output_ready;
@@ -800,6 +813,7 @@ module VexRiscv (
   wire                IBusSimplePlugin_iBusRsp_output_payload_rsp_error;
   wire       [31:0]   IBusSimplePlugin_iBusRsp_output_payload_rsp_inst;
   wire                IBusSimplePlugin_iBusRsp_output_payload_isRvc;
+  wire                when_Fetcher_l240;
   wire                IBusSimplePlugin_decompressor_input_valid;
   wire                IBusSimplePlugin_decompressor_input_ready;
   wire       [31:0]   IBusSimplePlugin_decompressor_input_payload_pc;
@@ -886,6 +900,11 @@ module VexRiscv (
   reg                 IBusSimplePlugin_cmd_valid;
   wire                IBusSimplePlugin_cmd_ready;
   wire       [31:0]   IBusSimplePlugin_cmd_payload_pc;
+  wire                IBusSimplePlugin_cmd_s2mPipe_valid;
+  wire                IBusSimplePlugin_cmd_s2mPipe_ready;
+  wire       [31:0]   IBusSimplePlugin_cmd_s2mPipe_payload_pc;
+  reg                 IBusSimplePlugin_cmd_rValid;
+  reg        [31:0]   IBusSimplePlugin_cmd_rData_pc;
   wire                IBusSimplePlugin_pending_inc;
   wire                IBusSimplePlugin_pending_dec;
   reg        [2:0]    IBusSimplePlugin_pending_value;
@@ -893,7 +912,7 @@ module VexRiscv (
   wire                IBusSimplePlugin_cmdFork_canEmit;
   wire                when_IBusSimplePlugin_l305;
   wire                IBusSimplePlugin_cmd_fire;
-  wire                IBusSimplePlugin_iBusRsp_stages_0_output_fire;
+  wire                IBusSimplePlugin_iBusRsp_stages_1_output_fire;
   reg        [31:0]   IBusSimplePlugin_mmu_joinCtx_physicalAddress;
   reg                 IBusSimplePlugin_mmu_joinCtx_isIoAccess;
   reg                 IBusSimplePlugin_mmu_joinCtx_isPaging;
@@ -1857,8 +1876,6 @@ module VexRiscv (
   assign _zz_IBusSimplePlugin_pending_next_3 = {2'd0, _zz_IBusSimplePlugin_pending_next_4};
   assign _zz_IBusSimplePlugin_rspJoin_rspBuffer_discardCounter_1 = (IBusSimplePlugin_rspJoin_rspBuffer_c_io_pop_valid && (IBusSimplePlugin_rspJoin_rspBuffer_discardCounter != 3'b000));
   assign _zz_IBusSimplePlugin_rspJoin_rspBuffer_discardCounter = {2'd0, _zz_IBusSimplePlugin_rspJoin_rspBuffer_discardCounter_1};
-  assign _zz_IBusSimplePlugin_rspJoin_rspBuffer_discardCounter_3 = IBusSimplePlugin_pending_dec;
-  assign _zz_IBusSimplePlugin_rspJoin_rspBuffer_discardCounter_2 = {2'd0, _zz_IBusSimplePlugin_rspJoin_rspBuffer_discardCounter_3};
   assign _zz_DBusSimplePlugin_memoryExceptionPort_payload_code = (memory_MEMORY_STORE ? 3'b110 : 3'b100);
   assign _zz__zz_decode_RS2_2 = (! writeBack_ATOMIC_HIT);
   assign _zz__zz_execute_REGFILE_WRITE_DATA = execute_SRC_LESS;
@@ -2137,7 +2154,7 @@ module VexRiscv (
     .io_pop_payload_error     (IBusSimplePlugin_rspJoin_rspBuffer_c_io_pop_payload_error       ), //o
     .io_pop_payload_inst      (IBusSimplePlugin_rspJoin_rspBuffer_c_io_pop_payload_inst[31:0]  ), //o
     .io_flush                 (1'b0                                                            ), //i
-    .io_occupancy             (IBusSimplePlugin_rspJoin_rspBuffer_c_io_occupancy               ), //o
+    .io_occupancy             (IBusSimplePlugin_rspJoin_rspBuffer_c_io_occupancy[1:0]          ), //o
     .clk                      (clk                                                             ), //i
     .reset                    (reset                                                           )  //i
   );
@@ -3395,7 +3412,7 @@ module VexRiscv (
 
   always @(*) begin
     IBusSimplePlugin_incomingInstruction = 1'b0;
-    if(IBusSimplePlugin_iBusRsp_stages_1_input_valid) begin
+    if(when_Fetcher_l240) begin
       IBusSimplePlugin_incomingInstruction = 1'b1;
     end
     if(IBusSimplePlugin_injector_decodeInput_valid) begin
@@ -3496,13 +3513,7 @@ module VexRiscv (
 
   assign IBusSimplePlugin_fetchPc_output_fire = (IBusSimplePlugin_fetchPc_output_valid && IBusSimplePlugin_fetchPc_output_ready);
   assign IBusSimplePlugin_fetchPc_corrected = (IBusSimplePlugin_fetchPc_correction || IBusSimplePlugin_fetchPc_correctionReg);
-  always @(*) begin
-    IBusSimplePlugin_fetchPc_pcRegPropagate = 1'b0;
-    if(IBusSimplePlugin_iBusRsp_stages_1_input_ready) begin
-      IBusSimplePlugin_fetchPc_pcRegPropagate = 1'b1;
-    end
-  end
-
+  assign IBusSimplePlugin_fetchPc_pcRegPropagate = 1'b0;
   assign when_Fetcher_l131 = (IBusSimplePlugin_fetchPc_correction || IBusSimplePlugin_fetchPc_pcRegPropagate);
   assign IBusSimplePlugin_fetchPc_output_fire_1 = (IBusSimplePlugin_fetchPc_output_valid && IBusSimplePlugin_fetchPc_output_ready);
   assign when_Fetcher_l131_1 = ((! IBusSimplePlugin_fetchPc_output_valid) && IBusSimplePlugin_fetchPc_output_ready);
@@ -3560,44 +3571,56 @@ module VexRiscv (
   assign IBusSimplePlugin_iBusRsp_stages_0_input_valid = IBusSimplePlugin_fetchPc_output_valid;
   assign IBusSimplePlugin_fetchPc_output_ready = IBusSimplePlugin_iBusRsp_stages_0_input_ready;
   assign IBusSimplePlugin_iBusRsp_stages_0_input_payload = IBusSimplePlugin_fetchPc_output_payload;
-  always @(*) begin
-    IBusSimplePlugin_iBusRsp_stages_0_halt = 1'b0;
-    if(when_IBusSimplePlugin_l305) begin
-      IBusSimplePlugin_iBusRsp_stages_0_halt = 1'b1;
-    end
-    if(IBusSimplePlugin_iBusRsp_stages_0_input_valid) begin
-      if(IBusSimplePlugin_mmuBus_rsp_refilling) begin
-        IBusSimplePlugin_iBusRsp_stages_0_halt = 1'b1;
-      end
-      if(IBusSimplePlugin_mmuBus_rsp_exception) begin
-        IBusSimplePlugin_iBusRsp_stages_0_halt = 1'b0;
-      end
-    end
-  end
-
+  assign IBusSimplePlugin_iBusRsp_stages_0_halt = 1'b0;
   assign _zz_IBusSimplePlugin_iBusRsp_stages_0_input_ready = (! IBusSimplePlugin_iBusRsp_stages_0_halt);
   assign IBusSimplePlugin_iBusRsp_stages_0_input_ready = (IBusSimplePlugin_iBusRsp_stages_0_output_ready && _zz_IBusSimplePlugin_iBusRsp_stages_0_input_ready);
   assign IBusSimplePlugin_iBusRsp_stages_0_output_valid = (IBusSimplePlugin_iBusRsp_stages_0_input_valid && _zz_IBusSimplePlugin_iBusRsp_stages_0_input_ready);
   assign IBusSimplePlugin_iBusRsp_stages_0_output_payload = IBusSimplePlugin_iBusRsp_stages_0_input_payload;
-  assign IBusSimplePlugin_iBusRsp_stages_1_halt = 1'b0;
+  always @(*) begin
+    IBusSimplePlugin_iBusRsp_stages_1_halt = 1'b0;
+    if(when_IBusSimplePlugin_l305) begin
+      IBusSimplePlugin_iBusRsp_stages_1_halt = 1'b1;
+    end
+    if(IBusSimplePlugin_iBusRsp_stages_1_input_valid) begin
+      if(IBusSimplePlugin_mmuBus_rsp_refilling) begin
+        IBusSimplePlugin_iBusRsp_stages_1_halt = 1'b1;
+      end
+      if(IBusSimplePlugin_mmuBus_rsp_exception) begin
+        IBusSimplePlugin_iBusRsp_stages_1_halt = 1'b0;
+      end
+    end
+  end
+
   assign _zz_IBusSimplePlugin_iBusRsp_stages_1_input_ready = (! IBusSimplePlugin_iBusRsp_stages_1_halt);
   assign IBusSimplePlugin_iBusRsp_stages_1_input_ready = (IBusSimplePlugin_iBusRsp_stages_1_output_ready && _zz_IBusSimplePlugin_iBusRsp_stages_1_input_ready);
   assign IBusSimplePlugin_iBusRsp_stages_1_output_valid = (IBusSimplePlugin_iBusRsp_stages_1_input_valid && _zz_IBusSimplePlugin_iBusRsp_stages_1_input_ready);
   assign IBusSimplePlugin_iBusRsp_stages_1_output_payload = IBusSimplePlugin_iBusRsp_stages_1_input_payload;
+  assign IBusSimplePlugin_iBusRsp_stages_2_halt = 1'b0;
+  assign _zz_IBusSimplePlugin_iBusRsp_stages_2_input_ready = (! IBusSimplePlugin_iBusRsp_stages_2_halt);
+  assign IBusSimplePlugin_iBusRsp_stages_2_input_ready = (IBusSimplePlugin_iBusRsp_stages_2_output_ready && _zz_IBusSimplePlugin_iBusRsp_stages_2_input_ready);
+  assign IBusSimplePlugin_iBusRsp_stages_2_output_valid = (IBusSimplePlugin_iBusRsp_stages_2_input_valid && _zz_IBusSimplePlugin_iBusRsp_stages_2_input_ready);
+  assign IBusSimplePlugin_iBusRsp_stages_2_output_payload = IBusSimplePlugin_iBusRsp_stages_2_input_payload;
   assign IBusSimplePlugin_fetchPc_redo_valid = IBusSimplePlugin_iBusRsp_redoFetch;
   always @(*) begin
-    IBusSimplePlugin_fetchPc_redo_payload = IBusSimplePlugin_iBusRsp_stages_1_input_payload;
+    IBusSimplePlugin_fetchPc_redo_payload = IBusSimplePlugin_iBusRsp_stages_2_input_payload;
     if(IBusSimplePlugin_decompressor_throw2BytesReg) begin
       IBusSimplePlugin_fetchPc_redo_payload[1] = 1'b1;
     end
   end
 
   assign IBusSimplePlugin_iBusRsp_flush = (IBusSimplePlugin_externalFlush || IBusSimplePlugin_iBusRsp_redoFetch);
-  assign IBusSimplePlugin_iBusRsp_stages_0_output_ready = _zz_IBusSimplePlugin_iBusRsp_stages_0_output_ready;
-  assign _zz_IBusSimplePlugin_iBusRsp_stages_0_output_ready = ((1'b0 && (! _zz_IBusSimplePlugin_iBusRsp_stages_0_output_ready_1)) || IBusSimplePlugin_iBusRsp_stages_1_input_ready);
-  assign _zz_IBusSimplePlugin_iBusRsp_stages_0_output_ready_1 = _zz_IBusSimplePlugin_iBusRsp_stages_0_output_ready_2;
-  assign IBusSimplePlugin_iBusRsp_stages_1_input_valid = _zz_IBusSimplePlugin_iBusRsp_stages_0_output_ready_1;
-  assign IBusSimplePlugin_iBusRsp_stages_1_input_payload = IBusSimplePlugin_fetchPc_pcReg;
+  assign IBusSimplePlugin_iBusRsp_stages_0_output_ready = ((1'b0 && (! IBusSimplePlugin_iBusRsp_stages_0_output_m2sPipe_valid)) || IBusSimplePlugin_iBusRsp_stages_0_output_m2sPipe_ready);
+  assign IBusSimplePlugin_iBusRsp_stages_0_output_m2sPipe_valid = _zz_IBusSimplePlugin_iBusRsp_stages_0_output_m2sPipe_valid;
+  assign IBusSimplePlugin_iBusRsp_stages_0_output_m2sPipe_payload = _zz_IBusSimplePlugin_iBusRsp_stages_0_output_m2sPipe_payload;
+  assign IBusSimplePlugin_iBusRsp_stages_1_input_valid = IBusSimplePlugin_iBusRsp_stages_0_output_m2sPipe_valid;
+  assign IBusSimplePlugin_iBusRsp_stages_0_output_m2sPipe_ready = IBusSimplePlugin_iBusRsp_stages_1_input_ready;
+  assign IBusSimplePlugin_iBusRsp_stages_1_input_payload = IBusSimplePlugin_iBusRsp_stages_0_output_m2sPipe_payload;
+  assign IBusSimplePlugin_iBusRsp_stages_1_output_ready = ((1'b0 && (! IBusSimplePlugin_iBusRsp_stages_1_output_m2sPipe_valid)) || IBusSimplePlugin_iBusRsp_stages_1_output_m2sPipe_ready);
+  assign IBusSimplePlugin_iBusRsp_stages_1_output_m2sPipe_valid = _zz_IBusSimplePlugin_iBusRsp_stages_1_output_m2sPipe_valid;
+  assign IBusSimplePlugin_iBusRsp_stages_1_output_m2sPipe_payload = _zz_IBusSimplePlugin_iBusRsp_stages_1_output_m2sPipe_payload;
+  assign IBusSimplePlugin_iBusRsp_stages_2_input_valid = IBusSimplePlugin_iBusRsp_stages_1_output_m2sPipe_valid;
+  assign IBusSimplePlugin_iBusRsp_stages_1_output_m2sPipe_ready = IBusSimplePlugin_iBusRsp_stages_2_input_ready;
+  assign IBusSimplePlugin_iBusRsp_stages_2_input_payload = IBusSimplePlugin_iBusRsp_stages_1_output_m2sPipe_payload;
   always @(*) begin
     IBusSimplePlugin_iBusRsp_readyForError = 1'b1;
     if(IBusSimplePlugin_injector_decodeInput_valid) begin
@@ -3605,6 +3628,7 @@ module VexRiscv (
     end
   end
 
+  assign when_Fetcher_l240 = (IBusSimplePlugin_iBusRsp_stages_1_input_valid || IBusSimplePlugin_iBusRsp_stages_2_input_valid);
   assign IBusSimplePlugin_decompressor_input_valid = (IBusSimplePlugin_iBusRsp_output_valid && (! IBusSimplePlugin_iBusRsp_redoFetch));
   assign IBusSimplePlugin_decompressor_input_payload_pc = IBusSimplePlugin_iBusRsp_output_payload_pc;
   assign IBusSimplePlugin_decompressor_input_payload_rsp_error = IBusSimplePlugin_iBusRsp_output_payload_rsp_error;
@@ -3812,7 +3836,7 @@ module VexRiscv (
   assign IBusSimplePlugin_decompressor_output_payload_pc = IBusSimplePlugin_decompressor_input_payload_pc;
   assign IBusSimplePlugin_decompressor_output_payload_isRvc = IBusSimplePlugin_decompressor_isRvc;
   assign IBusSimplePlugin_decompressor_output_payload_rsp_inst = (IBusSimplePlugin_decompressor_isRvc ? IBusSimplePlugin_decompressor_decompressed : IBusSimplePlugin_decompressor_raw);
-  assign IBusSimplePlugin_decompressor_input_ready = (IBusSimplePlugin_decompressor_output_ready && (((! IBusSimplePlugin_iBusRsp_stages_1_input_valid) || IBusSimplePlugin_decompressor_flushNext) || ((! (IBusSimplePlugin_decompressor_bufferValid && IBusSimplePlugin_decompressor_isInputHighRvc)) && (! (((! IBusSimplePlugin_decompressor_unaligned) && IBusSimplePlugin_decompressor_isInputLowRvc) && IBusSimplePlugin_decompressor_isInputHighRvc)))));
+  assign IBusSimplePlugin_decompressor_input_ready = (IBusSimplePlugin_decompressor_output_ready && (((! IBusSimplePlugin_iBusRsp_stages_2_input_valid) || IBusSimplePlugin_decompressor_flushNext) || ((! (IBusSimplePlugin_decompressor_bufferValid && IBusSimplePlugin_decompressor_isInputHighRvc)) && (! (((! IBusSimplePlugin_decompressor_unaligned) && IBusSimplePlugin_decompressor_isInputLowRvc) && IBusSimplePlugin_decompressor_isInputHighRvc)))));
   assign IBusSimplePlugin_decompressor_output_fire = (IBusSimplePlugin_decompressor_output_valid && IBusSimplePlugin_decompressor_output_ready);
   assign IBusSimplePlugin_decompressor_bufferFill = (((((! IBusSimplePlugin_decompressor_unaligned) && IBusSimplePlugin_decompressor_isInputLowRvc) && (! IBusSimplePlugin_decompressor_isInputHighRvc)) || (IBusSimplePlugin_decompressor_bufferValid && (! IBusSimplePlugin_decompressor_isInputHighRvc))) || ((IBusSimplePlugin_decompressor_throw2Bytes && (! IBusSimplePlugin_decompressor_isRvc)) && (! IBusSimplePlugin_decompressor_isInputHighRvc)));
   assign when_Fetcher_l283 = (IBusSimplePlugin_decompressor_output_ready && IBusSimplePlugin_decompressor_input_valid);
@@ -3847,15 +3871,18 @@ module VexRiscv (
     endcase
   end
 
-  assign iBus_cmd_valid = IBusSimplePlugin_cmd_valid;
-  assign IBusSimplePlugin_cmd_ready = iBus_cmd_ready;
-  assign iBus_cmd_payload_pc = IBusSimplePlugin_cmd_payload_pc;
+  assign IBusSimplePlugin_cmd_ready = (! IBusSimplePlugin_cmd_rValid);
+  assign IBusSimplePlugin_cmd_s2mPipe_valid = (IBusSimplePlugin_cmd_valid || IBusSimplePlugin_cmd_rValid);
+  assign IBusSimplePlugin_cmd_s2mPipe_payload_pc = (IBusSimplePlugin_cmd_rValid ? IBusSimplePlugin_cmd_rData_pc : IBusSimplePlugin_cmd_payload_pc);
+  assign iBus_cmd_valid = IBusSimplePlugin_cmd_s2mPipe_valid;
+  assign IBusSimplePlugin_cmd_s2mPipe_ready = iBus_cmd_ready;
+  assign iBus_cmd_payload_pc = IBusSimplePlugin_cmd_s2mPipe_payload_pc;
   assign IBusSimplePlugin_pending_next = (_zz_IBusSimplePlugin_pending_next - _zz_IBusSimplePlugin_pending_next_3);
-  assign IBusSimplePlugin_cmdFork_canEmit = (IBusSimplePlugin_iBusRsp_stages_0_output_ready && (IBusSimplePlugin_pending_value != 3'b111));
-  assign when_IBusSimplePlugin_l305 = (IBusSimplePlugin_iBusRsp_stages_0_input_valid && ((! IBusSimplePlugin_cmdFork_canEmit) || (! IBusSimplePlugin_cmd_ready)));
+  assign IBusSimplePlugin_cmdFork_canEmit = (IBusSimplePlugin_iBusRsp_stages_1_output_ready && (IBusSimplePlugin_pending_value != 3'b111));
+  assign when_IBusSimplePlugin_l305 = (IBusSimplePlugin_iBusRsp_stages_1_input_valid && ((! IBusSimplePlugin_cmdFork_canEmit) || (! IBusSimplePlugin_cmd_ready)));
   always @(*) begin
-    IBusSimplePlugin_cmd_valid = (IBusSimplePlugin_iBusRsp_stages_0_input_valid && IBusSimplePlugin_cmdFork_canEmit);
-    if(IBusSimplePlugin_iBusRsp_stages_0_input_valid) begin
+    IBusSimplePlugin_cmd_valid = (IBusSimplePlugin_iBusRsp_stages_1_input_valid && IBusSimplePlugin_cmdFork_canEmit);
+    if(IBusSimplePlugin_iBusRsp_stages_1_input_valid) begin
       if(IBusSimplePlugin_mmuBus_rsp_refilling) begin
         IBusSimplePlugin_cmd_valid = 1'b0;
       end
@@ -3867,11 +3894,11 @@ module VexRiscv (
 
   assign IBusSimplePlugin_cmd_fire = (IBusSimplePlugin_cmd_valid && IBusSimplePlugin_cmd_ready);
   assign IBusSimplePlugin_pending_inc = IBusSimplePlugin_cmd_fire;
-  assign IBusSimplePlugin_mmuBus_cmd_0_isValid = IBusSimplePlugin_iBusRsp_stages_0_input_valid;
-  assign IBusSimplePlugin_mmuBus_cmd_0_virtualAddress = IBusSimplePlugin_iBusRsp_stages_0_input_payload;
+  assign IBusSimplePlugin_mmuBus_cmd_0_isValid = IBusSimplePlugin_iBusRsp_stages_1_input_valid;
+  assign IBusSimplePlugin_mmuBus_cmd_0_virtualAddress = IBusSimplePlugin_iBusRsp_stages_1_input_payload;
   assign IBusSimplePlugin_mmuBus_cmd_0_bypassTranslation = 1'b0;
-  assign IBusSimplePlugin_iBusRsp_stages_0_output_fire = (IBusSimplePlugin_iBusRsp_stages_0_output_valid && IBusSimplePlugin_iBusRsp_stages_0_output_ready);
-  assign IBusSimplePlugin_mmuBus_end = (IBusSimplePlugin_iBusRsp_stages_0_output_fire || IBusSimplePlugin_externalFlush);
+  assign IBusSimplePlugin_iBusRsp_stages_1_output_fire = (IBusSimplePlugin_iBusRsp_stages_1_output_valid && IBusSimplePlugin_iBusRsp_stages_1_output_ready);
+  assign IBusSimplePlugin_mmuBus_end = (IBusSimplePlugin_iBusRsp_stages_1_output_fire || IBusSimplePlugin_externalFlush);
   assign IBusSimplePlugin_cmd_payload_pc = {IBusSimplePlugin_mmuBus_rsp_physicalAddress[31 : 2],2'b00};
   assign iBus_rsp_toStream_valid = iBus_rsp_valid;
   assign iBus_rsp_toStream_payload_error = iBus_rsp_payload_error;
@@ -3884,7 +3911,7 @@ module VexRiscv (
   assign IBusSimplePlugin_rspJoin_rspBuffer_c_io_pop_ready = (IBusSimplePlugin_rspJoin_rspBuffer_output_ready || IBusSimplePlugin_rspJoin_rspBuffer_flush);
   assign IBusSimplePlugin_rspJoin_rspBuffer_c_io_pop_fire = (IBusSimplePlugin_rspJoin_rspBuffer_c_io_pop_valid && IBusSimplePlugin_rspJoin_rspBuffer_c_io_pop_ready);
   assign IBusSimplePlugin_pending_dec = IBusSimplePlugin_rspJoin_rspBuffer_c_io_pop_fire;
-  assign IBusSimplePlugin_rspJoin_fetchRsp_pc = IBusSimplePlugin_iBusRsp_stages_1_output_payload;
+  assign IBusSimplePlugin_rspJoin_fetchRsp_pc = IBusSimplePlugin_iBusRsp_stages_2_output_payload;
   always @(*) begin
     IBusSimplePlugin_rspJoin_fetchRsp_rsp_error = IBusSimplePlugin_rspJoin_rspBuffer_output_payload_error;
     if(when_IBusSimplePlugin_l376) begin
@@ -3904,13 +3931,13 @@ module VexRiscv (
     end
   end
 
-  assign IBusSimplePlugin_rspJoin_join_valid = (IBusSimplePlugin_iBusRsp_stages_1_output_valid && IBusSimplePlugin_rspJoin_rspBuffer_output_valid);
+  assign IBusSimplePlugin_rspJoin_join_valid = (IBusSimplePlugin_iBusRsp_stages_2_output_valid && IBusSimplePlugin_rspJoin_rspBuffer_output_valid);
   assign IBusSimplePlugin_rspJoin_join_payload_pc = IBusSimplePlugin_rspJoin_fetchRsp_pc;
   assign IBusSimplePlugin_rspJoin_join_payload_rsp_error = IBusSimplePlugin_rspJoin_fetchRsp_rsp_error;
   assign IBusSimplePlugin_rspJoin_join_payload_rsp_inst = IBusSimplePlugin_rspJoin_fetchRsp_rsp_inst;
   assign IBusSimplePlugin_rspJoin_join_payload_isRvc = IBusSimplePlugin_rspJoin_fetchRsp_isRvc;
   assign IBusSimplePlugin_rspJoin_join_fire = (IBusSimplePlugin_rspJoin_join_valid && IBusSimplePlugin_rspJoin_join_ready);
-  assign IBusSimplePlugin_iBusRsp_stages_1_output_ready = (IBusSimplePlugin_iBusRsp_stages_1_output_valid ? IBusSimplePlugin_rspJoin_join_fire : IBusSimplePlugin_rspJoin_join_ready);
+  assign IBusSimplePlugin_iBusRsp_stages_2_output_ready = (IBusSimplePlugin_iBusRsp_stages_2_output_valid ? IBusSimplePlugin_rspJoin_join_fire : IBusSimplePlugin_rspJoin_join_ready);
   assign IBusSimplePlugin_rspJoin_join_fire_1 = (IBusSimplePlugin_rspJoin_join_valid && IBusSimplePlugin_rspJoin_join_ready);
   assign IBusSimplePlugin_rspJoin_rspBuffer_output_ready = IBusSimplePlugin_rspJoin_join_fire_1;
   assign _zz_IBusSimplePlugin_iBusRsp_output_valid = (! IBusSimplePlugin_rspJoin_exceptionDetected);
@@ -3920,7 +3947,7 @@ module VexRiscv (
   assign IBusSimplePlugin_iBusRsp_output_payload_rsp_error = IBusSimplePlugin_rspJoin_join_payload_rsp_error;
   assign IBusSimplePlugin_iBusRsp_output_payload_rsp_inst = IBusSimplePlugin_rspJoin_join_payload_rsp_inst;
   assign IBusSimplePlugin_iBusRsp_output_payload_isRvc = IBusSimplePlugin_rspJoin_join_payload_isRvc;
-  assign when_IBusSimplePlugin_l392 = (IBusSimplePlugin_iBusRsp_stages_1_input_valid && IBusSimplePlugin_mmu_joinCtx_refilling);
+  assign when_IBusSimplePlugin_l392 = (IBusSimplePlugin_iBusRsp_stages_2_input_valid && IBusSimplePlugin_mmu_joinCtx_refilling);
   always @(*) begin
     IBusSimplePlugin_decodeExceptionPort_payload_code = 4'bxxxx;
     if(when_IBusSimplePlugin_l402) begin
@@ -3933,7 +3960,7 @@ module VexRiscv (
 
   assign IBusSimplePlugin_decodeExceptionPort_payload_badAddr = {IBusSimplePlugin_rspJoin_join_payload_pc[31 : 2],2'b00};
   assign when_IBusSimplePlugin_l402 = (IBusSimplePlugin_rspJoin_join_valid && IBusSimplePlugin_rspJoin_join_payload_rsp_error);
-  assign when_IBusSimplePlugin_l408 = ((IBusSimplePlugin_iBusRsp_stages_1_input_valid && (! IBusSimplePlugin_mmu_joinCtx_refilling)) && (IBusSimplePlugin_mmu_joinCtx_exception || (! IBusSimplePlugin_mmu_joinCtx_allowExecute)));
+  assign when_IBusSimplePlugin_l408 = ((IBusSimplePlugin_iBusRsp_stages_2_input_valid && (! IBusSimplePlugin_mmu_joinCtx_refilling)) && (IBusSimplePlugin_mmu_joinCtx_exception || (! IBusSimplePlugin_mmu_joinCtx_allowExecute)));
   assign IBusSimplePlugin_decodeExceptionPort_valid = (IBusSimplePlugin_rspJoin_exceptionDetected && IBusSimplePlugin_iBusRsp_readyForError);
   assign when_DBusSimplePlugin_l398 = ((DBusSimplePlugin_mmuBus_busy && decode_arbitration_isValid) && decode_MEMORY_ENABLE);
   assign _zz_dBus_cmd_valid = 1'b0;
@@ -6021,7 +6048,8 @@ module VexRiscv (
       IBusSimplePlugin_fetchPc_booted <= 1'b0;
       IBusSimplePlugin_fetchPc_inc <= 1'b0;
       IBusSimplePlugin_decodePc_pcReg <= 32'h0;
-      _zz_IBusSimplePlugin_iBusRsp_stages_0_output_ready_2 <= 1'b0;
+      _zz_IBusSimplePlugin_iBusRsp_stages_0_output_m2sPipe_valid <= 1'b0;
+      _zz_IBusSimplePlugin_iBusRsp_stages_1_output_m2sPipe_valid <= 1'b0;
       IBusSimplePlugin_decompressor_bufferValid <= 1'b0;
       IBusSimplePlugin_decompressor_throw2BytesReg <= 1'b0;
       _zz_IBusSimplePlugin_injector_decodeInput_valid <= 1'b0;
@@ -6029,6 +6057,7 @@ module VexRiscv (
       IBusSimplePlugin_injector_nextPcCalc_valids_1 <= 1'b0;
       IBusSimplePlugin_injector_nextPcCalc_valids_2 <= 1'b0;
       IBusSimplePlugin_injector_nextPcCalc_valids_3 <= 1'b0;
+      IBusSimplePlugin_cmd_rValid <= 1'b0;
       IBusSimplePlugin_pending_value <= 3'b000;
       IBusSimplePlugin_rspJoin_rspBuffer_discardCounter <= 3'b000;
       execute_DBusSimplePlugin_atomic_reserved <= 1'b0;
@@ -6131,10 +6160,16 @@ module VexRiscv (
         IBusSimplePlugin_decodePc_pcReg <= IBusSimplePlugin_jump_pcLoad_payload;
       end
       if(IBusSimplePlugin_iBusRsp_flush) begin
-        _zz_IBusSimplePlugin_iBusRsp_stages_0_output_ready_2 <= 1'b0;
+        _zz_IBusSimplePlugin_iBusRsp_stages_0_output_m2sPipe_valid <= 1'b0;
       end
-      if(_zz_IBusSimplePlugin_iBusRsp_stages_0_output_ready) begin
-        _zz_IBusSimplePlugin_iBusRsp_stages_0_output_ready_2 <= (IBusSimplePlugin_iBusRsp_stages_0_output_valid && (! 1'b0));
+      if(IBusSimplePlugin_iBusRsp_stages_0_output_ready) begin
+        _zz_IBusSimplePlugin_iBusRsp_stages_0_output_m2sPipe_valid <= (IBusSimplePlugin_iBusRsp_stages_0_output_valid && (! 1'b0));
+      end
+      if(IBusSimplePlugin_iBusRsp_flush) begin
+        _zz_IBusSimplePlugin_iBusRsp_stages_1_output_m2sPipe_valid <= 1'b0;
+      end
+      if(IBusSimplePlugin_iBusRsp_stages_1_output_ready) begin
+        _zz_IBusSimplePlugin_iBusRsp_stages_1_output_m2sPipe_valid <= (IBusSimplePlugin_iBusRsp_stages_1_output_valid && (! IBusSimplePlugin_iBusRsp_flush));
       end
       if(IBusSimplePlugin_decompressor_output_fire) begin
         IBusSimplePlugin_decompressor_throw2BytesReg <= ((((! IBusSimplePlugin_decompressor_unaligned) && IBusSimplePlugin_decompressor_isInputLowRvc) && IBusSimplePlugin_decompressor_isInputHighRvc) || (IBusSimplePlugin_decompressor_bufferValid && IBusSimplePlugin_decompressor_isInputHighRvc));
@@ -6181,10 +6216,16 @@ module VexRiscv (
       if(IBusSimplePlugin_decodePc_flushed) begin
         IBusSimplePlugin_injector_nextPcCalc_valids_3 <= 1'b0;
       end
+      if(IBusSimplePlugin_cmd_valid) begin
+        IBusSimplePlugin_cmd_rValid <= 1'b1;
+      end
+      if(IBusSimplePlugin_cmd_s2mPipe_ready) begin
+        IBusSimplePlugin_cmd_rValid <= 1'b0;
+      end
       IBusSimplePlugin_pending_value <= IBusSimplePlugin_pending_next;
       IBusSimplePlugin_rspJoin_rspBuffer_discardCounter <= (IBusSimplePlugin_rspJoin_rspBuffer_discardCounter - _zz_IBusSimplePlugin_rspJoin_rspBuffer_discardCounter);
       if(IBusSimplePlugin_iBusRsp_flush) begin
-        IBusSimplePlugin_rspJoin_rspBuffer_discardCounter <= (IBusSimplePlugin_pending_value - _zz_IBusSimplePlugin_rspJoin_rspBuffer_discardCounter_2);
+        IBusSimplePlugin_rspJoin_rspBuffer_discardCounter <= IBusSimplePlugin_pending_next;
       end
       if(when_DBusSimplePlugin_l465) begin
         if(execute_MEMORY_ATOMIC) begin
@@ -6605,6 +6646,12 @@ module VexRiscv (
   end
 
   always @(posedge clk) begin
+    if(IBusSimplePlugin_iBusRsp_stages_0_output_ready) begin
+      _zz_IBusSimplePlugin_iBusRsp_stages_0_output_m2sPipe_payload <= IBusSimplePlugin_iBusRsp_stages_0_output_payload;
+    end
+    if(IBusSimplePlugin_iBusRsp_stages_1_output_ready) begin
+      _zz_IBusSimplePlugin_iBusRsp_stages_1_output_m2sPipe_payload <= IBusSimplePlugin_iBusRsp_stages_1_output_payload;
+    end
     if(IBusSimplePlugin_decompressor_input_valid) begin
       IBusSimplePlugin_decompressor_bufferValidLatch <= IBusSimplePlugin_decompressor_bufferValid;
     end
@@ -6623,7 +6670,10 @@ module VexRiscv (
     if(IBusSimplePlugin_injector_decodeInput_ready) begin
       IBusSimplePlugin_injector_formal_rawInDecode <= IBusSimplePlugin_decompressor_raw;
     end
-    if(IBusSimplePlugin_iBusRsp_stages_1_output_ready) begin
+    if(IBusSimplePlugin_cmd_ready) begin
+      IBusSimplePlugin_cmd_rData_pc <= IBusSimplePlugin_cmd_payload_pc;
+    end
+    if(IBusSimplePlugin_iBusRsp_stages_2_output_ready) begin
       IBusSimplePlugin_mmu_joinCtx_physicalAddress <= IBusSimplePlugin_mmuBus_rsp_physicalAddress;
       IBusSimplePlugin_mmu_joinCtx_isIoAccess <= IBusSimplePlugin_mmuBus_rsp_isIoAccess;
       IBusSimplePlugin_mmu_joinCtx_isPaging <= IBusSimplePlugin_mmuBus_rsp_isPaging;
@@ -7364,18 +7414,24 @@ module StreamFifoLowLatency (
   output reg          io_pop_payload_error,
   output reg [31:0]   io_pop_payload_inst,
   input               io_flush,
-  output     [0:0]    io_occupancy,
+  output     [1:0]    io_occupancy,
   input               clk,
   input               reset
 );
 
-  reg                 when_Phase_l623;
+  wire       [32:0]   _zz_ram_port0;
+  wire       [32:0]   _zz_ram_port;
+  reg                 _zz_1;
   reg                 pushPtr_willIncrement;
   reg                 pushPtr_willClear;
+  reg        [0:0]    pushPtr_valueNext;
+  reg        [0:0]    pushPtr_value;
   wire                pushPtr_willOverflowIfInc;
   wire                pushPtr_willOverflow;
   reg                 popPtr_willIncrement;
   reg                 popPtr_willClear;
+  reg        [0:0]    popPtr_valueNext;
+  reg        [0:0]    popPtr_value;
   wire                popPtr_willOverflowIfInc;
   wire                popPtr_willOverflow;
   wire                ptrMatch;
@@ -7389,13 +7445,21 @@ module StreamFifoLowLatency (
   wire       [32:0]   _zz_readed_error;
   wire                when_Stream_l1019;
   wire                when_Stream_l1032;
-  wire       [32:0]   _zz_readed_error_1;
-  reg        [32:0]   _zz_readed_error_2;
+  wire       [0:0]    ptrDif;
+  (* ram_style = "distributed" *) reg [32:0] ram [0:1];
+
+  assign _zz_ram_port = {io_push_payload_inst,io_push_payload_error};
+  assign _zz_ram_port0 = ram[popPtr_value];
+  always @(posedge clk) begin
+    if(_zz_1) begin
+      ram[pushPtr_value] <= _zz_ram_port;
+    end
+  end
 
   always @(*) begin
-    when_Phase_l623 = 1'b0;
+    _zz_1 = 1'b0;
     if(pushing) begin
-      when_Phase_l623 = 1'b1;
+      _zz_1 = 1'b1;
     end
   end
 
@@ -7413,8 +7477,15 @@ module StreamFifoLowLatency (
     end
   end
 
-  assign pushPtr_willOverflowIfInc = 1'b1;
+  assign pushPtr_willOverflowIfInc = (pushPtr_value == 1'b1);
   assign pushPtr_willOverflow = (pushPtr_willOverflowIfInc && pushPtr_willIncrement);
+  always @(*) begin
+    pushPtr_valueNext = (pushPtr_value + pushPtr_willIncrement);
+    if(pushPtr_willClear) begin
+      pushPtr_valueNext = 1'b0;
+    end
+  end
+
   always @(*) begin
     popPtr_willIncrement = 1'b0;
     if(popping) begin
@@ -7429,15 +7500,22 @@ module StreamFifoLowLatency (
     end
   end
 
-  assign popPtr_willOverflowIfInc = 1'b1;
+  assign popPtr_willOverflowIfInc = (popPtr_value == 1'b1);
   assign popPtr_willOverflow = (popPtr_willOverflowIfInc && popPtr_willIncrement);
-  assign ptrMatch = 1'b1;
+  always @(*) begin
+    popPtr_valueNext = (popPtr_value + popPtr_willIncrement);
+    if(popPtr_willClear) begin
+      popPtr_valueNext = 1'b0;
+    end
+  end
+
+  assign ptrMatch = (pushPtr_value == popPtr_value);
   assign empty = (ptrMatch && (! risingOccupancy));
   assign full = (ptrMatch && risingOccupancy);
   assign pushing = (io_push_valid && io_push_ready);
   assign popping = (io_pop_valid && io_pop_ready);
   assign io_push_ready = (! full);
-  assign _zz_readed_error = _zz_readed_error_1;
+  assign _zz_readed_error = _zz_ram_port0;
   assign readed_error = _zz_readed_error[0];
   assign readed_inst = _zz_readed_error[32 : 1];
   assign when_Stream_l1019 = (! empty);
@@ -7466,24 +7544,22 @@ module StreamFifoLowLatency (
   end
 
   assign when_Stream_l1032 = (pushing != popping);
-  assign io_occupancy = (risingOccupancy && ptrMatch);
-  assign _zz_readed_error_1 = _zz_readed_error_2;
+  assign ptrDif = (pushPtr_value - popPtr_value);
+  assign io_occupancy = {(risingOccupancy && ptrMatch),ptrDif};
   always @(posedge clk or posedge reset) begin
     if(reset) begin
+      pushPtr_value <= 1'b0;
+      popPtr_value <= 1'b0;
       risingOccupancy <= 1'b0;
     end else begin
+      pushPtr_value <= pushPtr_valueNext;
+      popPtr_value <= popPtr_valueNext;
       if(when_Stream_l1032) begin
         risingOccupancy <= pushing;
       end
       if(io_flush) begin
         risingOccupancy <= 1'b0;
       end
-    end
-  end
-
-  always @(posedge clk) begin
-    if(when_Phase_l623) begin
-      _zz_readed_error_2 <= {io_push_payload_inst,io_push_payload_error};
     end
   end
 

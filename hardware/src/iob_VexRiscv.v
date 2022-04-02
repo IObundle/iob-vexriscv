@@ -34,6 +34,7 @@ module iob_VexRiscv
     wire                  ibus_req_valid;
     wire              ibus_req_valid_int;
     wire                  ibus_req_ready;
+    wire              ibus_req_ready_int;
     wire [`ADDR_W-1:0]  ibus_req_address;
     wire [`ADDR_W-1:0] ibus_req_addr_int;
     wire                 ibus_resp_ready;
@@ -50,9 +51,10 @@ module iob_VexRiscv
     assign ibus_req = {ibus_req_valid_int, ibus_req_addr_int, `DATA_W'h0, {`DATA_W/8{1'b0}}};
 `endif
     assign ibus_req_ready = ibus_req_valid_reg ~& (~ibus_resp_ready);
-    //assign ibus_req_valid_int = (ibus_req_valid|(~ibus_resp_ready&ibus_req_valid_reg));
-    assign ibus_req_valid_int = (ibus_req_valid|ibus_resp_ready)? ibus_req_valid : ibus_req_valid_reg;
-    assign ibus_req_addr_int = ibus_req_valid ? ibus_req_address : ibus_req_addr_reg;
+    //assign ibus_req_ready_int = (ibus_req_valid|ibus_resp_ready)? ibus_req_ready : ibus_req_ready_reg;
+    // assign ibus_req_valid_int = (ibus_req_valid|ibus_resp_ready)? ibus_req_valid : ibus_req_valid_reg;
+    assign ibus_req_valid_int = (ibus_req_valid|(~ibus_resp_ready&ibus_req_valid_reg));
+    assign ibus_req_addr_int = (ibus_req_valid|ibus_resp_ready) ? ibus_req_address : ibus_req_addr_reg;
     assign ibus_resp_ready = ibus_resp[`ready(0)];
     assign ibus_resp_data = ibus_resp[`rdata(0)];
 
@@ -73,7 +75,7 @@ module iob_VexRiscv
     always @(posedge clk, posedge rst)
       if(rst)
         ibus_req_addr_reg <= 1'b0;
-      else if(ibus_req_valid)
+      else if(ibus_req_valid|ibus_resp_ready)
         ibus_req_addr_reg <= ibus_req_address;
 
 
@@ -108,11 +110,12 @@ module iob_VexRiscv
     assign dbus_req = {dbus_req_valid_int, dbus_req_addr_int, dbus_req_data_int, dbus_req_strb_int};
 `endif
     assign dbus_req_ready = dbus_req_valid_reg ~& (~dbus_resp_ready);
-    assign dbus_req_valid_int = (dbus_req_valid|dbus_resp_ready)? dbus_req_valid : dbus_req_valid_reg;
-    // assign dbus_req_valid_int = (dbus_req_valid|(~dbus_resp_ready&dbus_req_valid_reg));
-    assign dbus_req_addr_int = dbus_req_valid ? dbus_req_address : dbus_req_addr_reg;
-    assign dbus_req_data_int = dbus_req_valid ? dbus_req_data : dbus_req_data_reg;
-    assign dbus_req_strb_int = dbus_req_valid ? dbus_req_strb : dbus_req_strb_reg;
+    // assign dbus_req_ready_int = (dbus_req_valid|dbus_resp_ready)? dbus_req_ready : dbus_req_ready_reg;
+    // assign dbus_req_valid_int = (dbus_req_valid|dbus_resp_ready)? dbus_req_valid : dbus_req_valid_reg;
+    assign dbus_req_valid_int = (dbus_req_valid|(~dbus_resp_ready&dbus_req_valid_reg));
+    assign dbus_req_addr_int = (dbus_req_valid|dbus_resp_ready) ? dbus_req_address : dbus_req_addr_reg;
+    assign dbus_req_data_int = (dbus_req_valid|dbus_resp_ready) ? dbus_req_data : dbus_req_data_reg;
+    assign dbus_req_strb_int = (dbus_req_valid|dbus_resp_ready) ? dbus_req_strb : dbus_req_strb_reg;
     assign dbus_req_strb = dbus_req_wr ? dbus_req_mask : 4'h0;
     assign dbus_req_mask = dbus_req_mask2 << dbus_req_address[1:0];
     assign dbus_req_mask2 = dbus_req_size[1] ? (dbus_req_size[0] ? {4'h0} : {4'hF}) : (dbus_req_size[0] ? {4'h3} : {4'h1});
@@ -136,19 +139,19 @@ module iob_VexRiscv
     always @(posedge clk, posedge rst)
       if(rst)
         dbus_req_addr_reg <= 1'b0;
-      else if (dbus_req_valid)
+      else if (dbus_req_valid|dbus_resp_ready)
         dbus_req_addr_reg <= dbus_req_address;
     //compute write data for interface
     always @(posedge clk, posedge rst)
       if(rst)
         dbus_req_data_reg <= 1'b0;
-      else if (dbus_req_valid)
+      else if (dbus_req_valid|dbus_resp_ready)
         dbus_req_data_reg <= dbus_req_data_int;
     //compute write strb for interface
     always @(posedge clk, posedge rst)
       if(rst)
         dbus_req_strb_reg <= 1'b0;
-      else if(dbus_req_valid)
+      else if(dbus_req_valid|dbus_resp_ready)
         dbus_req_strb_reg <= dbus_req_strb;
 
 
