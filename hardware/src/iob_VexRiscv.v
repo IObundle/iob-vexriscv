@@ -47,9 +47,9 @@ module iob_VexRiscv
 `ifdef RUN_EXTMEM_USE_SRAM
     assign ibus_req = {ibus_req_valid_int, ~boot, ibus_req_addr_int[`ADDR_W-2:0], `DATA_W'h0, {`DATA_W/8{1'b0}}};
 `else
-    assign ibus_req = {ibus_req_valid_int, ibus_req_addr_int, `DATA_W'h0, {`DATA_W/8{1'b0}}};
+    assign ibus_req = {ibus_req_valid_int, {1'b0}, ibus_req_addr_int[`ADDR_W-2:0], `DATA_W'h0, {`DATA_W/8{1'b0}}};
 `endif
-    assign ibus_req_ready = (ibus_req_valid_reg&ibus_resp_ready)|(~ibus_req_valid_reg);
+    assign ibus_req_ready = ibus_req_valid_reg ~^ ibus_resp_ready;
     assign ibus_req_valid_int = (ibus_req_ready|ibus_resp_ready)? ibus_req_valid : ibus_req_valid_reg;
     assign ibus_req_addr_int = (ibus_req_ready|ibus_resp_ready) ? ibus_req_address : ibus_req_addr_reg;
     assign ibus_resp_ready = ibus_resp[`ready(0)];
@@ -65,7 +65,7 @@ module iob_VexRiscv
     //compute address for interface
     always @(posedge clk, posedge rst)
       if(rst)
-        ibus_req_addr_reg <= 1'b0;
+        ibus_req_addr_reg <= 32'h0000;
       else if(ibus_req_ready|ibus_resp_ready)
         ibus_req_addr_reg <= ibus_req_address;
 
@@ -98,7 +98,7 @@ module iob_VexRiscv
 `else
     assign dbus_req = {dbus_req_valid_int, dbus_req_addr_int, dbus_req_data_int, dbus_req_strb_int};
 `endif
-    assign dbus_req_ready = (dbus_req_valid_reg&dbus_resp_ready)|(~dbus_req_valid_reg);
+    assign dbus_req_ready = dbus_req_valid_reg ~^ dbus_resp_ready;
     assign dbus_req_valid_int = (dbus_req_ready|dbus_resp_ready)? dbus_req_valid : dbus_req_valid_reg;
     assign dbus_req_addr_int = (dbus_req_ready|dbus_resp_ready) ? dbus_req_address : dbus_req_addr_reg;
     assign dbus_req_data_int = (dbus_req_ready|dbus_resp_ready) ? dbus_req_data : dbus_req_data_reg;
@@ -119,31 +119,31 @@ module iob_VexRiscv
     //compute address for interface
     always @(posedge clk, posedge rst)
       if(rst)
-        dbus_req_addr_reg <= 1'b0;
+        dbus_req_addr_reg <= 32'h0000;
       else if (dbus_req_ready|dbus_resp_ready)
         dbus_req_addr_reg <= dbus_req_address;
     //compute write data for interface
     always @(posedge clk, posedge rst)
       if(rst)
-        dbus_req_data_reg <= 1'b0;
+        dbus_req_data_reg <= 32'h0000;
       else if (dbus_req_ready|dbus_resp_ready)
         dbus_req_data_reg <= dbus_req_data_int;
     //compute write strb for interface
     always @(posedge clk, posedge rst)
       if(rst)
-        dbus_req_strb_reg <= 1'b0;
+        dbus_req_strb_reg <= 4'h0;
       else if(dbus_req_ready|dbus_resp_ready)
         dbus_req_strb_reg <= dbus_req_strb;
 
 
     // DEBUG BUS
-    wire                     debug_valid;
-    wire                     debug_ready;
-    wire                        debug_wr;
+    wire                      debug_valid;
+    wire                      debug_ready;
+    wire                         debug_wr;
     wire [`ADDR_W/4-1:0]    debug_address;
     wire [`DATA_W-1:0]         debug_data;
     wire [`DATA_W-1:0]    debug_data_resp;
-    wire                  debug_resetOut;
+    wire                   debug_resetOut;
 
     assign debug_valid = 1'b0;
     assign debug_wr = 1'b0;
