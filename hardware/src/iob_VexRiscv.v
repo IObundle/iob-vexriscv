@@ -44,7 +44,7 @@ module iob_VexRiscv
     reg  [`ADDR_W-1:0] ibus_req_addr_reg;
 
 //modify addresses if DDR used according to boot status
-`ifdef RUN_EXTMEM_USE_SRAM
+`ifdef RUN_EXTMEM
     assign ibus_req = {ibus_req_valid_int, ~boot, ibus_req_addr_int[`ADDR_W-2:0], `DATA_W'h0, {`DATA_W/8{1'b0}}};
 `else
     assign ibus_req = {ibus_req_valid_int, {1'b0}, ibus_req_addr_int[`ADDR_W-2:0], `DATA_W'h0, {`DATA_W/8{1'b0}}};
@@ -93,7 +93,7 @@ module iob_VexRiscv
     reg  [`DATA_W/8-1:0] dbus_req_strb_reg;
 
 //modify addresses if DDR used according to boot status
-`ifdef RUN_EXTMEM_USE_SRAM
+`ifdef RUN_EXTMEM
     assign dbus_req = {dbus_req_valid_int, (dbus_req_addr_int[`E]^~boot)&~dbus_req_addr_int[`P], dbus_req_addr_int[ADDR_W-2:0], dbus_req_data_int, dbus_req_strb_int};
 `else
     assign dbus_req = {dbus_req_valid_int, dbus_req_addr_int, dbus_req_data_int, dbus_req_strb_int};
