@@ -1,6 +1,6 @@
 // Generator : SpinalHDL v1.6.4    git head : 598c18959149eb18e5eee5b0aa3eef01ecaa41a1
 // Component : VexRiscv
-// Git hash  : 80eec0a5eee1d6ef4c2854298dd636e1dfc5baa0
+// Git hash  : 736435004ed44b602b8fc462cc088e37b78f71e5
 
 `timescale 1ns/1ps 
 
@@ -6155,11 +6155,11 @@ module VexRiscv (
   assign when_CsrPlugin_l1302 = ((! execute_arbitration_isValid) || (! execute_IS_CSR));
   always @(posedge clk or posedge reset) begin
     if(reset) begin
-      IBusSimplePlugin_fetchPc_pcReg <= 32'h0;
+      IBusSimplePlugin_fetchPc_pcReg <= 32'h80000000;
       IBusSimplePlugin_fetchPc_correctionReg <= 1'b0;
       IBusSimplePlugin_fetchPc_booted <= 1'b0;
       IBusSimplePlugin_fetchPc_inc <= 1'b0;
-      IBusSimplePlugin_decodePc_pcReg <= 32'h0;
+      IBusSimplePlugin_decodePc_pcReg <= 32'h80000000;
       _zz_IBusSimplePlugin_iBusRsp_stages_0_output_ready_2 <= 1'b0;
       IBusSimplePlugin_decompressor_bufferValid <= 1'b0;
       IBusSimplePlugin_decompressor_throw2BytesReg <= 1'b0;
@@ -6179,7 +6179,7 @@ module VexRiscv (
       CsrPlugin_misa_base <= 2'b01;
       CsrPlugin_misa_extensions <= 26'h0;
       CsrPlugin_mtvec_mode <= 2'b00;
-      CsrPlugin_mtvec_base <= 30'h02000008;
+      CsrPlugin_mtvec_base <= 30'h20000008;
       CsrPlugin_mstatus_MIE <= 1'b0;
       CsrPlugin_mstatus_MPIE <= 1'b0;
       CsrPlugin_mstatus_MPP <= 2'b11;
