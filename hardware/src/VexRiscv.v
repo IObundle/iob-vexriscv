@@ -2,7 +2,7 @@
 // Component : VexRiscv
 // Git hash  : 6253f1747ea3adc13b4a6653ad9b113fea2b7563
 
-`timescale 1ns/1ps 
+`timescale 1ns/1ps
 
 module VexRiscv (
   output              iBus_cmd_valid,
@@ -4209,11 +4209,11 @@ module VexRiscv (
   assign when_CsrPlugin_l1302 = ((! execute_arbitration_isValid) || (! execute_IS_CSR));
   always @(posedge clk or posedge reset) begin
     if(reset) begin
-      IBusSimplePlugin_fetchPc_pcReg <= 32'h0;
+      IBusSimplePlugin_fetchPc_pcReg <= 32'h80000000;
       IBusSimplePlugin_fetchPc_correctionReg <= 1'b0;
       IBusSimplePlugin_fetchPc_booted <= 1'b0;
       IBusSimplePlugin_fetchPc_inc <= 1'b0;
-      IBusSimplePlugin_decodePc_pcReg <= 32'h0;
+      IBusSimplePlugin_decodePc_pcReg <= 32'h80000000;
       _zz_IBusSimplePlugin_iBusRsp_stages_0_output_ready_2 <= 1'b0;
       IBusSimplePlugin_decompressor_bufferValid <= 1'b0;
       IBusSimplePlugin_decompressor_throw2BytesReg <= 1'b0;
