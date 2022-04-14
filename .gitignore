@@ -1,1 +1,2 @@
-./LinuxOS/*
+# Ignore generated files
+LinuxOS/*
