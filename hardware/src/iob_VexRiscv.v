@@ -163,7 +163,6 @@ module iob_VexRiscv
      .timerInterrupt                (1'b0),
      .externalInterrupt             (1'b0),
      .softwareInterrupt             (1'b0),
-     .externalInterruptS            (1'b0),
      .debug_bus_cmd_valid           (debug_valid),
      .debug_bus_cmd_ready           (debug_ready),
      .debug_bus_cmd_payload_wr      (debug_wr),
