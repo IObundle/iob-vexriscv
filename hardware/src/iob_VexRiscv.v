@@ -185,7 +185,7 @@ module iob_VexRiscv
      .dBus_rsp_data                 (dbus_resp_data),
      .clk                           (clk),
      .reset                         (rst),
-     .debugReset                    (1'b0)
+     .debugReset                    (rst)
      );
 
 endmodule
