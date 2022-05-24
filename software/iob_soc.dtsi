@@ -3,12 +3,11 @@
   #size-cells = <1>
   model = "IOb-SoC w_VexRiscv";
   compatible = "iobundle,iob-soc","iobundle,iob-soc-vexriscv";
-
 	cpus {
 		#address-cells = <0x1>;
 		#size-cells = <0x0>;
 		timebase-frequency = <0x47868C0>;
-		cpu@0 {
+		CPU0: cpu@0 {
 			clock-frequency = <0x0>;
 			compatible = "spinal,vexriscv", "riscv";
 			device_type = "cpu";
@@ -23,42 +22,60 @@
 			status = "okay";
 			tlb-split;
 
-			interrupt-controller {
+			CPU0_intc: interrupt-controller {
 				#interrupt-cells = <0x1>;
 				compatible = "riscv,cpu-intc";
 				interrupt-controller;
 				phandle = <0x2>;
 			};
 		};
-		interrupt-controller {
-			#address-cells = <0x0>;
-			#interrupt-cells = <0x1>;
-			compatible = "riscv,vexriscv";
-			interrupt-controller;
-			interrupts-extended = <0x2 0xb>;
-			reg = <0xe000000 0x4000000>;
-			riscv,ndev = <0xa>;
-			phandle = <0x3>;
-		};
+		// interrupt-controller {
+		// 	#address-cells = <0x0>;
+		// 	#interrupt-cells = <0x1>;
+		// 	compatible = "riscv,vexriscv";
+		// 	interrupt-controller;
+		// 	interrupts-extended = <0x2 0xb>;
+		// 	reg = <0xe000000 0x4000000>;
+		// 	riscv,ndev = <0xa>;
+		// 	phandle = <0x3>;
+		// };
 	};
-
 	memory@c0000000 {
 		device_type = "memory";
 		reg = <0x0 0xc0000000 0x1 0x08000000>;
 	};
-
   chosen {
   	bootargs = "mem=128M@0x40000000 rootwait console=hvc0 root=/dev/ram0 init=/sbin/init swiotlb=32";
   	linux,initrd-start = <0xC2000000>;
   	linux,initrd-end = <0xC2800000>; // max 8MB ramdisk image
   };
-
-  serial@60000000 {
-    compatible = "ns8250";
-    reg = <0x6000000 0x100>;
-    interrupts = <10>;
-    reg-shift = <2>;
-    clock-frequency = <48000000>;
+  soc {
+    #address-cells = <2>;
+    #size-cells = <2>;
+    compatible = "iobundle,iob-soc", "simple-bus";
+    ranges;
+    clint@2000000 {
+      compatible = "riscv,clint0";
+      interrupts-extended = <&CPU0_intc 3 &CPU0_intc 7>;
+      reg = <0x0 0x2000000 0x0 0xc0000>;
+      reg-names = "control";
+    };
+    uart@6000000 {
+      compatible = "ns16550a";
+      reg = <0x0 0x6000000 0x0 0x1000>;
+      clock-frequency = <50000000>;
+      current-speed = <115200>;
+      // interrupt-parent = <&PLIC0>;
+      interrupts = <1>;
+      reg-shift = <2>; // regs are spaced on 32 bit boundary
+      reg-io-width = <4>; // only 32-bit access are supported
+    };
+    // serial@60000000 {
+    //   compatible = "ns8250";
+    //   reg = <0x6000000 0x100>;
+    //   interrupts = <10>;
+    //   reg-shift = <2>;
+    //   clock-frequency = <48000000>;
+    // };
   };
-
-}
+};
