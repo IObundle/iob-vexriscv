@@ -9,7 +9,12 @@ CPU ?= LinuxGen
 vexriscv:
 	cd VexRiscv && sbt "runMain vexriscv.demo.$(CPU)" && cp VexRiscv.v ../hardware/src/
 
-build-qemu: clean-qemu
+build-iob-linux: clean-buildroot
+	mkdir LinuxOS
+	cd buildroot && $(MAKE) iob_riscv32_defconfig && $(MAKE) -j2
+	cp buildroot/output/images/* LinuxOS
+
+build-qemu: clean-buildroot
 	mkdir LinuxOS
 	cd buildroot && $(MAKE) qemu_riscv32_virt_defconfig && $(MAKE) -j2
 	cp buildroot/output/images/* LinuxOS
@@ -20,8 +25,11 @@ run-qemu:
 #
 # Clean
 #
-clean-qemu:
+clean-buildroot:
 	cd buildroot && $(MAKE) clean && rm -rf dl output
 
-clean-all: clean-qemu
-	@rm -rf ./LinuxOS/
+
+clean-linux:
+	@rm -rf ./LinuxOS
+
+clean-all: clean-qemu clean-linux
