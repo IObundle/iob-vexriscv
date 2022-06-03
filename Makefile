@@ -11,7 +11,7 @@ vexriscv:
 
 build-iob-linux: clean-buildroot
 	mkdir LinuxOS
-	cd buildroot && $(MAKE) iob_riscv32_defconfig && $(MAKE) -j2
+	cd buildroot && $(MAKE) iob_riscv32_defconfig && $(MAKE) -j3
 	cp buildroot/output/images/* LinuxOS
 
 build-qemu: clean-buildroot
