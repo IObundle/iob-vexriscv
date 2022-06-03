@@ -22,6 +22,10 @@ build-qemu: clean-buildroot
 run-qemu:
 	qemu-system-riscv32 -M virt -bios LinuxOS/fw_jump.elf -kernel LinuxOS/Image -append "rootwait root=/dev/vda ro" -drive file=LinuxOS/rootfs.ext2,format=raw,id=hd0 -device virtio-blk-device,drive=hd0 -netdev user,id=net0 -device virtio-net-device,netdev=net0 -nographic
 
+check-dts:
+	dtc -O dtb -o iob_soc.dtb software/iob_soc.dts
+	rm iob_soc.dtb
+
 #
 # Clean
 #
@@ -32,4 +36,4 @@ clean-buildroot:
 clean-linux:
 	@rm -rf ./LinuxOS
 
-clean-all: clean-qemu clean-linux
+clean-all: clean-buildroot clean-linux
