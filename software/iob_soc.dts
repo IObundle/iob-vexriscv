@@ -1,16 +1,18 @@
+/dts-v1/;
+
 / {
-  #address-cells = <1>
-  #size-cells = <1>
-  model = "IOb-SoC w_VexRiscv";
-  compatible = "iobundle,iob-soc","iobundle,iob-soc-vexriscv";
+  #address-cells = <0x1>;
+  #size-cells = <0x1>;
+  model = "IOb-SoC, VexRiscv";
+  compatible = "IOb-SoC, VexRiscv";
 	cpus {
 		#address-cells = <0x1>;
 		#size-cells = <0x0>;
-		timebase-frequency = <0x47868C0>;
+    timebase-frequency = <100000000>;
 		CPU0: cpu@0 {
-			clock-frequency = <0x0>;
-			compatible = "spinal,vexriscv", "riscv";
-			device_type = "cpu";
+			clock-frequency = <100000000>;
+      device_type = "cpu";
+      compatible = "riscv";
 			d-tlb-sets = <0x1>;
 			d-tlb-size = <0x20>;
 			i-tlb-sets = <0x1>;
@@ -21,7 +23,6 @@
 			sifive,itim = <0x1>;
 			status = "okay";
 			tlb-split;
-
 			CPU0_intc: interrupt-controller {
 				#interrupt-cells = <0x1>;
 				compatible = "riscv,cpu-intc";
@@ -40,9 +41,9 @@
 		// 	phandle = <0x3>;
 		// };
 	};
-	memory@c0000000 {
+	memory@0 {
 		device_type = "memory";
-		reg = <0x0 0xc0000000 0x1 0x08000000>;
+		reg = <0x0 0x0 0x1 0x08000000>;
 	};
   chosen {
   	bootargs = "mem=128M@0x40000000 rootwait console=hvc0 root=/dev/ram0 init=/sbin/init swiotlb=32";
@@ -54,19 +55,19 @@
     #size-cells = <2>;
     compatible = "iobundle,iob-soc", "simple-bus";
     ranges;
-    clint@2000000 {
+    clint@6000000 {
       compatible = "riscv,clint0";
       interrupts-extended = <&CPU0_intc 3 &CPU0_intc 7>;
-      reg = <0x0 0x2000000 0x0 0xc0000>;
+      reg = <0x0 0x6000000 0x0 0xc0000>;
       reg-names = "control";
     };
-    uart@6000000 {
+    uart@4000000 {
       compatible = "ns16550a";
-      reg = <0x0 0x6000000 0x0 0x1000>;
-      clock-frequency = <50000000>;
-      current-speed = <115200>;
+      reg = <0x0 0x4000000 0x0 0x1000>;
+      clock-frequency = <100000000>;
+      current-speed = <3000000>;
       // interrupt-parent = <&PLIC0>;
-      interrupts = <1>;
+      // interrupts = <1>;
       reg-shift = <2>; // regs are spaced on 32 bit boundary
       reg-io-width = <4>; // only 32-bit access are supported
     };

@@ -1,2 +1,14 @@
 # Ignore generated files
-LinuxOS/*
+/*
+
+# Except:
+## Files:
+!/.gitignore
+!/.gitmodules
+!/config.mk
+!/Makefile
+!/README.md
+## Folders:
+!/hardware
+!/software
+!/VexRiscv
