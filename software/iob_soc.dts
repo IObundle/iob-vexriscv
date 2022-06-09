@@ -41,9 +41,9 @@
 		// 	phandle = <0x3>;
 		// };
 	};
-	memory@c0000000 {
+	memory@0 {
 		device_type = "memory";
-		reg = <0x0 0xc0000000 0x1 0x08000000>;
+		reg = <0x0 0x0 0x1 0x08000000>;
 	};
   chosen {
   	bootargs = "mem=128M@0x40000000 rootwait console=hvc0 root=/dev/ram0 init=/sbin/init swiotlb=32";
@@ -51,8 +51,8 @@
   	linux,initrd-end = <0xC2800000>; // max 8MB ramdisk image
   };
   soc {
-    #address-cells = <1>;
-    #size-cells = <1>;
+    #address-cells = <2>;
+    #size-cells = <2>;
     compatible = "iobundle,iob-soc", "simple-bus";
     ranges;
     clint@6000000 {
@@ -65,9 +65,9 @@
       compatible = "ns16550a";
       reg = <0x0 0x4000000 0x0 0x1000>;
       clock-frequency = <100000000>;
-      current-speed = <115200>;
+      current-speed = <3000000>;
       // interrupt-parent = <&PLIC0>;
-      interrupts = <1>;
+      // interrupts = <1>;
       reg-shift = <2>; // regs are spaced on 32 bit boundary
       reg-io-width = <4>; // only 32-bit access are supported
     };
