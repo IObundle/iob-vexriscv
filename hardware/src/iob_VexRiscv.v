@@ -27,7 +27,10 @@ module iob_VexRiscv
 
     // data bus
     output [`REQ_W-1:0] dbus_req,
-    input [`RESP_W-1:0] dbus_resp
+    input [`RESP_W-1:0] dbus_resp,
+
+    input [`N_CORES-1:0] timerInterrupt,
+    input [`N_CORES-1:0] softwareInterrupt
     );
 
 
@@ -160,9 +163,10 @@ module iob_VexRiscv
      .iBus_rsp_valid                (ibus_resp_ready),
      .iBus_rsp_payload_error        (1'b0),
      .iBus_rsp_payload_inst         (ibus_resp_data),
-     .timerInterrupt                (1'b0),
+     .timerInterrupt                (timerInterrupt),
      .externalInterrupt             (1'b0),
-     .softwareInterrupt             (1'b0),
+     .softwareInterrupt             (softwareInterrupt),
+     .externalInterruptS            (1'b0),
      .debug_bus_cmd_valid           (debug_valid),
      .debug_bus_cmd_ready           (debug_ready),
      .debug_bus_cmd_payload_wr      (debug_wr),
@@ -181,7 +185,7 @@ module iob_VexRiscv
      .dBus_rsp_data                 (dbus_resp_data),
      .clk                           (clk),
      .reset                         (rst),
-     .debugReset                    (1'b0)
+     .debugReset                    (rst)
      );
 
 endmodule
