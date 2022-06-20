@@ -9,3 +9,6 @@ USE_COMPRESSED ?=1
 
 #IOb-SoC L1 Cache
 USE_L1_CACHE ?=0
+
+#Number of Interrupt Cores
+N_CORES ?= 1
