@@ -129,7 +129,8 @@ static int iob_soc_final_init(bool cold_boot)
 static int iob_soc_console_init(void)
 {
 	/* Example if the generic UART8250 driver is used */
-	return uart8250_init(IOB_SOC_UART_ADDR, IOB_SOC_UART_INPUT_FREQ, IOB_SOC_UART_BAUDRATE, 0, 1);
+	return uart8250_init(IOB_SOC_UART_ADDR, IOB_SOC_UART_INPUT_FREQ,
+			     IOB_SOC_UART_BAUDRATE, 0, 1, 0);
 }
 
 /*
