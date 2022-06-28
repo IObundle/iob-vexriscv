@@ -4,9 +4,6 @@ include $(VEXRISCV_DIR)/config.mk
 
 HW_MODULES+=VEXRISCV
 
-#PATHS
-VEXRISCV_SRC_DIR=$(VEXRISCV_DIR)/hardware/src
-
 VSRC+=$(VEXRISCV_SRC_DIR)/VexRiscv.v $(VEXRISCV_SRC_DIR)/iob_VexRiscv.v
 
 #use hard multiplier and divider instructions
