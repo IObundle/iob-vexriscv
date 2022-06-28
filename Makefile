@@ -26,6 +26,8 @@ check-dts:
 	dtc -O dtb -o iob_soc.dtb software/iob_soc.dts
 	rm iob_soc.dtb
 
+build-dts:
+	dtc -O dtb -o iob_soc.dtb software/iob_soc.dts
 #
 # Clean
 #
