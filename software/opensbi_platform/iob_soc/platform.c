@@ -36,11 +36,11 @@
 #define IOB_SOC_UART_INPUT_FREQ	100000000
 #define IOB_SOC_UART_BAUDRATE		3000000
 
-//static struct platform_uart_data uart = {
-//	IOB_SOC_UART_ADDR,
-//	IOB_SOC_UART_INPUT_FREQ,
-//	IOB_SOC_UART_BAUDRATE,
-//};
+static struct platform_uart_data uart = {
+	IOB_SOC_UART_ADDR,
+	IOB_SOC_UART_INPUT_FREQ,
+	IOB_SOC_UART_BAUDRATE,
+};
 
 static struct plic_data plic = {
 	.addr = IOB_SOC_PLIC_ADDR,
@@ -72,37 +72,37 @@ static struct aclint_mtimer_data mtimer = {
  */
 static int iob_soc_early_init(bool cold_boot)
 {
-	//void *fdt;
-	//struct platform_uart_data uart_data;
+	void *fdt;
+	struct platform_uart_data uart_data;
 	//struct plic_data plic_data;
-	//unsigned long aclint_freq;
-	//uint64_t clint_addr;
-	//int rc;
+	unsigned long aclint_freq;
+	uint64_t clint_addr;
+	int rc;
 
-	//if (!cold_boot)
-	//	return 0;
-	//fdt = fdt_get_address();
+	if (!cold_boot)
+		return 0;
+	fdt = fdt_get_address();
 
-	//rc = fdt_parse_uart8250(fdt, &uart_data, "ns16550");
-	//if (!rc)
-	//	uart = uart_data;
+	rc = fdt_parse_uart8250(fdt, &uart_data, "ns16550");
+	if (!rc)
+		uart = uart_data;
 
 	//rc = fdt_parse_plic(fdt, &plic_data, "riscv,plic0");
 	//if (!rc)
 	//	plic = plic_data;
 
-	//rc = fdt_parse_timebase_frequency(fdt, &aclint_freq);
-	//if (!rc)
-	//	mtimer.mtime_freq = aclint_freq;
+	rc = fdt_parse_timebase_frequency(fdt, &aclint_freq);
+	if (!rc)
+		mtimer.mtime_freq = aclint_freq;
 
-	//rc = fdt_parse_compat_addr(fdt, &clint_addr, "riscv,clint0");
-	//if (!rc) {
-	//	mswi.addr = clint_addr;
-	//	mtimer.mtime_addr = clint_addr + CLINT_MTIMER_OFFSET +
-	//			    ACLINT_DEFAULT_MTIME_OFFSET;
-	//	mtimer.mtimecmp_addr = clint_addr + CLINT_MTIMER_OFFSET +
-	//			    ACLINT_DEFAULT_MTIMECMP_OFFSET;
-	//}
+	rc = fdt_parse_compat_addr(fdt, &clint_addr, "riscv,clint0");
+	if (!rc) {
+		mswi.addr = clint_addr;
+		mtimer.mtime_addr = clint_addr + CLINT_MTIMER_OFFSET +
+				    ACLINT_DEFAULT_MTIME_OFFSET;
+		mtimer.mtimecmp_addr = clint_addr + CLINT_MTIMER_OFFSET +
+				    ACLINT_DEFAULT_MTIMECMP_OFFSET;
+	}
 
 	return 0;
 }
@@ -112,13 +112,13 @@ static int iob_soc_early_init(bool cold_boot)
  */
 static int iob_soc_final_init(bool cold_boot)
 {
-	//void *fdt;
+	void *fdt;
 
-	//if (!cold_boot)
-	//	return 0;
+	if (!cold_boot)
+		return 0;
 
-	//fdt = fdt_get_address();
-	//fdt_fixups(fdt);
+	fdt = fdt_get_address();
+	fdt_fixups(fdt);
 
 	return 0;
 }
