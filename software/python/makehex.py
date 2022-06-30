@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 
 from sys import argv
+import sys
 
 nFiles = int((len(argv)-2)/2)
 mem_size = 2**(int(argv[-1]))
@@ -9,7 +10,6 @@ binaddr = []
 bindata = []
 aux = []
 
-i = 0
 for i in range(nFiles):
     binfile.append(argv[i*2+1])
     binaddr.append(int(argv[i*2+2], 16))
@@ -17,16 +17,16 @@ for i in range(nFiles):
         bindata.append(f.read())
     aux.append(0)
 
-i = 0
+for i in range(nFiles):
+    while(len(bindata[i]) % 4 != 0):
+        bindata[i] += b'0'
+
 for i in range(nFiles):
     assert binaddr[i]+len(bindata[i]) <= mem_size
-    assert len(bindata[i]) % 4 == 0
     assert binaddr[i] % 4 == 0
 
 valid = False
-i = 0
 for i in range(int(mem_size/4)):
-    j = 0
     for j in range(nFiles):
         aux[j] = i - int(binaddr[j]/4)
         if (aux[j] < (len(bindata[j])/4)) and (aux[j] >= 0):
