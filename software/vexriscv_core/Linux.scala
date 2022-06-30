@@ -31,7 +31,7 @@ object LinuxGen {
     val config = VexRiscvConfig(
       plugins = List(
         new IBusCachedPlugin(
-          resetVector = 0x00000000l,
+          resetVector = 0x80000000l,
           prediction = NONE,
           historyRamSizeLog2 = 10,
           compressedGen = true,
@@ -104,7 +104,7 @@ object LinuxGen {
           mulUnrollFactor = 32,
           divUnrollFactor = 4
         ),
-        new CsrPlugin(CsrPluginConfig.linuxFull(0x08000020l).copy(misaExtensionsInit = 0x0141115, ebreakGen = true)),
+        new CsrPlugin(CsrPluginConfig.linuxFull(0x80000020l).copy(misaExtensionsInit = 0x0141115, ebreakGen = true)),
         new DebugPlugin(ClockDomain.current.clone(reset = Bool().setName("debugReset"))),
         new BranchPlugin(
           earlyBranch = false,

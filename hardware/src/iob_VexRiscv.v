@@ -103,7 +103,7 @@ module iob_VexRiscv
 
 //modify addresses if DDR used according to boot status
 `ifdef RUN_EXTMEM
-    assign dbus_req = {dbus_req_valid_int, (dbus_req_addr_int[`E]^~boot)&~dbus_req_addr_int[`P], dbus_req_addr_int[ADDR_W-2:0], dbus_req_data_int, dbus_req_strb_int};
+    assign dbus_req = {dbus_req_valid_int, (~boot&~dbus_req_addr_int[`P])|(dbus_req_addr_int[`E]), dbus_req_addr_int[ADDR_W-2:0], dbus_req_data_int, dbus_req_strb_int};
 `else
     assign dbus_req = {dbus_req_valid_int, dbus_req_addr_int, dbus_req_data_int, dbus_req_strb_int};
 `endif
