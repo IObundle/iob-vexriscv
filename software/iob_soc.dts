@@ -1,50 +1,38 @@
 /dts-v1/;
 
 / {
-  #address-cells = <0x1>;
-  #size-cells = <0x1>;
+  #address-cells = <2>;
+  #size-cells = <2>;
   model = "IOb-SoC, VexRiscv";
   compatible = "IOb-SoC, VexRiscv";
 	cpus {
     #address-cells = <0x1>;
     #size-cells = <0x0>;
-    timebase-frequency = <100000000>;
+    timebase-frequency = <1000000>;
 		CPU0: cpu@0 {
 			clock-frequency = <100000000>;
       device_type = "cpu";
-      compatible = "riscv";
-			mmu-type = "riscv,sv32";
-			riscv,isa = "rv32imac";
-			sifive,itim = <0x1>;
 			reg = <0x0>;
 			status = "okay";
+      compatible = "riscv";
+			riscv,isa = "rv32imac";
+			mmu-type = "riscv,sv32";
 			tlb-split;
 			CPU0_intc: interrupt-controller {
-				#interrupt-cells = <0x00000001>;
-				compatible = "riscv,cpu-intc";
+				#interrupt-cells = <1>;
 				interrupt-controller;
-				phandle = <0x2>;
+				compatible = "riscv,cpu-intc";
 			};
 		};
-		// interrupt-controller {
-		// 	#address-cells = <0x0>;
-		// 	#interrupt-cells = <0x1>;
-		// 	compatible = "riscv,vexriscv";
-		// 	interrupt-controller;
-		// 	interrupts-extended = <0x2 0xb>;
-		// 	reg = <0xe000000 0x4000000>;
-		// 	riscv,ndev = <0xa>;
-		// 	phandle = <0x3>;
-		// };
 	};
-	memory@0 {
-		device_type = "memory";
-    reg = <0x00400000 0x0FC00000>;
+	memory@80000000 {
+    device_type = "memory";
+    reg = <0x0 0x80000000 0x0 0x10000000>;
 	};
   chosen {
   	bootargs = "rootwait console=hvc0 earlycon=sbi root=/dev/ram0 init=/sbin/init";
-  	linux,initrd-start = <0x01000000>;
-  	linux,initrd-end = <0x01800000>; // max 8MB ramdisk image
+  	linux,initrd-start = <0x81000000>;
+  	linux,initrd-end = <0x81800000>; // max 8MB ramdisk image
   };
   soc {
     #address-cells = <2>;
@@ -63,16 +51,9 @@
       clock-frequency = <100000000>;
       current-speed = <3000000>;
       // interrupt-parent = <&PLIC0>;
-      // interrupts = <1>;
+      interrupts = <1>;
       reg-shift = <2>; // regs are spaced on 32 bit boundary
       reg-io-width = <4>; // only 32-bit access are supported
     };
-    // serial@60000000 {
-    //   compatible = "ns8250";
-    //   reg = <0x6000000 0x100>;
-    //   interrupts = <10>;
-    //   reg-shift = <2>;
-    //   clock-frequency = <48000000>;
-    // };
   };
 };
