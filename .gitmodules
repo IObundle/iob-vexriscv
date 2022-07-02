@@ -1,6 +1,3 @@
-[submodule "buildroot"]
-	path = buildroot
-	url = git@github.com:PedroAntunes178/buildroot.git
 [submodule "submodules/OpenSBI"]
 	path = submodules/OpenSBI
 	url = git@github.com:riscv-software-src/opensbi.git
