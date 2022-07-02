@@ -6240,7 +6240,7 @@ module VexRiscv (
       memory_MulDivIterativePlugin_div_counter_value <= 4'b0000;
       _zz_CsrPlugin_privilege <= 2'b11;
       CsrPlugin_misa_base <= 2'b01;
-      CsrPlugin_misa_extensions <= 26'h0141115;
+      CsrPlugin_misa_extensions <= 26'h0141105;
       CsrPlugin_mtvec_mode <= 2'b00;
       CsrPlugin_mtvec_base <= 30'h20000008;
       CsrPlugin_mstatus_MIE <= 1'b0;
