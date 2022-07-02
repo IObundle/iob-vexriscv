@@ -1,7 +1,6 @@
 #PATHS
 VEXRISCV_DIR ?= $(shell pwd)
 VEXRISCV_SRC_DIR=$(VEXRISCV_DIR)/hardware/src
-VEX_PYTHON_DIR=$(VEXRISCV_DIR)/software/python
 VEX_PLATAFORM_DIR=$(VEXRISCV_DIR)/software/opensbi_platform
 VEX_CORE_DIR=$(VEXRISCV_DIR)/software/vexriscv_core
 VEX_OS_DIR=$(VEXRISCV_DIR)/software/OS_build
