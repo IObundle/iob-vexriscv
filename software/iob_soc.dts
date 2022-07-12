@@ -41,7 +41,6 @@
 	};
   chosen {
     bootargs = "rootwait console=hvc0 earlycon=sbi root=/dev/ram0 init=/sbin/init swiotlb=32";
-  	//bootargs = "mem=128M@0x82000000 rootwait console=hvc0 earlycon=sbi root=/dev/ram0 init=/sbin/init";
   	linux,initrd-start = <0x81000000>;
   	linux,initrd-end = <0x81800000>; // max 8MB ramdisk image
   };
@@ -60,7 +59,7 @@
       compatible = "ns16550a";
       reg = <0x4000000 0x1000>;
       clock-frequency = <100000000>;
-      current-speed = <3000000>;
+      current-speed = <115200>;
       // interrupt-parent = <&PLIC0>;
       interrupts = <1>;
       reg-shift = <2>; // regs are spaced on 32 bit boundary

@@ -15,7 +15,4 @@ DEFINE+=$(defmacro)USE_COMPRESSED=$(USE_COMPRESSED)
 #use atomic instructions
 DEFINE+=$(defmacro)USE_ATOMIC=$(USE_ATOMIC)
 
-#use L1 iob-cache
-DEFINE+=$(defmacro)USE_L1_CACHE=$(USE_L1_CACHE)
-
 endif
