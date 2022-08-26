@@ -1,12 +1,14 @@
 package vexriscv.demo
 
-import spinal.core._
 import spinal.lib.eda.bench.{AlteraStdTargets, Bench, Rtl, XilinxStdTargets}
 import spinal.lib.eda.icestorm.IcestormStdTargets
 import spinal.lib.master
-import vexriscv._
-import vexriscv.ip._
+
 import vexriscv.plugin._
+import vexriscv.ip.{DataCacheConfig, InstructionCacheConfig}
+import vexriscv.ip.fpu.{FpuCore, FpuParameter}
+import vexriscv.{plugin, VexRiscv, VexRiscvConfig}
+import spinal.core._
 
 object LinuxGen {
   def configFull(litex : Boolean, withMmu : Boolean, withSmp : Boolean = false) = {
@@ -19,7 +21,7 @@ object LinuxGen {
           compressedGen = true,
           injectorStage = true,
           config = InstructionCacheConfig(
-            cacheSize = 4096*1,
+            cacheSize = 4096,
             bytePerLine = 4,
             wayCount = 1,
             addressWidth = 32,
@@ -40,7 +42,7 @@ object LinuxGen {
           //dBusCmdSlavePipe = true,
           //dBusRspSlavePipe = true,
           config = new DataCacheConfig(
-            cacheSize         = 4096*1,
+            cacheSize         = 4096,
             bytePerLine       = 4,
             wayCount          = 1,
             addressWidth      = 32,
@@ -55,7 +57,7 @@ object LinuxGen {
             withAmo = true
           ),
           memoryTranslatorPortConfig = MmuPortConfig(
-            portTlbSize = 4
+            portTlbSize = 6
           )
         ),
         new DecoderSimplePlugin(
@@ -94,7 +96,7 @@ object LinuxGen {
           fenceiGenAsAJump = false
         ),
         new MmuPlugin(ioRange = (x => x(31 downto 30) === 0x1)),
-        //new FpuPlugin(externalFpu = False, simHalt = False, p = FpuParameter(withDouble = False)),
+        new FpuPlugin(externalFpu = false, simHalt = false, p = FpuParameter(withDouble = false)),
         new YamlPlugin("cpu0.yaml")
       )
     )
