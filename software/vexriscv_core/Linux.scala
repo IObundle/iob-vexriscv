@@ -1,21 +1,3 @@
-/*
- * SpinalHDL
- * Copyright (c) Dolu, All rights reserved.
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 3.0 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library.
- */
-
 package vexriscv.demo
 
 import spinal.core._
@@ -46,10 +28,10 @@ object LinuxGen {
             catchIllegalAccess = true,
             catchAccessFault = true,
             asyncTagMemory = false,
-            twoCycleRam = false,
+            twoCycleRam = true,
             twoCycleCache = true
           ),
-          memoryTranslatorPortConfig = withMmu generate MmuPortConfig(
+          memoryTranslatorPortConfig = MmuPortConfig(
             portTlbSize = 4
           )
         ),
@@ -72,7 +54,7 @@ object LinuxGen {
             withLrSc = true,
             withAmo = true
           ),
-          memoryTranslatorPortConfig = withMmu generate MmuPortConfig(
+          memoryTranslatorPortConfig = MmuPortConfig(
             portTlbSize = 4
           )
         ),
@@ -111,20 +93,13 @@ object LinuxGen {
           catchAddressMisaligned = true,
           fenceiGenAsAJump = false
         ),
+        new MmuPlugin(ioRange = (x => x(31 downto 30) === 0x1)),
+        //new FpuPlugin(externalFpu = False, simHalt = False, p = FpuParameter(withDouble = False)),
         new YamlPlugin("cpu0.yaml")
       )
     )
-    if(withMmu) config.plugins += new MmuPlugin(
-      ioRange = (x => if(litex) x(31 downto 30) === 0x1 else x(31 downto 28) === 0xF)
-    ) else {
-      config.plugins += new StaticMemoryTranslatorPlugin(
-        ioRange      = _(31 downto 28) === 0xF
-      )
-    }
     config
   }
-
-
 
   def main(args: Array[String]) {
     SpinalConfig(mergeAsyncProcess = false, anonymSignalPrefix = "_zz").generateVerilog {
