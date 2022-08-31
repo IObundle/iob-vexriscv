@@ -143,26 +143,10 @@ module iob_VexRiscv
         dbus_req_strb_reg <= 4'h0;
       else if(dbus_req_ready|dbus_resp_ready)
         dbus_req_strb_reg <= dbus_req_strb;
-
-
-    // DEBUG BUS
-    wire                      debug_valid;
-    wire                      debug_ready;
-    wire                         debug_wr;
-    wire [`ADDR_W/4-1:0]    debug_address;
-    wire [`DATA_W-1:0]         debug_data;
-    wire [`DATA_W-1:0]    debug_data_resp;
-    wire                   debug_resetOut;
-
-    assign debug_valid = 1'b0;
-    assign debug_wr = 1'b0;
-    assign debug_address = 8'h0;
-    assign debug_data = 32'h0;
-
+        
 
    // VexRiscv instantiation
    VexRiscv VexRiscv_core(
-     .timerInterrupt                (timerInterrupt),
      .dBus_cmd_valid                (dbus_req_valid),
      .dBus_cmd_ready                (dbus_req_ready),
      .dBus_cmd_payload_wr           (dbus_req_wr),
@@ -176,16 +160,10 @@ module iob_VexRiscv
      .dBus_rsp_payload_last         (dbus_resp_last),
      .dBus_rsp_payload_data         (dbus_resp_data),
      .dBus_rsp_payload_error        (dbus_resp_error),
+     .timerInterrupt                (timerInterrupt),
      .externalInterrupt             (1'b0),
      .softwareInterrupt             (softwareInterrupt),
      .externalInterruptS            (1'b0),
-     .debug_bus_cmd_valid           (debug_valid),
-     .debug_bus_cmd_ready           (debug_ready),
-     .debug_bus_cmd_payload_wr      (debug_wr),
-     .debug_bus_cmd_payload_address (debug_address),
-     .debug_bus_cmd_payload_data    (debug_data),
-     .debug_bus_rsp_data            (debug_data_resp),
-     .debug_resetOut                (debug_resetOut),
      .iBus_cmd_valid                (ibus_req_valid),
      .iBus_cmd_ready                (ibus_req_ready),
      .iBus_cmd_payload_address      (ibus_req_address),
@@ -194,8 +172,7 @@ module iob_VexRiscv
      .iBus_rsp_payload_data         (ibus_resp_data),
      .iBus_rsp_payload_error        (ibus_resp_error),
      .clk                           (clk),
-     .reset                         (rst),
-     .debugReset                    (rst)
+     .reset                         (rst)
      );
 
 endmodule
