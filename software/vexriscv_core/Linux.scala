@@ -89,7 +89,7 @@ object LinuxGen {
           divUnrollFactor = 4
         ),
         new CsrPlugin(CsrPluginConfig.linuxFull(0x80000020l).copy(misaExtensionsInit = 0x0141105, ebreakGen = true)),
-        new DebugPlugin(ClockDomain.current.clone(reset = Bool().setName("debugReset"))),
+        //new DebugPlugin(ClockDomain.current.clone(reset = Bool().setName("debugReset"))),
         new BranchPlugin(
           earlyBranch = false,
           catchAddressMisaligned = true,
