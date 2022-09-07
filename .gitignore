@@ -12,4 +12,5 @@
 !/hardware
 !/software
 /software/OS_build/*
+!/submodules
 /submodules/*/*
