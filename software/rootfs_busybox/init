@@ -1,0 +1,8 @@
+#!/bin/sh
+echo "### INIT SCRIPT ###"
+mkdir /proc /sys /tmp
+mount -t proc none /proc
+mount -t sysfs none /sys
+mount -t tmpfs none /tmp
+echo -e "\nThis boot took $(cut -d' ' -f1 /proc/uptime) seconds\n"
+exec /bin/sh
