@@ -7,24 +7,23 @@ CPU ?= LinuxGen
 #CPU ?= GenFullNoMmuNoCache
 
 vexriscv:
-	cp $(VEX_CORE_DIR)/* $(VEX_SUBMODULES_DIR)/VexRiscv/src/main/scala/vexriscv/demo/ && \
+	cp $(VEX_SOFTWARE_DIR)/vexriscv_core/* $(VEX_SUBMODULES_DIR)/VexRiscv/src/main/scala/vexriscv/demo/ && \
 		cd submodules/VexRiscv && sbt "runMain vexriscv.demo.$(CPU)" && \
 		cp VexRiscv.v $(VEXRISCV_SRC_DIR)
 
 build-opensbi: clean-opensbi
-	cp -r $(VEX_PLATAFORM_DIR)/* $(VEX_SUBMODULES_DIR)/OpenSBI/platform/ && \
+	cp -r $(VEX_SOFTWARE_DIR)/opensbi_platform/* $(VEX_SUBMODULES_DIR)/OpenSBI/platform/ && \
 		cd $(VEX_SUBMODULES_DIR)/OpenSBI && $(MAKE) run PLATFORM=iob_soc
 
 build-rootfs: clean-rootfs
-	cd $(VEX_SUBMODULES_DIR)/BusyBox && \
-		$(MAKE) ARCH=riscv CROSS_COMPILE=riscv64-unknown-linux-gnu- defconfig
-
-build-rootfs-hello:
-	cd software/rootfs && \
-	  riscv64-unknown-linux-gnu-gcc -static -march=rv32imac -mabi=ilp32 hello.c -o hello && \
-	  mkdir sub && cp hello sub/init && cd sub && \
-	  find . | cpio -o -H newc | gzip > $(VEX_OS_DIR)/rootfs.cpio.gz && \
-	  cd .. && rm -rf sub
+	cd $(VEX_SUBMODULES_DIR)/busybox && \
+		cp $(VEX_SOFTWARE_DIR)/rootfs_busybox/busybox_config $(VEX_SUBMODULES_DIR)/busybox/configs/iob_config && \
+		$(MAKE) ARCH=riscv CROSS_COMPILE=riscv64-unknown-linux-gnu- iob_config && \
+		CROSS_COMPILE=riscv64-unknown-linux-gnu- $(MAKE) -j$(nproc) && \
+		CROSS_COMPILE=riscv64-unknown-linux-gnu- $(MAKE) install && \
+		cd _install/ && cp $(VEX_SOFTWARE_DIR)/rootfs_busybox/init init && \
+		mkdir -p dev && sudo mknod dev/console c 5 1 && sudo mknod dev/ram0 b 1 0 && \
+		find -print0 | cpio -0oH newc | gzip -9 > $(VEX_OS_DIR)/rootfs.cpio.gz
 
 build-linux-kernel: clean-linux-kernel
 	cd $(VEX_SUBMODULES_DIR)/linux && \
@@ -32,10 +31,10 @@ build-linux-kernel: clean-linux-kernel
 		$(MAKE) ARCH=riscv CROSS_COMPILE=riscv64-unknown-linux-gnu- -j$(nproc)
 
 build-dts:
-	dtc -O dtb -o $(VEX_OS_DIR)/iob_soc.dtb software/iob_soc.dts
+	dtc -O dtb -o $(VEX_OS_DIR)/iob_soc.dtb $(VEX_SOFTWARE_DIR)/iob_soc.dts
 
-buildroot: clean-buildroot
-	cp $(VEXRISCV_DIR)/software/buildroot/iob_soc_defconfig $(VEX_SUBMODULES_DIR)/buildroot/configs/ && \
+build-buildroot: clean-buildroot
+	cp $(VEX_SOFTWARE_DIR)/buildroot/iob_soc_defconfig $(VEX_SUBMODULES_DIR)/buildroot/configs/ && \
 		$(MAKE) iob_soc_defconfig && $(MAKE) -j2 && \
 		cp buildroot/output/images/* $(VEX_OS_DIR)
 
@@ -57,7 +56,7 @@ clean-opensbi:
 	cd $(VEX_SUBMODULES_DIR)/OpenSBI && $(MAKE) distclean
 
 clean-rootfs:
-	cd $(VEX_SUBMODULES_DIR)/BusyBox && $(MAKE) distclean
+	cd $(VEX_SUBMODULES_DIR)/busybox && $(MAKE) distclean
 
 clean-linux-kernel:
 	cd $(VEX_SUBMODULES_DIR)/linux && $(MAKE) distclean
@@ -65,7 +64,7 @@ clean-linux-kernel:
 clean-buildroot:
 	cd buildroot && $(MAKE) clean && rm -rf dl output
 
-clean-linux:
-	@rm -rf ./LinuxOS
+clean-OS:
+	@rm -rf $(VEX_OS_DIR)/*
 
-clean-all: clean-buildroot clean-linux
+clean-all: clean-OS
