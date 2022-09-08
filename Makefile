@@ -17,8 +17,8 @@ build-opensbi: clean-opensbi
 
 build-rootfs: clean-rootfs
 	cd $(VEX_SUBMODULES_DIR)/busybox && \
-		cp $(VEX_SOFTWARE_DIR)/rootfs_busybox/busybox_config $(VEX_SUBMODULES_DIR)/busybox/configs/iob_config && \
-		$(MAKE) ARCH=riscv CROSS_COMPILE=riscv64-unknown-linux-gnu- iob_config && \
+		cp $(VEX_SOFTWARE_DIR)/rootfs_busybox/busybox_config $(VEX_SUBMODULES_DIR)/busybox/configs/iob_defconfig && \
+		$(MAKE) ARCH=riscv CROSS_COMPILE=riscv64-unknown-linux-gnu- iob_defconfig && \
 		CROSS_COMPILE=riscv64-unknown-linux-gnu- $(MAKE) -j$(nproc) && \
 		CROSS_COMPILE=riscv64-unknown-linux-gnu- $(MAKE) install && \
 		cd _install/ && cp $(VEX_SOFTWARE_DIR)/rootfs_busybox/init init && \
