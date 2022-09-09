@@ -34,9 +34,10 @@ build-dts:
 	dtc -O dtb -o $(VEX_OS_DIR)/iob_soc.dtb $(VEX_SOFTWARE_DIR)/iob_soc.dts
 
 build-buildroot: clean-buildroot
-	cp $(VEX_SOFTWARE_DIR)/buildroot/iob_soc_defconfig $(VEX_SUBMODULES_DIR)/buildroot/configs/ && \
-		$(MAKE) iob_soc_defconfig && $(MAKE) -j2 && \
-		cp buildroot/output/images/* $(VEX_OS_DIR)
+	@wget https://buildroot.org/downloads/buildroot-2022.05.2.tar.gz && tar -xvzf buildroot-2022.05.2.tar.gz -C $(VEX_SUBMODULES_DIR) && \
+		cd $(VEX_SUBMODULES_DIR)/buildroot-2022.05.2/ && \
+		$(MAKE) BR2_EXTERNAL=$(VEX_SOFTWARE_DIR)/buildroot iob_soc_defconfig && $(MAKE) -j2 && \
+		cp $(VEX_SUBMODULES_DIR)/buildroot-2022.05.2/output/images/Image $(VEX_OS_DIR)
 
 ## BuildRoot QEMU to deprecate ##
 build-qemu: clean-buildroot
@@ -62,7 +63,8 @@ clean-linux-kernel:
 	cd $(VEX_SUBMODULES_DIR)/linux && $(MAKE) distclean
 
 clean-buildroot:
-	cd buildroot && $(MAKE) clean && rm -rf dl output
+	-@rm -rf $(VEX_SUBMODULES_DIR)/buildroot-2022.05.2 && \
+		rm buildroot-2022.05.2.tar.gz
 
 clean-OS:
 	@rm -rf $(VEX_OS_DIR)/*
