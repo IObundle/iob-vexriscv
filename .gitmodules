@@ -4,3 +4,6 @@
 [submodule "submodules/VexRiscv"]
 	path = submodules/VexRiscv
 	url = git@github.com:SpinalHDL/VexRiscv.git
+[submodule "submodules/busybox"]
+	path = submodules/busybox
+	url = https://git.busybox.net/busybox

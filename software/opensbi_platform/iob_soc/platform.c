@@ -24,7 +24,7 @@
 #include <sbi_utils/timer/aclint_mtimer.h>
 
 #define IOB_SOC_PLIC_ADDR		0x50000000
-#define IOB_SOC_PLIC_NUM_SOURCES	2
+#define IOB_SOC_PLIC_NUM_SOURCES	32
 #define IOB_SOC_HART_COUNT		1
 #define IOB_SOC_CLINT_ADDR		0x60000000
 #define IOB_SOC_ACLINT_MTIMER_FREQ	100000
@@ -74,7 +74,7 @@ static int iob_soc_early_init(bool cold_boot)
 {
 	void *fdt;
 	struct platform_uart_data uart_data;
-	//struct plic_data plic_data;
+	struct plic_data plic_data;
 	unsigned long aclint_freq;
 	uint64_t clint_addr;
 	int rc;
@@ -87,9 +87,9 @@ static int iob_soc_early_init(bool cold_boot)
 	if (!rc)
 		uart = uart_data;
 
-	//rc = fdt_parse_plic(fdt, &plic_data, "riscv,plic0");
-	//if (!rc)
-	//	plic = plic_data;
+	rc = fdt_parse_plic(fdt, &plic_data, "riscv,plic0");
+	if (!rc)
+		plic = plic_data;
 
 	rc = fdt_parse_timebase_frequency(fdt, &aclint_freq);
 	if (!rc)

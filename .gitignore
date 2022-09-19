@@ -12,7 +12,5 @@
 !/hardware
 !/software
 /software/OS_build/*
-/software/*.cpio*
-/software/rootfs/*
-!/software/rootfs/*.c
-!/VexRiscv
+!/submodules
+/submodules/*/*
