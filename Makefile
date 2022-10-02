@@ -34,18 +34,19 @@ build-dts:
 	dtc -O dtb -o $(VEX_OS_DIR)/iob_soc.dtb $(VEX_SOFTWARE_DIR)/iob_soc.dts
 
 build-buildroot: clean-buildroot
-	cp $(VEX_SOFTWARE_DIR)/buildroot/iob_soc_defconfig $(VEX_SUBMODULES_DIR)/buildroot/configs/ && \
-		$(MAKE) iob_soc_defconfig && $(MAKE) -j2 && \
-		cp buildroot/output/images/* $(VEX_OS_DIR)
+	@wget https://buildroot.org/downloads/buildroot-2022.05.2.tar.gz && tar -xvzf buildroot-2022.05.2.tar.gz -C $(VEX_SUBMODULES_DIR) && \
+		cd $(VEX_SUBMODULES_DIR)/buildroot-2022.05.2/ && \
+		$(MAKE) BR2_EXTERNAL=$(VEX_SOFTWARE_DIR)/buildroot iob_soc_defconfig && $(MAKE) -j2 && \
+		cp $(VEX_SUBMODULES_DIR)/buildroot-2022.05.2/output/images/Image $(VEX_OS_DIR)
 
 ## BuildRoot QEMU to deprecate ##
 build-qemu: clean-buildroot
-	mkdir LinuxOS
-	cd buildroot && $(MAKE) qemu_riscv32_virt_defconfig && $(MAKE) -j2
-	cp buildroot/output/images/* LinuxOS
+	mkdir qemu_LinuxOS && \
+		cd buildroot && $(MAKE) qemu_riscv32_virt_defconfig && $(MAKE) -j2 && \
+		cp buildroot/output/images/* qemu_LinuxOS
 
 run-qemu:
-	qemu-system-riscv32 -M virt -bios LinuxOS/fw_jump.elf -kernel LinuxOS/Image -append "rootwait root=/dev/vda ro" -drive file=LinuxOS/rootfs.ext2,format=raw,id=hd0 -device virtio-blk-device,drive=hd0 -netdev user,id=net0 -device virtio-net-device,netdev=net0 -nographic
+	qemu-system-riscv32 -M virt -bios qemu_LinuxOS/fw_jump.elf -kernel qemu_LinuxOS/Image -append "rootwait root=/dev/vda ro" -drive file=qemu_LinuxOS/rootfs.ext2,format=raw,id=hd0 -device virtio-blk-device,drive=hd0 -netdev user,id=net0 -device virtio-net-device,netdev=net0 -nographic
 
 
 
@@ -62,7 +63,8 @@ clean-linux-kernel:
 	cd $(VEX_SUBMODULES_DIR)/linux && $(MAKE) distclean
 
 clean-buildroot:
-	cd buildroot && $(MAKE) clean && rm -rf dl output
+	-@rm -rf $(VEX_SUBMODULES_DIR)/buildroot-2022.05.2 && \
+		rm buildroot-2022.05.2.tar.gz
 
 clean-OS:
 	@rm -rf $(VEX_OS_DIR)/*
