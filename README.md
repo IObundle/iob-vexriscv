@@ -3,6 +3,7 @@ This repository contains the hardware necessary to integrate the VexRiscv CPU on
 
 ## Requirements
 - RISC-V Linux/GNU toolchain: can be obtained from https://github.com/riscv-collab/riscv-gnu-toolchain; after cloning the repository in the terminal `cd` to the respective directory and configure with `./configure --prefix=/opt/riscv --enable-multilib`; After configuring you can build the Linux cross-compiler with `make Linux`.
+- dtc: dtc can be installed on Debian/Ubuntu with -> `sudo apt-get install device-tree-compiler`
 
 ## Makefile Targets
 - vexriscv: build the Verilog RTL VexRiscv CPU core.
