@@ -41,12 +41,12 @@ build-buildroot: clean-buildroot
 
 ## BuildRoot QEMU to deprecate ##
 build-qemu: clean-buildroot
-	mkdir LinuxOS
-	cd buildroot && $(MAKE) qemu_riscv32_virt_defconfig && $(MAKE) -j2
-	cp buildroot/output/images/* LinuxOS
+	mkdir qemu_LinuxOS && \
+		cd buildroot && $(MAKE) qemu_riscv32_virt_defconfig && $(MAKE) -j2 && \
+		cp buildroot/output/images/* qemu_LinuxOS
 
 run-qemu:
-	qemu-system-riscv32 -M virt -bios LinuxOS/fw_jump.elf -kernel LinuxOS/Image -append "rootwait root=/dev/vda ro" -drive file=LinuxOS/rootfs.ext2,format=raw,id=hd0 -device virtio-blk-device,drive=hd0 -netdev user,id=net0 -device virtio-net-device,netdev=net0 -nographic
+	qemu-system-riscv32 -M virt -bios qemu_LinuxOS/fw_jump.elf -kernel qemu_LinuxOS/Image -append "rootwait root=/dev/vda ro" -drive file=qemu_LinuxOS/rootfs.ext2,format=raw,id=hd0 -device virtio-blk-device,drive=hd0 -netdev user,id=net0 -device virtio-net-device,netdev=net0 -nographic
 
 
 
