@@ -46,6 +46,8 @@ build-buildroot: clean-buildroot
 		$(MAKE) BR2_EXTERNAL=$(VEX_SOFTWARE_DIR)/buildroot iob_soc_defconfig && $(MAKE) -j2 && \
 		cp $(VEX_SUBMODULES_DIR)/buildroot-2022.05.2/output/images/Image $(VEX_OS_DIR)
 
+build-OS: clean-OS build-dts build-opensbi build-rootfs build-linux-kernel
+
 ## BuildRoot QEMU to deprecate ##
 build-qemu: clean-buildroot
 	mkdir qemu_LinuxOS && \
