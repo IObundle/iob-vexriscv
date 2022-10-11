@@ -31,9 +31,11 @@ build-rootfs: clean-rootfs os_dir
 		find -print0 | cpio -0oH newc | gzip -9 > $(VEX_OS_DIR)/rootfs.cpio.gz
 
 build-linux-kernel: clean-linux-kernel os_dir
-	cd $(VEX_SUBMODULES_DIR)/linux && \
-		$(MAKE) ARCH=riscv CROSS_COMPILE=riscv64-unknown-linux-gnu- rv32_iob_defconfig && \
-		$(MAKE) ARCH=riscv CROSS_COMPILE=riscv64-unknown-linux-gnu- -j$(nproc)
+	cd $(VEX_SUBMODULES_DIR)/Linux && \
+		cp $(VEX_SOFTWARE_DIR)/linux_config $(VEX_SUBMODULES_DIR)/Linux/arch/riscv/configs/iob_soc_defconfig && \
+		$(MAKE) ARCH=riscv CROSS_COMPILE=riscv64-unknown-linux-gnu- iob_soc_defconfig && \
+		$(MAKE) ARCH=riscv CROSS_COMPILE=riscv64-unknown-linux-gnu- -j2 && \
+		cp $(VEX_SUBMODULES_DIR)/Linux/arch/riscv/boot/Image $(VEX_OS_DIR)
 
 build-dts: os_dir
 	dtc -O dtb -o $(VEX_OS_DIR)/iob_soc.dtb $(VEX_SOFTWARE_DIR)/iob_soc.dts
@@ -65,7 +67,7 @@ clean-rootfs:
 	cd $(VEX_SUBMODULES_DIR)/busybox && $(MAKE) distclean
 
 clean-linux-kernel:
-	cd $(VEX_SUBMODULES_DIR)/linux && $(MAKE) distclean
+	cd $(VEX_SUBMODULES_DIR)/Linux && $(MAKE) ARCH=riscv distclean
 
 clean-buildroot:
 	-@rm -rf $(VEX_SUBMODULES_DIR)/buildroot-2022.05.2 && \
