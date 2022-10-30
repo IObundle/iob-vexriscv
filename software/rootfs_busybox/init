@@ -17,5 +17,4 @@ MMO     ;MMX00XMM'    cMMMNO0WM,   .MMKkOWWMM  cMM     MM;  ,MW0OXMMMd  MM.   MM
 EOF
 echo 'OpenCryptoLinux >   '
 echo -e "\nThis boot took $(cut -d' ' -f1 /proc/uptime) seconds\n"
-
-/bin/sh
+/bin/sh +m
