@@ -5,6 +5,7 @@
 ## Files:
 !/.gitignore
 !/.gitmodules
+!/.github
 !/config.mk
 !/Makefile
 !/README.md

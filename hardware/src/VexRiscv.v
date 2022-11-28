@@ -1,6 +1,6 @@
-// Generator : SpinalHDL v1.7.1    git head : 0444bb76ab1d6e19f0ec46bc03c4769776deb7d5
+// Generator : SpinalHDL v1.7.3    git head : ed8004c489ee8a38c2cab309d0447b543fe9d5b8
 // Component : VexRiscv
-// Git hash  : 24795ef09b88defe2ee1bb335e5caaf7e07e64ff
+// Git hash  : 87c8822f55c0674d24a55b2d83255b60f8a6146e
 
 `timescale 1ns/1ps
 
@@ -1733,11 +1733,15 @@ module VexRiscv (
   reg        [1:0]    FpuPlugin_fs;
   wire                FpuPlugin_sd;
   wire                when_FpuPlugin_l219;
+  reg                 _zz_when_FpuPlugin_l222;
+  reg                 _zz_when_FpuPlugin_l222_1;
+  reg                 _zz_when_FpuPlugin_l222_2;
+  wire                when_FpuPlugin_l222;
   reg                 decode_FpuPlugin_forked;
   wire                FpuPlugin_port_cmd_fire_1;
-  wire                when_FpuPlugin_l234;
+  wire                when_FpuPlugin_l237;
   wire                decode_FpuPlugin_hazard;
-  wire                when_FpuPlugin_l238;
+  wire                when_FpuPlugin_l241;
   wire                FpuPlugin_port_cmd_isStall;
   wire       [2:0]    decode_FpuPlugin_iRoundMode;
   wire       [2:0]    decode_FpuPlugin_roundMode;
@@ -1748,16 +1752,16 @@ module VexRiscv (
   wire                writeBack_FpuPlugin_isCommit;
   wire       [31:0]   writeBack_FpuPlugin_storeFormated;
   wire       [31:0]   DBusBypass0_value;
-  wire                when_FpuPlugin_l280;
-  wire                when_FpuPlugin_l285;
-  wire                when_FpuPlugin_l287;
+  wire                when_FpuPlugin_l283;
+  wire                when_FpuPlugin_l288;
+  wire                when_FpuPlugin_l290;
   wire                writeBack_FpuPlugin_commit_valid /* verilator public */ ;
   wire                writeBack_FpuPlugin_commit_ready /* verilator public */ ;
   wire       [3:0]    writeBack_FpuPlugin_commit_payload_opcode /* verilator public */ ;
   wire       [4:0]    writeBack_FpuPlugin_commit_payload_rd /* verilator public */ ;
   wire                writeBack_FpuPlugin_commit_payload_write /* verilator public */ ;
   wire       [31:0]   writeBack_FpuPlugin_commit_payload_value /* verilator public */ ;
-  wire                when_FpuPlugin_l301;
+  wire                when_FpuPlugin_l304;
   wire                writeBack_FpuPlugin_commit_s2mPipe_valid;
   wire                writeBack_FpuPlugin_commit_s2mPipe_ready;
   wire       [3:0]    writeBack_FpuPlugin_commit_s2mPipe_payload_opcode;
@@ -4475,7 +4479,7 @@ module VexRiscv (
     if(when_DBusCachedPlugin_l308) begin
       decode_arbitration_haltItself = 1'b1;
     end
-    if(when_FpuPlugin_l238) begin
+    if(when_FpuPlugin_l241) begin
       decode_arbitration_haltItself = 1'b1;
     end
     if(FpuPlugin_port_cmd_isStall) begin
@@ -4603,11 +4607,11 @@ module VexRiscv (
   always @(*) begin
     writeBack_arbitration_haltByOther = 1'b0;
     if(writeBack_FpuPlugin_isRsp) begin
-      if(when_FpuPlugin_l285) begin
+      if(when_FpuPlugin_l288) begin
         writeBack_arbitration_haltByOther = 1'b1;
       end
     end
-    if(when_FpuPlugin_l301) begin
+    if(when_FpuPlugin_l304) begin
       writeBack_arbitration_haltByOther = 1'b1;
     end
   end
@@ -6833,10 +6837,38 @@ module VexRiscv (
   assign when_FpuPlugin_l214 = (FpuPlugin_csrActive && FpuPlugin_hasPending);
   assign FpuPlugin_sd = (FpuPlugin_fs == 2'b11);
   assign when_FpuPlugin_l219 = ((writeBack_arbitration_isFiring && writeBack_FPU_ENABLE) && (writeBack_FPU_OPCODE != FpuOpcode_STORE));
+  always @(*) begin
+    _zz_when_FpuPlugin_l222 = 1'b0;
+    if(execute_CsrPlugin_csr_2) begin
+      if(execute_CsrPlugin_writeEnable) begin
+        _zz_when_FpuPlugin_l222 = 1'b1;
+      end
+    end
+  end
+
+  always @(*) begin
+    _zz_when_FpuPlugin_l222_1 = 1'b0;
+    if(execute_CsrPlugin_csr_3) begin
+      if(execute_CsrPlugin_writeEnable) begin
+        _zz_when_FpuPlugin_l222_1 = 1'b1;
+      end
+    end
+  end
+
+  always @(*) begin
+    _zz_when_FpuPlugin_l222_2 = 1'b0;
+    if(execute_CsrPlugin_csr_1) begin
+      if(execute_CsrPlugin_writeEnable) begin
+        _zz_when_FpuPlugin_l222_2 = 1'b1;
+      end
+    end
+  end
+
+  assign when_FpuPlugin_l222 = ({_zz_when_FpuPlugin_l222_2,{_zz_when_FpuPlugin_l222_1,_zz_when_FpuPlugin_l222}} != 3'b000);
   assign FpuPlugin_port_cmd_fire_1 = (FpuPlugin_port_cmd_valid && FpuPlugin_port_cmd_ready);
-  assign when_FpuPlugin_l234 = (! decode_arbitration_isStuck);
+  assign when_FpuPlugin_l237 = (! decode_arbitration_isStuck);
   assign decode_FpuPlugin_hazard = (FpuPlugin_pendings[5] || FpuPlugin_csrActive);
-  assign when_FpuPlugin_l238 = ((decode_arbitration_isValid && decode_FPU_ENABLE) && decode_FpuPlugin_hazard);
+  assign when_FpuPlugin_l241 = ((decode_arbitration_isValid && decode_FPU_ENABLE) && decode_FpuPlugin_hazard);
   assign FpuPlugin_port_cmd_isStall = (FpuPlugin_port_cmd_valid && (! FpuPlugin_port_cmd_ready));
   assign decode_FpuPlugin_iRoundMode = decode_INSTRUCTION[14 : 12];
   assign decode_FpuPlugin_roundMode = ((decode_INSTRUCTION[14 : 12] == 3'b111) ? FpuPlugin_rm : decode_INSTRUCTION[14 : 12]);
@@ -6858,8 +6890,8 @@ module VexRiscv (
   always @(*) begin
     FpuPlugin_port_rsp_ready = 1'b0;
     if(writeBack_FpuPlugin_isRsp) begin
-      if(!when_FpuPlugin_l285) begin
-        if(when_FpuPlugin_l287) begin
+      if(!when_FpuPlugin_l288) begin
+        if(when_FpuPlugin_l290) begin
           FpuPlugin_port_rsp_ready = 1'b1;
         end
       end
@@ -6867,15 +6899,15 @@ module VexRiscv (
   end
 
   assign DBusBypass0_value = writeBack_FpuPlugin_storeFormated;
-  assign when_FpuPlugin_l280 = ((! writeBack_arbitration_isStuck) && (! writeBack_arbitration_removeIt));
-  assign when_FpuPlugin_l285 = (! FpuPlugin_port_rsp_valid);
-  assign when_FpuPlugin_l287 = (! writeBack_arbitration_haltItself);
+  assign when_FpuPlugin_l283 = ((! writeBack_arbitration_isStuck) && (! writeBack_arbitration_removeIt));
+  assign when_FpuPlugin_l288 = (! FpuPlugin_port_rsp_valid);
+  assign when_FpuPlugin_l290 = (! writeBack_arbitration_haltItself);
   assign writeBack_FpuPlugin_commit_valid = (writeBack_FpuPlugin_isCommit && (! writeBack_arbitration_isStuck));
   assign writeBack_FpuPlugin_commit_payload_value[31 : 0] = (writeBack_FPU_COMMIT_LOAD ? writeBack_MEMORY_LOAD_DATA[31 : 0] : writeBack_RS1);
   assign writeBack_FpuPlugin_commit_payload_write = (writeBack_arbitration_isValid && (! writeBack_arbitration_removeIt));
   assign writeBack_FpuPlugin_commit_payload_opcode = writeBack_FPU_OPCODE;
   assign writeBack_FpuPlugin_commit_payload_rd = writeBack_INSTRUCTION[11 : 7];
-  assign when_FpuPlugin_l301 = (writeBack_FpuPlugin_isCommit && (! writeBack_FpuPlugin_commit_ready));
+  assign when_FpuPlugin_l304 = (writeBack_FpuPlugin_isCommit && (! writeBack_FpuPlugin_commit_ready));
   assign writeBack_FpuPlugin_commit_ready = (! writeBack_FpuPlugin_commit_rValid);
   assign writeBack_FpuPlugin_commit_s2mPipe_valid = (writeBack_FpuPlugin_commit_valid || writeBack_FpuPlugin_commit_rValid);
   assign _zz_writeBack_FpuPlugin_commit_s2mPipe_payload_opcode = (writeBack_FpuPlugin_commit_rValid ? writeBack_FpuPlugin_commit_rData_opcode : writeBack_FpuPlugin_commit_payload_opcode);
@@ -7799,15 +7831,18 @@ module VexRiscv (
       if(when_FpuPlugin_l219) begin
         FpuPlugin_fs <= 2'b11;
       end
+      if(when_FpuPlugin_l222) begin
+        FpuPlugin_fs <= 2'b11;
+      end
       if(FpuPlugin_port_cmd_fire_1) begin
         decode_FpuPlugin_forked <= 1'b1;
       end
-      if(when_FpuPlugin_l234) begin
+      if(when_FpuPlugin_l237) begin
         decode_FpuPlugin_forked <= 1'b0;
       end
       if(writeBack_FpuPlugin_isRsp) begin
         if(writeBack_arbitration_isValid) begin
-          if(when_FpuPlugin_l280) begin
+          if(when_FpuPlugin_l283) begin
             if(FpuPlugin_port_rsp_payload_NV) begin
               FpuPlugin_flags_NV <= 1'b1;
             end
