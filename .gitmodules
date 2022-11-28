@@ -1,12 +1,3 @@
-[submodule "submodules/OpenSBI"]
-	path = submodules/OpenSBI
-	url = git@github.com:riscv-software-src/opensbi.git
 [submodule "submodules/VexRiscv"]
 	path = submodules/VexRiscv
 	url = git@github.com:SpinalHDL/VexRiscv.git
-[submodule "submodules/busybox"]
-	path = submodules/busybox
-	url = https://git.busybox.net/busybox
-[submodule "submodules/Linux"]
-	path = submodules/Linux
-	url = git@github.com:SpinalHDL/linux.git
