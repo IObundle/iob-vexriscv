@@ -11,4 +11,6 @@
 ## Folders:
 !/hardware
 !/software
-!/VexRiscv
+/software/OS_build/*
+!/submodules
+/submodules/*/*
