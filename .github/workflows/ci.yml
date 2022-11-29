@@ -36,4 +36,4 @@ jobs:
       - name: test-clean
         run: make clean-all
       - name: test-vexriscv
-        run: make vexriscv
+        run: nix-shell --run "make vexriscv"

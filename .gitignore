@@ -9,6 +9,7 @@
 !/config.mk
 !/Makefile
 !/README.md
+!/*.nix
 ## Folders:
 !/hardware
 !/software
