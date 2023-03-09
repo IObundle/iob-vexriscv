@@ -29,9 +29,9 @@ module iob_VexRiscv
     output [`REQ_W-1:0] dbus_req,
     input [`RESP_W-1:0] dbus_resp,
 
-    input [`N_CORES-1:0] timerInterrupt,
-    input [`N_CORES-1:0] softwareInterrupt,
-    input [`N_CORES-1:0] externalInterrupt
+    input wire       timerInterrupt,    // Machine level timer interrupts
+    input wire       softwareInterrupt, // Machine level software interrupts
+    input wire [1:0] externalInterrupts // Both Machine and Supervisor level external interrupts
     );
 
 
@@ -162,9 +162,9 @@ module iob_VexRiscv
      .dBus_rsp_payload_data         (dbus_resp_data),
      .dBus_rsp_payload_error        (dbus_resp_error),
      .timerInterrupt                (timerInterrupt),
-     .externalInterrupt             (externalInterrupt),
+     .externalInterrupt             (externalInterrupts[0]),
      .softwareInterrupt             (softwareInterrupt),
-     .externalInterruptS            (1'b0),
+     .externalInterruptS            (externalInterrupts[1]),
      .iBus_cmd_valid                (ibus_req_valid),
      .iBus_cmd_ready                (ibus_req_ready),
      .iBus_cmd_payload_address      (ibus_req_address),
