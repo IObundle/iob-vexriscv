@@ -2,11 +2,11 @@
  *  IOb-VexRiscv -- A VexRiscv Wrapper
  */
 `timescale 1 ns / 1 ps
-`include "iob_picorv32_conf.vh"
+`include "iob_vexriscv_conf.vh"
 `include "iob_lib.vh"
 
 module iob_VexRiscv#(
-    `include "iob_picorv32_params.vh"
+    `include "iob_vexriscv_params.vh"
     )(
     input               clk,
     input               rst,
