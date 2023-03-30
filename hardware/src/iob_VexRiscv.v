@@ -1,21 +1,13 @@
 /*
  *  IOb-VexRiscv -- A VexRiscv Wrapper
  */
-
-
 `timescale 1 ns / 1 ps
-`include "system.vh"
-`include "iob_intercon.vh"
+`include "iob_picorv32_conf.vh"
+`include "iob_lib.vh"
 
-//the look ahead interface is not working because mem_instr is unknown at request
-//`define LA_IF
-
-module iob_VexRiscv
-  #(
-    parameter ADDR_W=32,
-    parameter DATA_W=32
-    )
-   (
+module iob_VexRiscv#(
+    `include "iob_picorv32_params.vh"
+    )(
     input               clk,
     input               rst,
     input               boot,
@@ -50,15 +42,16 @@ module iob_VexRiscv
     reg  [`ADDR_W-1:0] ibus_req_addr_reg;
 
 //modify addresses if DDR used according to boot status
-`ifdef RUN_EXTMEM
+`ifdef USE_EXTMEM
     assign ibus_req = {ibus_req_valid_int, ~boot, ibus_req_addr_int[`ADDR_W-2:0], `DATA_W'h0, {`DATA_W/8{1'b0}}};
 `else
     assign ibus_req = {ibus_req_valid_int, {1'b0}, ibus_req_addr_int[`ADDR_W-2:0], `DATA_W'h0, {`DATA_W/8{1'b0}}};
 `endif
-    assign ibus_req_ready = ibus_req_valid_reg ~^ ibus_resp_ready;
+    //assign ibus_req_ready = ibus_req_valid_reg ~^ ibus_resp_ready; Used on OLD IObundle bus interface
+    assign ibus_req_ready = ibus_resp[`ready(0)];
     assign ibus_req_valid_int = (ibus_req_ready|ibus_resp_ready)? ibus_req_valid : ibus_req_valid_reg;
     assign ibus_req_addr_int = (ibus_req_ready|ibus_resp_ready) ? ibus_req_address : ibus_req_addr_reg;
-    assign ibus_resp_ready = ibus_resp[`ready(0)];
+    assign ibus_resp_ready = ibus_resp[`rvalid(0)];
     assign ibus_resp_data = ibus_resp[`rdata(0)];
     assign ibus_resp_error = 1'b0;
 
@@ -103,18 +96,19 @@ module iob_VexRiscv
     reg  [`DATA_W/8-1:0] dbus_req_strb_reg;
 
 //modify addresses if DDR used according to boot status
-`ifdef RUN_EXTMEM
+`ifdef USE_EXTMEM
     assign dbus_req = {dbus_req_valid_int, (~boot&~dbus_req_addr_int[`P])|(dbus_req_addr_int[`E]), dbus_req_addr_int[ADDR_W-2:0], dbus_req_data_int, dbus_req_strb_int};
 `else
     assign dbus_req = {dbus_req_valid_int, dbus_req_addr_int, dbus_req_data_int, dbus_req_strb_int};
 `endif
-    assign dbus_req_ready = dbus_req_valid_reg ~^ dbus_resp_ready;
+    //assign dbus_req_ready = dbus_req_valid_reg ~^ dbus_resp_ready; Used on OLD IObundle bus interface
+    assign dbus_req_ready = dbus_resp[`ready(0)];
     assign dbus_req_valid_int = (dbus_req_ready|dbus_resp_ready)? dbus_req_valid : dbus_req_valid_reg;
     assign dbus_req_addr_int = (dbus_req_ready|dbus_resp_ready) ? dbus_req_address : dbus_req_addr_reg;
     assign dbus_req_data_int = (dbus_req_ready|dbus_resp_ready) ? dbus_req_data : dbus_req_data_reg;
     assign dbus_req_strb_int = (dbus_req_ready|dbus_resp_ready) ? dbus_req_strb : dbus_req_strb_reg;
     assign dbus_req_strb = dbus_req_wr ? dbus_req_mask : 4'h0;
-    assign dbus_resp_ready = dbus_resp[`ready(0)];
+    assign dbus_resp_ready = dbus_resp[`rvalid(0)];
     assign dbus_resp_data = dbus_resp[`rdata(0)];
     assign dbus_resp_error = 1'b0;
     assign dbus_resp_last = dbus_req_last;
