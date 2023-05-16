@@ -10,7 +10,7 @@ flows=''
 submodules = {
     'hw_setup': {
         'headers' : [  ],
-        'modules': [ 'iob_reg.v' ]
+        'modules': [ 'iob_reg_re' ]
     },
 }
 
