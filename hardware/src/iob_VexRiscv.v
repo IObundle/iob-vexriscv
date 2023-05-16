@@ -68,17 +68,9 @@ module iob_VexRiscv #(
   // Logic
   // // INSTRUCTIONS BUS
   //modify addresses if DDR used according to boot status
-  generate
-    if (USE_EXTMEM) begin : g_use_extmem
-      assign ibus_req = {
-        ibus_avalid_int, ~boot, ibus_addr_int[ADDR_W-2:0], {DATA_W{1'b0}}, {DATA_W / 8{1'b0}}
-      };
-    end else begin : g_not_use_extmem
-      assign ibus_req = {
-        ibus_avalid_int, {1'b0}, ibus_addr_int[ADDR_W-2:0], {DATA_W{1'b0}}, {DATA_W / 8{1'b0}}
-      };
-    end
-  endgenerate
+  assign ibus_req = {
+    ibus_avalid_int, ~boot, ibus_addr_int[ADDR_W-2:0], {DATA_W{1'b0}}, {DATA_W / 8{1'b0}}
+  };
   //assign ibus_ready = ibus_avalid_r ~^ ibus_ack; Used on OLD IObundle bus interface
   assign ibus_ready = ibus_resp[`READY(0)];
   assign ibus_avalid_int = (ibus_ready | ibus_ack) ? ibus_avalid : ibus_avalid_r;
@@ -89,19 +81,13 @@ module iob_VexRiscv #(
 
   // // DATA BUS
   //modify addresses if DDR used according to boot status
-  generate
-    if (USE_EXTMEM) begin : g_use_extmem
-      assign dbus_req = {
-        dbus_avalid_int,
-        (~boot & ~dbus_addr_int[P_BIT]) | (dbus_addr_int[E_BIT]),
-        dbus_addr_int[ADDR_W-2:0],
-        dbus_req_data_int,
-        dbus_strb_int
-      };
-    end else begin : g_not_use_extmem
-      assign dbus_req = {dbus_avalid_int, dbus_addr_int, dbus_req_data_int, dbus_strb_int};
-    end
-  endgenerate
+  assign dbus_req = {
+    dbus_avalid_int,
+    (~boot & ~dbus_addr_int[P_BIT]) | (dbus_addr_int[E_BIT]),
+    dbus_addr_int[ADDR_W-2:0],
+    dbus_req_data_int,
+    dbus_strb_int
+  };
   //assign dbus_ready = dbus_avalid_r ~^ dbus_ack; Used on OLD IObundle bus interface
   assign dbus_ready = dbus_resp[`READY(0)];
   assign dbus_avalid_int = (dbus_ready | dbus_ack) ? dbus_avalid : dbus_avalid_r;
