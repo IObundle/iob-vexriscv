@@ -112,7 +112,6 @@ module iob_VexRiscv #(
   assign dbus_ack = (dbus_ready) & (dbus_avalid_r);
   assign dbus_resp_data = dbus_resp[`RDATA(0)];
   assign dbus_error = 1'b0;
-  assign dbus_resp_last = dbus_req_last;
 
 
   // Module intanciation
@@ -190,6 +189,18 @@ module iob_VexRiscv #(
       .en_i  (dbus_ready),
       .data_i(dbus_strb),
       .data_o(dbus_strb_r)
+  );
+  iob_reg_re #(
+      .DATA_W (DATA_W / 8),
+      .RST_VAL(0)
+  ) iob_reg_d_last (
+      .clk_i (clk_i),
+      .arst_i(arst_i),
+      .cke_i (cke_i),
+      .rst_i (1'b0),
+      .en_i  (1'b1),
+      .data_i(dbus_req_last),
+      .data_o(dbus_resp_last)
   );
 
   // // VexRiscv instantiation
