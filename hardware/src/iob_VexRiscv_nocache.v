@@ -6,8 +6,8 @@
 `include "iob_lib.vh"
 
 module iob_VexRiscv_nocache #(
-    parameter ADDR_W=32,
-    parameter DATA_W=32
+    parameter N_CORES=1,
+    `include "iob_vexriscv_params.vh"
     )
    (
     input               clk,
@@ -23,8 +23,8 @@ module iob_VexRiscv_nocache #(
     output [`REQ_W-1:0] dbus_req,
     input [`RESP_W-1:0] dbus_resp,
 
-    input [`N_CORES-1:0] timerInterrupt,
-    input [`N_CORES-1:0] softwareInterrupt
+    input [N_CORES-1:0] timerInterrupt,
+    input [N_CORES-1:0] softwareInterrupt
     );
 
 
@@ -32,25 +32,27 @@ module iob_VexRiscv_nocache #(
     wire                  ibus_req_valid;
     wire              ibus_req_valid_int;
     wire                  ibus_req_ready;
-    wire [`ADDR_W-1:0]  ibus_req_address;
-    wire [`ADDR_W-1:0] ibus_req_addr_int;
+    wire [ADDR_W-1:0]  ibus_req_address;
+    wire [ADDR_W-1:0] ibus_req_addr_int;
     wire                 ibus_resp_ready;
-    wire [`DATA_W-1:0]    ibus_resp_data;
+    wire [DATA_W-1:0]    ibus_resp_data;
 
     reg               ibus_req_valid_reg;
-    reg  [`ADDR_W-1:0] ibus_req_addr_reg;
+    reg  [ADDR_W-1:0] ibus_req_addr_reg;
 
 //modify addresses if DDR used according to boot status
-`ifdef RUN_EXTMEM
-    assign ibus_req = {ibus_req_valid_int, ~boot, ibus_req_addr_int[`ADDR_W-2:0], `DATA_W'h0, {`DATA_W/8{1'b0}}};
-`else
-    assign ibus_req = {ibus_req_valid_int, {1'b0}, ibus_req_addr_int[`ADDR_W-2:0], `DATA_W'h0, {`DATA_W/8{1'b0}}};
-`endif
-    assign ibus_req_ready = ibus_resp[`ready(0)];
+  generate
+    if (USE_EXTMEM) begin
+      assign ibus_req = {ibus_req_valid_int, ~boot, ibus_req_addr_int[ADDR_W-2:0], {DATA_W{1'b0}}, {DATA_W/8{1'b0}}};
+    end else begin
+      assign ibus_req = {ibus_req_valid_int, {1'b0}, ibus_req_addr_int[ADDR_W-2:0], {DATA_W{1'b0}}, {DATA_W/8{1'b0}}};
+    end
+  endgenerate
+    assign ibus_req_ready = ibus_resp[`READY(0)];
     assign ibus_req_valid_int = (ibus_req_ready|ibus_resp_ready)? ibus_req_valid : ibus_req_valid_reg;
     assign ibus_req_addr_int = (ibus_req_ready|ibus_resp_ready) ? ibus_req_address : ibus_req_addr_reg;
-    assign ibus_resp_ready = ibus_resp[`rvalid(0)];
-    assign ibus_resp_data = ibus_resp[`rdata(0)];
+    assign ibus_resp_ready = ibus_resp[`RVALID(0)];
+    assign ibus_resp_data = ibus_resp[`RDATA(0)];
 
     // INSTRUCTIONS REGISTERS
     //compute if valid
@@ -73,29 +75,31 @@ module iob_VexRiscv_nocache #(
     wire                dbus_req_valid_int;
     wire                       dbus_req_wr;
     wire [1:0]               dbus_req_size;
-    wire [`ADDR_W-1:0]    dbus_req_address;
-    wire [`ADDR_W-1:0]   dbus_req_addr_int;
-    wire [`DATA_W-1:0]       dbus_req_data;
-    wire [`DATA_W-1:0]   dbus_req_data_int;
-    wire [`DATA_W/8-1:0]     dbus_req_strb;
-    wire [`DATA_W/8-1:0] dbus_req_strb_int;
-    wire [`DATA_W/8-1:0]     dbus_req_mask;
-    wire [`DATA_W/8-1:0]    dbus_req_mask2;
+    wire [ADDR_W-1:0]    dbus_req_address;
+    wire [ADDR_W-1:0]   dbus_req_addr_int;
+    wire [DATA_W-1:0]       dbus_req_data;
+    wire [DATA_W-1:0]   dbus_req_data_int;
+    wire [DATA_W/8-1:0]     dbus_req_strb;
+    wire [DATA_W/8-1:0] dbus_req_strb_int;
+    wire [DATA_W/8-1:0]     dbus_req_mask;
+    wire [DATA_W/8-1:0]    dbus_req_mask2;
     wire                   dbus_resp_ready;
-    wire [`DATA_W-1:0]      dbus_resp_data;
+    wire [DATA_W-1:0]      dbus_resp_data;
 
     reg                 dbus_req_valid_reg;
-    reg  [`ADDR_W-1:0]   dbus_req_addr_reg;
-    reg  [`DATA_W-1:0]   dbus_req_data_reg;
-    reg  [`DATA_W/8-1:0] dbus_req_strb_reg;
+    reg  [ADDR_W-1:0]   dbus_req_addr_reg;
+    reg  [DATA_W-1:0]   dbus_req_data_reg;
+    reg  [DATA_W/8-1:0] dbus_req_strb_reg;
 
 //modify addresses if DDR used according to boot status
-`ifdef RUN_EXTMEM
-    assign dbus_req = {dbus_req_valid_int, (dbus_req_addr_int[`E]^~boot)&~dbus_req_addr_int[`P], dbus_req_addr_int[ADDR_W-2:0], dbus_req_data_int, dbus_req_strb_int};
-`else
-    assign dbus_req = {dbus_req_valid_int, dbus_req_addr_int, dbus_req_data_int, dbus_req_strb_int};
-`endif
-    assign dbus_req_ready = dbus_resp[`ready(0)];
+  generate
+    if (USE_EXTMEM) begin
+      assign dbus_req = {dbus_req_valid_int, (dbus_req_addr_int[E_BIT]^~boot)&~dbus_req_addr_int[P_BIT], dbus_req_addr_int[ADDR_W-2:0], dbus_req_data_int, dbus_req_strb_int};
+    end else begin
+      assign dbus_req = {dbus_req_valid_int, dbus_req_addr_int, dbus_req_data_int, dbus_req_strb_int};
+      end
+   endgenerate
+    assign dbus_req_ready = dbus_resp[`READY(0)];
     assign dbus_req_valid_int = (dbus_req_ready|dbus_resp_ready)? dbus_req_valid : dbus_req_valid_reg;
     assign dbus_req_addr_int = (dbus_req_ready|dbus_resp_ready) ? dbus_req_address : dbus_req_addr_reg;
     assign dbus_req_data_int = (dbus_req_ready|dbus_resp_ready) ? dbus_req_data : dbus_req_data_reg;
@@ -103,8 +107,8 @@ module iob_VexRiscv_nocache #(
     assign dbus_req_strb = dbus_req_wr ? dbus_req_mask : 4'h0;
     assign dbus_req_mask = dbus_req_mask2 << dbus_req_address[1:0];
     assign dbus_req_mask2 = dbus_req_size[1] ? {4'hF} : (dbus_req_size[0] ? {4'h3} : {4'h1});
-    assign dbus_resp_ready = dbus_resp[`rvalid(0)];
-    assign dbus_resp_data = dbus_resp[`rdata(0)];
+    assign dbus_resp_ready = dbus_resp[`RVALID(0)];
+    assign dbus_resp_data = dbus_resp[`RDATA(0)];
 
     // DATA REGISTERS
     //compute if ready
@@ -137,9 +141,9 @@ module iob_VexRiscv_nocache #(
     wire                      debug_valid;
     wire                      debug_ready;
     wire                         debug_wr;
-    wire [`ADDR_W/4-1:0]    debug_address;
-    wire [`DATA_W-1:0]         debug_data;
-    wire [`DATA_W-1:0]    debug_data_resp;
+    wire [ADDR_W/4-1:0]    debug_address;
+    wire [DATA_W-1:0]         debug_data;
+    wire [DATA_W-1:0]    debug_data_resp;
     wire                   debug_resetOut;
 
     assign debug_valid = 1'b0;

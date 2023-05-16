@@ -31,14 +31,14 @@ module iob_VexRiscv#(
     wire               ibus_avalid;
     wire               ibus_avalid_int;
     wire               ibus_ready;
-    wire [`ADDR_W-1:0] ibus_addr;
-    wire [`ADDR_W-1:0] ibus_addr_int;
+    wire [ADDR_W-1:0] ibus_addr;
+    wire [ADDR_W-1:0] ibus_addr_int;
     wire [1:0]         ibus_size;
     wire               ibus_ack;
-    wire [`DATA_W-1:0] ibus_resp_data;
+    wire [DATA_W-1:0] ibus_resp_data;
     wire               ibus_error;
     wire               ibus_avalid_r;
-    wire [`ADDR_W-1:0] ibus_addr_r;
+    wire [ADDR_W-1:0] ibus_addr_r;
 
     // // DATA BUS
     wire                 dbus_avalid;
@@ -48,53 +48,57 @@ module iob_VexRiscv#(
     wire                 dbus_uncached;
     wire [1:0]           dbus_size;
     wire                 dbus_req_last;
-    wire [`ADDR_W-1:0]   dbus_addr;
-    wire [`ADDR_W-1:0]   dbus_addr_int;
-    wire [`DATA_W-1:0]   dbus_req_data;
-    wire [`DATA_W-1:0]   dbus_req_data_int;
-    wire [`DATA_W/8-1:0] dbus_strb;
-    wire [`DATA_W/8-1:0] dbus_strb_int;
-    wire [`DATA_W/8-1:0] dbus_mask;
+    wire [ADDR_W-1:0]   dbus_addr;
+    wire [ADDR_W-1:0]   dbus_addr_int;
+    wire [DATA_W-1:0]   dbus_req_data;
+    wire [DATA_W-1:0]   dbus_req_data_int;
+    wire [DATA_W/8-1:0] dbus_strb;
+    wire [DATA_W/8-1:0] dbus_strb_int;
+    wire [DATA_W/8-1:0] dbus_mask;
     wire                 dbus_ack;
     wire                 dbus_resp_last;
-    wire [`DATA_W-1:0]   dbus_resp_data;
+    wire [DATA_W-1:0]   dbus_resp_data;
     wire                 dbus_error;
     wire                 dbus_avalid_r;
-    wire [`ADDR_W-1:0]   dbus_addr_r;
-    wire [`DATA_W-1:0]   dbus_req_data_r;
-    wire [`DATA_W/8-1:0] dbus_strb_r;
+    wire [ADDR_W-1:0]   dbus_addr_r;
+    wire [DATA_W-1:0]   dbus_req_data_r;
+    wire [DATA_W/8-1:0] dbus_strb_r;
 
 
     // Logic
     // // INSTRUCTIONS BUS
 //modify addresses if DDR used according to boot status
-`ifdef USE_EXTMEM
-    assign ibus_req = {ibus_avalid_int, ~boot, ibus_addr_int[`ADDR_W-2:0],
-                        `DATA_W'h0, {`DATA_W/8{1'b0}}};
-`else
-    assign ibus_req = {ibus_avalid_int, {1'b0}, ibus_addr_int[`ADDR_W-2:0],
-                        `DATA_W'h0, {`DATA_W/8{1'b0}}};
-`endif
+  generate
+    if (USE_EXTMEM) begin: g_use_extmem
+      assign ibus_req = {ibus_avalid_int, ~boot, ibus_addr_int[ADDR_W-2:0],
+                          {DATA_W{1'b0}}, {DATA_W/8{1'b0}}};
+    end else begin: g_not_use_extmem
+      assign ibus_req = {ibus_avalid_int, {1'b0}, ibus_addr_int[ADDR_W-2:0],
+                          {DATA_W{1'b0}}, {DATA_W/8{1'b0}}};
+    end
+  endgenerate
     //assign ibus_ready = ibus_avalid_r ~^ ibus_ack; Used on OLD IObundle bus interface
-    assign ibus_ready = ibus_resp[`ready(0)];
+    assign ibus_ready = ibus_resp[`READY(0)];
     assign ibus_avalid_int =
             (ibus_ready|ibus_ack) ? ibus_avalid : ibus_avalid_r;
     assign ibus_addr_int =
             (ibus_ready|ibus_ack) ? ibus_addr : ibus_addr_r;
     assign ibus_ack = (ibus_ready) & (ibus_avalid_r);
-    assign ibus_resp_data = ibus_resp[`rdata(0)];
+    assign ibus_resp_data = ibus_resp[`RDATA(0)];
     assign ibus_error = 1'b0;
 
     // // DATA BUS
 //modify addresses if DDR used according to boot status
-`ifdef USE_EXTMEM
-    assign dbus_req = {dbus_avalid_int, (~boot&~dbus_addr_int[`P])|(dbus_addr_int[`E]),
-                        dbus_addr_int[ADDR_W-2:0], dbus_req_data_int, dbus_strb_int};
-`else
-    assign dbus_req = {dbus_avalid_int, dbus_addr_int, dbus_req_data_int, dbus_strb_int};
-`endif
+  generate
+    if (USE_EXTMEM) begin: g_use_extmem
+      assign dbus_req = {dbus_avalid_int, (~boot&~dbus_addr_int[P_BIT])|(dbus_addr_int[E_BIT]),
+                          dbus_addr_int[ADDR_W-2:0], dbus_req_data_int, dbus_strb_int};
+    end else begin: g_not_use_extmem
+      assign dbus_req = {dbus_avalid_int, dbus_addr_int, dbus_req_data_int, dbus_strb_int};
+    end
+  endgenerate
     //assign dbus_ready = dbus_avalid_r ~^ dbus_ack; Used on OLD IObundle bus interface
-    assign dbus_ready = dbus_resp[`ready(0)];
+    assign dbus_ready = dbus_resp[`READY(0)];
     assign dbus_avalid_int =
             (dbus_ready|dbus_ack)? dbus_avalid : dbus_avalid_r;
     assign dbus_addr_int =
@@ -103,7 +107,7 @@ module iob_VexRiscv#(
     assign dbus_strb_int = (dbus_ready|dbus_ack) ? dbus_strb : dbus_strb_r;
     assign dbus_strb = dbus_we ? dbus_mask : 4'h0;
     assign dbus_ack = (dbus_ready) & (dbus_avalid_r);
-    assign dbus_resp_data = dbus_resp[`rdata(0)];
+    assign dbus_resp_data = dbus_resp[`RDATA(0)];
     assign dbus_error = 1'b0;
     assign dbus_resp_last = dbus_req_last;
 
