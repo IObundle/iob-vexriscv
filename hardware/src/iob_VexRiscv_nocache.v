@@ -7,7 +7,7 @@
 
 module iob_VexRiscv_nocache #(
     parameter N_CORES=1,
-    `include "iob_vexriscv_params.vh"
+    `include "iob_vexriscv_params.vs"
     )
    (
     input               clk,
@@ -42,9 +42,9 @@ module iob_VexRiscv_nocache #(
 
 //modify addresses if DDR used according to boot status
   generate
-    if (USE_EXTMEM) begin
+    if (USE_EXTMEM) begin: g_iBus_extmem
       assign ibus_req = {ibus_req_valid_int, ~boot, ibus_req_addr_int[ADDR_W-2:0], {DATA_W{1'b0}}, {DATA_W/8{1'b0}}};
-    end else begin
+    end else begin: g_iBus_no_extmem
       assign ibus_req = {ibus_req_valid_int, {1'b0}, ibus_req_addr_int[ADDR_W-2:0], {DATA_W{1'b0}}, {DATA_W/8{1'b0}}};
     end
   endgenerate
@@ -93,9 +93,9 @@ module iob_VexRiscv_nocache #(
 
 //modify addresses if DDR used according to boot status
   generate
-    if (USE_EXTMEM) begin
+    if (USE_EXTMEM) begin: g_dBus_extmem
       assign dbus_req = {dbus_req_valid_int, (dbus_req_addr_int[E_BIT]^~boot)&~dbus_req_addr_int[P_BIT], dbus_req_addr_int[ADDR_W-2:0], dbus_req_data_int, dbus_req_strb_int};
-    end else begin
+    end else begin: g_dBus_no_extmem
       assign dbus_req = {dbus_req_valid_int, dbus_req_addr_int, dbus_req_data_int, dbus_req_strb_int};
       end
    endgenerate

@@ -6,7 +6,7 @@
 `include "iob_lib.vh"
 
 module iob_VexRiscv #(
-    `include "iob_vexriscv_params.vh"
+    `include "iob_vexriscv_params.vs"
 ) (
     input wire clk_i,
     input wire cke_i,
