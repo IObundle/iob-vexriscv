@@ -15847,7 +15847,7 @@ module FpuCore (
           `else
             if(!(! ((writeback_port_payload_data_value_exponent == 9'h0) && (! writeback_port_payload_data_value_special)))) begin
               $display("FAILURE Special violation"); // FpuCore.scala:L1711
-              $finish;
+              $finish();
             end
           `endif
         `endif
@@ -15857,7 +15857,7 @@ module FpuCore (
           `else
             if(!(! ((writeback_port_payload_data_value_exponent == 9'h1ff) && (! writeback_port_payload_data_value_special)))) begin
               $display("FAILURE Special violation"); // FpuCore.scala:L1712
-              $finish;
+              $finish();
             end
           `endif
         `endif
