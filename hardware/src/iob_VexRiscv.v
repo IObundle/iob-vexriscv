@@ -215,8 +215,8 @@ module iob_VexRiscv #(
       .iBus_rsp_valid           (ibus_ack),
       .iBus_rsp_payload_data    (ibus_resp_data),
       .iBus_rsp_payload_error   (ibus_error),
-      .clk                      (clk),
-      .reset                    (rst)
+      .clk                      (clk_i),
+      .reset                    (arst_i)
   );
 
 endmodule
