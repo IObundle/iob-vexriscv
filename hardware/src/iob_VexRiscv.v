@@ -69,7 +69,7 @@ module iob_VexRiscv #(
   // // INSTRUCTIONS BUS
   //modify addresses if DDR used according to boot status
   assign ibus_req = {
-    ibus_avalid_int, ~boot, ibus_addr_int[ADDR_W-2:0], {DATA_W{1'b0}}, {DATA_W / 8{1'b0}}
+    ibus_avalid_int, ~boot_i, ibus_addr_int[ADDR_W-2:0], {DATA_W{1'b0}}, {DATA_W / 8{1'b0}}
   };
   //assign ibus_ready = ibus_avalid_r ~^ ibus_ack; Used on OLD IObundle bus interface
   assign ibus_ready = ibus_resp[`READY(0)];
@@ -83,7 +83,7 @@ module iob_VexRiscv #(
   //modify addresses if DDR used according to boot status
   assign dbus_req = {
     dbus_avalid_int,
-    (~boot & ~dbus_addr_int[P_BIT]) | (dbus_addr_int[E_BIT]),
+    (~boot_i & ~dbus_addr_int[P_BIT]) | (dbus_addr_int[E_BIT]),
     dbus_addr_int[ADDR_W-2:0],
     dbus_req_data_int,
     dbus_strb_int
