@@ -3,6 +3,7 @@
 import os, sys
 sys.path.insert(0, os.getcwd()+'/submodules/LIB/scripts')
 import setup
+import shutil
 
 name='iob_vexriscv'
 version='V0.10'
@@ -13,6 +14,9 @@ submodules = {
         'modules': [ 'iob_reg_re' ]
     },
 }
+if setup.is_top_module(sys.modules[__name__]):
+    setup_dir = os.path.dirname(__file__)
+    build_dir = f"../{name}_{version}"
 
 confs = \
 [
@@ -51,6 +55,8 @@ blocks = []
 def main():
     # Setup this system
     setup.setup(sys.modules[__name__])
+    setup_dir = os.path.dirname(__file__)
+    shutil.copy(f'{setup_dir}/hardware/src/VexRiscv.v_toplevel_RegFilePlugin_regFile.bin', f'{build_dir}/hardware/simulation')
 
 if __name__ == "__main__":
     main()
