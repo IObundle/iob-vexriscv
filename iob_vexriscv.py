@@ -2,6 +2,7 @@
 
 import os
 import sys
+import shutil
 
 from iob_module import iob_module
 from setup import setup
@@ -32,6 +33,8 @@ class iob_vexriscv(iob_module):
 
         # Setup core using LIB function
         setup(cls)
+
+        shutil.copy(f'{cls.setup_dir}/hardware/src/VexRiscv.v_toplevel_RegFilePlugin_regFile.bin', f'{cls.build_dir}/hardware/simulation')
 
 
     @classmethod
