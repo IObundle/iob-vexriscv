@@ -177,7 +177,7 @@ module iob_VexRiscv #(
       .data_o(dbus_strb_r)
   );
   iob_reg_re #(
-      .DATA_W (DATA_W / 8),
+      .DATA_W (1),
       .RST_VAL(0)
   ) iob_reg_d_last (
       .clk_i (clk_i),
