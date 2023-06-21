@@ -26,6 +26,8 @@ module iob_VexRiscv #(
     input wire [1:0] externalInterrupts  // Both Machine and Supervisor level external interrupts
 );
 
+   localparam integer AddrMsb = `REQ_W - 2;
+
   // Wires
   // // INSTRUCTIONS BUS
   wire                ibus_avalid;
@@ -64,7 +66,6 @@ module iob_VexRiscv #(
   wire [  ADDR_W-1:0] dbus_addr_r;
   wire [  DATA_W-1:0] dbus_req_data_r;
   wire [DATA_W/8-1:0] dbus_strb_r;
-  wire                dbus_addr_msb;
 
 
   // Logic
@@ -85,9 +86,8 @@ module iob_VexRiscv #(
   // // DATA BUS
   //modify addresses if DDR used according to boot status
   assign dbus_req = {
-    dbus_avalid_int, dbus_addr_msb, dbus_addr_int[ADDR_W-2:0], dbus_req_data_int, dbus_strb_int
+    dbus_avalid_int, dbus_addr_int, dbus_req_data_int, dbus_strb_int
   };
-  assign dbus_addr_msb = (~boot_i & ~dbus_addr_int[P_BIT]) | (dbus_addr_int[E_BIT]);
   //assign dbus_ready = dbus_avalid_r ~^ dbus_ack; Used on OLD IObundle bus interface
   assign dbus_ready = dbus_resp[`READY(0)];
   assign dbus_avalid_int = (dbus_ready) ? dbus_avalid : dbus_avalid_r;
