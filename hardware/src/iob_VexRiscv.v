@@ -40,12 +40,8 @@ module iob_VexRiscv #(
 
   // // // Packing the request bus
   assign ibus_req = {
-    ibus_avalid_int, ibus_addr_msb, ibus_addr_int[ADDR_W-2:0], {DATA_W{1'b0}}, {DATA_W / 8{1'b0}}
+    ibus_avalid, ibus_addr_msb, ibus_addr[ADDR_W-2:0], {DATA_W{1'b0}}, {DATA_W / 8{1'b0}}
   };
-  // // // IOb-bus avalid should only be asserted to 1 when the ready signal is 1. The avalid register (avalid_r) is in reset state when ready is 1. Therefor, the avalid_int will only be active during 1 clk cycle.
-  assign ibus_avalid_int = (ibus_ready) & (ibus_avalid | ibus_avalid_r);
-  // // // IOb-bus address should be registred when the VexRiscv asserts the avalid signal. After asserting the avalid signal the VexRiscv may change the address value although it should not influence the request.
-  assign ibus_addr_int = (ibus_avalid) ? ibus_addr : ibus_addr_r;
   // // // IOb-bus address most significant bit should be 0 while executing the bootloader and 1 when running the firmware. This consideres that the firmware will always run in the external memory.
   assign ibus_addr_msb = ~boot_i;
 
@@ -60,20 +56,12 @@ module iob_VexRiscv #(
   // // // VexRiscv ack is either the rvalid (which happens when a read is executed) or a write ack (delayed 1 clk cycle) generated in this wrapper.
   assign dbus_ack = dbus_rvalid | dbus_wack_r;
   // // // The write ack is asserted to 1 when the avalid is sent to the SoC, if the strb signal is diferent than 4'h0.
-  assign dbus_wack = dbus_avalid_int & (|dbus_strb_int);
+  assign dbus_wack = (ibus_ready) & dbus_avalid & (|dbus_strb_int);
 
   // // // Packing the request bus
   assign dbus_req = {
-    dbus_avalid_int, dbus_addr_int, dbus_req_data_int, dbus_strb_int
+    dbus_avalid, dbus_addr, dbus_req_data, dbus_strb
   };
-  // // // IOb-bus avalid should only be asserted to 1 when the ready signal is 1. The avalid register (avalid_r) is in reset state when ready is 1. Therefor, the avalid_int will only be active during 1 clk cycle.
-  assign dbus_avalid_int = (dbus_ready) & (dbus_avalid | dbus_avalid_r);
-  // // // IOb-bus address should be registred when the VexRiscv asserts the avalid signal. After asserting the avalid signal the VexRiscv may change the address value although it should not influence the request.
-  assign dbus_addr_int = (dbus_avalid) ? dbus_addr : dbus_addr_r;
-  // // // IOb-bus request data should be registred for the same reason as the address.
-  assign dbus_req_data_int = (dbus_avalid) ? dbus_req_data : dbus_req_data_r;
-  // // // IOb-bus strobe should be registred for the same reason as the address.
-  assign dbus_strb_int = (dbus_avalid) ? dbus_strb : dbus_strb_r;
   // // // IOb-Bus strb, if VexRiscv enables dbus_we then is equal to dbus_mask; if not it is 0.
   assign dbus_strb = dbus_we ? dbus_mask : 4'h0;
 
