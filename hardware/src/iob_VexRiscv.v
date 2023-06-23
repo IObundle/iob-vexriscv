@@ -26,7 +26,49 @@ module iob_VexRiscv #(
     input wire [1:0] externalInterrupts  // Both Machine and Supervisor level external interrupts
 );
 
-  `include "iob_VexRiscv_wires.vs"
+  // VexRiscv Wires
+  // // INSTRUCTIONS BUS
+  wire                ibus_avalid;
+  wire                ibus_avalid_int;
+  wire                ibus_rvalid;
+  wire                ibus_ready;
+  wire [  ADDR_W-1:0] ibus_addr;
+  wire [  ADDR_W-1:0] ibus_addr_int;
+  wire [         1:0] ibus_size;
+  wire                ibus_ack;
+  wire [  DATA_W-1:0] ibus_resp_data;
+  wire                ibus_error;
+  wire                ibus_avalid_r;
+  wire [  ADDR_W-1:0] ibus_addr_r;
+  wire                ibus_addr_msb;
+
+  // // DATA BUS
+  wire                dbus_avalid;
+  wire                dbus_rvalid;
+  wire                dbus_ready;
+  wire                dbus_avalid_int;
+  wire                dbus_we;
+  wire                dbus_uncached;
+  wire [         1:0] dbus_size;
+  wire                dbus_req_last;
+  wire [  ADDR_W-1:0] dbus_addr;
+  wire [  ADDR_W-1:0] dbus_addr_int;
+  wire [  DATA_W-1:0] dbus_req_data;
+  wire [  DATA_W-1:0] dbus_req_data_int;
+  wire [DATA_W/8-1:0] dbus_strb;
+  wire [DATA_W/8-1:0] dbus_strb_int;
+  wire [DATA_W/8-1:0] dbus_mask;
+  wire                dbus_ack;
+  wire                dbus_wack;
+  wire                dbus_wack_r;
+  wire                dbus_resp_last;
+  wire [  DATA_W-1:0] dbus_resp_data;
+  wire                dbus_error;
+  wire                dbus_avalid_r;
+  wire [  ADDR_W-1:0] dbus_addr_r;
+  wire [  DATA_W-1:0] dbus_req_data_r;
+  wire [DATA_W/8-1:0] dbus_strb_r;
+
 
   // Logic
   // // INSTRUCTIONS BUS
@@ -65,7 +107,107 @@ module iob_VexRiscv #(
   // // // IOb-Bus strb, if VexRiscv enables dbus_we then is equal to dbus_mask; if not it is 0.
   assign dbus_strb = dbus_we ? dbus_mask : 4'h0;
 
-  `include "iob_VexRiscv_regs.vs"
+  // VexRiscv iob-regs instantiation
+  // // INSTRUCTIONS BUS
+  iob_reg_re #(
+      .DATA_W (1),
+      .RST_VAL(0)
+  ) iob_reg_i_avalid (
+      .clk_i (clk_i),
+      .arst_i(arst_i),
+      .cke_i (cke_i),
+      .rst_i (ibus_ready),
+      .en_i  (1'b1),
+      .data_i(ibus_avalid),
+      .data_o(ibus_avalid_r)
+  );
+  iob_reg_re #(
+      .DATA_W (ADDR_W),
+      .RST_VAL(0)
+  ) iob_reg_i_addr (
+      .clk_i (clk_i),
+      .arst_i(arst_i),
+      .cke_i (cke_i),
+      .rst_i (1'b0),
+      .en_i  (ibus_avalid),
+      .data_i(ibus_addr),
+      .data_o(ibus_addr_r)
+  );
+
+  // // DATA BUS
+  iob_reg_re #(
+      .DATA_W (1),
+      .RST_VAL(0)
+  ) iob_reg_d_avalid (
+      .clk_i (clk_i),
+      .arst_i(arst_i),
+      .cke_i (cke_i),
+      .rst_i (dbus_ready),
+      .en_i  (1'b1),
+      .data_i(dbus_avalid),
+      .data_o(dbus_avalid_r)
+  );
+  iob_reg_re #(
+      .DATA_W (ADDR_W),
+      .RST_VAL(0)
+  ) iob_reg_d_addr (
+      .clk_i (clk_i),
+      .arst_i(arst_i),
+      .cke_i (cke_i),
+      .rst_i (1'b0),
+      .en_i  (dbus_avalid),
+      .data_i(dbus_addr),
+      .data_o(dbus_addr_r)
+  );
+  iob_reg_re #(
+      .DATA_W (DATA_W),
+      .RST_VAL(0)
+  ) iob_reg_d_data (
+      .clk_i (clk_i),
+      .arst_i(arst_i),
+      .cke_i (cke_i),
+      .rst_i (1'b0),
+      .en_i  (dbus_avalid),
+      .data_i(dbus_req_data),
+      .data_o(dbus_req_data_r)
+  );
+  iob_reg_re #(
+      .DATA_W (DATA_W / 8),
+      .RST_VAL(0)
+  ) iob_reg_d_strb (
+      .clk_i (clk_i),
+      .arst_i(arst_i),
+      .cke_i (cke_i),
+      .rst_i (1'b0),
+      .en_i  (dbus_avalid),
+      .data_i(dbus_strb),
+      .data_o(dbus_strb_r)
+  );
+  iob_reg_re #(
+      .DATA_W (1),
+      .RST_VAL(0)
+  ) iob_reg_wack (
+      .clk_i (clk_i),
+      .arst_i(arst_i),
+      .cke_i (cke_i),
+      .rst_i (1'b0),
+      .en_i  (1'b1),
+      .data_i(dbus_wack),
+      .data_o(dbus_wack_r)
+  );
+  iob_reg_re #(
+      .DATA_W (1),
+      .RST_VAL(0)
+  ) iob_reg_d_last (
+      .clk_i (clk_i),
+      .arst_i(arst_i),
+      .cke_i (cke_i),
+      .rst_i (1'b0),
+      .en_i  (1'b1),
+      .data_i(dbus_req_last),
+      .data_o(dbus_resp_last)
+  );
+
 
   // VexRiscv instantiation
   VexRiscv VexRiscv_core (
