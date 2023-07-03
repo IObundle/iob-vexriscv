@@ -11,6 +11,7 @@ module iob_VexRiscv #(
     input wire clk_i,
     input wire cke_i,
     input wire arst_i,
+    input wire cpu_reset_i,
     input wire boot_i,
 
     // instruction bus
@@ -26,27 +27,23 @@ module iob_VexRiscv #(
     input wire [1:0] externalInterrupts  // Both Machine and Supervisor level external interrupts
 );
 
+  wire vex_reset;
+
   // VexRiscv Wires
   // // INSTRUCTIONS BUS
   wire                ibus_avalid;
-  wire                ibus_avalid_int;
   wire                ibus_rvalid;
   wire                ibus_ready;
   wire [  ADDR_W-1:0] ibus_addr;
-  wire [  ADDR_W-1:0] ibus_addr_int;
   wire [         1:0] ibus_size;
-  wire                ibus_ack;
   wire [  DATA_W-1:0] ibus_resp_data;
   wire                ibus_error;
-  wire                ibus_avalid_r;
-  wire [  ADDR_W-1:0] ibus_addr_r;
   wire                ibus_addr_msb;
 
   // // DATA BUS
   wire                dbus_avalid;
   wire                dbus_rvalid;
   wire                dbus_ready;
-  wire                dbus_avalid_int;
   wire                dbus_we;
   wire                dbus_uncached;
   wire [         1:0] dbus_size;
@@ -54,9 +51,7 @@ module iob_VexRiscv #(
   wire [  ADDR_W-1:0] dbus_addr;
   wire [  ADDR_W-1:0] dbus_addr_int;
   wire [  DATA_W-1:0] dbus_req_data;
-  wire [  DATA_W-1:0] dbus_req_data_int;
   wire [DATA_W/8-1:0] dbus_strb;
-  wire [DATA_W/8-1:0] dbus_strb_int;
   wire [DATA_W/8-1:0] dbus_mask;
   wire                dbus_ack;
   wire                dbus_wack;
@@ -64,17 +59,13 @@ module iob_VexRiscv #(
   wire                dbus_resp_last;
   wire [  DATA_W-1:0] dbus_resp_data;
   wire                dbus_error;
-  wire                dbus_avalid_r;
-  wire [  ADDR_W-1:0] dbus_addr_r;
-  wire [  DATA_W-1:0] dbus_req_data_r;
-  wire [DATA_W/8-1:0] dbus_strb_r;
 
 
   // Logic
+  assign vex_reset = cpu_reset_i | arst_i;
   // // INSTRUCTIONS BUS
   // // // Unpacking the responce bus
   assign ibus_ready = ibus_resp[`READY(0)];
-//assign ibus_ready = ibus_avalid_r ~^ ibus_ack; Used on OLD IObundle bus interface
   assign ibus_rvalid = ibus_resp[`RVALID(0)];
   assign ibus_resp_data = ibus_resp[`RDATA(0)];
   // // // VexRiscv error signal is equal to 0. Since the IOb-bus does not support errors.
@@ -90,7 +81,6 @@ module iob_VexRiscv #(
   // // DATA BUS
   // // // Unpacking the responce bus
   assign dbus_ready = dbus_resp[`READY(0)];
-//assign dbus_ready = dbus_avalid_r ~^ dbus_ack; Used on OLD IObundle bus interface
   assign dbus_rvalid = dbus_resp[`RVALID(0)];
   assign dbus_resp_data = dbus_resp[`RDATA(0)];
   // // // VexRiscv error signal is equal to 0. Since the IOb-bus does not support errors.
@@ -98,7 +88,7 @@ module iob_VexRiscv #(
   // // // VexRiscv ack is either the rvalid (which happens when a read is executed) or a write ack (delayed 1 clk cycle) generated in this wrapper.
   assign dbus_ack = dbus_rvalid | dbus_wack_r;
   // // // The write ack is asserted to 1 when the avalid is sent to the SoC, if the strb signal is diferent than 4'h0.
-  assign dbus_wack = (ibus_ready) & dbus_avalid & (|dbus_strb_int);
+  assign dbus_wack = dbus_ready & dbus_avalid & dbus_we;
 
   // // // Packing the request bus
   assign dbus_req = {
@@ -108,81 +98,6 @@ module iob_VexRiscv #(
   assign dbus_strb = dbus_we ? dbus_mask : 4'h0;
 
   // VexRiscv iob-regs instantiation
-  // // INSTRUCTIONS BUS
-  iob_reg_re #(
-      .DATA_W (1),
-      .RST_VAL(0)
-  ) iob_reg_i_avalid (
-      .clk_i (clk_i),
-      .arst_i(arst_i),
-      .cke_i (cke_i),
-      .rst_i (ibus_ready),
-      .en_i  (1'b1),
-      .data_i(ibus_avalid),
-      .data_o(ibus_avalid_r)
-  );
-  iob_reg_re #(
-      .DATA_W (ADDR_W),
-      .RST_VAL(0)
-  ) iob_reg_i_addr (
-      .clk_i (clk_i),
-      .arst_i(arst_i),
-      .cke_i (cke_i),
-      .rst_i (1'b0),
-      .en_i  (ibus_avalid),
-      .data_i(ibus_addr),
-      .data_o(ibus_addr_r)
-  );
-
-  // // DATA BUS
-  iob_reg_re #(
-      .DATA_W (1),
-      .RST_VAL(0)
-  ) iob_reg_d_avalid (
-      .clk_i (clk_i),
-      .arst_i(arst_i),
-      .cke_i (cke_i),
-      .rst_i (dbus_ready),
-      .en_i  (1'b1),
-      .data_i(dbus_avalid),
-      .data_o(dbus_avalid_r)
-  );
-  iob_reg_re #(
-      .DATA_W (ADDR_W),
-      .RST_VAL(0)
-  ) iob_reg_d_addr (
-      .clk_i (clk_i),
-      .arst_i(arst_i),
-      .cke_i (cke_i),
-      .rst_i (1'b0),
-      .en_i  (dbus_avalid),
-      .data_i(dbus_addr),
-      .data_o(dbus_addr_r)
-  );
-  iob_reg_re #(
-      .DATA_W (DATA_W),
-      .RST_VAL(0)
-  ) iob_reg_d_data (
-      .clk_i (clk_i),
-      .arst_i(arst_i),
-      .cke_i (cke_i),
-      .rst_i (1'b0),
-      .en_i  (dbus_avalid),
-      .data_i(dbus_req_data),
-      .data_o(dbus_req_data_r)
-  );
-  iob_reg_re #(
-      .DATA_W (DATA_W / 8),
-      .RST_VAL(0)
-  ) iob_reg_d_strb (
-      .clk_i (clk_i),
-      .arst_i(arst_i),
-      .cke_i (cke_i),
-      .rst_i (1'b0),
-      .en_i  (dbus_avalid),
-      .data_i(dbus_strb),
-      .data_o(dbus_strb_r)
-  );
   iob_reg_re #(
       .DATA_W (1),
       .RST_VAL(0)
@@ -190,7 +105,7 @@ module iob_VexRiscv #(
       .clk_i (clk_i),
       .arst_i(arst_i),
       .cke_i (cke_i),
-      .rst_i (1'b0),
+      .rst_i (dbus_ack),
       .en_i  (1'b1),
       .data_i(dbus_wack),
       .data_o(dbus_wack_r)
@@ -236,7 +151,7 @@ module iob_VexRiscv #(
       .iBus_rsp_payload_data    (ibus_resp_data),
       .iBus_rsp_payload_error   (ibus_error),
       .clk                      (clk_i),
-      .reset                    (arst_i)
+      .reset                    (vex_reset)
   );
 
 endmodule
