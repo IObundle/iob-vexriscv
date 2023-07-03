@@ -91,7 +91,9 @@ object LinuxGen {
           catchAddressMisaligned = true,
           fenceiGenAsAJump = false
         ),
-        new MmuPlugin(ioRange = (x => x(31 downto 30) === 0x1)),
+        new MmuPlugin(
+          ioRange = (x => x(31 downto 31) === 0x0)
+        ),
         new FpuPlugin(externalFpu = false, simHalt = false, p = FpuParameter(withDouble = false)),
         new YamlPlugin("cpu0.yaml")
       )

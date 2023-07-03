@@ -1,179 +1,157 @@
 /*
  *  IOb-VexRiscv -- A VexRiscv Wrapper
  */
-
-
 `timescale 1 ns / 1 ps
-`include "system.vh"
-`include "iob_intercon.vh"
+`include "iob_vexriscv_conf.vh"
+`include "iob_lib.vh"
 
-//the look ahead interface is not working because mem_instr is unknown at request
-//`define LA_IF
-
-module iob_VexRiscv
-  #(
-    parameter ADDR_W=32,
-    parameter DATA_W=32
-    )
-   (
-    input               clk,
-    input               rst,
-    input               boot,
-    output              trap,
+module iob_VexRiscv #(
+    `include "iob_vexriscv_params.vs"
+) (
+    input wire clk_i,
+    input wire cke_i,
+    input wire arst_i,
+    input wire cpu_reset_i,
+    input wire boot_i,
 
     // instruction bus
-    output [`REQ_W-1:0] ibus_req,
-    input [`RESP_W-1:0] ibus_resp,
+    output wire [ `REQ_W-1:0] ibus_req,
+    input  wire [`RESP_W-1:0] ibus_resp,
 
     // data bus
-    output [`REQ_W-1:0] dbus_req,
-    input [`RESP_W-1:0] dbus_resp,
+    output [ `REQ_W-1:0] dbus_req,
+    input  [`RESP_W-1:0] dbus_resp,
 
-    input wire       timerInterrupt,    // Machine level timer interrupts
-    input wire       softwareInterrupt, // Machine level software interrupts
-    input wire [1:0] externalInterrupts // Both Machine and Supervisor level external interrupts
-    );
+    input wire       timerInterrupt,     // Machine level timer interrupts
+    input wire       softwareInterrupt,  // Machine level software interrupts
+    input wire [1:0] externalInterrupts  // Both Machine and Supervisor level external interrupts
+);
 
+  wire vex_reset;
 
-    // INSTRUCTIONS BUS
-    wire                  ibus_req_valid;
-    wire              ibus_req_valid_int;
-    wire                  ibus_req_ready;
-    wire [`ADDR_W-1:0]  ibus_req_address;
-    wire [`ADDR_W-1:0] ibus_req_addr_int;
-    wire [1:0]             ibus_req_size;
-    wire                 ibus_resp_ready;
-    wire [`DATA_W-1:0]    ibus_resp_data;
-    wire                 ibus_resp_error;
+  // VexRiscv Wires
+  // // INSTRUCTIONS BUS
+  wire                ibus_avalid;
+  wire                ibus_rvalid;
+  wire                ibus_ready;
+  wire [  ADDR_W-1:0] ibus_addr;
+  wire [         1:0] ibus_size;
+  wire [  DATA_W-1:0] ibus_resp_data;
+  wire                ibus_error;
+  wire                ibus_addr_msb;
 
-    reg               ibus_req_valid_reg;
-    reg  [`ADDR_W-1:0] ibus_req_addr_reg;
-
-//modify addresses if DDR used according to boot status
-`ifdef RUN_EXTMEM
-    assign ibus_req = {ibus_req_valid_int, ~boot, ibus_req_addr_int[`ADDR_W-2:0], `DATA_W'h0, {`DATA_W/8{1'b0}}};
-`else
-    assign ibus_req = {ibus_req_valid_int, {1'b0}, ibus_req_addr_int[`ADDR_W-2:0], `DATA_W'h0, {`DATA_W/8{1'b0}}};
-`endif
-    assign ibus_req_ready = ibus_req_valid_reg ~^ ibus_resp_ready;
-    assign ibus_req_valid_int = (ibus_req_ready|ibus_resp_ready)? ibus_req_valid : ibus_req_valid_reg;
-    assign ibus_req_addr_int = (ibus_req_ready|ibus_resp_ready) ? ibus_req_address : ibus_req_addr_reg;
-    assign ibus_resp_ready = ibus_resp[`ready(0)];
-    assign ibus_resp_data = ibus_resp[`rdata(0)];
-    assign ibus_resp_error = 1'b0;
-
-    // INSTRUCTIONS REGISTERS
-    //compute if valid
-    always  @(posedge clk, posedge rst)
-      if(rst)
-        ibus_req_valid_reg <= 1'b0;
-      else if(ibus_req_ready|ibus_resp_ready)
-        ibus_req_valid_reg <= ibus_req_valid;
-    //compute address for interface
-    always @(posedge clk, posedge rst)
-      if(rst)
-        ibus_req_addr_reg <= 32'h0000;
-      else if(ibus_req_ready|ibus_resp_ready)
-        ibus_req_addr_reg <= ibus_req_address;
+  // // DATA BUS
+  wire                dbus_avalid;
+  wire                dbus_rvalid;
+  wire                dbus_ready;
+  wire                dbus_we;
+  wire                dbus_uncached;
+  wire [         1:0] dbus_size;
+  wire                dbus_req_last;
+  wire [  ADDR_W-1:0] dbus_addr;
+  wire [  ADDR_W-1:0] dbus_addr_int;
+  wire [  DATA_W-1:0] dbus_req_data;
+  wire [DATA_W/8-1:0] dbus_strb;
+  wire [DATA_W/8-1:0] dbus_mask;
+  wire                dbus_ack;
+  wire                dbus_wack;
+  wire                dbus_wack_r;
+  wire                dbus_resp_last;
+  wire [  DATA_W-1:0] dbus_resp_data;
+  wire                dbus_error;
 
 
-    // DATA BUS
-    wire                    dbus_req_valid;
-    wire                    dbus_req_ready;
-    wire                dbus_req_valid_int;
-    wire                       dbus_req_wr;
-    wire                 dbus_req_uncached;
-    wire [1:0]               dbus_req_size;
-    wire                     dbus_req_last;
-    wire [`ADDR_W-1:0]    dbus_req_address;
-    wire [`ADDR_W-1:0]   dbus_req_addr_int;
-    wire [`DATA_W-1:0]       dbus_req_data;
-    wire [`DATA_W-1:0]   dbus_req_data_int;
-    wire [`DATA_W/8-1:0]     dbus_req_strb;
-    wire [`DATA_W/8-1:0] dbus_req_strb_int;
-    wire [`DATA_W/8-1:0]     dbus_req_mask;
-    wire                   dbus_resp_ready;
-    wire                    dbus_resp_last;
-    wire [`DATA_W-1:0]      dbus_resp_data;
-    wire                   dbus_resp_error;
+  // Logic
+  assign vex_reset = cpu_reset_i | arst_i;
+  // // INSTRUCTIONS BUS
+  // // // Unpacking the responce bus
+  assign ibus_ready = ibus_resp[`READY(0)];
+  assign ibus_rvalid = ibus_resp[`RVALID(0)];
+  assign ibus_resp_data = ibus_resp[`RDATA(0)];
+  // // // VexRiscv error signal is equal to 0. Since the IOb-bus does not support errors.
+  assign ibus_error = 1'b0;
 
-    reg                 dbus_req_valid_reg;
-    reg  [`ADDR_W-1:0]   dbus_req_addr_reg;
-    reg  [`DATA_W-1:0]   dbus_req_data_reg;
-    reg  [`DATA_W/8-1:0] dbus_req_strb_reg;
+  // // // Packing the request bus
+  assign ibus_req = {
+    ibus_avalid, ibus_addr_msb, ibus_addr[ADDR_W-2:0], {DATA_W{1'b0}}, {DATA_W / 8{1'b0}}
+  };
+  // // // IOb-bus address most significant bit should be 0 while executing the bootloader and 1 when running the firmware. This consideres that the firmware will always run in the external memory.
+  assign ibus_addr_msb = ~boot_i;
 
-//modify addresses if DDR used according to boot status
-`ifdef RUN_EXTMEM
-    assign dbus_req = {dbus_req_valid_int, (~boot&~dbus_req_addr_int[`P])|(dbus_req_addr_int[`E]), dbus_req_addr_int[ADDR_W-2:0], dbus_req_data_int, dbus_req_strb_int};
-`else
-    assign dbus_req = {dbus_req_valid_int, dbus_req_addr_int, dbus_req_data_int, dbus_req_strb_int};
-`endif
-    assign dbus_req_ready = dbus_req_valid_reg ~^ dbus_resp_ready;
-    assign dbus_req_valid_int = (dbus_req_ready|dbus_resp_ready)? dbus_req_valid : dbus_req_valid_reg;
-    assign dbus_req_addr_int = (dbus_req_ready|dbus_resp_ready) ? dbus_req_address : dbus_req_addr_reg;
-    assign dbus_req_data_int = (dbus_req_ready|dbus_resp_ready) ? dbus_req_data : dbus_req_data_reg;
-    assign dbus_req_strb_int = (dbus_req_ready|dbus_resp_ready) ? dbus_req_strb : dbus_req_strb_reg;
-    assign dbus_req_strb = dbus_req_wr ? dbus_req_mask : 4'h0;
-    assign dbus_resp_ready = dbus_resp[`ready(0)];
-    assign dbus_resp_data = dbus_resp[`rdata(0)];
-    assign dbus_resp_error = 1'b0;
-    assign dbus_resp_last = dbus_req_last;
+  // // DATA BUS
+  // // // Unpacking the responce bus
+  assign dbus_ready = dbus_resp[`READY(0)];
+  assign dbus_rvalid = dbus_resp[`RVALID(0)];
+  assign dbus_resp_data = dbus_resp[`RDATA(0)];
+  // // // VexRiscv error signal is equal to 0. Since the IOb-bus does not support errors.
+  assign dbus_error = 1'b0;
+  // // // VexRiscv ack is either the rvalid (which happens when a read is executed) or a write ack (delayed 1 clk cycle) generated in this wrapper.
+  assign dbus_ack = dbus_rvalid | dbus_wack_r;
+  // // // The write ack is asserted to 1 when the avalid is sent to the SoC, if the strb signal is diferent than 4'h0.
+  assign dbus_wack = dbus_ready & dbus_avalid & dbus_we;
 
-    // DATA REGISTERS
-    //compute if ready
-    always  @(posedge clk, posedge rst)
-      if(rst)
-        dbus_req_valid_reg <= 1'b0;
-      else if(dbus_req_ready|dbus_resp_ready)
-        dbus_req_valid_reg <= dbus_req_valid;
-    //compute address for interface
-    always @(posedge clk, posedge rst)
-      if(rst)
-        dbus_req_addr_reg <= 32'h0000;
-      else if (dbus_req_ready|dbus_resp_ready)
-        dbus_req_addr_reg <= dbus_req_address;
-    //compute write data for interface
-    always @(posedge clk, posedge rst)
-      if(rst)
-        dbus_req_data_reg <= 32'h0000;
-      else if (dbus_req_ready|dbus_resp_ready)
-        dbus_req_data_reg <= dbus_req_data_int;
-    //compute write strb for interface
-    always @(posedge clk, posedge rst)
-      if(rst)
-        dbus_req_strb_reg <= 4'h0;
-      else if(dbus_req_ready|dbus_resp_ready)
-        dbus_req_strb_reg <= dbus_req_strb;
-        
+  // // // Packing the request bus
+  assign dbus_req = {
+    dbus_avalid, dbus_addr, dbus_req_data, dbus_strb
+  };
+  // // // IOb-Bus strb, if VexRiscv enables dbus_we then is equal to dbus_mask; if not it is 0.
+  assign dbus_strb = dbus_we ? dbus_mask : 4'h0;
 
-   // VexRiscv instantiation
-   VexRiscv VexRiscv_core(
-     .dBus_cmd_valid                (dbus_req_valid),
-     .dBus_cmd_ready                (dbus_req_ready),
-     .dBus_cmd_payload_wr           (dbus_req_wr),
-     .dBus_cmd_payload_uncached     (dbus_req_uncached),
-     .dBus_cmd_payload_address      (dbus_req_address),
-     .dBus_cmd_payload_data         (dbus_req_data),
-     .dBus_cmd_payload_mask         (dbus_req_mask),
-     .dBus_cmd_payload_size         (dbus_req_size),
-     .dBus_cmd_payload_last         (dbus_req_last),
-     .dBus_rsp_valid                (dbus_resp_ready),
-     .dBus_rsp_payload_last         (dbus_resp_last),
-     .dBus_rsp_payload_data         (dbus_resp_data),
-     .dBus_rsp_payload_error        (dbus_resp_error),
-     .timerInterrupt                (timerInterrupt),
-     .externalInterrupt             (externalInterrupts[0]),
-     .softwareInterrupt             (softwareInterrupt),
-     .externalInterruptS            (externalInterrupts[1]),
-     .iBus_cmd_valid                (ibus_req_valid),
-     .iBus_cmd_ready                (ibus_req_ready),
-     .iBus_cmd_payload_address      (ibus_req_address),
-     .iBus_cmd_payload_size         (ibus_req_size),
-     .iBus_rsp_valid                (ibus_resp_ready),
-     .iBus_rsp_payload_data         (ibus_resp_data),
-     .iBus_rsp_payload_error        (ibus_resp_error),
-     .clk                           (clk),
-     .reset                         (rst)
-     );
+  // VexRiscv iob-regs instantiation
+  iob_reg_re #(
+      .DATA_W (1),
+      .RST_VAL(0)
+  ) iob_reg_wack (
+      .clk_i (clk_i),
+      .arst_i(arst_i),
+      .cke_i (cke_i),
+      .rst_i (dbus_ack),
+      .en_i  (1'b1),
+      .data_i(dbus_wack),
+      .data_o(dbus_wack_r)
+  );
+  iob_reg_re #(
+      .DATA_W (1),
+      .RST_VAL(0)
+  ) iob_reg_d_last (
+      .clk_i (clk_i),
+      .arst_i(arst_i),
+      .cke_i (cke_i),
+      .rst_i (1'b0),
+      .en_i  (1'b1),
+      .data_i(dbus_req_last),
+      .data_o(dbus_resp_last)
+  );
+
+
+  // VexRiscv instantiation
+  VexRiscv VexRiscv_core (
+      .dBus_cmd_valid           (dbus_avalid),
+      .dBus_cmd_ready           (dbus_ready),
+      .dBus_cmd_payload_wr      (dbus_we),
+      .dBus_cmd_payload_uncached(dbus_uncached),
+      .dBus_cmd_payload_address (dbus_addr),
+      .dBus_cmd_payload_data    (dbus_req_data),
+      .dBus_cmd_payload_mask    (dbus_mask),
+      .dBus_cmd_payload_size    (dbus_size),
+      .dBus_cmd_payload_last    (dbus_req_last),
+      .dBus_rsp_valid           (dbus_ack),
+      .dBus_rsp_payload_last    (dbus_resp_last),
+      .dBus_rsp_payload_data    (dbus_resp_data),
+      .dBus_rsp_payload_error   (dbus_error),
+      .timerInterrupt           (timerInterrupt),
+      .externalInterrupt        (externalInterrupts[0]),
+      .softwareInterrupt        (softwareInterrupt),
+      .externalInterruptS       (externalInterrupts[1]),
+      .iBus_cmd_valid           (ibus_avalid),
+      .iBus_cmd_ready           (ibus_ready),
+      .iBus_cmd_payload_address (ibus_addr),
+      .iBus_cmd_payload_size    (ibus_size),
+      .iBus_rsp_valid           (ibus_rvalid),
+      .iBus_rsp_payload_data    (ibus_resp_data),
+      .iBus_rsp_payload_error   (ibus_error),
+      .clk                      (clk_i),
+      .reset                    (vex_reset)
+  );
 
 endmodule

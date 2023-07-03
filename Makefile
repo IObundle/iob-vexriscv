@@ -1,4 +1,8 @@
-include config.mk
+#PATHS
+VEXRISCV_DIR ?= $(shell pwd)
+VEX_HARDWARE_DIR:=$(VEXRISCV_DIR)/hardware
+VEXRISCV_SRC_DIR:=$(VEX_HARDWARE_DIR)/src
+VEX_SUBMODULES_DIR:=$(VEXRISCV_DIR)/submodules
 
 # Rules
 .PHONY: vexriscv clean-all qemu
@@ -8,7 +12,7 @@ CPU ?= LinuxGen
 
 # Primary targets
 vexriscv:
-	cp $(VEX_SOFTWARE_DIR)/vexriscv_core/* $(VEX_SUBMODULES_DIR)/VexRiscv/src/main/scala/vexriscv/demo/ && \
+	cp $(VEX_HARDWARE_DIR)/vexriscv_core/* $(VEX_SUBMODULES_DIR)/VexRiscv/src/main/scala/vexriscv/demo/ && \
 		cd submodules/VexRiscv && sbt "runMain vexriscv.demo.$(CPU)" && \
 		cp VexRiscv.v $(VEXRISCV_SRC_DIR)
 
