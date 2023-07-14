@@ -5,7 +5,6 @@ import sys
 import shutil
 
 from iob_module import iob_module
-from setup import setup
 
 # Submodules
 from iob_reg_re import iob_reg_re
