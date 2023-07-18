@@ -3,7 +3,7 @@
  */
 `timescale 1 ns / 1 ps
 `include "iob_vexriscv_conf.vh"
-`include "iob_lib.vh"
+`include "iob_utils.vh"
 
 module iob_VexRiscv_nocache #(
     parameter N_CORES=1,
