@@ -5,7 +5,6 @@ import sys
 import shutil
 
 from iob_module import iob_module
-from setup import setup
 
 # Submodules
 from iob_reg_re import iob_reg_re
@@ -17,25 +16,17 @@ class iob_vexriscv(iob_module):
     setup_dir=os.path.dirname(__file__)
 
     @classmethod
-    def _run_setup(cls):
-        # Hardware headers & modules
-        iob_reg_re.setup()
+    def _create_submodules_list(cls):
+        ''' Create submodules list with dependencies of this module
+        '''
+        super()._create_submodules_list([
+            iob_reg_re,
+        ])
 
-        cls._setup_confs()
-        cls._setup_ios()
-        cls._setup_block_groups()
-
-        # Verilog modules instances
-        # TODO
-
-        # Copy sources of this module to the build directory
-        super()._run_setup()
-
-        # Setup core using LIB function
-        setup(cls)
-
+    @classmethod
+    def _post_setup(cls):
+        super()._post_setup()
         shutil.copy(f'{cls.setup_dir}/hardware/src/VexRiscv.v_toplevel_RegFilePlugin_regFile.bin', f'{cls.build_dir}/hardware/simulation')
-
 
     @classmethod
     def _setup_confs(cls):
