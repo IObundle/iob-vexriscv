@@ -25,6 +25,7 @@ class iob_vexriscv(iob_module):
 
     @classmethod
     def _post_setup(cls):
+        super()._post_setup()
         shutil.copy(f'{cls.setup_dir}/hardware/src/VexRiscv.v_toplevel_RegFilePlugin_regFile.bin', f'{cls.build_dir}/hardware/simulation')
 
     @classmethod
