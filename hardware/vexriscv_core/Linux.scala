@@ -55,7 +55,7 @@ object LinuxGen {
             )
           ),
           new MmuPlugin(
-            ioRange      = _(31 downto 30) === 0x1
+            ioRange      = (x => x(31 downto 30) === 0x1 || x(31 downto 29) === 0x1 || x(31 downto 28) === 0x1)
           ),
           new DecoderSimplePlugin(
             catchIllegalInstruction = true
