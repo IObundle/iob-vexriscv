@@ -10,9 +10,11 @@ object LinuxGen {
   def configFull(litex : Boolean, withMmu : Boolean, withSmp : Boolean = false) = {
     val cpuConfig = VexRiscvConfig(
       plugins = List(
-          new PcManagerSimplePlugin(0x00000000l, false),
           new IBusCachedPlugin(
+            resetVector = 0x80000000l,
             prediction = STATIC,
+            compressedGen = true,
+            injectorStage = true,
             config = InstructionCacheConfig(
               cacheSize = 4096,
               bytePerLine = 4,
@@ -55,7 +57,7 @@ object LinuxGen {
             )
           ),
           new MmuPlugin(
-            ioRange      = (x => x(31 downto 30) === 0x1 || x(31 downto 29) === 0x1 || x(31 downto 28) === 0x1)
+            ioRange      = (x => x(31 downto 30) === 0x1 || x(31 downto 29) === 0x1 || x(31 downto 28) === 0x1 || x(31 downto 27) === 0x1)
           ),
           new DecoderSimplePlugin(
             catchIllegalInstruction = true
@@ -85,7 +87,7 @@ object LinuxGen {
             earlyBranch = false,
             catchAddressMisaligned = true
           ),
-          new CsrPlugin(CsrPluginConfig.openSbi(mhartid = 0, misa = Riscv.misaToInt(s"ima"))),
+          new CsrPlugin(CsrPluginConfig.linuxFull(0x80000020l).copy(mhartid = 0, misaExtensionsInit = Riscv.misaToInt(s"imac"), ebreakGen = true)),
           new YamlPlugin("cpu0.yaml")
       )
     )
