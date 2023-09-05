@@ -35,7 +35,7 @@ module iob_VexRiscv #(
   wire                clint_iob_avalid;
   wire [  ADDR_W-1:0] clint_iob_addr;
   wire [  DATA_W-1:0] clint_iob_wdata;
-  wire [DATA_W/8-1:0] clint_iob_wsrtb;
+  wire [DATA_W/8-1:0] clint_iob_wstrb;
   wire                clint_iob_rvalid;
   wire [  DATA_W-1:0] clint_iob_rdata;
   wire                clint_iob_ready;
@@ -63,7 +63,7 @@ module iob_VexRiscv #(
   wire                plic_iob_avalid;
   wire [  ADDR_W-1:0] plic_iob_addr;
   wire [  DATA_W-1:0] plic_iob_wdata;
-  wire [DATA_W/8-1:0] plic_iob_wsrtb;
+  wire [DATA_W/8-1:0] plic_iob_wstrb;
   wire                plic_iob_rvalid;
   wire [  DATA_W-1:0] plic_iob_rdata;
   wire                plic_iob_ready;
@@ -91,7 +91,7 @@ module iob_VexRiscv #(
   wire                iBus_iob_avalid;
   wire [  ADDR_W-1:0] iBus_iob_addr;
   wire [  DATA_W-1:0] iBus_iob_wdata;
-  wire [DATA_W/8-1:0] iBus_iob_wsrtb;
+  wire [DATA_W/8-1:0] iBus_iob_wstrb;
   wire                iBus_iob_rvalid;
   wire [  DATA_W-1:0] iBus_iob_rdata;
   wire                iBus_iob_ready;
@@ -118,7 +118,7 @@ module iob_VexRiscv #(
   wire                dBus_iob_avalid;
   wire [  ADDR_W-1:0] dBus_iob_addr;
   wire [  DATA_W-1:0] dBus_iob_wdata;
-  wire [DATA_W/8-1:0] dBus_iob_wsrtb;
+  wire [DATA_W/8-1:0] dBus_iob_wstrb;
   wire                dBus_iob_rvalid;
   wire [  DATA_W-1:0] dBus_iob_rdata;
   wire                dBus_iob_ready;
@@ -177,7 +177,7 @@ module iob_VexRiscv #(
   assign debugReset = 1'b0;
 
   assign ibus_req = {
-    iBus_iob_avalid, ~boot_i, iBus_iob_addr[ADDR_W-2:0], iBus_iob_wdata, iBus_iob_wsrtb
+    iBus_iob_avalid, ~boot_i, iBus_iob_addr[ADDR_W-2:0], iBus_iob_wdata, iBus_iob_wstrb
   };
   assign {iBus_iob_rdata, iBus_iob_rvalid, iBus_iob_ready} = ibus_resp;
 
@@ -187,14 +187,14 @@ module iob_VexRiscv #(
     (~boot_i) & (~periphral_sel),
     dBus_iob_addr[ADDR_W-2:0],
     dBus_iob_wdata,
-    dBus_iob_wsrtb
+    dBus_iob_wstrb
   };
   assign {dBus_iob_rdata, dBus_iob_rvalid, dBus_iob_ready} = dbus_resp;
 
-  assign plic_req = {plic_iob_avalid, plic_iob_addr, plic_iob_wdata, plic_iob_wsrtb};
-  assign {plic_iob_rdata, plic_iob_rvalid, plic_iob_ready} = plic_resp;
-  assign clint_req = {clint_iob_avalid, clint_iob_addr, clint_iob_wdata, clint_iob_wsrtb};
-  assign {clint_iob_rdata, clint_iob_rvalid, clint_iob_ready} = clint_resp;
+  assign {plic_iob_avalid, plic_iob_addr, plic_iob_wdata, plic_iob_wstrb} = plic_req;
+  assign plic_resp = {plic_iob_rdata, plic_iob_rvalid, plic_iob_ready};
+  assign {clint_iob_avalid, clint_iob_addr, clint_iob_wdata, clint_iob_wstrb} = clint_req;
+  assign clint_resp = {clint_iob_rdata, clint_iob_rvalid, clint_iob_ready};
   // instantiate iob2axil clint
   iob2axil #(
       .AXIL_ADDR_W(16),
@@ -320,7 +320,7 @@ module iob_VexRiscv #(
       .iob_avalid_o(iBus_iob_avalid),
       .iob_addr_o(iBus_iob_addr),
       .iob_wdata_o(iBus_iob_wdata),
-      .iob_wstrb_o(iBus_iob_wsrtb),
+      .iob_wstrb_o(iBus_iob_wstrb),
       .iob_rvalid_i(iBus_iob_rvalid),
       .iob_rdata_i(iBus_iob_rdata),
       .iob_ready_i(iBus_iob_ready)
@@ -378,7 +378,7 @@ module iob_VexRiscv #(
       .iob_avalid_o(dBus_iob_avalid),
       .iob_addr_o(dBus_iob_addr),
       .iob_wdata_o(dBus_iob_wdata),
-      .iob_wstrb_o(dBus_iob_wsrtb),
+      .iob_wstrb_o(dBus_iob_wstrb),
       .iob_rvalid_i(dBus_iob_rvalid),
       .iob_rdata_i(dBus_iob_rdata),
       .iob_ready_i(dBus_iob_ready)

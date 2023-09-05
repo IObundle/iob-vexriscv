@@ -121,32 +121,68 @@ module axi2iob #(
   wire                      m_axil_rvalid;
   wire                      m_axil_rready;
 
+
+  wire iob_rvalid_q;
+  wire iob_rvalid_e;
+  wire write_enable;
+  wire m_axil_bvalid_n;
+  wire m_axil_bvalid_e;
+  wire m_axil_bvalid_q;
+
+  assign write_enable = |m_axil_wstrb;
+  assign m_axil_bvalid_n = m_axil_wvalid;
+  assign m_axil_bvalid_e = m_axil_bvalid_n|m_axil_bready;
+  assign m_axil_bvalid = m_axil_bvalid_q & m_axil_bready;
+  assign iob_rvalid_e = iob_rvalid_i|m_axil_rready;
   //
   // COMPUTE AXIL OUTPUTS
   //
   // write address
   assign m_axil_awready = iob_ready_i;
-  assign m_axil_awprot  = 3'b000;
   // write
   assign m_axil_wready  = iob_ready_i;
   // write response
   assign m_axil_bresp   = 2'b0;
-  assign m_axil_bvalid  = 1'b1;
   // read address
   assign m_axil_arready = iob_ready_i;
-  assign m_axil_arprot  = 3'b000;
   // read
   assign m_axil_rdata   = iob_rdata_i;
   assign m_axil_rresp   = 2'b0;
-  assign m_axil_rvalid  = iob_rvalid_i;
+  assign m_axil_rvalid  = iob_rvalid_i ? 1'b1 : iob_rvalid_q;
 
   //
   // COMPUTE IOb OUTPUTS
   //
-  assign iob_avalid_o   = m_axil_awvalid | m_axil_wvalid | m_axil_arvalid;
+  assign iob_avalid_o   = (m_axil_bvalid_n & write_enable) | m_axil_arvalid;
   assign iob_addr_o     = m_axil_awvalid ? m_axil_awaddr : m_axil_araddr;
   assign iob_wdata_o    = m_axil_wdata;
-  assign iob_wstrb_o    = m_axil_wvalid ? m_axil_wstrb : {IOB_STRB_WIDTH{1'b0}};
+  assign iob_wstrb_o    = m_axil_wstrb;
+
+  iob_reg_re #(
+      .DATA_W (1),
+      .RST_VAL(0)
+  ) iob_reg_rvalid (
+      .clk_i (clk),
+      .arst_i(rst),
+      .cke_i (1'b1),
+      .rst_i (1'b0),
+      .en_i  (iob_rvalid_e),
+      .data_i(iob_rvalid_i),
+      .data_o(iob_rvalid_q)
+  );
+
+  iob_reg_re #(
+      .DATA_W (1),
+      .RST_VAL(0)
+  ) iob_reg_bvalid (
+      .clk_i (clk),
+      .arst_i(rst),
+      .cke_i (1'b1),
+      .rst_i (1'b0),
+      .en_i  (m_axil_bvalid_e),
+      .data_i(m_axil_bvalid_n),
+      .data_o(m_axil_bvalid_q)
+  );
 
   axi_axil_adapter_wr #(
       .ADDR_WIDTH          (ADDR_WIDTH),

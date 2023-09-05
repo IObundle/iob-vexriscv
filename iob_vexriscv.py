@@ -8,7 +8,6 @@ from iob_module import iob_module
 
 # Submodules
 from iob_reg_re import iob_reg_re
-from iob2axil import iob2axil
 
 class iob_vexriscv(iob_module):
     name = "iob_vexriscv"
@@ -22,7 +21,6 @@ class iob_vexriscv(iob_module):
         '''
         super()._create_submodules_list([
             iob_reg_re,
-            iob2axil,
         ])
 
     @classmethod
