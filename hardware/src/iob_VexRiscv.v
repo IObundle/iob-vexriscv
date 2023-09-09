@@ -271,16 +271,14 @@ module iob_VexRiscv #(
   // instantiate axi2iob CPU instructions
   axi2iob #(
       .ADDR_WIDTH(ADDR_W),
-      .AXI_DATA_WIDTH(DATA_W),
-      .AXI_STRB_WIDTH((DATA_W / 8)),
+      .DATA_WIDTH(DATA_W),
+      .STRB_WIDTH((DATA_W / 8)),
       .AXI_ID_WIDTH(1),
-      .IOB_DATA_WIDTH(DATA_W),
-      .IOB_STRB_WIDTH((DATA_W / 8)),
       .CONVERT_BURST(1),
       .CONVERT_NARROW_BURST(0)
   ) iBus_axi2iob (
-      .clk(clk_i),
-      .rst(arst_i),
+      .clk_i(clk_i),
+      .arst_i(arst_i),
       .s_axi_awid(1'b0),
       .s_axi_awaddr(32'h00000000),
       .s_axi_awlen(8'h00),
@@ -329,16 +327,14 @@ module iob_VexRiscv #(
   // instantiate axi2iob CPU data
   axi2iob #(
       .ADDR_WIDTH(ADDR_W),
-      .AXI_DATA_WIDTH(DATA_W),
-      .AXI_STRB_WIDTH((DATA_W / 8)),
+      .DATA_WIDTH(DATA_W),
+      .STRB_WIDTH((DATA_W / 8)),
       .AXI_ID_WIDTH(1),
-      .IOB_DATA_WIDTH(DATA_W),
-      .IOB_STRB_WIDTH((DATA_W / 8)),
       .CONVERT_BURST(1),
       .CONVERT_NARROW_BURST(0)
   ) dBus_axi2iob (
-      .clk(clk_i),
-      .rst(arst_i),
+      .clk_i(clk_i),
+      .arst_i(arst_i),
       .s_axi_awid(dBusAxi_awid),
       .s_axi_awaddr(dBusAxi_awaddr),
       .s_axi_awlen(dBusAxi_awlen),

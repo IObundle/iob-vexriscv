@@ -1,169 +1,147 @@
-/*
-
-Copyright (c) 2019 Alex Forencich
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
-
-*/
-
 // Language: Verilog 2001
-
 `timescale 1ns / 1ps
 
 /*
- * AXI4 to AXI4-Lite adapter
+ * AXI4 to IOb adapter
  */
 module axi2iob #(
     // Width of address bus in bits
     parameter ADDR_WIDTH           = 32,
-    // Width of input (slave) AXI interface data bus in bits
-    parameter AXI_DATA_WIDTH       = 32,
-    // Width of input (slave) AXI interface wstrb (width of data bus in words)
-    parameter AXI_STRB_WIDTH       = (AXI_DATA_WIDTH / 8),
+    // Width of input (slave/master) AXI/IOb interface data bus in bits
+    parameter DATA_WIDTH           = 32,
+    // Width of input (slave/master) AXI/IOb interface wstrb (width of data bus in words)
+    parameter STRB_WIDTH           = (DATA_WIDTH / 8),
     // Width of AXI ID signal
     parameter AXI_ID_WIDTH         = 8,
-    // Width of output (master) AXI lite interface data bus in bits
-    parameter IOB_DATA_WIDTH       = 32,
-    // Width of output (master) AXI lite interface wstrb (width of data bus in words)
-    parameter IOB_STRB_WIDTH       = (IOB_DATA_WIDTH / 8),
     // When adapting to a wider bus, re-pack full-width burst instead of passing through narrow burst if possible
     parameter CONVERT_BURST        = 1,
     // When adapting to a wider bus, re-pack all bursts instead of passing through narrow burst if possible
     parameter CONVERT_NARROW_BURST = 0
 ) (
-    input wire clk,
-    input wire rst,
+    input wire clk_i,
+    input wire arst_i,
 
     /*
      * AXI slave interface
      */
-    input  wire [  AXI_ID_WIDTH-1:0] s_axi_awid,
-    input  wire [    ADDR_WIDTH-1:0] s_axi_awaddr,
-    input  wire [               7:0] s_axi_awlen,
-    input  wire [               2:0] s_axi_awsize,
-    input  wire [               1:0] s_axi_awburst,
-    input  wire                      s_axi_awlock,
-    input  wire [               3:0] s_axi_awcache,
-    input  wire [               2:0] s_axi_awprot,
-    input  wire                      s_axi_awvalid,
-    output wire                      s_axi_awready,
-    input  wire [AXI_DATA_WIDTH-1:0] s_axi_wdata,
-    input  wire [AXI_STRB_WIDTH-1:0] s_axi_wstrb,
-    input  wire                      s_axi_wlast,
-    input  wire                      s_axi_wvalid,
-    output wire                      s_axi_wready,
-    output wire [  AXI_ID_WIDTH-1:0] s_axi_bid,
-    output wire [               1:0] s_axi_bresp,
-    output wire                      s_axi_bvalid,
-    input  wire                      s_axi_bready,
-    input  wire [  AXI_ID_WIDTH-1:0] s_axi_arid,
-    input  wire [    ADDR_WIDTH-1:0] s_axi_araddr,
-    input  wire [               7:0] s_axi_arlen,
-    input  wire [               2:0] s_axi_arsize,
-    input  wire [               1:0] s_axi_arburst,
-    input  wire                      s_axi_arlock,
-    input  wire [               3:0] s_axi_arcache,
-    input  wire [               2:0] s_axi_arprot,
-    input  wire                      s_axi_arvalid,
-    output wire                      s_axi_arready,
-    output wire [  AXI_ID_WIDTH-1:0] s_axi_rid,
-    output wire [AXI_DATA_WIDTH-1:0] s_axi_rdata,
-    output wire [               1:0] s_axi_rresp,
-    output wire                      s_axi_rlast,
-    output wire                      s_axi_rvalid,
-    input  wire                      s_axi_rready,
+    input  wire [AXI_ID_WIDTH-1:0] s_axi_awid,
+    input  wire [  ADDR_WIDTH-1:0] s_axi_awaddr,
+    input  wire [             7:0] s_axi_awlen,
+    input  wire [             2:0] s_axi_awsize,
+    input  wire [             1:0] s_axi_awburst,
+    input  wire                    s_axi_awlock,
+    input  wire [             3:0] s_axi_awcache,
+    input  wire [             2:0] s_axi_awprot,
+    input  wire                    s_axi_awvalid,
+    output wire                    s_axi_awready,
+    input  wire [  DATA_WIDTH-1:0] s_axi_wdata,
+    input  wire [  STRB_WIDTH-1:0] s_axi_wstrb,
+    input  wire                    s_axi_wlast,
+    input  wire                    s_axi_wvalid,
+    output wire                    s_axi_wready,
+    output wire [AXI_ID_WIDTH-1:0] s_axi_bid,
+    output wire [             1:0] s_axi_bresp,
+    output wire                    s_axi_bvalid,
+    input  wire                    s_axi_bready,
+    input  wire [AXI_ID_WIDTH-1:0] s_axi_arid,
+    input  wire [  ADDR_WIDTH-1:0] s_axi_araddr,
+    input  wire [             7:0] s_axi_arlen,
+    input  wire [             2:0] s_axi_arsize,
+    input  wire [             1:0] s_axi_arburst,
+    input  wire                    s_axi_arlock,
+    input  wire [             3:0] s_axi_arcache,
+    input  wire [             2:0] s_axi_arprot,
+    input  wire                    s_axi_arvalid,
+    output wire                    s_axi_arready,
+    output wire [AXI_ID_WIDTH-1:0] s_axi_rid,
+    output wire [  DATA_WIDTH-1:0] s_axi_rdata,
+    output wire [             1:0] s_axi_rresp,
+    output wire                    s_axi_rlast,
+    output wire                    s_axi_rvalid,
+    input  wire                    s_axi_rready,
 
     /*
      * IOb-bus master interface
      */
-    output wire                      iob_avalid_o,
-    output wire [    ADDR_WIDTH-1:0] iob_addr_o,
-    output wire [IOB_DATA_WIDTH-1:0] iob_wdata_o,
-    output wire [IOB_STRB_WIDTH-1:0] iob_wstrb_o,
-    input  wire                      iob_rvalid_i,
-    input  wire [IOB_DATA_WIDTH-1:0] iob_rdata_i,
-    input  wire                      iob_ready_i
+    output wire                  iob_avalid_o,
+    output wire [ADDR_WIDTH-1:0] iob_addr_o,
+    output wire [DATA_WIDTH-1:0] iob_wdata_o,
+    output wire [STRB_WIDTH-1:0] iob_wstrb_o,
+    input  wire                  iob_rvalid_i,
+    input  wire [DATA_WIDTH-1:0] iob_rdata_i,
+    input  wire                  iob_ready_i
 );
 
-  wire [    ADDR_WIDTH-1:0] m_axil_awaddr;
-  wire [               2:0] m_axil_awprot;
-  wire                      m_axil_awvalid;
-  wire                      m_axil_awready;
-  wire [IOB_DATA_WIDTH-1:0] m_axil_wdata;
-  wire [IOB_STRB_WIDTH-1:0] m_axil_wstrb;
-  wire                      m_axil_wvalid;
-  wire                      m_axil_wready;
-  wire [               1:0] m_axil_bresp;
-  wire                      m_axil_bvalid;
-  wire                      m_axil_bready;
-  wire [    ADDR_WIDTH-1:0] m_axil_araddr;
-  wire [               2:0] m_axil_arprot;
-  wire                      m_axil_arvalid;
-  wire                      m_axil_arready;
-  wire [IOB_DATA_WIDTH-1:0] m_axil_rdata;
-  wire [               1:0] m_axil_rresp;
-  wire                      m_axil_rvalid;
-  wire                      m_axil_rready;
+  localparam [1:0]
+    STATE_IDLE = 2'd0,
+    STATE_DATA = 2'd1,
+    STATE_RESP = 2'd2;
 
+  /*
+  * AXI lite master interface (used as a middle ground from AXI4 to IOb)
+  */
+  wire [ADDR_WIDTH-1:0] m_axil_awaddr;
+  wire [           2:0] m_axil_awprot;
+  wire                  m_axil_awvalid;
+  wire                  m_axil_awready;
+  wire [DATA_WIDTH-1:0] m_axil_wdata;
+  wire [STRB_WIDTH-1:0] m_axil_wstrb;
+  wire                  m_axil_wvalid;
+  wire                  m_axil_wready;
+  wire [           1:0] m_axil_bresp;
+  wire                  m_axil_bvalid;
+  wire                  m_axil_bready;
+  wire [ADDR_WIDTH-1:0] m_axil_araddr;
+  wire [           2:0] m_axil_arprot;
+  wire                  m_axil_arvalid;
+  wire                  m_axil_arready;
+  wire [DATA_WIDTH-1:0] m_axil_rdata;
+  wire [           1:0] m_axil_rresp;
+  wire                  m_axil_rvalid;
+  wire                  m_axil_rready;
 
-  wire iob_rvalid_q;
-  wire iob_rvalid_e;
-  wire write_enable;
-  wire m_axil_bvalid_n;
-  wire m_axil_bvalid_e;
-  wire m_axil_bvalid_q;
+  //
+  // AXI4-Lite interface to IOb
+  //
+  wire                  iob_rvalid_q;
+  wire                  iob_rvalid_e;
+  wire                  write_enable;
+  wire                  m_axil_bvalid_n;
+  wire                  m_axil_bvalid_e;
+  wire                  m_axil_bvalid_q;
 
-  assign write_enable = |m_axil_wstrb;
+  assign write_enable    = |m_axil_wstrb;
   assign m_axil_bvalid_n = m_axil_wvalid;
-  assign m_axil_bvalid_e = m_axil_bvalid_n|m_axil_bready;
-  assign m_axil_bvalid = m_axil_bvalid_q & m_axil_bready;
-  assign iob_rvalid_e = iob_rvalid_i|m_axil_rready;
-  //
-  // COMPUTE AXIL OUTPUTS
-  //
-  // write address
-  assign m_axil_awready = iob_ready_i;
-  // write
-  assign m_axil_wready  = iob_ready_i;
-  // write response
-  assign m_axil_bresp   = 2'b0;
-  // read address
-  assign m_axil_arready = iob_ready_i;
-  // read
-  assign m_axil_rdata   = iob_rdata_i;
-  assign m_axil_rresp   = 2'b0;
-  assign m_axil_rvalid  = iob_rvalid_i ? 1'b1 : iob_rvalid_q;
+  assign m_axil_bvalid_e = m_axil_bvalid_n | m_axil_bready;
+  assign m_axil_bvalid   = m_axil_bvalid_q & m_axil_bready;
+  assign iob_rvalid_e    = iob_rvalid_i | m_axil_rready;
 
-  //
+  // COMPUTE AXIL OUTPUTS
+  // // write address
+  assign m_axil_awready  = iob_ready_i;
+  // // write
+  assign m_axil_wready   = iob_ready_i;
+  // // write response
+  assign m_axil_bresp    = 2'b0;
+  // // read address
+  assign m_axil_arready  = iob_ready_i;
+  // // read
+  assign m_axil_rdata    = iob_rdata_i;
+  assign m_axil_rresp    = 2'b0;
+  assign m_axil_rvalid   = iob_rvalid_i ? 1'b1 : iob_rvalid_q;
+
   // COMPUTE IOb OUTPUTS
-  //
-  assign iob_avalid_o   = (m_axil_bvalid_n & write_enable) | m_axil_arvalid;
-  assign iob_addr_o     = m_axil_awvalid ? m_axil_awaddr : m_axil_araddr;
-  assign iob_wdata_o    = m_axil_wdata;
-  assign iob_wstrb_o    = m_axil_wstrb;
+  assign iob_avalid_o    = (m_axil_bvalid_n & write_enable) | m_axil_arvalid;
+  assign iob_addr_o      = m_axil_awvalid ? m_axil_awaddr : m_axil_araddr;
+  assign iob_wdata_o     = m_axil_wdata;
+  assign iob_wstrb_o     = m_axil_wstrb;
 
   iob_reg_re #(
       .DATA_W (1),
       .RST_VAL(0)
   ) iob_reg_rvalid (
-      .clk_i (clk),
-      .arst_i(rst),
+      .clk_i (clk_i),
+      .arst_i(arst_i),
       .cke_i (1'b1),
       .rst_i (1'b0),
       .en_i  (iob_rvalid_e),
@@ -175,8 +153,8 @@ module axi2iob #(
       .DATA_W (1),
       .RST_VAL(0)
   ) iob_reg_bvalid (
-      .clk_i (clk),
-      .arst_i(rst),
+      .clk_i (clk_i),
+      .arst_i(arst_i),
       .cke_i (1'b1),
       .rst_i (1'b0),
       .en_i  (m_axil_bvalid_e),
@@ -184,102 +162,368 @@ module axi2iob #(
       .data_o(m_axil_bvalid_q)
   );
 
-  axi_axil_adapter_wr #(
-      .ADDR_WIDTH          (ADDR_WIDTH),
-      .AXI_DATA_WIDTH      (AXI_DATA_WIDTH),
-      .AXI_STRB_WIDTH      (AXI_STRB_WIDTH),
-      .AXI_ID_WIDTH        (AXI_ID_WIDTH),
-      .AXIL_DATA_WIDTH     (IOB_DATA_WIDTH),
-      .AXIL_STRB_WIDTH     (IOB_STRB_WIDTH),
-      .CONVERT_BURST       (CONVERT_BURST),
-      .CONVERT_NARROW_BURST(CONVERT_NARROW_BURST)
-  ) axi_axil_adapter_wr_inst (
-      .clk(clk),
-      .rst(rst),
+  //
+  // AXI4 write interface conversion to AXI4-Lite
+  //
+  reg [1:0] w_state_reg = STATE_IDLE, w_state_next;
 
-      /*
-     * AXI slave interface
-     */
-      .s_axi_awid   (s_axi_awid),
-      .s_axi_awaddr (s_axi_awaddr),
-      .s_axi_awlen  (s_axi_awlen),
-      .s_axi_awsize (s_axi_awsize),
-      .s_axi_awburst(s_axi_awburst),
-      .s_axi_awlock (s_axi_awlock),
-      .s_axi_awcache(s_axi_awcache),
-      .s_axi_awprot (s_axi_awprot),
-      .s_axi_awvalid(s_axi_awvalid),
-      .s_axi_awready(s_axi_awready),
-      .s_axi_wdata  (s_axi_wdata),
-      .s_axi_wstrb  (s_axi_wstrb),
-      .s_axi_wlast  (s_axi_wlast),
-      .s_axi_wvalid (s_axi_wvalid),
-      .s_axi_wready (s_axi_wready),
-      .s_axi_bid    (s_axi_bid),
-      .s_axi_bresp  (s_axi_bresp),
-      .s_axi_bvalid (s_axi_bvalid),
-      .s_axi_bready (s_axi_bready),
+  reg [AXI_ID_WIDTH-1:0] w_id_reg = {AXI_ID_WIDTH{1'b0}}, w_id_next;
+  reg [ADDR_WIDTH-1:0] w_addr_reg = {ADDR_WIDTH{1'b0}}, w_addr_next;
+  reg [DATA_WIDTH-1:0] w_data_reg = {DATA_WIDTH{1'b0}}, w_data_next;
+  reg [STRB_WIDTH-1:0] w_strb_reg = {STRB_WIDTH{1'b0}}, w_strb_next;
+  reg [7:0] w_burst_reg = 8'd0, w_burst_next;
+  reg [2:0] w_burst_size_reg = 3'd0, w_burst_size_next;
+  reg [2:0] w_master_burst_size_reg = 3'd0, w_master_burst_size_next;
+  reg w_burst_active_reg = 1'b0, w_burst_active_next;
+  reg w_convert_burst_reg = 1'b0, w_convert_burst_next;
+  reg w_first_transfer_reg = 1'b0, w_first_transfer_next;
+  reg w_last_segment_reg = 1'b0, w_last_segment_next;
 
-      /*
-     * AXI lite master interface
-     */
-      .m_axil_awaddr (m_axil_awaddr),
-      .m_axil_awprot (m_axil_awprot),
-      .m_axil_awvalid(m_axil_awvalid),
-      .m_axil_awready(m_axil_awready),
-      .m_axil_wdata  (m_axil_wdata),
-      .m_axil_wstrb  (m_axil_wstrb),
-      .m_axil_wvalid (m_axil_wvalid),
-      .m_axil_wready (m_axil_wready),
-      .m_axil_bresp  (m_axil_bresp),
-      .m_axil_bvalid (m_axil_bvalid),
-      .m_axil_bready (m_axil_bready)
-  );
+  reg s_axi_awready_reg = 1'b0, s_axi_awready_next;
+  reg s_axi_wready_reg = 1'b0, s_axi_wready_next;
+  reg [AXI_ID_WIDTH-1:0] s_axi_bid_reg = {AXI_ID_WIDTH{1'b0}}, s_axi_bid_next;
+  reg [1:0] s_axi_bresp_reg = 2'd0, s_axi_bresp_next;
+  reg s_axi_bvalid_reg = 1'b0, s_axi_bvalid_next;
 
-  axi_axil_adapter_rd #(
-      .ADDR_WIDTH          (ADDR_WIDTH),
-      .AXI_DATA_WIDTH      (AXI_DATA_WIDTH),
-      .AXI_STRB_WIDTH      (AXI_STRB_WIDTH),
-      .AXI_ID_WIDTH        (AXI_ID_WIDTH),
-      .AXIL_DATA_WIDTH     (IOB_DATA_WIDTH),
-      .AXIL_STRB_WIDTH     (IOB_STRB_WIDTH),
-      .CONVERT_BURST       (CONVERT_BURST),
-      .CONVERT_NARROW_BURST(CONVERT_NARROW_BURST)
-  ) axi_axil_adapter_rd_inst (
-      .clk(clk),
-      .rst(rst),
+  reg [ADDR_WIDTH-1:0] m_axil_awaddr_reg = {ADDR_WIDTH{1'b0}}, m_axil_awaddr_next;
+  reg [2:0] m_axil_awprot_reg = 3'd0, m_axil_awprot_next;
+  reg m_axil_awvalid_reg = 1'b0, m_axil_awvalid_next;
+  reg [DATA_WIDTH-1:0] m_axil_wdata_reg = {DATA_WIDTH{1'b0}}, m_axil_wdata_next;
+  reg [STRB_WIDTH-1:0] m_axil_wstrb_reg = {STRB_WIDTH{1'b0}}, m_axil_wstrb_next;
+  reg m_axil_wvalid_reg = 1'b0, m_axil_wvalid_next;
+  reg m_axil_bready_reg = 1'b0, m_axil_bready_next;
 
-      /*
-     * AXI slave interface
-     */
-      .s_axi_arid   (s_axi_arid),
-      .s_axi_araddr (s_axi_araddr),
-      .s_axi_arlen  (s_axi_arlen),
-      .s_axi_arsize (s_axi_arsize),
-      .s_axi_arburst(s_axi_arburst),
-      .s_axi_arlock (s_axi_arlock),
-      .s_axi_arcache(s_axi_arcache),
-      .s_axi_arprot (s_axi_arprot),
-      .s_axi_arvalid(s_axi_arvalid),
-      .s_axi_arready(s_axi_arready),
-      .s_axi_rid    (s_axi_rid),
-      .s_axi_rdata  (s_axi_rdata),
-      .s_axi_rresp  (s_axi_rresp),
-      .s_axi_rlast  (s_axi_rlast),
-      .s_axi_rvalid (s_axi_rvalid),
-      .s_axi_rready (s_axi_rready),
+  assign s_axi_awready  = s_axi_awready_reg;
+  assign s_axi_wready   = s_axi_wready_reg;
+  assign s_axi_bid      = s_axi_bid_reg;
+  assign s_axi_bresp    = s_axi_bresp_reg;
+  assign s_axi_bvalid   = s_axi_bvalid_reg;
 
-      /*
-     * AXI lite master interface
-     */
-      .m_axil_araddr (m_axil_araddr),
-      .m_axil_arprot (m_axil_arprot),
-      .m_axil_arvalid(m_axil_arvalid),
-      .m_axil_arready(m_axil_arready),
-      .m_axil_rdata  (m_axil_rdata),
-      .m_axil_rresp  (m_axil_rresp),
-      .m_axil_rvalid (m_axil_rvalid),
-      .m_axil_rready (m_axil_rready)
-  );
+  assign m_axil_awaddr  = m_axil_awaddr_reg;
+  assign m_axil_awprot  = m_axil_awprot_reg;
+  assign m_axil_awvalid = m_axil_awvalid_reg;
+  assign m_axil_wdata   = m_axil_wdata_reg;
+  assign m_axil_wstrb   = m_axil_wstrb_reg;
+  assign m_axil_wvalid  = m_axil_wvalid_reg;
+  assign m_axil_bready  = m_axil_bready_reg;
+
+  integer i;
+
+  always @* begin
+    w_state_next             = STATE_IDLE;
+
+    w_id_next                = w_id_reg;
+    w_addr_next              = w_addr_reg;
+    w_data_next              = w_data_reg;
+    w_strb_next              = w_strb_reg;
+    w_burst_next             = w_burst_reg;
+    w_burst_size_next        = w_burst_size_reg;
+    w_master_burst_size_next = w_master_burst_size_reg;
+    w_burst_active_next      = w_burst_active_reg;
+    w_convert_burst_next     = w_convert_burst_reg;
+    w_first_transfer_next    = w_first_transfer_reg;
+    w_last_segment_next      = w_last_segment_reg;
+
+    s_axi_awready_next       = 1'b0;
+    s_axi_wready_next        = 1'b0;
+    s_axi_bid_next           = s_axi_bid_reg;
+    s_axi_bresp_next         = s_axi_bresp_reg;
+    s_axi_bvalid_next        = s_axi_bvalid_reg && !s_axi_bready;
+    m_axil_awaddr_next       = m_axil_awaddr_reg;
+    m_axil_awprot_next       = m_axil_awprot_reg;
+    m_axil_awvalid_next      = m_axil_awvalid_reg && !m_axil_awready;
+    m_axil_wdata_next        = m_axil_wdata_reg;
+    m_axil_wstrb_next        = m_axil_wstrb_reg;
+    m_axil_wvalid_next       = m_axil_wvalid_reg && !m_axil_wready;
+    m_axil_bready_next       = 1'b0;
+
+    case (w_state_reg)
+      default: begin  // STATE_IDLE
+        // idle state; wait for new burst
+        s_axi_awready_next = !m_axil_awvalid;
+        w_first_transfer_next = 1'b1;
+
+        if (s_axi_awready && s_axi_awvalid) begin
+          s_axi_awready_next  = 1'b0;
+          w_id_next           = s_axi_awid;
+          m_axil_awaddr_next  = s_axi_awaddr;
+          w_addr_next         = s_axi_awaddr;
+          w_burst_next        = s_axi_awlen;
+          w_burst_size_next   = s_axi_awsize;
+          w_burst_active_next = 1'b1;
+          m_axil_awprot_next  = s_axi_awprot;
+          m_axil_awvalid_next = 1'b1;
+          s_axi_wready_next   = !m_axil_wvalid;
+          w_state_next        = STATE_DATA;
+        end else begin
+          w_state_next = STATE_IDLE;
+        end
+      end
+      STATE_DATA: begin
+        // data state; transfer write data
+        s_axi_wready_next = !m_axil_wvalid;
+
+        if (s_axi_wready && s_axi_wvalid) begin
+          m_axil_wdata_next   = s_axi_wdata;
+          m_axil_wstrb_next   = s_axi_wstrb;
+          m_axil_wvalid_next  = 1'b1;
+          w_burst_next        = w_burst_reg - 1;
+          w_burst_active_next = w_burst_reg != 0;
+          w_addr_next         = w_addr_reg + (1 << w_burst_size_reg);
+          s_axi_wready_next   = 1'b0;
+          m_axil_bready_next  = !s_axi_bvalid && !m_axil_awvalid;
+          w_state_next        = STATE_RESP;
+        end else begin
+          w_state_next = STATE_DATA;
+        end
+      end
+      STATE_RESP: begin
+        // resp state; transfer write response
+        m_axil_bready_next = !s_axi_bvalid && !m_axil_awvalid;
+
+        if (m_axil_bready && m_axil_bvalid) begin
+          m_axil_bready_next    = 1'b0;
+          s_axi_bid_next        = w_id_reg;
+          w_first_transfer_next = 1'b0;
+          if (w_first_transfer_reg || m_axil_bresp != 0) begin
+            s_axi_bresp_next = m_axil_bresp;
+          end
+          if (w_burst_active_reg) begin
+            // burst on slave interface still active; start new AXI lite write
+            m_axil_awaddr_next  = w_addr_reg;
+            m_axil_awvalid_next = 1'b1;
+            s_axi_wready_next   = !m_axil_wvalid;
+            w_state_next        = STATE_DATA;
+          end else begin
+            // burst on slave interface finished; return to idle
+            s_axi_bvalid_next  = 1'b1;
+            s_axi_awready_next = !m_axil_awvalid;
+            w_state_next       = STATE_IDLE;
+          end
+        end else begin
+          w_state_next = STATE_RESP;
+        end
+      end
+    endcase
+  end
+
+  always @(posedge clk_i, posedge arst_i) begin
+    if (arst_i) begin
+      w_state_reg             <= STATE_IDLE;
+      s_axi_awready_reg       <= 1'b0;
+      s_axi_wready_reg        <= 1'b0;
+      s_axi_bvalid_reg        <= 1'b0;
+      m_axil_awvalid_reg      <= 1'b0;
+      m_axil_wvalid_reg       <= 1'b0;
+      m_axil_bready_reg       <= 1'b0;
+
+      w_id_reg                <= {AXI_ID_WIDTH{1'b0}};
+      w_addr_reg              <= {ADDR_WIDTH{1'b0}};
+      w_data_reg              <= {DATA_WIDTH{1'b0}};
+      w_strb_reg              <= {STRB_WIDTH{1'b0}};
+      w_burst_reg             <= 8'd0;
+      w_burst_size_reg        <= 3'd0;
+      w_master_burst_size_reg <= 3'd0;
+      w_burst_active_reg      <= 1'b0;
+      w_convert_burst_reg     <= 1'b0;
+      w_first_transfer_reg    <= 1'b0;
+      w_last_segment_reg      <= 1'b0;
+
+      s_axi_bid_reg           <= {AXI_ID_WIDTH{1'b0}};
+      s_axi_bresp_reg         <= 2'd0;
+      m_axil_awaddr_reg       <= {ADDR_WIDTH{1'b0}};
+      m_axil_awprot_reg       <= 3'd0;
+      m_axil_wdata_reg        <= {DATA_WIDTH{1'b0}};
+      m_axil_wstrb_reg        <= {STRB_WIDTH{1'b0}};
+    end else begin
+      w_state_reg             <= w_state_next;
+      s_axi_awready_reg       <= s_axi_awready_next;
+      s_axi_wready_reg        <= s_axi_wready_next;
+      s_axi_bvalid_reg        <= s_axi_bvalid_next;
+      m_axil_awvalid_reg      <= m_axil_awvalid_next;
+      m_axil_wvalid_reg       <= m_axil_wvalid_next;
+      m_axil_bready_reg       <= m_axil_bready_next;
+
+      w_id_reg                <= w_id_next;
+      w_addr_reg              <= w_addr_next;
+      w_data_reg              <= w_data_next;
+      w_strb_reg              <= w_strb_next;
+      w_burst_reg             <= w_burst_next;
+      w_burst_size_reg        <= w_burst_size_next;
+      w_master_burst_size_reg <= w_master_burst_size_next;
+      w_burst_active_reg      <= w_burst_active_next;
+      w_convert_burst_reg     <= w_convert_burst_next;
+      w_first_transfer_reg    <= w_first_transfer_next;
+      w_last_segment_reg      <= w_last_segment_next;
+
+      s_axi_bid_reg           <= s_axi_bid_next;
+      s_axi_bresp_reg         <= s_axi_bresp_next;
+      m_axil_awaddr_reg       <= m_axil_awaddr_next;
+      m_axil_awprot_reg       <= m_axil_awprot_next;
+      m_axil_wdata_reg        <= m_axil_wdata_next;
+      m_axil_wstrb_reg        <= m_axil_wstrb_next;
+    end
+  end
+
+  //
+  // AXI4 read interface conversion to AXI4-Lite
+  //
+  reg [1:0] r_state_reg = STATE_IDLE, r_state_next;
+
+  reg [AXI_ID_WIDTH-1:0] r_id_reg = {AXI_ID_WIDTH{1'b0}}, r_id_next;
+  reg [ADDR_WIDTH-1:0] r_addr_reg = {ADDR_WIDTH{1'b0}}, r_addr_next;
+  reg [DATA_WIDTH-1:0] r_data_reg = {DATA_WIDTH{1'b0}}, r_data_next;
+  reg [1:0] r_resp_reg = 2'd0, r_resp_next;
+  reg [7:0] r_burst_reg = 8'd0, r_burst_next;
+  reg [2:0] r_burst_size_reg = 3'd0, r_burst_size_next;
+  reg [7:0] r_master_burst_reg = 8'd0, r_master_burst_next;
+  reg [2:0] r_master_burst_size_reg = 3'd0, r_master_burst_size_next;
+
+  reg s_axi_arready_reg = 1'b0, s_axi_arready_next;
+  reg [AXI_ID_WIDTH-1:0] s_axi_rid_reg = {AXI_ID_WIDTH{1'b0}}, s_axi_rid_next;
+  reg [DATA_WIDTH-1:0] s_axi_rdata_reg = {DATA_WIDTH{1'b0}}, s_axi_rdata_next;
+  reg [1:0] s_axi_rresp_reg = 2'd0, s_axi_rresp_next;
+  reg s_axi_rlast_reg = 1'b0, s_axi_rlast_next;
+  reg s_axi_rvalid_reg = 1'b0, s_axi_rvalid_next;
+
+  reg [ADDR_WIDTH-1:0] m_axil_araddr_reg = {ADDR_WIDTH{1'b0}}, m_axil_araddr_next;
+  reg [2:0] m_axil_arprot_reg = 3'd0, m_axil_arprot_next;
+  reg m_axil_arvalid_reg = 1'b0, m_axil_arvalid_next;
+  reg m_axil_rready_reg = 1'b0, m_axil_rready_next;
+
+  assign s_axi_arready  = s_axi_arready_reg;
+  assign s_axi_rid      = s_axi_rid_reg;
+  assign s_axi_rdata    = s_axi_rdata_reg;
+  assign s_axi_rresp    = s_axi_rresp_reg;
+  assign s_axi_rlast    = s_axi_rlast_reg;
+  assign s_axi_rvalid   = s_axi_rvalid_reg;
+
+  assign m_axil_araddr  = m_axil_araddr_reg;
+  assign m_axil_arprot  = m_axil_arprot_reg;
+  assign m_axil_arvalid = m_axil_arvalid_reg;
+  assign m_axil_rready  = m_axil_rready_reg;
+
+  always @* begin
+    r_state_next             = STATE_IDLE;
+
+    r_id_next                = r_id_reg;
+    r_addr_next              = r_addr_reg;
+    r_data_next              = r_data_reg;
+    r_resp_next              = r_resp_reg;
+    r_burst_next             = r_burst_reg;
+    r_burst_size_next        = r_burst_size_reg;
+    r_master_burst_next      = r_master_burst_reg;
+    r_master_burst_size_next = r_master_burst_size_reg;
+
+    s_axi_arready_next       = 1'b0;
+    s_axi_rid_next           = s_axi_rid_reg;
+    s_axi_rdata_next         = s_axi_rdata_reg;
+    s_axi_rresp_next         = s_axi_rresp_reg;
+    s_axi_rlast_next         = s_axi_rlast_reg;
+    s_axi_rvalid_next        = s_axi_rvalid_reg && !s_axi_rready;
+    m_axil_araddr_next       = m_axil_araddr_reg;
+    m_axil_arprot_next       = m_axil_arprot_reg;
+    m_axil_arvalid_next      = m_axil_arvalid_reg && !m_axil_arready;
+    m_axil_rready_next       = 1'b0;
+
+    case (r_state_reg)
+      default: begin  // STATE_IDLE
+        // idle state; wait for new burst
+        s_axi_arready_next = !m_axil_arvalid;
+
+        if (s_axi_arready && s_axi_arvalid) begin
+          s_axi_arready_next  = 1'b0;
+          r_id_next           = s_axi_arid;
+          m_axil_araddr_next  = s_axi_araddr;
+          r_addr_next         = s_axi_araddr;
+          r_burst_next        = s_axi_arlen;
+          r_burst_size_next   = s_axi_arsize;
+          m_axil_arprot_next  = s_axi_arprot;
+          m_axil_arvalid_next = 1'b1;
+          m_axil_rready_next  = 1'b0;
+          r_state_next        = STATE_DATA;
+        end else begin
+          r_state_next = STATE_IDLE;
+        end
+      end
+      STATE_DATA: begin
+        // data state; transfer read data
+        m_axil_rready_next = !s_axi_rvalid && !m_axil_arvalid;
+
+        if (m_axil_rready && m_axil_rvalid) begin
+          s_axi_rid_next    = r_id_reg;
+          s_axi_rdata_next  = m_axil_rdata;
+          s_axi_rresp_next  = m_axil_rresp;
+          s_axi_rlast_next  = 1'b0;
+          s_axi_rvalid_next = 1'b1;
+          r_burst_next      = r_burst_reg - 1;
+          r_addr_next       = r_addr_reg + (1 << r_burst_size_reg);
+          if (r_burst_reg == 0) begin
+            // last data word, return to idle
+            m_axil_rready_next = 1'b0;
+            s_axi_rlast_next   = 1'b1;
+            s_axi_arready_next = !m_axil_arvalid;
+            r_state_next       = STATE_IDLE;
+          end else begin
+            // start new AXI lite read
+            m_axil_araddr_next  = r_addr_next;
+            m_axil_arvalid_next = 1'b1;
+            m_axil_rready_next  = 1'b0;
+            r_state_next        = STATE_DATA;
+          end
+        end else begin
+          r_state_next = STATE_DATA;
+        end
+      end
+    endcase
+  end
+
+  always @(posedge clk_i, posedge arst_i) begin
+    if (arst_i) begin
+      r_state_reg             <= STATE_IDLE;
+      s_axi_arready_reg       <= 1'b0;
+      s_axi_rvalid_reg        <= 1'b0;
+      m_axil_arvalid_reg      <= 1'b0;
+      m_axil_rready_reg       <= 1'b0;
+
+      r_id_reg                <= {AXI_ID_WIDTH{1'b0}};
+      r_addr_reg              <= {ADDR_WIDTH{1'b0}};
+      r_data_reg              <= {DATA_WIDTH{1'b0}};
+      r_resp_reg              <= 2'd0;
+      r_burst_reg             <= 8'd0;
+      r_burst_size_reg        <= 3'd0;
+      r_master_burst_reg      <= 8'd0;
+      r_master_burst_size_reg <= 3'd0;
+
+      s_axi_rid_reg           <= {AXI_ID_WIDTH{1'b0}};
+      s_axi_rdata_reg         <= {DATA_WIDTH{1'b0}};
+      s_axi_rresp_reg         <= 2'd0;
+      s_axi_rlast_reg         <= 1'b0;
+      m_axil_araddr_reg       <= {ADDR_WIDTH{1'b0}};
+      m_axil_arprot_reg       <= 3'd0;
+    end else begin
+      r_state_reg             <= r_state_next;
+      s_axi_arready_reg       <= s_axi_arready_next;
+      s_axi_rvalid_reg        <= s_axi_rvalid_next;
+      m_axil_arvalid_reg      <= m_axil_arvalid_next;
+      m_axil_rready_reg       <= m_axil_rready_next;
+
+      r_id_reg                <= r_id_next;
+      r_addr_reg              <= r_addr_next;
+      r_data_reg              <= r_data_next;
+      r_resp_reg              <= r_resp_next;
+      r_burst_reg             <= r_burst_next;
+      r_burst_size_reg        <= r_burst_size_next;
+      r_master_burst_reg      <= r_master_burst_next;
+      r_master_burst_size_reg <= r_master_burst_size_next;
+
+      s_axi_rid_reg           <= s_axi_rid_next;
+      s_axi_rdata_reg         <= s_axi_rdata_next;
+      s_axi_rresp_reg         <= s_axi_rresp_next;
+      s_axi_rlast_reg         <= s_axi_rlast_next;
+      m_axil_araddr_reg       <= m_axil_araddr_next;
+      m_axil_arprot_reg       <= m_axil_arprot_next;
+    end
+  end
 
 endmodule
