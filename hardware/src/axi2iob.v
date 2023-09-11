@@ -106,6 +106,7 @@ module axi2iob #(
   wire                  iob_rvalid_q;
   wire                  iob_rvalid_e;
   wire                  write_enable;
+  wire [ADDR_WIDTH-1:0] m_axil_awaddr_q;
   wire                  m_axil_bvalid_n;
   wire                  m_axil_bvalid_e;
   wire                  m_axil_bvalid_q;
@@ -132,9 +133,22 @@ module axi2iob #(
 
   // COMPUTE IOb OUTPUTS
   assign iob_avalid_o    = (m_axil_bvalid_n & write_enable) | m_axil_arvalid;
-  assign iob_addr_o      = m_axil_awvalid ? m_axil_awaddr : m_axil_araddr;
+  assign iob_addr_o      = m_axil_arvalid ? m_axil_araddr : (m_axil_awvalid ? m_axil_awaddr : m_axil_awaddr_q);
   assign iob_wdata_o     = m_axil_wdata;
-  assign iob_wstrb_o     = m_axil_wstrb;
+  assign iob_wstrb_o     = m_axil_arvalid ? {STRB_WIDTH{1'b0}} : m_axil_wstrb;
+
+  iob_reg_re #(
+      .DATA_W (ADDR_WIDTH),
+      .RST_VAL(0)
+  ) iob_reg_awaddr (
+      .clk_i (clk_i),
+      .arst_i(arst_i),
+      .cke_i (1'b1),
+      .rst_i (1'b0),
+      .en_i  (m_axil_awvalid),
+      .data_i(m_axil_awaddr),
+      .data_o(m_axil_awaddr_q)
+  );
 
   iob_reg_re #(
       .DATA_W (1),

@@ -116,7 +116,8 @@ module iob_VexRiscv #(
   wire                iBusAxi_rlast;
 
   wire                dBus_iob_avalid;
-  wire [  ADDR_W-1:0] dBus_iob_addr;
+  wire [  ADDR_W-1:0] dBus_iob_addr_int;
+  reg  [  ADDR_W-1:0] dBus_iob_addr;
   wire [  DATA_W-1:0] dBus_iob_wdata;
   wire [DATA_W/8-1:0] dBus_iob_wstrb;
   wire                dBus_iob_rvalid;
@@ -181,14 +182,17 @@ module iob_VexRiscv #(
   };
   assign {iBus_iob_rdata, iBus_iob_rvalid, iBus_iob_ready} = ibus_resp;
 
-  assign periphral_sel = (~dBus_iob_addr[ADDR_W-1]) & (|dBus_iob_addr[ADDR_W-2:ADDR_W-5]);
-  assign dbus_req = {
-    dBus_iob_avalid,
-    (~boot_i) & (~periphral_sel),
-    dBus_iob_addr[ADDR_W-2:0],
-    dBus_iob_wdata,
-    dBus_iob_wstrb
-  };
+  assign periphral_sel = (&dBus_iob_addr_int[ADDR_W-1:ADDR_W-4]);
+
+  always @(*) begin
+    if (periphral_sel) begin
+      dBus_iob_addr = {dBus_iob_addr_int[ADDR_W-5:ADDR_W-8], 4'b0, dBus_iob_addr_int[ADDR_W-9:0]};
+    end else begin
+      dBus_iob_addr = {~boot_i, dBus_iob_addr_int[ADDR_W-2:0]};
+    end
+  end
+
+  assign dbus_req = {dBus_iob_avalid, dBus_iob_addr, dBus_iob_wdata, dBus_iob_wstrb};
   assign {dBus_iob_rdata, dBus_iob_rvalid, dBus_iob_ready} = dbus_resp;
 
   assign {plic_iob_avalid, plic_iob_addr, plic_iob_wdata, plic_iob_wstrb} = plic_req;
@@ -372,7 +376,7 @@ module iob_VexRiscv #(
       .s_axi_rready(dBusAxi_rready),
       // IOb-bus signals
       .iob_avalid_o(dBus_iob_avalid),
-      .iob_addr_o(dBus_iob_addr),
+      .iob_addr_o(dBus_iob_addr_int),
       .iob_wdata_o(dBus_iob_wdata),
       .iob_wstrb_o(dBus_iob_wstrb),
       .iob_rvalid_i(dBus_iob_rvalid),
