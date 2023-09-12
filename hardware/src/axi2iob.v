@@ -240,22 +240,22 @@ module axi2iob #(
     s_axi_wready_next        = 1'b0;
     s_axi_bid_next           = s_axi_bid_reg;
     s_axi_bresp_next         = s_axi_bresp_reg;
-    s_axi_bvalid_next        = s_axi_bvalid_reg && !s_axi_bready;
+    s_axi_bvalid_next        = s_axi_bvalid_reg & ~s_axi_bready;
     m_axil_awaddr_next       = m_axil_awaddr_reg;
     m_axil_awprot_next       = m_axil_awprot_reg;
-    m_axil_awvalid_next      = m_axil_awvalid_reg && !m_axil_awready;
+    m_axil_awvalid_next      = m_axil_awvalid_reg & ~m_axil_awready;
     m_axil_wdata_next        = m_axil_wdata_reg;
     m_axil_wstrb_next        = m_axil_wstrb_reg;
-    m_axil_wvalid_next       = m_axil_wvalid_reg && !m_axil_wready;
+    m_axil_wvalid_next       = m_axil_wvalid_reg & ~m_axil_wready;
     m_axil_bready_next       = 1'b0;
 
     case (w_state_reg)
       default: begin  // STATE_IDLE
         // idle state; wait for new burst
-        s_axi_awready_next = !m_axil_awvalid;
+        s_axi_awready_next = ~m_axil_awvalid;
         w_first_transfer_next = 1'b1;
 
-        if (s_axi_awready && s_axi_awvalid) begin
+        if (s_axi_awready & s_axi_awvalid) begin
           s_axi_awready_next  = 1'b0;
           w_id_next           = s_axi_awid;
           m_axil_awaddr_next  = s_axi_awaddr;
@@ -265,7 +265,7 @@ module axi2iob #(
           w_burst_active_next = 1'b1;
           m_axil_awprot_next  = s_axi_awprot;
           m_axil_awvalid_next = 1'b1;
-          s_axi_wready_next   = !m_axil_wvalid;
+          s_axi_wready_next   = ~m_axil_wvalid;
           w_state_next        = STATE_DATA;
         end else begin
           w_state_next = STATE_IDLE;
@@ -273,9 +273,9 @@ module axi2iob #(
       end
       STATE_DATA: begin
         // data state; transfer write data
-        s_axi_wready_next = !m_axil_wvalid;
+        s_axi_wready_next = ~m_axil_wvalid;
 
-        if (s_axi_wready && s_axi_wvalid) begin
+        if (s_axi_wready & s_axi_wvalid) begin
           m_axil_wdata_next   = s_axi_wdata;
           m_axil_wstrb_next   = s_axi_wstrb;
           m_axil_wvalid_next  = 1'b1;
@@ -283,7 +283,7 @@ module axi2iob #(
           w_burst_active_next = w_burst_reg != 0;
           w_addr_next         = w_addr_reg + (1 << w_burst_size_reg);
           s_axi_wready_next   = 1'b0;
-          m_axil_bready_next  = !s_axi_bvalid && !m_axil_awvalid;
+          m_axil_bready_next  = ~s_axi_bvalid & ~m_axil_awvalid;
           w_state_next        = STATE_RESP;
         end else begin
           w_state_next = STATE_DATA;
@@ -291,25 +291,25 @@ module axi2iob #(
       end
       STATE_RESP: begin
         // resp state; transfer write response
-        m_axil_bready_next = !s_axi_bvalid && !m_axil_awvalid;
+        m_axil_bready_next = ~s_axi_bvalid & ~m_axil_awvalid;
 
-        if (m_axil_bready && m_axil_bvalid) begin
+        if (m_axil_bready & m_axil_bvalid) begin
           m_axil_bready_next    = 1'b0;
           s_axi_bid_next        = w_id_reg;
           w_first_transfer_next = 1'b0;
-          if (w_first_transfer_reg || m_axil_bresp != 0) begin
+          if (w_first_transfer_reg | (m_axil_bresp != 0)) begin
             s_axi_bresp_next = m_axil_bresp;
           end
           if (w_burst_active_reg) begin
             // burst on slave interface still active; start new AXI lite write
             m_axil_awaddr_next  = w_addr_reg;
             m_axil_awvalid_next = 1'b1;
-            s_axi_wready_next   = !m_axil_wvalid;
+            s_axi_wready_next   = ~m_axil_wvalid;
             w_state_next        = STATE_DATA;
           end else begin
             // burst on slave interface finished; return to idle
             s_axi_bvalid_next  = 1'b1;
-            s_axi_awready_next = !m_axil_awvalid;
+            s_axi_awready_next = ~m_axil_awvalid;
             w_state_next       = STATE_IDLE;
           end
         end else begin
@@ -432,18 +432,18 @@ module axi2iob #(
     s_axi_rdata_next         = s_axi_rdata_reg;
     s_axi_rresp_next         = s_axi_rresp_reg;
     s_axi_rlast_next         = s_axi_rlast_reg;
-    s_axi_rvalid_next        = s_axi_rvalid_reg && !s_axi_rready;
+    s_axi_rvalid_next        = s_axi_rvalid_reg & ~s_axi_rready;
     m_axil_araddr_next       = m_axil_araddr_reg;
     m_axil_arprot_next       = m_axil_arprot_reg;
-    m_axil_arvalid_next      = m_axil_arvalid_reg && !m_axil_arready;
+    m_axil_arvalid_next      = m_axil_arvalid_reg & ~m_axil_arready;
     m_axil_rready_next       = 1'b0;
 
     case (r_state_reg)
       default: begin  // STATE_IDLE
         // idle state; wait for new burst
-        s_axi_arready_next = !m_axil_arvalid;
+        s_axi_arready_next = ~m_axil_arvalid;
 
-        if (s_axi_arready && s_axi_arvalid) begin
+        if (s_axi_arready & s_axi_arvalid) begin
           s_axi_arready_next  = 1'b0;
           r_id_next           = s_axi_arid;
           m_axil_araddr_next  = s_axi_araddr;
@@ -460,9 +460,9 @@ module axi2iob #(
       end
       STATE_DATA: begin
         // data state; transfer read data
-        m_axil_rready_next = !s_axi_rvalid && !m_axil_arvalid;
+        m_axil_rready_next = ~s_axi_rvalid & ~m_axil_arvalid;
 
-        if (m_axil_rready && m_axil_rvalid) begin
+        if (m_axil_rready & m_axil_rvalid) begin
           s_axi_rid_next    = r_id_reg;
           s_axi_rdata_next  = m_axil_rdata;
           s_axi_rresp_next  = m_axil_rresp;
@@ -474,7 +474,7 @@ module axi2iob #(
             // last data word, return to idle
             m_axil_rready_next = 1'b0;
             s_axi_rlast_next   = 1'b1;
-            s_axi_arready_next = !m_axil_arvalid;
+            s_axi_arready_next = ~m_axil_arvalid;
             r_state_next       = STATE_IDLE;
           end else begin
             // start new AXI lite read
