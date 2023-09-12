@@ -489,7 +489,7 @@ module iob_VexRiscv #(
       .jtag_tdo(jtag_tdo),
       .jtag_tck(jtag_tck),
       .clk(clk_i),
-      .reset(arst_i | cpu_reset_i),
+      .reset(cpu_reset_i),
       .debugReset(debugReset)
   );
 

@@ -109,12 +109,10 @@ module axi2iob #(
   wire [ADDR_WIDTH-1:0] m_axil_awaddr_q;
   wire                  m_axil_bvalid_n;
   wire                  m_axil_bvalid_e;
-  wire                  m_axil_bvalid_q;
 
   assign write_enable    = |m_axil_wstrb;
   assign m_axil_bvalid_n = m_axil_wvalid;
   assign m_axil_bvalid_e = m_axil_bvalid_n | m_axil_bready;
-  assign m_axil_bvalid   = m_axil_bvalid_q & m_axil_bready;
   assign iob_rvalid_e    = iob_rvalid_i | m_axil_rready;
 
   // COMPUTE AXIL OUTPUTS
@@ -173,39 +171,39 @@ module axi2iob #(
       .rst_i (1'b0),
       .en_i  (m_axil_bvalid_e),
       .data_i(m_axil_bvalid_n),
-      .data_o(m_axil_bvalid_q)
+      .data_o(m_axil_bvalid)
   );
 
   //
   // AXI4 write interface conversion to AXI4-Lite
   //
-  reg [1:0] w_state_reg = STATE_IDLE, w_state_next;
+  reg [1:0] w_state_reg, w_state_next;
 
-  reg [AXI_ID_WIDTH-1:0] w_id_reg = {AXI_ID_WIDTH{1'b0}}, w_id_next;
-  reg [ADDR_WIDTH-1:0] w_addr_reg = {ADDR_WIDTH{1'b0}}, w_addr_next;
-  reg [DATA_WIDTH-1:0] w_data_reg = {DATA_WIDTH{1'b0}}, w_data_next;
-  reg [STRB_WIDTH-1:0] w_strb_reg = {STRB_WIDTH{1'b0}}, w_strb_next;
-  reg [7:0] w_burst_reg = 8'd0, w_burst_next;
-  reg [2:0] w_burst_size_reg = 3'd0, w_burst_size_next;
-  reg [2:0] w_master_burst_size_reg = 3'd0, w_master_burst_size_next;
-  reg w_burst_active_reg = 1'b0, w_burst_active_next;
-  reg w_convert_burst_reg = 1'b0, w_convert_burst_next;
-  reg w_first_transfer_reg = 1'b0, w_first_transfer_next;
-  reg w_last_segment_reg = 1'b0, w_last_segment_next;
+  reg [AXI_ID_WIDTH-1:0] w_id_reg, w_id_next;
+  reg [ADDR_WIDTH-1:0] w_addr_reg, w_addr_next;
+  reg [DATA_WIDTH-1:0] w_data_reg, w_data_next;
+  reg [STRB_WIDTH-1:0] w_strb_reg, w_strb_next;
+  reg [7:0] w_burst_reg, w_burst_next;
+  reg [2:0] w_burst_size_reg , w_burst_size_next;
+  reg [2:0] w_master_burst_size_reg, w_master_burst_size_next;
+  reg w_burst_active_reg, w_burst_active_next;
+  reg w_convert_burst_reg, w_convert_burst_next;
+  reg w_first_transfer_reg, w_first_transfer_next;
+  reg w_last_segment_reg, w_last_segment_next;
 
-  reg s_axi_awready_reg = 1'b0, s_axi_awready_next;
-  reg s_axi_wready_reg = 1'b0, s_axi_wready_next;
-  reg [AXI_ID_WIDTH-1:0] s_axi_bid_reg = {AXI_ID_WIDTH{1'b0}}, s_axi_bid_next;
-  reg [1:0] s_axi_bresp_reg = 2'd0, s_axi_bresp_next;
-  reg s_axi_bvalid_reg = 1'b0, s_axi_bvalid_next;
+  reg s_axi_awready_reg, s_axi_awready_next;
+  reg s_axi_wready_reg, s_axi_wready_next;
+  reg [AXI_ID_WIDTH-1:0] s_axi_bid_reg, s_axi_bid_next;
+  reg [1:0] s_axi_bresp_reg, s_axi_bresp_next;
+  reg s_axi_bvalid_reg, s_axi_bvalid_next;
 
-  reg [ADDR_WIDTH-1:0] m_axil_awaddr_reg = {ADDR_WIDTH{1'b0}}, m_axil_awaddr_next;
-  reg [2:0] m_axil_awprot_reg = 3'd0, m_axil_awprot_next;
-  reg m_axil_awvalid_reg = 1'b0, m_axil_awvalid_next;
-  reg [DATA_WIDTH-1:0] m_axil_wdata_reg = {DATA_WIDTH{1'b0}}, m_axil_wdata_next;
-  reg [STRB_WIDTH-1:0] m_axil_wstrb_reg = {STRB_WIDTH{1'b0}}, m_axil_wstrb_next;
-  reg m_axil_wvalid_reg = 1'b0, m_axil_wvalid_next;
-  reg m_axil_bready_reg = 1'b0, m_axil_bready_next;
+  reg [ADDR_WIDTH-1:0] m_axil_awaddr_reg, m_axil_awaddr_next;
+  reg [2:0] m_axil_awprot_reg, m_axil_awprot_next;
+  reg m_axil_awvalid_reg, m_axil_awvalid_next;
+  reg [DATA_WIDTH-1:0] m_axil_wdata_reg, m_axil_wdata_next;
+  reg [STRB_WIDTH-1:0] m_axil_wstrb_reg, m_axil_wstrb_next;
+  reg m_axil_wvalid_reg, m_axil_wvalid_next;
+  reg m_axil_bready_reg, m_axil_bready_next;
 
   assign s_axi_awready  = s_axi_awready_reg;
   assign s_axi_wready   = s_axi_wready_reg;
@@ -382,28 +380,28 @@ module axi2iob #(
   //
   // AXI4 read interface conversion to AXI4-Lite
   //
-  reg [1:0] r_state_reg = STATE_IDLE, r_state_next;
+  reg [1:0] r_state_reg, r_state_next;
 
-  reg [AXI_ID_WIDTH-1:0] r_id_reg = {AXI_ID_WIDTH{1'b0}}, r_id_next;
-  reg [ADDR_WIDTH-1:0] r_addr_reg = {ADDR_WIDTH{1'b0}}, r_addr_next;
-  reg [DATA_WIDTH-1:0] r_data_reg = {DATA_WIDTH{1'b0}}, r_data_next;
-  reg [1:0] r_resp_reg = 2'd0, r_resp_next;
-  reg [7:0] r_burst_reg = 8'd0, r_burst_next;
-  reg [2:0] r_burst_size_reg = 3'd0, r_burst_size_next;
-  reg [7:0] r_master_burst_reg = 8'd0, r_master_burst_next;
-  reg [2:0] r_master_burst_size_reg = 3'd0, r_master_burst_size_next;
+  reg [AXI_ID_WIDTH-1:0] r_id_reg, r_id_next;
+  reg [ADDR_WIDTH-1:0] r_addr_reg, r_addr_next;
+  reg [DATA_WIDTH-1:0] r_data_reg, r_data_next;
+  reg [1:0] r_resp_reg, r_resp_next;
+  reg [7:0] r_burst_reg, r_burst_next;
+  reg [2:0] r_burst_size_reg, r_burst_size_next;
+  reg [7:0] r_master_burst_reg, r_master_burst_next;
+  reg [2:0] r_master_burst_size_reg, r_master_burst_size_next;
 
-  reg s_axi_arready_reg = 1'b0, s_axi_arready_next;
-  reg [AXI_ID_WIDTH-1:0] s_axi_rid_reg = {AXI_ID_WIDTH{1'b0}}, s_axi_rid_next;
-  reg [DATA_WIDTH-1:0] s_axi_rdata_reg = {DATA_WIDTH{1'b0}}, s_axi_rdata_next;
-  reg [1:0] s_axi_rresp_reg = 2'd0, s_axi_rresp_next;
-  reg s_axi_rlast_reg = 1'b0, s_axi_rlast_next;
-  reg s_axi_rvalid_reg = 1'b0, s_axi_rvalid_next;
+  reg s_axi_arready_reg, s_axi_arready_next;
+  reg [AXI_ID_WIDTH-1:0] s_axi_rid_reg, s_axi_rid_next;
+  reg [DATA_WIDTH-1:0] s_axi_rdata_reg, s_axi_rdata_next;
+  reg [1:0] s_axi_rresp_reg, s_axi_rresp_next;
+  reg s_axi_rlast_reg, s_axi_rlast_next;
+  reg s_axi_rvalid_reg, s_axi_rvalid_next;
 
-  reg [ADDR_WIDTH-1:0] m_axil_araddr_reg = {ADDR_WIDTH{1'b0}}, m_axil_araddr_next;
-  reg [2:0] m_axil_arprot_reg = 3'd0, m_axil_arprot_next;
-  reg m_axil_arvalid_reg = 1'b0, m_axil_arvalid_next;
-  reg m_axil_rready_reg = 1'b0, m_axil_rready_next;
+  reg [ADDR_WIDTH-1:0] m_axil_araddr_reg, m_axil_araddr_next;
+  reg [2:0] m_axil_arprot_reg, m_axil_arprot_next;
+  reg m_axil_arvalid_reg, m_axil_arvalid_next;
+  reg m_axil_rready_reg, m_axil_rready_next;
 
   assign s_axi_arready  = s_axi_arready_reg;
   assign s_axi_rid      = s_axi_rid_reg;
