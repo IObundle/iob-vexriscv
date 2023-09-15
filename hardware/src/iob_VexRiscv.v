@@ -277,9 +277,7 @@ module iob_VexRiscv #(
       .ADDR_WIDTH(ADDR_W),
       .DATA_WIDTH(DATA_W),
       .STRB_WIDTH((DATA_W / 8)),
-      .AXI_ID_WIDTH(1),
-      .CONVERT_BURST(1),
-      .CONVERT_NARROW_BURST(0)
+      .AXI_ID_WIDTH(1)
   ) iBus_axi2iob (
       .clk_i(clk_i),
       .arst_i(arst_i),
@@ -333,9 +331,7 @@ module iob_VexRiscv #(
       .ADDR_WIDTH(ADDR_W),
       .DATA_WIDTH(DATA_W),
       .STRB_WIDTH((DATA_W / 8)),
-      .AXI_ID_WIDTH(1),
-      .CONVERT_BURST(1),
-      .CONVERT_NARROW_BURST(0)
+      .AXI_ID_WIDTH(1)
   ) dBus_axi2iob (
       .clk_i(clk_i),
       .arst_i(arst_i),
