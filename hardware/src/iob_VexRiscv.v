@@ -6,13 +6,20 @@
 `include "iob_utils.vh"
 
 module iob_VexRiscv #(
+    parameter IBUS_AXI_ID_W   = 1,
+    parameter IBUS_AXI_LEN_W  = 8,
+    parameter IBUS_AXI_ADDR_W = 32,
+    parameter IBUS_AXI_DATA_W = 32,
+    parameter DBUS_AXI_ID_W   = 1,
+    parameter DBUS_AXI_LEN_W  = 8,
+    parameter DBUS_AXI_ADDR_W = 32,
+    parameter DBUS_AXI_DATA_W = 32,
     `include "iob_vexriscv_params.vs"
 ) (
     input wire clk_i,
     input wire cke_i,
     input wire arst_i,
     input wire cpu_reset_i,
-    input wire boot_i,
 
     // CLINT bus
     input  wire [ `REQ_W-1:0] clint_req,
@@ -23,13 +30,12 @@ module iob_VexRiscv #(
     output wire [`RESP_W-1:0] plic_resp,
     input  wire [       31:0] plicInterrupts,
 
-    // instruction bus
-    output wire [ `REQ_W-1:0] ibus_req,
-    input  wire [`RESP_W-1:0] ibus_resp,
+    // Axi instruction bus
+    `include "iBus_axi_m_port.vs"
+    // Axi data bus
+    `include "dBus_axi_m_port.vs"
 
-    // data bus
-    output [ `REQ_W-1:0] dbus_req,
-    input  [`RESP_W-1:0] dbus_resp
+    input wire boot_i
 );
 
   wire                clint_iob_avalid;
@@ -88,81 +94,17 @@ module iob_VexRiscv #(
   wire [        31:0] plic_rdata;
   wire [         1:0] plic_rresp;
 
-  wire                iBus_iob_avalid;
-  wire [  ADDR_W-1:0] iBus_iob_addr;
-  wire [  DATA_W-1:0] iBus_iob_wdata;
-  wire [DATA_W/8-1:0] iBus_iob_wstrb;
-  wire                iBus_iob_rvalid;
-  wire [  DATA_W-1:0] iBus_iob_rdata;
-  wire                iBus_iob_ready;
-
-  wire                iBusAxi_arvalid;
-  wire                iBusAxi_arready;
-  wire [        31:0] iBusAxi_araddr;
-  wire [         0:0] iBusAxi_arid;
-  wire [         3:0] iBusAxi_arregion;  // Not used on axi2iob
-  wire [         7:0] iBusAxi_arlen;
-  wire [         2:0] iBusAxi_arsize;
-  wire [         1:0] iBusAxi_arburst;
-  wire [         0:0] iBusAxi_arlock;
-  wire [         3:0] iBusAxi_arcache;
-  wire [         3:0] iBusAxi_arqos;  // Not used on axi2iob
-  wire [         2:0] iBusAxi_arprot;
-  wire                iBusAxi_rvalid;
-  wire                iBusAxi_rready;
-  wire [        31:0] iBusAxi_rdata;
-  wire [         0:0] iBusAxi_rid;
-  wire [         1:0] iBusAxi_rresp;
-  wire                iBusAxi_rlast;
-
-  wire                dBus_iob_avalid;
-  wire [  ADDR_W-1:0] dBus_iob_addr_int;
-  reg  [  ADDR_W-1:0] dBus_iob_addr;
-  wire [  DATA_W-1:0] dBus_iob_wdata;
-  wire [DATA_W/8-1:0] dBus_iob_wstrb;
-  wire                dBus_iob_rvalid;
-  wire [  DATA_W-1:0] dBus_iob_rdata;
-  wire                dBus_iob_ready;
-
-  wire                dBusAxi_awvalid;
-  wire                dBusAxi_awready;
-  wire [        31:0] dBusAxi_awaddr;
-  wire [         0:0] dBusAxi_awid;
-  wire [         3:0] dBusAxi_awregion;  // Not used on axi2iob
-  wire [         7:0] dBusAxi_awlen;
-  wire [         2:0] dBusAxi_awsize;
-  wire [         1:0] dBusAxi_awburst;
-  wire [         0:0] dBusAxi_awlock;
-  wire [         3:0] dBusAxi_awcache;
-  wire [         3:0] dBusAxi_awqos;  // Not used on axi2iob
-  wire [         2:0] dBusAxi_awprot;
-  wire                dBusAxi_wvalid;
-  wire                dBusAxi_wready;
-  wire [        31:0] dBusAxi_wdata;
-  wire [         3:0] dBusAxi_wstrb;
-  wire                dBusAxi_wlast;
-  wire                dBusAxi_bvalid;
-  wire                dBusAxi_bready;
-  wire [         0:0] dBusAxi_bid;
-  wire [         1:0] dBusAxi_bresp;
-  wire                dBusAxi_arvalid;
-  wire                dBusAxi_arready;
-  wire [        31:0] dBusAxi_araddr;
-  wire [         0:0] dBusAxi_arid;
-  wire [         3:0] dBusAxi_arregion;  // Not used on axi2iob
-  wire [         7:0] dBusAxi_arlen;
-  wire [         2:0] dBusAxi_arsize;
-  wire [         1:0] dBusAxi_arburst;
-  wire [         0:0] dBusAxi_arlock;
-  wire [         3:0] dBusAxi_arcache;
-  wire [         3:0] dBusAxi_arqos;  // Not used on axi2iob
-  wire [         2:0] dBusAxi_arprot;
-  wire                dBusAxi_rvalid;
-  wire                dBusAxi_rready;
-  wire [        31:0] dBusAxi_rdata;
-  wire [         0:0] dBusAxi_rid;
-  wire [         1:0] dBusAxi_rresp;
-  wire                dBusAxi_rlast;
+  wire [  DATA_W-1:0] iBus_axi_araddr_int;
+  wire [         3:0] iBus_axi_arregion;
+  wire                iBus_axi_arlock;
+  reg  [  DATA_W-1:0] dBus_axi_awaddr;
+  wire [  DATA_W-1:0] dBus_axi_awaddr_int;
+  wire [         3:0] dBus_axi_awregion;
+  wire                dBus_axi_awlock;
+  reg  [  DATA_W-1:0] dBus_axi_araddr;
+  wire [  DATA_W-1:0] dBus_axi_araddr_int;
+  wire [         3:0] dBus_axi_arregion;
+  wire                dBus_axi_arlock;
   wire                periphral_sel;
 
   wire                jtag_tms;
@@ -177,23 +119,45 @@ module iob_VexRiscv #(
   assign jtag_tck = 1'b0;
   assign debugReset = 1'b0;
 
-  assign ibus_req = {
-    iBus_iob_avalid, ~boot_i, iBus_iob_addr[ADDR_W-2:0], iBus_iob_wdata, iBus_iob_wstrb
-  };
-  assign {iBus_iob_rdata, iBus_iob_rvalid, iBus_iob_ready} = ibus_resp;
+  assign periphral_sel =
+    (&dBus_axi_awaddr_int[ADDR_W-1:ADDR_W-4])|(&dBus_axi_araddr_int[ADDR_W-1:ADDR_W-4]);
 
-  assign periphral_sel = (&dBus_iob_addr_int[ADDR_W-1:ADDR_W-4]);
+  assign iBus_axi_awvalid_o = 1'b0;
+  assign iBus_axi_awaddr_o = {ADDR_W{1'b0}};
+  assign iBus_axi_awid_o = 1'b0;
+  assign iBus_axi_awlen_o = {IBUS_AXI_LEN_W{1'b0}};
+  assign iBus_axi_awsize_o = {3{1'b0}};
+  assign iBus_axi_awburst_o = {2{1'b0}};
+  assign iBus_axi_awlock_o = 1'b0;
+  assign iBus_axi_awcache_o = {4{1'b0}};
+  assign iBus_axi_awqos_o = {4{1'b0}};
+  assign iBus_axi_awprot_o = {3{1'b0}};
+  assign iBus_axi_wvalid_o = 1'b0;
+  assign iBus_axi_wdata_o = {DATA_W{1'b0}};
+  assign iBus_axi_wstrb_o = {DATA_W/8{1'b0}};
+  assign iBus_axi_wlast_o = 1'b0;
+  assign iBus_axi_bready_o = 1'b0;
+  assign iBus_axi_araddr_o = {boot_i, iBus_axi_araddr_int[ADDR_W-2:0]};
+  assign iBus_axi_arlock_o = {1'b0, iBus_axi_arlock};
+
+  assign dBus_axi_awaddr_o = dBus_axi_awaddr;
+  assign dBus_axi_araddr_o = dBus_axi_araddr;
+  assign dBus_axi_awlock_o = {1'b0, dBus_axi_awlock};
+  assign dBus_axi_arlock_o = {1'b0, dBus_axi_arlock};
 
   always @(*) begin
     if (periphral_sel) begin
-      dBus_iob_addr = {dBus_iob_addr_int[ADDR_W-5:ADDR_W-8], 4'b0, dBus_iob_addr_int[ADDR_W-9:0]};
+      dBus_axi_awaddr = {
+        1'b1, dBus_axi_awaddr_int[ADDR_W-6:ADDR_W-8], 4'b0, dBus_axi_awaddr_int[ADDR_W-9:0]
+      };
+      dBus_axi_araddr = {
+        1'b1, dBus_axi_araddr_int[ADDR_W-6:ADDR_W-8], 4'b0, dBus_axi_araddr_int[ADDR_W-9:0]
+      };
     end else begin
-      dBus_iob_addr = {~boot_i, dBus_iob_addr_int[ADDR_W-2:0]};
+      dBus_axi_awaddr = {boot_i, dBus_axi_awaddr_int[ADDR_W-2:0]};
+      dBus_axi_araddr = {boot_i, dBus_axi_araddr_int[ADDR_W-2:0]};
     end
   end
-
-  assign dbus_req = {dBus_iob_avalid, dBus_iob_addr, dBus_iob_wdata, dBus_iob_wstrb};
-  assign {dBus_iob_rdata, dBus_iob_rvalid, dBus_iob_ready} = dbus_resp;
 
   assign {plic_iob_avalid, plic_iob_addr, plic_iob_wdata, plic_iob_wstrb} = plic_req;
   assign plic_resp = {plic_iob_rdata, plic_iob_rvalid, plic_iob_ready};
@@ -272,115 +236,6 @@ module iob_VexRiscv #(
       .axil_rresp_i(plic_rresp)
   );
 
-  // instantiate axi2iob CPU instructions
-  axi2iob #(
-      .ADDR_WIDTH(ADDR_W),
-      .DATA_WIDTH(DATA_W),
-      .STRB_WIDTH((DATA_W / 8)),
-      .AXI_ID_WIDTH(1)
-  ) iBus_axi2iob (
-      .clk_i(clk_i),
-      .arst_i(arst_i),
-      .s_axi_awid(1'b0),
-      .s_axi_awaddr(32'h00000000),
-      .s_axi_awlen(8'h00),
-      .s_axi_awsize(3'b000),
-      .s_axi_awburst(2'b00),
-      .s_axi_awlock(1'b0),
-      .s_axi_awcache(4'h0),
-      .s_axi_awprot(3'b000),
-      .s_axi_awvalid(1'b0),
-      .s_axi_awready(),
-      .s_axi_wdata(32'h00000000),
-      .s_axi_wstrb(4'h0),
-      .s_axi_wlast(1'b0),
-      .s_axi_wvalid(1'b0),
-      .s_axi_wready(),
-      .s_axi_bid(),
-      .s_axi_bresp(),
-      .s_axi_bvalid(),
-      .s_axi_bready(1'b0),
-      .s_axi_arid(iBusAxi_arid),
-      .s_axi_araddr(iBusAxi_araddr),
-      .s_axi_arlen(iBusAxi_arlen),
-      .s_axi_arsize(iBusAxi_arsize),
-      .s_axi_arburst(iBusAxi_arburst),
-      .s_axi_arlock(iBusAxi_arlock),
-      .s_axi_arcache(iBusAxi_arcache),
-      .s_axi_arprot(iBusAxi_arprot),
-      .s_axi_arvalid(iBusAxi_arvalid),
-      .s_axi_arready(iBusAxi_arready),
-      .s_axi_rid(iBusAxi_rid),
-      .s_axi_rdata(iBusAxi_rdata),
-      .s_axi_rresp(iBusAxi_rresp),
-      .s_axi_rlast(iBusAxi_rlast),
-      .s_axi_rvalid(iBusAxi_rvalid),
-      .s_axi_rready(iBusAxi_rready),
-      // IOb-bus signals
-      .iob_avalid_o(iBus_iob_avalid),
-      .iob_addr_o(iBus_iob_addr),
-      .iob_wdata_o(iBus_iob_wdata),
-      .iob_wstrb_o(iBus_iob_wstrb),
-      .iob_rvalid_i(iBus_iob_rvalid),
-      .iob_rdata_i(iBus_iob_rdata),
-      .iob_ready_i(iBus_iob_ready)
-  );
-
-  // instantiate axi2iob CPU data
-  axi2iob #(
-      .ADDR_WIDTH(ADDR_W),
-      .DATA_WIDTH(DATA_W),
-      .STRB_WIDTH((DATA_W / 8)),
-      .AXI_ID_WIDTH(1)
-  ) dBus_axi2iob (
-      .clk_i(clk_i),
-      .arst_i(arst_i),
-      .s_axi_awid(dBusAxi_awid),
-      .s_axi_awaddr(dBusAxi_awaddr),
-      .s_axi_awlen(dBusAxi_awlen),
-      .s_axi_awsize(dBusAxi_awsize),
-      .s_axi_awburst(dBusAxi_awburst),
-      .s_axi_awlock(dBusAxi_awlock),
-      .s_axi_awcache(dBusAxi_awcache),
-      .s_axi_awprot(dBusAxi_awprot),
-      .s_axi_awvalid(dBusAxi_awvalid),
-      .s_axi_awready(dBusAxi_awready),
-      .s_axi_wdata(dBusAxi_wdata),
-      .s_axi_wstrb(dBusAxi_wstrb),
-      .s_axi_wlast(dBusAxi_wlast),
-      .s_axi_wvalid(dBusAxi_wvalid),
-      .s_axi_wready(dBusAxi_wready),
-      .s_axi_bid(dBusAxi_bid),
-      .s_axi_bresp(dBusAxi_bresp),
-      .s_axi_bvalid(dBusAxi_bvalid),
-      .s_axi_bready(dBusAxi_bready),
-      .s_axi_arid(dBusAxi_arid),
-      .s_axi_araddr(dBusAxi_araddr),
-      .s_axi_arlen(dBusAxi_arlen),
-      .s_axi_arsize(dBusAxi_arsize),
-      .s_axi_arburst(dBusAxi_arburst),
-      .s_axi_arlock(dBusAxi_arlock),
-      .s_axi_arcache(dBusAxi_arcache),
-      .s_axi_arprot(dBusAxi_arprot),
-      .s_axi_arvalid(dBusAxi_arvalid),
-      .s_axi_arready(dBusAxi_arready),
-      .s_axi_rid(dBusAxi_rid),
-      .s_axi_rdata(dBusAxi_rdata),
-      .s_axi_rresp(dBusAxi_rresp),
-      .s_axi_rlast(dBusAxi_rlast),
-      .s_axi_rvalid(dBusAxi_rvalid),
-      .s_axi_rready(dBusAxi_rready),
-      // IOb-bus signals
-      .iob_avalid_o(dBus_iob_avalid),
-      .iob_addr_o(dBus_iob_addr_int),
-      .iob_wdata_o(dBus_iob_wdata),
-      .iob_wstrb_o(dBus_iob_wstrb),
-      .iob_rvalid_i(dBus_iob_rvalid),
-      .iob_rdata_i(dBus_iob_rdata),
-      .iob_ready_i(dBus_iob_ready)
-  );
-
-
   // Instantiation of VexRiscvAxi4LinuxPlicClint
   VexRiscvAxi4LinuxPlicClint CPU (
       .clint_awvalid(clint_awvalid),
@@ -423,63 +278,63 @@ module iob_VexRiscv #(
       .plic_rresp(plic_rresp),
       .plicInterrupts(plicInterrupts),
       .debug_resetOut(debug_resetOut),
-      .iBusAxi_arvalid(iBusAxi_arvalid),
-      .iBusAxi_arready(iBusAxi_arready),
-      .iBusAxi_araddr(iBusAxi_araddr),
-      .iBusAxi_arid(iBusAxi_arid),
-      .iBusAxi_arregion(iBusAxi_arregion),
-      .iBusAxi_arlen(iBusAxi_arlen),
-      .iBusAxi_arsize(iBusAxi_arsize),
-      .iBusAxi_arburst(iBusAxi_arburst),
-      .iBusAxi_arlock(iBusAxi_arlock),
-      .iBusAxi_arcache(iBusAxi_arcache),
-      .iBusAxi_arqos(iBusAxi_arqos),
-      .iBusAxi_arprot(iBusAxi_arprot),
-      .iBusAxi_rvalid(iBusAxi_rvalid),
-      .iBusAxi_rready(iBusAxi_rready),
-      .iBusAxi_rdata(iBusAxi_rdata),
-      .iBusAxi_rid(iBusAxi_rid),
-      .iBusAxi_rresp(iBusAxi_rresp),
-      .iBusAxi_rlast(iBusAxi_rlast),
-      .dBusAxi_awvalid(dBusAxi_awvalid),
-      .dBusAxi_awready(dBusAxi_awready),
-      .dBusAxi_awaddr(dBusAxi_awaddr),
-      .dBusAxi_awid(dBusAxi_awid),
-      .dBusAxi_awregion(dBusAxi_awregion),
-      .dBusAxi_awlen(dBusAxi_awlen),
-      .dBusAxi_awsize(dBusAxi_awsize),
-      .dBusAxi_awburst(dBusAxi_awburst),
-      .dBusAxi_awlock(dBusAxi_awlock),
-      .dBusAxi_awcache(dBusAxi_awcache),
-      .dBusAxi_awqos(dBusAxi_awqos),
-      .dBusAxi_awprot(dBusAxi_awprot),
-      .dBusAxi_wvalid(dBusAxi_wvalid),
-      .dBusAxi_wready(dBusAxi_wready),
-      .dBusAxi_wdata(dBusAxi_wdata),
-      .dBusAxi_wstrb(dBusAxi_wstrb),
-      .dBusAxi_wlast(dBusAxi_wlast),
-      .dBusAxi_bvalid(dBusAxi_bvalid),
-      .dBusAxi_bready(dBusAxi_bready),
-      .dBusAxi_bid(dBusAxi_bid),
-      .dBusAxi_bresp(dBusAxi_bresp),
-      .dBusAxi_arvalid(dBusAxi_arvalid),
-      .dBusAxi_arready(dBusAxi_arready),
-      .dBusAxi_araddr(dBusAxi_araddr),
-      .dBusAxi_arid(dBusAxi_arid),
-      .dBusAxi_arregion(dBusAxi_arregion),
-      .dBusAxi_arlen(dBusAxi_arlen),
-      .dBusAxi_arsize(dBusAxi_arsize),
-      .dBusAxi_arburst(dBusAxi_arburst),
-      .dBusAxi_arlock(dBusAxi_arlock),
-      .dBusAxi_arcache(dBusAxi_arcache),
-      .dBusAxi_arqos(dBusAxi_arqos),
-      .dBusAxi_arprot(dBusAxi_arprot),
-      .dBusAxi_rvalid(dBusAxi_rvalid),
-      .dBusAxi_rready(dBusAxi_rready),
-      .dBusAxi_rdata(dBusAxi_rdata),
-      .dBusAxi_rid(dBusAxi_rid),
-      .dBusAxi_rresp(dBusAxi_rresp),
-      .dBusAxi_rlast(dBusAxi_rlast),
+      .iBusAxi_arvalid(iBus_axi_arvalid_o),
+      .iBusAxi_arready(iBus_axi_arready_i),
+      .iBusAxi_araddr(iBus_axi_araddr_int),
+      .iBusAxi_arid(iBus_axi_arid_o),
+      .iBusAxi_arregion(iBus_axi_arregion),
+      .iBusAxi_arlen(iBus_axi_arlen_o),
+      .iBusAxi_arsize(iBus_axi_arsize_o),
+      .iBusAxi_arburst(iBus_axi_arburst_o),
+      .iBusAxi_arlock(iBus_axi_arlock),
+      .iBusAxi_arcache(iBus_axi_arcache_o),
+      .iBusAxi_arqos(iBus_axi_arqos_o),
+      .iBusAxi_arprot(iBus_axi_arprot_o),
+      .iBusAxi_rvalid(iBus_axi_rvalid_i),
+      .iBusAxi_rready(iBus_axi_rready_o),
+      .iBusAxi_rdata(iBus_axi_rdata_i),
+      .iBusAxi_rid(iBus_axi_rid_i),
+      .iBusAxi_rresp(iBus_axi_rresp_i),
+      .iBusAxi_rlast(iBus_axi_rlast_i),
+      .dBusAxi_awvalid(dBus_axi_awvalid_o),
+      .dBusAxi_awready(dBus_axi_awready_i),
+      .dBusAxi_awaddr(dBus_axi_awaddr_int),
+      .dBusAxi_awid(dBus_axi_awid_o),
+      .dBusAxi_awregion(dBus_axi_awregion),
+      .dBusAxi_awlen(dBus_axi_awlen_o),
+      .dBusAxi_awsize(dBus_axi_awsize_o),
+      .dBusAxi_awburst(dBus_axi_awburst_o),
+      .dBusAxi_awlock(dBus_axi_awlock),
+      .dBusAxi_awcache(dBus_axi_awcache_o),
+      .dBusAxi_awqos(dBus_axi_awqos_o),
+      .dBusAxi_awprot(dBus_axi_awprot_o),
+      .dBusAxi_wvalid(dBus_axi_wvalid_o),
+      .dBusAxi_wready(dBus_axi_wready_i),
+      .dBusAxi_wdata(dBus_axi_wdata_o),
+      .dBusAxi_wstrb(dBus_axi_wstrb_o),
+      .dBusAxi_wlast(dBus_axi_wlast_o),
+      .dBusAxi_bvalid(dBus_axi_bvalid_i),
+      .dBusAxi_bready(dBus_axi_bready_o),
+      .dBusAxi_bid(dBus_axi_bid_i),
+      .dBusAxi_bresp(dBus_axi_bresp_i),
+      .dBusAxi_arvalid(dBus_axi_arvalid_o),
+      .dBusAxi_arready(dBus_axi_arready_i),
+      .dBusAxi_araddr(dBus_axi_araddr_int),
+      .dBusAxi_arid(dBus_axi_arid_o),
+      .dBusAxi_arregion(dBus_axi_arregion),
+      .dBusAxi_arlen(dBus_axi_arlen_o),
+      .dBusAxi_arsize(dBus_axi_arsize_o),
+      .dBusAxi_arburst(dBus_axi_arburst_o),
+      .dBusAxi_arlock(dBus_axi_arlock),
+      .dBusAxi_arcache(dBus_axi_arcache_o),
+      .dBusAxi_arqos(dBus_axi_arqos_o),
+      .dBusAxi_arprot(dBus_axi_arprot_o),
+      .dBusAxi_rvalid(dBus_axi_rvalid_i),
+      .dBusAxi_rready(dBus_axi_rready_o),
+      .dBusAxi_rdata(dBus_axi_rdata_i),
+      .dBusAxi_rid(dBus_axi_rid_i),
+      .dBusAxi_rresp(dBus_axi_rresp_i),
+      .dBusAxi_rlast(dBus_axi_rlast_i),
       .jtag_tms(jtag_tms),
       .jtag_tdi(jtag_tdi),
       .jtag_tdo(jtag_tdo),
