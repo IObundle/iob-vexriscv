@@ -107,18 +107,6 @@ module iob_VexRiscv #(
   wire                dBus_axi_arlock;
   wire                periphral_sel;
 
-  wire                jtag_tms;
-  wire                jtag_tdi;
-  wire                jtag_tdo;
-  wire                jtag_tck;
-  wire                debugReset;
-  wire                debug_resetOut;
-
-  assign jtag_tms = 1'b0;
-  assign jtag_tdi = 1'b0;
-  assign jtag_tck = 1'b0;
-  assign debugReset = 1'b0;
-
   assign periphral_sel =
     (&dBus_axi_awaddr_int[ADDR_W-1:ADDR_W-4])|(&dBus_axi_araddr_int[ADDR_W-1:ADDR_W-4]);
 
@@ -277,7 +265,6 @@ module iob_VexRiscv #(
       .plic_rdata(plic_rdata),
       .plic_rresp(plic_rresp),
       .plicInterrupts(plicInterrupts),
-      .debug_resetOut(debug_resetOut),
       .iBusAxi_arvalid(iBus_axi_arvalid_o),
       .iBusAxi_arready(iBus_axi_arready_i),
       .iBusAxi_araddr(iBus_axi_araddr_int),
@@ -335,13 +322,8 @@ module iob_VexRiscv #(
       .dBusAxi_rid(dBus_axi_rid_i),
       .dBusAxi_rresp(dBus_axi_rresp_i),
       .dBusAxi_rlast(dBus_axi_rlast_i),
-      .jtag_tms(jtag_tms),
-      .jtag_tdi(jtag_tdi),
-      .jtag_tdo(jtag_tdo),
-      .jtag_tck(jtag_tck),
       .clk(clk_i),
-      .reset(cpu_reset_i),
-      .debugReset(debugReset)
+      .reset(cpu_reset_i)
   );
 
 

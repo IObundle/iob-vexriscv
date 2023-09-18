@@ -7,8 +7,7 @@ VEX_SUBMODULES_DIR:=$(VEXRISCV_DIR)/submodules
 # Rules
 .PHONY: vexriscv clean-all qemu
 
-CPU ?= LinuxGen
-#CPU ?= GenFullNoMmuNoCache
+CPU ?= VexRiscvAxi4LinuxPlicClint
 
 # Primary targets
 vexriscv:
