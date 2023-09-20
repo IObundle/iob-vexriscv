@@ -105,10 +105,11 @@ module iob_VexRiscv #(
   wire [  DATA_W-1:0] dBus_axi_araddr_int;
   wire [         3:0] dBus_axi_arregion;
   wire                dBus_axi_arlock;
-  wire                periphral_sel;
+  wire                w_periphral_sel;
+  wire                r_periphral_sel;
 
-  assign periphral_sel =
-    (&dBus_axi_awaddr_int[ADDR_W-1:ADDR_W-4])|(&dBus_axi_araddr_int[ADDR_W-1:ADDR_W-4]);
+  assign w_periphral_sel = &dBus_axi_awaddr_int[ADDR_W-1:ADDR_W-4];
+  assign r_periphral_sel = &dBus_axi_araddr_int[ADDR_W-1:ADDR_W-4];
 
   assign iBus_axi_awvalid_o = 1'b0;
   assign iBus_axi_awaddr_o = {ADDR_W{1'b0}};
@@ -134,16 +135,22 @@ module iob_VexRiscv #(
   assign dBus_axi_arlock_o = {1'b0, dBus_axi_arlock};
 
   always @(*) begin
-    if (periphral_sel) begin
+    if (w_periphral_sel) begin
       dBus_axi_awaddr = {
         1'b1, dBus_axi_awaddr_int[ADDR_W-6:ADDR_W-8], 4'b0, dBus_axi_awaddr_int[ADDR_W-9:0]
       };
+    end else begin
+      dBus_axi_awaddr = {boot_i&(~dBus_axi_awaddr_int[ADDR_W-1]), dBus_axi_awaddr_int[ADDR_W-2:0]};
+    end
+  end
+
+  always @(*) begin
+    if (r_periphral_sel) begin
       dBus_axi_araddr = {
         1'b1, dBus_axi_araddr_int[ADDR_W-6:ADDR_W-8], 4'b0, dBus_axi_araddr_int[ADDR_W-9:0]
       };
     end else begin
-      dBus_axi_awaddr = {boot_i, dBus_axi_awaddr_int[ADDR_W-2:0]};
-      dBus_axi_araddr = {boot_i, dBus_axi_araddr_int[ADDR_W-2:0]};
+      dBus_axi_araddr = {boot_i&(~dBus_axi_araddr_int[ADDR_W-1]), dBus_axi_araddr_int[ADDR_W-2:0]};
     end
   end
 

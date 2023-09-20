@@ -20,6 +20,7 @@ object VexRiscvAxi4LinuxPlicClint{
           new IBusCachedPlugin(
             prediction = NONE,
             compressedGen = true,
+            injectorStage = true,
             config = InstructionCacheConfig(
               cacheSize = 4096,
               bytePerLine = 64,
@@ -30,8 +31,8 @@ object VexRiscvAxi4LinuxPlicClint{
               catchIllegalAccess = true,
               catchAccessFault = true,
               asyncTagMemory = false,
-              twoCycleRam = false,
-              twoCycleCache = false
+              twoCycleRam = true,
+              twoCycleCache = true
             ),
             memoryTranslatorPortConfig = MmuPortConfig(
               portTlbSize = 4,
@@ -92,7 +93,7 @@ object VexRiscvAxi4LinuxPlicClint{
             earlyBranch = false,
             catchAddressMisaligned = true
           ),
-          new CsrPlugin(CsrPluginConfig.openSbi(mhartid = 0, misa = Riscv.misaToInt(s"ima")).copy(utimeAccess = CsrAccess.READ_ONLY)),
+          new CsrPlugin(CsrPluginConfig.openSbi(mhartid = 0, misa = Riscv.misaToInt(s"imac")).copy(utimeAccess = CsrAccess.READ_ONLY)),
           new YamlPlugin("cpu0.yaml")
         )
       )
