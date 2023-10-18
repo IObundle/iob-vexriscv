@@ -19,6 +19,6 @@ vexriscv:
 # Clean
 #
 clean-vexriscv:
-	rm $(VEXRISCV_SRC_DIR)/VexRiscv.v
+	rm $(VEXRISCV_SRC_DIR)/$(CPU).v
 
 clean-all: clean-vexriscv
