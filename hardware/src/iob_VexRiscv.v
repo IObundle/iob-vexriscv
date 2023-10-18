@@ -123,7 +123,7 @@ module iob_VexRiscv #(
   assign iBus_axi_awprot_o = {3{1'b0}};
   assign iBus_axi_wvalid_o = 1'b0;
   assign iBus_axi_wdata_o = {DATA_W{1'b0}};
-  assign iBus_axi_wstrb_o = {DATA_W/8{1'b0}};
+  assign iBus_axi_wstrb_o = {DATA_W / 8{1'b0}};
   assign iBus_axi_wlast_o = 1'b0;
   assign iBus_axi_bready_o = 1'b0;
   assign iBus_axi_araddr_o = {boot_i, iBus_axi_araddr_int[ADDR_W-2:0]};
@@ -136,21 +136,21 @@ module iob_VexRiscv #(
 
   always @(*) begin
     if (w_periphral_sel) begin
-      dBus_axi_awaddr = {
-        1'b1, dBus_axi_awaddr_int[ADDR_W-6:ADDR_W-8], 4'b0, dBus_axi_awaddr_int[ADDR_W-9:0]
-      };
+      dBus_axi_awaddr = dBus_axi_awaddr_int;
     end else begin
-      dBus_axi_awaddr = {boot_i&(~dBus_axi_awaddr_int[ADDR_W-1]), dBus_axi_awaddr_int[ADDR_W-2:0]};
+      dBus_axi_awaddr = {
+        boot_i & (~dBus_axi_awaddr_int[ADDR_W-1]), dBus_axi_awaddr_int[ADDR_W-2:0]
+      };
     end
   end
 
   always @(*) begin
     if (r_periphral_sel) begin
-      dBus_axi_araddr = {
-        1'b1, dBus_axi_araddr_int[ADDR_W-6:ADDR_W-8], 4'b0, dBus_axi_araddr_int[ADDR_W-9:0]
-      };
+      dBus_axi_araddr = dBus_axi_araddr_int;
     end else begin
-      dBus_axi_araddr = {boot_i&(~dBus_axi_araddr_int[ADDR_W-1]), dBus_axi_araddr_int[ADDR_W-2:0]};
+      dBus_axi_araddr = {
+        boot_i & (~dBus_axi_araddr_int[ADDR_W-1]), dBus_axi_araddr_int[ADDR_W-2:0]
+      };
     end
   end
 
