@@ -34,6 +34,6 @@ jobs:
         with:
           submodules: 'recursive'
       - name: test-clean
-        run: make clean-all
+        run: nix-shell --run "make clean-vexriscv"
       - name: test-vexriscv
         run: nix-shell --run "make vexriscv"
