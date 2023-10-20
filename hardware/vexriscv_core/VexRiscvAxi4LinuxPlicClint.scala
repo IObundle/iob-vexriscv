@@ -93,7 +93,7 @@ object VexRiscvAxi4LinuxPlicClint{
             earlyBranch = false,
             catchAddressMisaligned = true
           ),
-          new CsrPlugin(CsrPluginConfig.linuxFull(0x80000020l).copy(misaExtensionsInit = Riscv.misaToInt(s"imac"), ebreakGen = true).copy(utimeAccess = CsrAccess.READ_ONLY)),
+          new CsrPlugin(CsrPluginConfig.linuxFull(0x80000020l).copy(misaExtensionsInit = 0x0141105, ebreakGen = true).copy(utimeAccess = CsrAccess.READ_ONLY)),
           new YamlPlugin("cpu0.yaml")
         )
       )

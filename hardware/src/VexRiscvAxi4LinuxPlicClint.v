@@ -5631,7 +5631,7 @@ module VexRiscvAxi4LinuxPlicClint (
   end
 
   assign CsrPlugin_misa_base = 2'b01;
-  assign CsrPlugin_misa_extensions = 26'h0001105;
+  assign CsrPlugin_misa_extensions = 26'h0141105;
   assign CsrPlugin_mtvec_mode = 2'b00;
   assign CsrPlugin_sip_SEIP_OR = (CsrPlugin_sip_SEIP_SOFT || CsrPlugin_sip_SEIP_INPUT);
   always @(*) begin
