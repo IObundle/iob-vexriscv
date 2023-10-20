@@ -38,6 +38,8 @@ module iob_VexRiscv #(
     input wire boot_i
 );
 
+  wire reset;
+
   wire                clint_iob_avalid;
   wire [  ADDR_W-1:0] clint_iob_addr;
   wire [  DATA_W-1:0] clint_iob_wdata;
@@ -107,6 +109,8 @@ module iob_VexRiscv #(
   wire                dBus_axi_arlock;
   wire                w_periphral_sel;
   wire                r_periphral_sel;
+
+  assign reset = cpu_reset_i | arst_i;
 
   assign w_periphral_sel = &dBus_axi_awaddr_int[ADDR_W-1:ADDR_W-4];
   assign r_periphral_sel = &dBus_axi_araddr_int[ADDR_W-1:ADDR_W-4];
@@ -330,7 +334,7 @@ module iob_VexRiscv #(
       .dBusAxi_rresp(dBus_axi_rresp_i),
       .dBusAxi_rlast(dBus_axi_rlast_i),
       .clk(clk_i),
-      .reset(cpu_reset_i)
+      .reset(reset)
   );
 
 
