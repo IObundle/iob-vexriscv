@@ -40,7 +40,7 @@ module iob_VexRiscv #(
 
   wire reset;
 
-  wire                clint_iob_avalid;
+  wire                clint_iob_valid;
   wire [  ADDR_W-1:0] clint_iob_addr;
   wire [  DATA_W-1:0] clint_iob_wdata;
   wire [DATA_W/8-1:0] clint_iob_wstrb;
@@ -68,7 +68,7 @@ module iob_VexRiscv #(
   wire [        31:0] clint_rdata;
   wire [         1:0] clint_rresp;
 
-  wire                plic_iob_avalid;
+  wire                plic_iob_valid;
   wire [  ADDR_W-1:0] plic_iob_addr;
   wire [  DATA_W-1:0] plic_iob_wdata;
   wire [DATA_W/8-1:0] plic_iob_wstrb;
@@ -158,9 +158,9 @@ module iob_VexRiscv #(
     end
   end
 
-  assign {plic_iob_avalid, plic_iob_addr, plic_iob_wdata, plic_iob_wstrb} = plic_req;
+  assign {plic_iob_valid, plic_iob_addr, plic_iob_wdata, plic_iob_wstrb} = plic_req;
   assign plic_resp = {plic_iob_rdata, plic_iob_rvalid, plic_iob_ready};
-  assign {clint_iob_avalid, clint_iob_addr, clint_iob_wdata, clint_iob_wstrb} = clint_req;
+  assign {clint_iob_valid, clint_iob_addr, clint_iob_wdata, clint_iob_wstrb} = clint_req;
   assign clint_resp = {clint_iob_rdata, clint_iob_rvalid, clint_iob_ready};
   // instantiate iob2axil clint
   iob2axil #(
@@ -170,7 +170,7 @@ module iob_VexRiscv #(
       .DATA_W(DATA_W)
   ) clint_iob2axil (
       // IOb-bus slave signals
-      .iob_avalid_i(clint_iob_avalid),
+      .iob_valid_i(clint_iob_valid),
       .iob_addr_i(clint_iob_addr),
       .iob_wdata_i(clint_iob_wdata),
       .iob_wstrb_i(clint_iob_wstrb),
@@ -206,7 +206,7 @@ module iob_VexRiscv #(
       .DATA_W(DATA_W)
   ) plic_iob2axil (
       // IOb-bus slave signals
-      .iob_avalid_i(plic_iob_avalid),
+      .iob_valid_i(plic_iob_valid),
       .iob_addr_i(plic_iob_addr),
       .iob_wdata_i(plic_iob_wdata),
       .iob_wstrb_i(plic_iob_wstrb),
