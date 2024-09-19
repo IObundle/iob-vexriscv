@@ -6754,11 +6754,11 @@ module VexRiscvAxi4LinuxPlicClint (
   assign utime = clintCtrl_io_time;
   always @(posedge clk or posedge reset) begin
     if(reset) begin
-      IBusCachedPlugin_fetchPc_pcReg <= 32'h80000000;
+      IBusCachedPlugin_fetchPc_pcReg <= 32'h40000000;
       IBusCachedPlugin_fetchPc_correctionReg <= 1'b0;
       IBusCachedPlugin_fetchPc_booted <= 1'b0;
       IBusCachedPlugin_fetchPc_inc <= 1'b0;
-      IBusCachedPlugin_decodePc_pcReg <= 32'h80000000;
+      IBusCachedPlugin_decodePc_pcReg <= 32'h40000000;
       _zz_IBusCachedPlugin_iBusRsp_stages_1_input_valid_1 <= 1'b0;
       _zz_IBusCachedPlugin_iBusRsp_stages_1_output_m2sPipe_valid <= 1'b0;
       IBusCachedPlugin_decompressor_bufferValid <= 1'b0;
