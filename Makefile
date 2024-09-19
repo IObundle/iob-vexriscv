@@ -8,12 +8,14 @@ VEX_SUBMODULES_DIR:=$(VEXRISCV_DIR)/submodules
 .PHONY: vexriscv clean-all qemu
 
 CPU ?= VexRiscvAxi4LinuxPlicClint
+JDK_HOME := $(shell dirname $$(dirname $$(which java)))
 
 # Primary targets
 vexriscv:
-	cp $(VEX_HARDWARE_DIR)/vexriscv_core/* $(VEX_SUBMODULES_DIR)/VexRiscv/src/main/scala/vexriscv/demo/ && \
-		cd submodules/VexRiscv && sbt "runMain vexriscv.demo.$(CPU)" && \
-		cp $(CPU).v $(VEXRISCV_SRC_DIR)
+	cp $(VEX_HARDWARE_DIR)/vexriscv_core/* $(VEX_SUBMODULES_DIR)/VexRiscv/src/main/scala/vexriscv/demo/
+	cd submodules/VexRiscv && \
+	sbt -java-home $(JDK_HOME) "runMain vexriscv.demo.$(CPU)" && \
+	cp $(CPU).v $(VEXRISCV_SRC_DIR)
 
 #
 # Clean
