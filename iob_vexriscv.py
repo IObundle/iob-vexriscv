@@ -39,12 +39,12 @@ def setup(py_params_dict):
         ],
         "ports": [
             {
-                "name": "clk_en_rst",
+                "name": "clk_en_rst_s",
                 "descr": "Clock, clock enable and reset",
                 "interface": {"type": "clk_en_rst", "subtype": "slave"},
             },
             {
-                "name": "rst",
+                "name": "rst_i",
                 "descr": "Synchronous reset",
                 "signals": [
                     {
@@ -56,7 +56,7 @@ def setup(py_params_dict):
                 ],
             },
             {
-                "name": "i_bus",
+                "name": "i_bus_m",
                 "descr": "iob-picorv32 instruction bus",
                 "interface": {
                     "type": "axi",
@@ -70,7 +70,7 @@ def setup(py_params_dict):
                 },
             },
             {
-                "name": "d_bus",
+                "name": "d_bus_m",
                 "descr": "iob-picorv32 data bus",
                 "interface": {
                     "type": "axi",
@@ -84,7 +84,7 @@ def setup(py_params_dict):
                 },
             },
             {
-                "name": "clint_cbus",
+                "name": "clint_cbus_s",
                 "descr": "CLINT CSRs bus",
                 "interface": {
                     "type": "axil",
@@ -97,7 +97,7 @@ def setup(py_params_dict):
                 },
             },
             {
-                "name": "plic_cbus",
+                "name": "plic_cbus_s",
                 "descr": "PLIC CSRs bus",
                 "interface": {
                     "type": "axil",
@@ -110,7 +110,7 @@ def setup(py_params_dict):
                 },
             },
             {
-                "name": "plic_interrupts",
+                "name": "plic_interrupts_i",
                 "descr": "PLIC interrupts",
                 "signals": [
                     {
