@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024 IObundle
+#
+# SPDX-License-Identifier: MIT
+
 #PATHS
 VEXRISCV_DIR ?= $(shell pwd)
 VEX_HARDWARE_DIR:=$(VEXRISCV_DIR)/hardware

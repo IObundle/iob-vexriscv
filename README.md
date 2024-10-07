@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2024 IObundle
+
+SPDX-License-Identifier: MIT
+-->
+
 # iob-vexriscv
 This repository contains the hardware necessary to integrate the VexRiscv CPU on IOb-SoC.
 
