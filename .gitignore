@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024 IObundle
+#
+# SPDX-License-Identifier: MIT
+
 # Ignore generated files
 /*
 
@@ -16,3 +20,4 @@
 /software/OS_build/*
 !/submodules
 /submodules/*/*
+!/LICENSES

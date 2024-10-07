@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024 IObundle
+#
+# SPDX-License-Identifier: MIT
+
 [submodule "submodules/VexRiscv"]
 	path = submodules/VexRiscv
 	url = git@github.com:SpinalHDL/VexRiscv.git
