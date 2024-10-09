@@ -51,9 +51,8 @@ def setup(py_params_dict):
                 "descr": "Synchronous reset",
                 "signals": [
                     {
-                        "name": "rst",
+                        "name": "rst_i",
                         "descr": "CPU synchronous reset",
-                        "direction": "input",
                         "width": "1",
                     },
                 ],
@@ -111,9 +110,8 @@ def setup(py_params_dict):
                 "descr": "PLIC interrupts",
                 "signals": [
                     {
-                        "name": "plic_interrupts",
+                        "name": "plic_interrupts_i",
                         "descr": "PLIC interrupts",
-                        "direction": "input",
                         "width": "32",
                     },
                 ],
