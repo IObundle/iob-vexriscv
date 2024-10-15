@@ -63,7 +63,7 @@ def setup(py_params_dict):
                 "interface": {
                     "type": "axi",
                     "subtype": "master",
-                    "port_prefix": "ibus_",
+                    "prefix": "ibus_",
                     "ID_W": "AXI_ID_W",
                     "ADDR_W": "AXI_ADDR_W - 2",
                     "DATA_W": "AXI_DATA_W",
@@ -77,7 +77,7 @@ def setup(py_params_dict):
                 "interface": {
                     "type": "axi",
                     "subtype": "master",
-                    "port_prefix": "dbus_",
+                    "prefix": "dbus_",
                     "ID_W": "AXI_ID_W",
                     "ADDR_W": "AXI_ADDR_W - 2",
                     "DATA_W": "AXI_DATA_W",
@@ -91,7 +91,7 @@ def setup(py_params_dict):
                 "interface": {
                     "type": "iob",
                     "subtype": "slave",
-                    "port_prefix": "clint_",
+                    "prefix": "clint_",
                     "ADDR_W": 16 - 2,
                 },
             },
@@ -101,7 +101,7 @@ def setup(py_params_dict):
                 "interface": {
                     "type": "iob",
                     "subtype": "slave",
-                    "port_prefix": "plic_",
+                    "prefix": "plic_",
                     "ADDR_W": 22 - 2,
                 },
             },
@@ -149,7 +149,7 @@ def setup(py_params_dict):
                 "interface": {
                     "type": "axil",
                     "subtype": "slave",
-                    "wire_prefix": "clint_",
+                    "prefix": "clint_",
                     "ADDR_W": 16 - 2,
                     "DATA_W": "AXI_DATA_W",
                 },
@@ -160,7 +160,7 @@ def setup(py_params_dict):
                 "interface": {
                     "type": "axil",
                     "subtype": "slave",
-                    "wire_prefix": "plic_",
+                    "prefix": "plic_",
                     "ADDR_W": 22 - 2,
                     "DATA_W": "AXI_DATA_W",
                 },
