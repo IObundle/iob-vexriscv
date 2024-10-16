@@ -44,7 +44,7 @@ def setup(py_params_dict):
             {
                 "name": "clk_en_rst_s",
                 "descr": "Clock, clock enable and reset",
-                "interface": {"type": "clk_en_rst", "subtype": "slave"},
+                "interface": {"type": "clk_en_rst"},
             },
             {
                 "name": "rst_i",
@@ -62,7 +62,6 @@ def setup(py_params_dict):
                 "descr": "iob-picorv32 instruction bus",
                 "interface": {
                     "type": "axi",
-                    "subtype": "master",
                     "port_prefix": "ibus_",
                     "ID_W": "AXI_ID_W",
                     "ADDR_W": "AXI_ADDR_W",
@@ -76,7 +75,6 @@ def setup(py_params_dict):
                 "descr": "iob-picorv32 data bus",
                 "interface": {
                     "type": "axi",
-                    "subtype": "master",
                     "port_prefix": "dbus_",
                     "ID_W": "AXI_ID_W",
                     "ADDR_W": "AXI_ADDR_W",
@@ -90,7 +88,6 @@ def setup(py_params_dict):
                 "descr": "CLINT CSRs bus",
                 "interface": {
                     "type": "iob",
-                    "subtype": "slave",
                     "port_prefix": "clint_",
                     "ADDR_W": "16",
                 },
@@ -100,7 +97,6 @@ def setup(py_params_dict):
                 "descr": "PLIC CSRs bus",
                 "interface": {
                     "type": "iob",
-                    "subtype": "slave",
                     "port_prefix": "plic_",
                     "ADDR_W": "22",
                 },
@@ -148,7 +144,6 @@ def setup(py_params_dict):
                 "descr": "CLINT CSRs bus",
                 "interface": {
                     "type": "axil",
-                    "subtype": "slave",
                     "wire_prefix": "clint_",
                     "ADDR_W": "16",
                     "DATA_W": "AXI_DATA_W",
@@ -159,7 +154,6 @@ def setup(py_params_dict):
                 "descr": "PLIC CSRs bus",
                 "interface": {
                     "type": "axil",
-                    "subtype": "slave",
                     "wire_prefix": "plic_",
                     "ADDR_W": "22",
                     "DATA_W": "AXI_DATA_W",
