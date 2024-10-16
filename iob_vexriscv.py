@@ -12,32 +12,32 @@ def setup(py_params_dict):
                 "descr": "AXI ID bus width",
                 "type": "P",
                 "val": 0,
-                "min": "1",
-                "max": "32",
+                "min": 0,
+                "max": 32,
             },
             {
                 "name": "AXI_ADDR_W",
                 "descr": "AXI address bus width",
                 "type": "P",
                 "val": 0,
-                "min": "1",
-                "max": "32",
+                "min": 0,
+                "max": 32,
             },
             {
                 "name": "AXI_DATA_W",
                 "descr": "AXI data bus width",
                 "type": "P",
                 "val": 0,
-                "min": "1",
-                "max": "32",
+                "min": 0,
+                "max": 32,
             },
             {
                 "name": "AXI_LEN_W",
                 "descr": "AXI burst length width",
                 "type": "P",
                 "val": 0,
-                "min": "1",
-                "max": "4",
+                "min": 0,
+                "max": 4,
             },
         ],
         "ports": [
@@ -51,9 +51,8 @@ def setup(py_params_dict):
                 "descr": "Synchronous reset",
                 "signals": [
                     {
-                        "name": "rst",
+                        "name": "rst_i",
                         "descr": "CPU synchronous reset",
-                        "direction": "input",
                         "width": "1",
                     },
                 ],
@@ -64,9 +63,9 @@ def setup(py_params_dict):
                 "interface": {
                     "type": "axi",
                     "subtype": "master",
-                    "port_prefix": "ibus_",
+                    "prefix": "ibus_",
                     "ID_W": "AXI_ID_W",
-                    "ADDR_W": "AXI_ADDR_W",
+                    "ADDR_W": "AXI_ADDR_W - 2",
                     "DATA_W": "AXI_DATA_W",
                     "LEN_W": "AXI_LEN_W",
                     "LOCK_W": 1,
@@ -78,9 +77,9 @@ def setup(py_params_dict):
                 "interface": {
                     "type": "axi",
                     "subtype": "master",
-                    "port_prefix": "dbus_",
+                    "prefix": "dbus_",
                     "ID_W": "AXI_ID_W",
-                    "ADDR_W": "AXI_ADDR_W",
+                    "ADDR_W": "AXI_ADDR_W - 2",
                     "DATA_W": "AXI_DATA_W",
                     "LEN_W": "AXI_LEN_W",
                     "LOCK_W": 1,
@@ -92,8 +91,8 @@ def setup(py_params_dict):
                 "interface": {
                     "type": "iob",
                     "subtype": "slave",
-                    "port_prefix": "clint_",
-                    "ADDR_W": "16",
+                    "prefix": "clint_",
+                    "ADDR_W": 16 - 2,
                 },
             },
             {
@@ -102,8 +101,8 @@ def setup(py_params_dict):
                 "interface": {
                     "type": "iob",
                     "subtype": "slave",
-                    "port_prefix": "plic_",
-                    "ADDR_W": "22",
+                    "prefix": "plic_",
+                    "ADDR_W": 22 - 2,
                 },
             },
             {
@@ -111,9 +110,8 @@ def setup(py_params_dict):
                 "descr": "PLIC interrupts",
                 "signals": [
                     {
-                        "name": "plic_interrupts",
+                        "name": "plic_interrupts_i",
                         "descr": "PLIC interrupts",
-                        "direction": "input",
                         "width": "32",
                     },
                 ],
@@ -124,7 +122,7 @@ def setup(py_params_dict):
                 "name": "cpu_reset",
                 "descr": "cpu reset signal",
                 "signals": [
-                    {"name": "cpu_reset", "direction": "input", "width": "1"},
+                    {"name": "cpu_reset", "width": "1"},
                 ],
             },
             {
@@ -151,8 +149,8 @@ def setup(py_params_dict):
                 "interface": {
                     "type": "axil",
                     "subtype": "slave",
-                    "wire_prefix": "clint_",
-                    "ADDR_W": "16",
+                    "prefix": "clint_",
+                    "ADDR_W": 16 - 2,
                     "DATA_W": "AXI_DATA_W",
                 },
             },
@@ -162,8 +160,8 @@ def setup(py_params_dict):
                 "interface": {
                     "type": "axil",
                     "subtype": "slave",
-                    "wire_prefix": "plic_",
-                    "ADDR_W": "22",
+                    "prefix": "plic_",
+                    "ADDR_W": 22 - 2,
                     "DATA_W": "AXI_DATA_W",
                 },
             },
@@ -174,7 +172,7 @@ def setup(py_params_dict):
                 "instance_name": "clint_iob2axil",
                 "instance_description": "Convert IOb to AXI lite for CLINT",
                 "parameters": {
-                    "AXIL_ADDR_W": "16",
+                    "AXIL_ADDR_W": 16 - 2,
                     "AXIL_DATA_W": "AXI_DATA_W",
                 },
                 "connect": {
@@ -187,7 +185,7 @@ def setup(py_params_dict):
                 "instance_name": "plic_iob2axil",
                 "instance_description": "Convert IOb to AXI lite for PLIC",
                 "parameters": {
-                    "AXIL_ADDR_W": "22",
+                    "AXIL_ADDR_W": 22 - 2,
                     "AXIL_DATA_W": "AXI_DATA_W",
                 },
                 "connect": {
@@ -199,12 +197,20 @@ def setup(py_params_dict):
         "snippets": [
             {
                 "verilog_code": """
+    wire [AXI_ADDR_W-1:0] ibus_axi_araddr_int;
+    wire [AXI_ADDR_W-1:0] dbus_axi_awaddr_int;
+    wire [AXI_ADDR_W-1:0] dbus_axi_araddr_int;
+
+    assign ibus_axi_araddr_o = ibus_axi_araddr_int[AXI_ADDR_W-1:2];
+    assign dbus_axi_awaddr_o = dbus_axi_awaddr_int[AXI_ADDR_W-1:2];
+    assign dbus_axi_araddr_o = dbus_axi_araddr_int[AXI_ADDR_W-1:2];
+
   // Instantiation of VexRiscv, Plic, and Clint
   VexRiscvAxi4LinuxPlicClint CPU (
       // CLINT
       .clint_awvalid(clint_axil_awvalid),
       .clint_awready(clint_axil_awready),
-      .clint_awaddr(clint_axil_awaddr),
+      .clint_awaddr({clint_axil_awaddr, 2'b0}),
       .clint_awprot(clint_axil_awprot),
       .clint_wvalid(clint_axil_wvalid),
       .clint_wready(clint_axil_wready),
@@ -215,7 +221,7 @@ def setup(py_params_dict):
       .clint_bresp(clint_axil_bresp),
       .clint_arvalid(clint_axil_arvalid),
       .clint_arready(clint_axil_arready),
-      .clint_araddr(clint_axil_araddr),
+      .clint_araddr({clint_axil_araddr, 2'b0}),
       .clint_arprot(clint_axil_arprot),
       .clint_rvalid(clint_axil_rvalid),
       .clint_rready(clint_axil_rready),
@@ -224,7 +230,7 @@ def setup(py_params_dict):
       // PLIC
       .plic_awvalid(plic_axil_awvalid),
       .plic_awready(plic_axil_awready),
-      .plic_awaddr(plic_axil_awaddr),
+      .plic_awaddr({plic_axil_awaddr, 2'b0}),
       .plic_awprot(plic_axil_awprot),
       .plic_wvalid(plic_axil_wvalid),
       .plic_wready(plic_axil_wready),
@@ -235,7 +241,7 @@ def setup(py_params_dict):
       .plic_bresp(plic_axil_bresp),
       .plic_arvalid(plic_axil_arvalid),
       .plic_arready(plic_axil_arready),
-      .plic_araddr(plic_axil_araddr),
+      .plic_araddr({plic_axil_araddr, 2'b0}),
       .plic_arprot(plic_axil_arprot),
       .plic_rvalid(plic_axil_rvalid),
       .plic_rready(plic_axil_rready),
@@ -245,7 +251,7 @@ def setup(py_params_dict):
       // Instruction Bus
       .iBusAxi_arvalid(ibus_axi_arvalid_o),
       .iBusAxi_arready(ibus_axi_arready_i),
-      .iBusAxi_araddr(ibus_axi_araddr_o),
+      .iBusAxi_araddr(ibus_axi_araddr_int),
       .iBusAxi_arid(ibus_axi_arid_o),
       .iBusAxi_arregion(ibus_axi_arregion_int),
       .iBusAxi_arlen(ibus_axi_arlen_o),
@@ -264,7 +270,7 @@ def setup(py_params_dict):
       // Data Bus
       .dBusAxi_awvalid(dbus_axi_awvalid_o),
       .dBusAxi_awready(dbus_axi_awready_i),
-      .dBusAxi_awaddr(dbus_axi_awaddr_o),
+      .dBusAxi_awaddr(dbus_axi_awaddr_int),
       .dBusAxi_awid(dbus_axi_awid_o),
       .dBusAxi_awregion(dbus_axi_awregion_int),
       .dBusAxi_awlen(dbus_axi_awlen_o),
@@ -285,7 +291,7 @@ def setup(py_params_dict):
       .dBusAxi_bresp(dbus_axi_bresp_i),
       .dBusAxi_arvalid(dbus_axi_arvalid_o),
       .dBusAxi_arready(dbus_axi_arready_i),
-      .dBusAxi_araddr(dbus_axi_araddr_o),
+      .dBusAxi_araddr(dbus_axi_araddr_int),
       .dBusAxi_arid(dbus_axi_arid_o),
       .dBusAxi_arregion(dbus_axi_arregion_int),
       .dBusAxi_arlen(dbus_axi_arlen_o),
@@ -311,7 +317,7 @@ def setup(py_params_dict):
    assign cpu_reset = rst_i | arst_i;
 
    assign ibus_axi_awvalid_o = 1'b0;
-   assign ibus_axi_awaddr_o = {AXI_ADDR_W{1'b0}};
+   assign ibus_axi_awaddr_o = {AXI_ADDR_W-2{1'b0}};
    assign ibus_axi_awid_o = 1'b0;
    assign ibus_axi_awlen_o = {AXI_LEN_W{1'b0}};
    assign ibus_axi_awsize_o = {3{1'b0}};
