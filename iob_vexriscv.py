@@ -44,7 +44,7 @@ def setup(py_params_dict):
             {
                 "name": "clk_en_rst_s",
                 "descr": "Clock, clock enable and reset",
-                "interface": {"type": "clk_en_rst"},
+                "signals": {"type": "clk_en_rst"},
             },
             {
                 "name": "rst_i",
@@ -60,7 +60,7 @@ def setup(py_params_dict):
             {
                 "name": "i_bus_m",
                 "descr": "iob-picorv32 instruction bus",
-                "interface": {
+                "signals": {
                     "type": "axi",
                     "prefix": "ibus_",
                     "ID_W": "AXI_ID_W",
@@ -73,7 +73,7 @@ def setup(py_params_dict):
             {
                 "name": "d_bus_m",
                 "descr": "iob-picorv32 data bus",
-                "interface": {
+                "signals": {
                     "type": "axi",
                     "prefix": "dbus_",
                     "ID_W": "AXI_ID_W",
@@ -86,7 +86,7 @@ def setup(py_params_dict):
             {
                 "name": "clint_cbus_s",
                 "descr": "CLINT CSRs bus",
-                "interface": {
+                "signals": {
                     "type": "iob",
                     "prefix": "clint_",
                     "ADDR_W": 16 - 2,
@@ -95,7 +95,7 @@ def setup(py_params_dict):
             {
                 "name": "plic_cbus_s",
                 "descr": "PLIC CSRs bus",
-                "interface": {
+                "signals": {
                     "type": "iob",
                     "prefix": "plic_",
                     "ADDR_W": 22 - 2,
@@ -142,7 +142,7 @@ def setup(py_params_dict):
             {
                 "name": "clint_cbus_axil",
                 "descr": "CLINT CSRs bus",
-                "interface": {
+                "signals": {
                     "type": "axil",
                     "prefix": "clint_",
                     "ADDR_W": 16 - 2,
@@ -152,7 +152,7 @@ def setup(py_params_dict):
             {
                 "name": "plic_cbus_axil",
                 "descr": "PLIC CSRs bus",
-                "interface": {
+                "signals": {
                     "type": "axil",
                     "prefix": "plic_",
                     "ADDR_W": 22 - 2,
