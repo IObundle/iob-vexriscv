@@ -44,7 +44,7 @@ def setup(py_params_dict):
             {
                 "name": "clk_en_rst_s",
                 "descr": "Clock, clock enable and reset",
-                "interface": {"type": "clk_en_rst", "subtype": "slave"},
+                "signals": {"type": "clk_en_rst"},
             },
             {
                 "name": "rst_i",
@@ -60,9 +60,8 @@ def setup(py_params_dict):
             {
                 "name": "i_bus_m",
                 "descr": "iob-picorv32 instruction bus",
-                "interface": {
+                "signals": {
                     "type": "axi",
-                    "subtype": "master",
                     "prefix": "ibus_",
                     "ID_W": "AXI_ID_W",
                     "ADDR_W": "AXI_ADDR_W - 2",
@@ -74,9 +73,8 @@ def setup(py_params_dict):
             {
                 "name": "d_bus_m",
                 "descr": "iob-picorv32 data bus",
-                "interface": {
+                "signals": {
                     "type": "axi",
-                    "subtype": "master",
                     "prefix": "dbus_",
                     "ID_W": "AXI_ID_W",
                     "ADDR_W": "AXI_ADDR_W - 2",
@@ -88,9 +86,8 @@ def setup(py_params_dict):
             {
                 "name": "clint_cbus_s",
                 "descr": "CLINT CSRs bus",
-                "interface": {
+                "signals": {
                     "type": "iob",
-                    "subtype": "slave",
                     "prefix": "clint_",
                     "ADDR_W": 16 - 2,
                 },
@@ -98,9 +95,8 @@ def setup(py_params_dict):
             {
                 "name": "plic_cbus_s",
                 "descr": "PLIC CSRs bus",
-                "interface": {
+                "signals": {
                     "type": "iob",
-                    "subtype": "slave",
                     "prefix": "plic_",
                     "ADDR_W": 22 - 2,
                 },
@@ -146,9 +142,8 @@ def setup(py_params_dict):
             {
                 "name": "clint_cbus_axil",
                 "descr": "CLINT CSRs bus",
-                "interface": {
+                "signals": {
                     "type": "axil",
-                    "subtype": "slave",
                     "prefix": "clint_",
                     "ADDR_W": 16 - 2,
                     "DATA_W": "AXI_DATA_W",
@@ -157,9 +152,8 @@ def setup(py_params_dict):
             {
                 "name": "plic_cbus_axil",
                 "descr": "PLIC CSRs bus",
-                "interface": {
+                "signals": {
                     "type": "axil",
-                    "subtype": "slave",
                     "prefix": "plic_",
                     "ADDR_W": 22 - 2,
                     "DATA_W": "AXI_DATA_W",
@@ -168,7 +162,7 @@ def setup(py_params_dict):
         ],
         "blocks": [
             {
-                "core_name": "iob2axil",
+                "core_name": "iob_iob2axil",
                 "instance_name": "clint_iob2axil",
                 "instance_description": "Convert IOb to AXI lite for CLINT",
                 "parameters": {
@@ -181,7 +175,7 @@ def setup(py_params_dict):
                 },
             },
             {
-                "core_name": "iob2axil",
+                "core_name": "iob_iob2axil",
                 "instance_name": "plic_iob2axil",
                 "instance_description": "Convert IOb to AXI lite for PLIC",
                 "parameters": {
