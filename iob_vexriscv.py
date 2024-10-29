@@ -162,7 +162,7 @@ def setup(py_params_dict):
         ],
         "blocks": [
             {
-                "core_name": "iob2axil",
+                "core_name": "iob_iob2axil",
                 "instance_name": "clint_iob2axil",
                 "instance_description": "Convert IOb to AXI lite for CLINT",
                 "parameters": {
@@ -175,7 +175,7 @@ def setup(py_params_dict):
                 },
             },
             {
-                "core_name": "iob2axil",
+                "core_name": "iob_iob2axil",
                 "instance_name": "plic_iob2axil",
                 "instance_description": "Convert IOb to AXI lite for PLIC",
                 "parameters": {
