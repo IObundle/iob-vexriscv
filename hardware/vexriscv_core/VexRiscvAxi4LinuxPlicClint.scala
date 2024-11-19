@@ -68,7 +68,7 @@ object VexRiscvAxi4LinuxPlicClint{
             )
           ),
           new MmuPlugin(
-            ioRange = _(31) === True
+            ioRange = _(31 downto 30) === 0x3
           ),
           new DecoderSimplePlugin(
             catchIllegalInstruction = true
