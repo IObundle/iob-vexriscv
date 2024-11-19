@@ -22,7 +22,7 @@ object VexRiscvAxi4LinuxPlicClint{
       val cpuConfig = VexRiscvConfig(
         plugins = List(
           new IBusCachedPlugin(
-            resetVector = 0x40000000l,
+            resetVector = 0x80000000l,
             prediction = NONE,
             compressedGen = true,
             injectorStage = true,
