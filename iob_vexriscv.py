@@ -160,7 +160,7 @@ def setup(py_params_dict):
                 },
             },
         ],
-        "blocks": [
+        "subblocks": [
             {
                 "core_name": "iob_iob2axil",
                 "instance_name": "clint_iob2axil",
