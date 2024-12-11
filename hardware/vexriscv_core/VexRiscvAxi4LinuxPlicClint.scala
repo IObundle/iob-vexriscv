@@ -22,7 +22,7 @@ object VexRiscvAxi4LinuxPlicClint{
       val cpuConfig = VexRiscvConfig(
         plugins = List(
           new IBusCachedPlugin(
-            resetVector = 0x40000000l,
+            resetVector = 0x80000000l,
             prediction = NONE,
             compressedGen = true,
             injectorStage = true,
@@ -68,7 +68,7 @@ object VexRiscvAxi4LinuxPlicClint{
             )
           ),
           new MmuPlugin(
-            ioRange = _(31) === True
+            ioRange = _(31 downto 30) === 0x3
           ),
           new DecoderSimplePlugin(
             catchIllegalInstruction = true
