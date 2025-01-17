@@ -127,7 +127,6 @@ def setup(py_params_dict):
                 "descr": "ibus internal signals",
                 "signals": [
                     {"name": "ibus_axi_arregion_int", "width": "4"},
-                    {"name": "ibus_axi_arlock_int", "width": "1"},
                 ],
             },
             {
@@ -135,9 +134,7 @@ def setup(py_params_dict):
                 "descr": "dbus internal signals",
                 "signals": [
                     {"name": "dbus_axi_awregion_int", "width": "4"},
-                    {"name": "dbus_axi_awlock_int", "width": "1"},
                     {"name": "dbus_axi_arregion_int", "width": "4"},
-                    {"name": "dbus_axi_arlock_int", "width": "1"},
                 ],
             },
             {
@@ -195,6 +192,9 @@ def setup(py_params_dict):
     wire [AXI_ADDR_W-1:0] ibus_axi_araddr_int;
     wire [AXI_ADDR_W-1:0] dbus_axi_awaddr_int;
     wire [AXI_ADDR_W-1:0] dbus_axi_araddr_int;
+    wire [7:0] ibus_axi_arlen_int;
+    wire [7:0] dbus_axi_arlen_int;
+    wire [7:0] dbus_axi_awlen_int;
 
     assign ibus_axi_araddr_o = ibus_axi_araddr_int[AXI_ADDR_W-1:2];
     assign dbus_axi_awaddr_o = dbus_axi_awaddr_int[AXI_ADDR_W-1:2];
@@ -249,10 +249,10 @@ def setup(py_params_dict):
       .iBusAxi_araddr(ibus_axi_araddr_int),
       .iBusAxi_arid(ibus_axi_arid_o),
       .iBusAxi_arregion(ibus_axi_arregion_int),
-      .iBusAxi_arlen(ibus_axi_arlen_o),
+      .iBusAxi_arlen(ibus_axi_arlen_int),
       .iBusAxi_arsize(ibus_axi_arsize_o),
       .iBusAxi_arburst(ibus_axi_arburst_o),
-      .iBusAxi_arlock(ibus_axi_arlock_int),
+      .iBusAxi_arlock(ibus_axi_arlock_o),
       .iBusAxi_arcache(ibus_axi_arcache_o),
       .iBusAxi_arqos(ibus_axi_arqos_o),
       .iBusAxi_arprot(ibus_axi_arprot_o),
@@ -268,10 +268,10 @@ def setup(py_params_dict):
       .dBusAxi_awaddr(dbus_axi_awaddr_int),
       .dBusAxi_awid(dbus_axi_awid_o),
       .dBusAxi_awregion(dbus_axi_awregion_int),
-      .dBusAxi_awlen(dbus_axi_awlen_o),
+      .dBusAxi_awlen(dbus_axi_awlen_int),
       .dBusAxi_awsize(dbus_axi_awsize_o),
       .dBusAxi_awburst(dbus_axi_awburst_o),
-      .dBusAxi_awlock(dbus_axi_awlock_int),
+      .dBusAxi_awlock(dbus_axi_awlock_o),
       .dBusAxi_awcache(dbus_axi_awcache_o),
       .dBusAxi_awqos(dbus_axi_awqos_o),
       .dBusAxi_awprot(dbus_axi_awprot_o),
@@ -289,10 +289,10 @@ def setup(py_params_dict):
       .dBusAxi_araddr(dbus_axi_araddr_int),
       .dBusAxi_arid(dbus_axi_arid_o),
       .dBusAxi_arregion(dbus_axi_arregion_int),
-      .dBusAxi_arlen(dbus_axi_arlen_o),
+      .dBusAxi_arlen(dbus_axi_arlen_int),
       .dBusAxi_arsize(dbus_axi_arsize_o),
       .dBusAxi_arburst(dbus_axi_arburst_o),
-      .dBusAxi_arlock(dbus_axi_arlock_int),
+      .dBusAxi_arlock(dbus_axi_arlock_o),
       .dBusAxi_arcache(dbus_axi_arcache_o),
       .dBusAxi_arqos(dbus_axi_arqos_o),
       .dBusAxi_arprot(dbus_axi_arprot_o),
@@ -326,10 +326,18 @@ def setup(py_params_dict):
    assign ibus_axi_wstrb_o = {AXI_DATA_W / 8{1'b0}};
    assign ibus_axi_wlast_o = 1'b0;
    assign ibus_axi_bready_o = 1'b0;
-   assign ibus_axi_arlock_o = {1'b0, ibus_axi_arlock_int};
 
-   assign dbus_axi_awlock_o = {1'b0, dbus_axi_awlock_int};
-   assign dbus_axi_arlock_o = {1'b0, dbus_axi_arlock_int};
+   generate
+      if (AXI_LEN_W < 8) begin : gen_if_less_than_8
+         assign ibus_axi_arlen_o = ibus_axi_arlen_int[AXI_LEN_W-1:0];
+         assign dbus_axi_arlen_o = dbus_axi_arlen_int[AXI_LEN_W-1:0];
+         assign dbus_axi_awlen_o = dbus_axi_awlen_int[AXI_LEN_W-1:0];
+      end else begin : gen_if_equal_8
+         assign ibus_axi_arlen_o = ibus_axi_arlen_int;
+         assign dbus_axi_arlen_o = dbus_axi_arlen_int;
+         assign dbus_axi_awlen_o = dbus_axi_awlen_int;
+      end
+   endgenerate
 """
             }
         ],
