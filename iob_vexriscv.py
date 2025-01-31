@@ -6,7 +6,24 @@ import os
 
 
 def setup(py_params_dict):
+    # Each generated cpu verilog module must have a unique name due to different python parameters (can't have two differnet verilog modules with same name).
+    assert "name" in py_params_dict, print(
+        "Error: Missing name for generated vexriscv module."
+    )
+
+    params = {
+        "reset_addr": 0x00000000,
+        "uncached_start_addr": 0x00000000,
+        "uncached_size": 2**32,
+    }
+
+    # Update params with values from py_params_dict
+    for param in py_params_dict:
+        if param in params:
+            params[param] = py_params_dict[param]
+
     attributes_dict = {
+        "name": py_params_dict["name"],
         "version": "0.1",
         "generate_hw": True,
         "confs": [
@@ -245,6 +262,14 @@ def setup(py_params_dict):
       .plic_rdata(plic_axil_rdata),
       .plic_rresp(plic_axil_rresp),
       .plicInterrupts(plic_interrupts_i),
+"""
+                + f"""
+      // Configuration ports
+      .externalResetVector(32'h{params["reset_addr"]:x}),
+      .ioStartAddr(32'h{params["uncached_start_addr"]:x}),
+      .ioSize(32'h{params["uncached_size"]:x}),
+"""
+                + """
       // Instruction Bus
       .iBusAxi_arvalid(ibus_axi_arvalid_o),
       .iBusAxi_arready(ibus_axi_arready_i),
