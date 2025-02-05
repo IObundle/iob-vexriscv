@@ -16,7 +16,8 @@ JDK_HOME := $(shell dirname $$(dirname $$(which java)))
 
 # Primary targets
 vexriscv:
-	cp $(VEX_HARDWARE_DIR)/vexriscv_core/* $(VEX_SUBMODULES_DIR)/VexRiscv/src/main/scala/vexriscv/demo/
+	cp $(VEX_HARDWARE_DIR)/vexriscv_core/VexRiscvAxi4LinuxPlicClint.scala $(VEX_SUBMODULES_DIR)/VexRiscv/src/main/scala/vexriscv/demo/
+	cp $(VEX_HARDWARE_DIR)/vexriscv_core/MmuPlugin.scala $(VEX_SUBMODULES_DIR)/VexRiscv/src/main/scala/vexriscv/plugin/
 	cd submodules/VexRiscv && \
 	sbt -java-home $(JDK_HOME) "runMain vexriscv.demo.$(CPU)" && \
 	cp $(CPU).v $(VEXRISCV_SRC_DIR)

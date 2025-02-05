@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2024 IObundle
+// SPDX-FileCopyrightText: 2025 IObundle
 //
 // SPDX-License-Identifier: MIT
 
@@ -48,6 +48,9 @@ module VexRiscvAxi4LinuxPlicClint (
    output [31:0] plic_rdata,
    output [ 1:0] plic_rresp,
    input  [31:0] plicInterrupts,
+   input  [31:0] externalResetVector,
+   input  [31:0] ioStartAddr,
+   input  [31:0] ioSize,
    output        iBusAxi_arvalid,
    input         iBusAxi_arready,
    output [31:0] iBusAxi_araddr,
@@ -269,6 +272,7 @@ module VexRiscvAxi4LinuxPlicClint (
    wire [31:0] _zz_decode_LEGAL_INSTRUCTION_20;
    wire [31:0] _zz_decode_LEGAL_INSTRUCTION_21;
    wire [31:0] _zz_decode_LEGAL_INSTRUCTION_22;
+   wire [31:0] _zz_MmuPlugin_ioEndAddr;
    wire [ 3:0] _zz__zz_IBusCachedPlugin_jump_pcLoad_payload_1;
    reg  [31:0] _zz_IBusCachedPlugin_jump_pcLoad_payload_5;
    wire [ 1:0] _zz_IBusCachedPlugin_jump_pcLoad_payload_6;
@@ -871,6 +875,7 @@ module VexRiscvAxi4LinuxPlicClint (
    reg         DBusCachedPlugin_exceptionBus_valid;
    reg  [ 3:0] DBusCachedPlugin_exceptionBus_payload_code;
    wire [31:0] DBusCachedPlugin_exceptionBus_payload_badAddr;
+   wire [31:0] MmuPlugin_ioEndAddr;
    reg         MmuPlugin_dBusAccess_cmd_valid;
    reg         MmuPlugin_dBusAccess_cmd_ready;
    reg  [31:0] MmuPlugin_dBusAccess_cmd_payload_address;
@@ -1177,14 +1182,14 @@ module VexRiscvAxi4LinuxPlicClint (
    reg         MmuPlugin_ports_0_cache_3_allowExecute;
    reg         MmuPlugin_ports_0_cache_3_allowUser;
    reg         MmuPlugin_ports_0_dirty;
-   wire        when_MmuPlugin_l117;
+   wire        when_MmuPlugin_l129;
    reg         MmuPlugin_ports_0_requireMmuLockupCalc;
-   wire        when_MmuPlugin_l131;
-   wire        when_MmuPlugin_l132;
+   wire        when_MmuPlugin_l143;
+   wire        when_MmuPlugin_l144;
    wire [ 3:0] MmuPlugin_ports_0_cacheHitsCalc;
-   wire        when_MmuPlugin_l124;
+   wire        when_MmuPlugin_l136;
    reg         MmuPlugin_ports_0_requireMmuLockup;
-   wire        when_MmuPlugin_l124_1;
+   wire        when_MmuPlugin_l136_1;
    reg  [ 3:0] MmuPlugin_ports_0_cacheHits;
    wire        MmuPlugin_ports_0_cacheHit;
    wire        _zz_MmuPlugin_ports_0_cacheLine_valid;
@@ -1253,15 +1258,15 @@ module VexRiscvAxi4LinuxPlicClint (
    reg         MmuPlugin_ports_1_cache_3_allowExecute;
    reg         MmuPlugin_ports_1_cache_3_allowUser;
    reg         MmuPlugin_ports_1_dirty;
-   wire        when_MmuPlugin_l117_1;
+   wire        when_MmuPlugin_l129_1;
    reg         MmuPlugin_ports_1_requireMmuLockupCalc;
-   wire        when_MmuPlugin_l131_1;
-   wire        when_MmuPlugin_l132_1;
-   wire        when_MmuPlugin_l134;
+   wire        when_MmuPlugin_l143_1;
+   wire        when_MmuPlugin_l144_1;
+   wire        when_MmuPlugin_l146;
    wire [ 3:0] MmuPlugin_ports_1_cacheHitsCalc;
-   wire        when_MmuPlugin_l124_2;
+   wire        when_MmuPlugin_l136_2;
    reg         MmuPlugin_ports_1_requireMmuLockup;
-   wire        when_MmuPlugin_l124_3;
+   wire        when_MmuPlugin_l136_3;
    reg  [ 3:0] MmuPlugin_ports_1_cacheHits;
    wire        MmuPlugin_ports_1_cacheHit;
    wire        _zz_MmuPlugin_ports_1_cacheLine_valid;
@@ -1306,7 +1311,7 @@ module VexRiscvAxi4LinuxPlicClint (
    wire [11:0] MmuPlugin_shared_dBusRsp_pte_PPN1;
    wire        MmuPlugin_shared_dBusRsp_exception;
    wire        MmuPlugin_shared_dBusRsp_leaf;
-   wire        when_MmuPlugin_l211;
+   wire        when_MmuPlugin_l234;
    reg         MmuPlugin_shared_pteBuffer_V;
    reg         MmuPlugin_shared_pteBuffer_R;
    reg         MmuPlugin_shared_pteBuffer_W;
@@ -1323,21 +1328,21 @@ module VexRiscvAxi4LinuxPlicClint (
    wire [ 1:0] MmuPlugin_shared_refills;
    wire [ 1:0] _zz_MmuPlugin_shared_refills_2;
    reg  [ 1:0] _zz_MmuPlugin_shared_refills_3;
-   wire        when_MmuPlugin_l223;
+   wire        when_MmuPlugin_l246;
    wire [31:0] _zz_MmuPlugin_shared_vpn_0;
-   wire        when_MmuPlugin_l250;
-   wire        when_MmuPlugin_l279;
-   wire        when_MmuPlugin_l281;
-   wire        when_MmuPlugin_l287;
-   wire        when_MmuPlugin_l287_1;
-   wire        when_MmuPlugin_l287_2;
-   wire        when_MmuPlugin_l287_3;
-   wire        when_MmuPlugin_l281_1;
-   wire        when_MmuPlugin_l287_4;
-   wire        when_MmuPlugin_l287_5;
-   wire        when_MmuPlugin_l287_6;
-   wire        when_MmuPlugin_l287_7;
-   wire        when_MmuPlugin_l311;
+   wire        when_MmuPlugin_l273;
+   wire        when_MmuPlugin_l302;
+   wire        when_MmuPlugin_l304;
+   wire        when_MmuPlugin_l310;
+   wire        when_MmuPlugin_l310_1;
+   wire        when_MmuPlugin_l310_2;
+   wire        when_MmuPlugin_l310_3;
+   wire        when_MmuPlugin_l304_1;
+   wire        when_MmuPlugin_l310_4;
+   wire        when_MmuPlugin_l310_5;
+   wire        when_MmuPlugin_l310_6;
+   wire        when_MmuPlugin_l310_7;
+   wire        when_MmuPlugin_l334;
    wire [36:0] _zz_decode_IS_CSR;
    wire        _zz_decode_IS_CSR_1;
    wire        _zz_decode_IS_CSR_2;
@@ -2059,6 +2064,7 @@ module VexRiscvAxi4LinuxPlicClint (
    };
    assign _zz_decode_FORMAL_PC_NEXT_1 = (decode_IS_RVC ? 3'b010 : 3'b100);
    assign _zz_decode_FORMAL_PC_NEXT = {29'd0, _zz_decode_FORMAL_PC_NEXT_1};
+   assign _zz_MmuPlugin_ioEndAddr = (ioStartAddr + ioSize);
    assign _zz__zz_IBusCachedPlugin_jump_pcLoad_payload_1 = (_zz_IBusCachedPlugin_jump_pcLoad_payload - 4'b0001);
    assign _zz_IBusCachedPlugin_fetchPc_pc_1 = {IBusCachedPlugin_fetchPc_inc, 2'b00};
    assign _zz_IBusCachedPlugin_fetchPc_pc = {29'd0, _zz_IBusCachedPlugin_fetchPc_pc_1};
@@ -4077,6 +4083,7 @@ module VexRiscvAxi4LinuxPlicClint (
       end
    end
 
+   assign MmuPlugin_ioEndAddr             = (_zz_MmuPlugin_ioEndAddr - 32'h00000001);
    assign BranchPlugin_inDebugNoFetchFlag = 1'b0;
    always @(*) begin
       CsrPlugin_csrMapping_allowCsrSignal = 1'b0;
@@ -5243,19 +5250,19 @@ module VexRiscvAxi4LinuxPlicClint (
    assign MmuPlugin_dBusAccess_rsp_payload_data = writeBack_DBusCachedPlugin_rspRf;
    assign MmuPlugin_dBusAccess_rsp_payload_error = (dataCache_1_io_cpu_writeBack_unalignedAccess || dataCache_1_io_cpu_writeBack_accessError);
    assign MmuPlugin_dBusAccess_rsp_payload_redo = dataCache_1_io_cpu_redo;
-   assign when_MmuPlugin_l117 = (!IBusCachedPlugin_mmuBus_cmd_1_isStuck);
+   assign when_MmuPlugin_l129 = (!IBusCachedPlugin_mmuBus_cmd_1_isStuck);
    always @(*) begin
       MmuPlugin_ports_0_requireMmuLockupCalc = ((1'b1 && (! IBusCachedPlugin_mmuBus_cmd_0_bypassTranslation)) && MmuPlugin_satp_mode);
-      if (when_MmuPlugin_l131) begin
+      if (when_MmuPlugin_l143) begin
          MmuPlugin_ports_0_requireMmuLockupCalc = 1'b0;
       end
-      if (when_MmuPlugin_l132) begin
+      if (when_MmuPlugin_l144) begin
          MmuPlugin_ports_0_requireMmuLockupCalc = 1'b0;
       end
    end
 
-   assign when_MmuPlugin_l131 = ((!MmuPlugin_status_mprv) && (CsrPlugin_privilege == 2'b11));
-   assign when_MmuPlugin_l132 = (CsrPlugin_privilege == 2'b11);
+   assign when_MmuPlugin_l143 = ((!MmuPlugin_status_mprv) && (CsrPlugin_privilege == 2'b11));
+   assign when_MmuPlugin_l144 = (CsrPlugin_privilege == 2'b11);
    assign MmuPlugin_ports_0_cacheHitsCalc = {
       ((MmuPlugin_ports_0_cache_3_valid && (MmuPlugin_ports_0_cache_3_virtualAddress_1 == IBusCachedPlugin_mmuBus_cmd_0_virtualAddress[31 : 22])) && (MmuPlugin_ports_0_cache_3_superPage || (MmuPlugin_ports_0_cache_3_virtualAddress_0 == IBusCachedPlugin_mmuBus_cmd_0_virtualAddress[21 : 12]))),
       {
@@ -5266,8 +5273,8 @@ module VexRiscvAxi4LinuxPlicClint (
          }
       }
    };
-   assign when_MmuPlugin_l124 = (!IBusCachedPlugin_mmuBus_cmd_1_isStuck);
-   assign when_MmuPlugin_l124_1 = (!IBusCachedPlugin_mmuBus_cmd_1_isStuck);
+   assign when_MmuPlugin_l136 = (!IBusCachedPlugin_mmuBus_cmd_1_isStuck);
+   assign when_MmuPlugin_l136_1 = (!IBusCachedPlugin_mmuBus_cmd_1_isStuck);
    assign MmuPlugin_ports_0_cacheHit = (|MmuPlugin_ports_0_cacheHits);
    assign _zz_MmuPlugin_ports_0_cacheLine_valid = MmuPlugin_ports_0_cacheHits[3];
    assign _zz_MmuPlugin_ports_0_cacheLine_valid_1 = (MmuPlugin_ports_0_cacheHits[1] || _zz_MmuPlugin_ports_0_cacheLine_valid);
@@ -5288,8 +5295,8 @@ module VexRiscvAxi4LinuxPlicClint (
    assign MmuPlugin_ports_0_cacheLine_allowUser = _zz_MmuPlugin_ports_0_cacheLine_allowUser;
    always @(*) begin
       MmuPlugin_ports_0_entryToReplace_willIncrement = 1'b0;
-      if (when_MmuPlugin_l279) begin
-         if (when_MmuPlugin_l281) begin
+      if (when_MmuPlugin_l302) begin
+         if (when_MmuPlugin_l304) begin
             MmuPlugin_ports_0_entryToReplace_willIncrement = 1'b1;
          end
       end
@@ -5367,7 +5374,7 @@ module VexRiscvAxi4LinuxPlicClint (
       end
    end
 
-   assign IBusCachedPlugin_mmuBus_rsp_isIoAccess = (IBusCachedPlugin_mmuBus_rsp_physicalAddress[31 : 30] == 2'b11);
+   assign IBusCachedPlugin_mmuBus_rsp_isIoAccess = ((ioStartAddr <= IBusCachedPlugin_mmuBus_rsp_physicalAddress) && (IBusCachedPlugin_mmuBus_rsp_physicalAddress <= MmuPlugin_ioEndAddr));
    assign IBusCachedPlugin_mmuBus_rsp_bypassTranslation = (!MmuPlugin_ports_0_requireMmuLockup);
    assign IBusCachedPlugin_mmuBus_rsp_ways_0_sel = MmuPlugin_ports_0_cacheHits[0];
    assign IBusCachedPlugin_mmuBus_rsp_ways_0_physical = {
@@ -5401,22 +5408,22 @@ module VexRiscvAxi4LinuxPlicClint (
       },
       IBusCachedPlugin_mmuBus_cmd_1_virtualAddress[11 : 0]
    };
-   assign when_MmuPlugin_l117_1 = (!DBusCachedPlugin_mmuBus_cmd_1_isStuck);
+   assign when_MmuPlugin_l129_1 = (!DBusCachedPlugin_mmuBus_cmd_1_isStuck);
    always @(*) begin
       MmuPlugin_ports_1_requireMmuLockupCalc = ((1'b1 && (! DBusCachedPlugin_mmuBus_cmd_0_bypassTranslation)) && MmuPlugin_satp_mode);
-      if (when_MmuPlugin_l131_1) begin
+      if (when_MmuPlugin_l143_1) begin
          MmuPlugin_ports_1_requireMmuLockupCalc = 1'b0;
       end
-      if (when_MmuPlugin_l132_1) begin
-         if (when_MmuPlugin_l134) begin
+      if (when_MmuPlugin_l144_1) begin
+         if (when_MmuPlugin_l146) begin
             MmuPlugin_ports_1_requireMmuLockupCalc = 1'b0;
          end
       end
    end
 
-   assign when_MmuPlugin_l131_1 = ((!MmuPlugin_status_mprv) && (CsrPlugin_privilege == 2'b11));
-   assign when_MmuPlugin_l132_1 = (CsrPlugin_privilege == 2'b11);
-   assign when_MmuPlugin_l134 = ((!MmuPlugin_status_mprv) || (CsrPlugin_mstatus_MPP == 2'b11));
+   assign when_MmuPlugin_l143_1 = ((!MmuPlugin_status_mprv) && (CsrPlugin_privilege == 2'b11));
+   assign when_MmuPlugin_l144_1 = (CsrPlugin_privilege == 2'b11);
+   assign when_MmuPlugin_l146 = ((!MmuPlugin_status_mprv) || (CsrPlugin_mstatus_MPP == 2'b11));
    assign MmuPlugin_ports_1_cacheHitsCalc = {
       ((MmuPlugin_ports_1_cache_3_valid && (MmuPlugin_ports_1_cache_3_virtualAddress_1 == DBusCachedPlugin_mmuBus_cmd_0_virtualAddress[31 : 22])) && (MmuPlugin_ports_1_cache_3_superPage || (MmuPlugin_ports_1_cache_3_virtualAddress_0 == DBusCachedPlugin_mmuBus_cmd_0_virtualAddress[21 : 12]))),
       {
@@ -5427,8 +5434,8 @@ module VexRiscvAxi4LinuxPlicClint (
          }
       }
    };
-   assign when_MmuPlugin_l124_2 = (!DBusCachedPlugin_mmuBus_cmd_1_isStuck);
-   assign when_MmuPlugin_l124_3 = (!DBusCachedPlugin_mmuBus_cmd_1_isStuck);
+   assign when_MmuPlugin_l136_2 = (!DBusCachedPlugin_mmuBus_cmd_1_isStuck);
+   assign when_MmuPlugin_l136_3 = (!DBusCachedPlugin_mmuBus_cmd_1_isStuck);
    assign MmuPlugin_ports_1_cacheHit = (|MmuPlugin_ports_1_cacheHits);
    assign _zz_MmuPlugin_ports_1_cacheLine_valid = MmuPlugin_ports_1_cacheHits[3];
    assign _zz_MmuPlugin_ports_1_cacheLine_valid_1 = (MmuPlugin_ports_1_cacheHits[1] || _zz_MmuPlugin_ports_1_cacheLine_valid);
@@ -5449,8 +5456,8 @@ module VexRiscvAxi4LinuxPlicClint (
    assign MmuPlugin_ports_1_cacheLine_allowUser = _zz_MmuPlugin_ports_1_cacheLine_allowUser;
    always @(*) begin
       MmuPlugin_ports_1_entryToReplace_willIncrement = 1'b0;
-      if (when_MmuPlugin_l279) begin
-         if (when_MmuPlugin_l281_1) begin
+      if (when_MmuPlugin_l302) begin
+         if (when_MmuPlugin_l304_1) begin
             MmuPlugin_ports_1_entryToReplace_willIncrement = 1'b1;
          end
       end
@@ -5528,7 +5535,7 @@ module VexRiscvAxi4LinuxPlicClint (
       end
    end
 
-   assign DBusCachedPlugin_mmuBus_rsp_isIoAccess = (DBusCachedPlugin_mmuBus_rsp_physicalAddress[31 : 30] == 2'b11);
+   assign DBusCachedPlugin_mmuBus_rsp_isIoAccess = ((ioStartAddr <= DBusCachedPlugin_mmuBus_rsp_physicalAddress) && (DBusCachedPlugin_mmuBus_rsp_physicalAddress <= MmuPlugin_ioEndAddr));
    assign DBusCachedPlugin_mmuBus_rsp_bypassTranslation = (!MmuPlugin_ports_1_requireMmuLockup);
    assign DBusCachedPlugin_mmuBus_rsp_ways_0_sel = MmuPlugin_ports_1_cacheHits[0];
    assign DBusCachedPlugin_mmuBus_rsp_ways_0_physical = {
@@ -5575,7 +5582,7 @@ module VexRiscvAxi4LinuxPlicClint (
    assign MmuPlugin_shared_dBusRsp_pte_PPN1 = MmuPlugin_shared_dBusRspStaged_payload_data[31 : 20];
    assign MmuPlugin_shared_dBusRsp_exception = (((! MmuPlugin_shared_dBusRsp_pte_V) || ((! MmuPlugin_shared_dBusRsp_pte_R) && MmuPlugin_shared_dBusRsp_pte_W)) || MmuPlugin_shared_dBusRspStaged_payload_error);
    assign MmuPlugin_shared_dBusRsp_leaf = (MmuPlugin_shared_dBusRsp_pte_R || MmuPlugin_shared_dBusRsp_pte_X);
-   assign when_MmuPlugin_l211 = (MmuPlugin_shared_dBusRspStaged_valid && (! MmuPlugin_shared_dBusRspStaged_payload_redo));
+   assign when_MmuPlugin_l234 = (MmuPlugin_shared_dBusRspStaged_valid && (! MmuPlugin_shared_dBusRspStaged_payload_redo));
    always @(*) begin
       MmuPlugin_dBusAccess_cmd_valid = 1'b0;
       case (MmuPlugin_shared_state_1)
@@ -5640,23 +5647,23 @@ module VexRiscvAxi4LinuxPlicClint (
    end
 
    assign MmuPlugin_shared_refills = _zz_MmuPlugin_shared_refills_3;
-   assign when_MmuPlugin_l223 = (|MmuPlugin_shared_refills);
+   assign when_MmuPlugin_l246 = (|MmuPlugin_shared_refills);
    assign _zz_MmuPlugin_shared_vpn_0 = (MmuPlugin_shared_refills[0] ? IBusCachedPlugin_mmuBus_cmd_1_virtualAddress : DBusCachedPlugin_mmuBus_cmd_1_virtualAddress);
-   assign when_MmuPlugin_l250 = (MmuPlugin_shared_dBusRsp_leaf || MmuPlugin_shared_dBusRsp_exception);
+   assign when_MmuPlugin_l273 = (MmuPlugin_shared_dBusRsp_leaf || MmuPlugin_shared_dBusRsp_exception);
    assign IBusCachedPlugin_mmuBus_busy = ((MmuPlugin_shared_state_1 != MmuPlugin_shared_State_IDLE) && MmuPlugin_shared_portSortedOh[0]);
    assign DBusCachedPlugin_mmuBus_busy = ((MmuPlugin_shared_state_1 != MmuPlugin_shared_State_IDLE) && MmuPlugin_shared_portSortedOh[1]);
-   assign when_MmuPlugin_l279 = ((MmuPlugin_shared_dBusRspStaged_valid && (! MmuPlugin_shared_dBusRspStaged_payload_redo)) && (MmuPlugin_shared_dBusRsp_leaf || MmuPlugin_shared_dBusRsp_exception));
-   assign when_MmuPlugin_l281 = MmuPlugin_shared_portSortedOh[0];
-   assign when_MmuPlugin_l287 = (MmuPlugin_ports_0_entryToReplace_value == 2'b00);
-   assign when_MmuPlugin_l287_1 = (MmuPlugin_ports_0_entryToReplace_value == 2'b01);
-   assign when_MmuPlugin_l287_2 = (MmuPlugin_ports_0_entryToReplace_value == 2'b10);
-   assign when_MmuPlugin_l287_3 = (MmuPlugin_ports_0_entryToReplace_value == 2'b11);
-   assign when_MmuPlugin_l281_1 = MmuPlugin_shared_portSortedOh[1];
-   assign when_MmuPlugin_l287_4 = (MmuPlugin_ports_1_entryToReplace_value == 2'b00);
-   assign when_MmuPlugin_l287_5 = (MmuPlugin_ports_1_entryToReplace_value == 2'b01);
-   assign when_MmuPlugin_l287_6 = (MmuPlugin_ports_1_entryToReplace_value == 2'b10);
-   assign when_MmuPlugin_l287_7 = (MmuPlugin_ports_1_entryToReplace_value == 2'b11);
-   assign when_MmuPlugin_l311 = ((execute_arbitration_isValid && execute_arbitration_isFiring) && execute_IS_SFENCE_VMA2);
+   assign when_MmuPlugin_l302 = ((MmuPlugin_shared_dBusRspStaged_valid && (! MmuPlugin_shared_dBusRspStaged_payload_redo)) && (MmuPlugin_shared_dBusRsp_leaf || MmuPlugin_shared_dBusRsp_exception));
+   assign when_MmuPlugin_l304 = MmuPlugin_shared_portSortedOh[0];
+   assign when_MmuPlugin_l310 = (MmuPlugin_ports_0_entryToReplace_value == 2'b00);
+   assign when_MmuPlugin_l310_1 = (MmuPlugin_ports_0_entryToReplace_value == 2'b01);
+   assign when_MmuPlugin_l310_2 = (MmuPlugin_ports_0_entryToReplace_value == 2'b10);
+   assign when_MmuPlugin_l310_3 = (MmuPlugin_ports_0_entryToReplace_value == 2'b11);
+   assign when_MmuPlugin_l304_1 = MmuPlugin_shared_portSortedOh[1];
+   assign when_MmuPlugin_l310_4 = (MmuPlugin_ports_1_entryToReplace_value == 2'b00);
+   assign when_MmuPlugin_l310_5 = (MmuPlugin_ports_1_entryToReplace_value == 2'b01);
+   assign when_MmuPlugin_l310_6 = (MmuPlugin_ports_1_entryToReplace_value == 2'b10);
+   assign when_MmuPlugin_l310_7 = (MmuPlugin_ports_1_entryToReplace_value == 2'b11);
+   assign when_MmuPlugin_l334 = ((execute_arbitration_isValid && execute_arbitration_isFiring) && execute_IS_SFENCE_VMA2);
    assign _zz_decode_IS_CSR_1 = ((decode_INSTRUCTION & 32'h00005048) == 32'h00001008);
    assign _zz_decode_IS_CSR_2 = ((decode_INSTRUCTION & 32'h02003050) == 32'h02000050);
    assign _zz_decode_IS_CSR_3 = ((decode_INSTRUCTION & 32'h00004050) == 32'h00004050);
@@ -7381,11 +7388,11 @@ module VexRiscvAxi4LinuxPlicClint (
    assign utime = clintCtrl_io_time;
    always @(posedge clk or posedge reset) begin
       if (reset) begin
-         IBusCachedPlugin_fetchPc_pcReg                             <= 32'h80000000;
+         IBusCachedPlugin_fetchPc_pcReg                             <= externalResetVector;
          IBusCachedPlugin_fetchPc_correctionReg                     <= 1'b0;
          IBusCachedPlugin_fetchPc_booted                            <= 1'b0;
          IBusCachedPlugin_fetchPc_inc                               <= 1'b0;
-         IBusCachedPlugin_decodePc_pcReg                            <= 32'h80000000;
+         IBusCachedPlugin_decodePc_pcReg                            <= externalResetVector;
          _zz_IBusCachedPlugin_iBusRsp_stages_1_input_valid_1        <= 1'b0;
          _zz_IBusCachedPlugin_iBusRsp_stages_1_output_m2sPipe_valid <= 1'b0;
          IBusCachedPlugin_decompressor_bufferValid                  <= 1'b0;
@@ -7571,7 +7578,7 @@ module VexRiscvAxi4LinuxPlicClint (
          if (CsrPlugin_xretAwayFromMachine) begin
             MmuPlugin_status_mprv <= 1'b0;
          end
-         if (when_MmuPlugin_l117) begin
+         if (when_MmuPlugin_l129) begin
             MmuPlugin_ports_0_dirty <= 1'b0;
          end
          MmuPlugin_ports_0_entryToReplace_value <= MmuPlugin_ports_0_entryToReplace_valueNext;
@@ -7589,7 +7596,7 @@ module VexRiscvAxi4LinuxPlicClint (
                MmuPlugin_ports_0_cache_3_valid <= 1'b0;
             end
          end
-         if (when_MmuPlugin_l117_1) begin
+         if (when_MmuPlugin_l129_1) begin
             MmuPlugin_ports_1_dirty <= 1'b0;
          end
          MmuPlugin_ports_1_entryToReplace_value <= MmuPlugin_ports_1_entryToReplace_valueNext;
@@ -7610,7 +7617,7 @@ module VexRiscvAxi4LinuxPlicClint (
          MmuPlugin_shared_dBusRspStaged_valid <= MmuPlugin_dBusAccess_rsp_valid;
          case (MmuPlugin_shared_state_1)
             MmuPlugin_shared_State_IDLE: begin
-               if (when_MmuPlugin_l223) begin
+               if (when_MmuPlugin_l246) begin
                   MmuPlugin_shared_state_1 <= MmuPlugin_shared_State_L1_CMD;
                end
             end
@@ -7622,7 +7629,7 @@ module VexRiscvAxi4LinuxPlicClint (
             MmuPlugin_shared_State_L1_RSP: begin
                if (MmuPlugin_shared_dBusRspStaged_valid) begin
                   MmuPlugin_shared_state_1 <= MmuPlugin_shared_State_L0_CMD;
-                  if (when_MmuPlugin_l250) begin
+                  if (when_MmuPlugin_l273) begin
                      MmuPlugin_shared_state_1 <= MmuPlugin_shared_State_IDLE;
                   end
                   if (MmuPlugin_shared_dBusRspStaged_payload_redo) begin
@@ -7644,39 +7651,39 @@ module VexRiscvAxi4LinuxPlicClint (
                end
             end
          endcase
-         if (when_MmuPlugin_l279) begin
-            if (when_MmuPlugin_l281) begin
+         if (when_MmuPlugin_l302) begin
+            if (when_MmuPlugin_l304) begin
                MmuPlugin_ports_0_dirty <= 1'b1;
-               if (when_MmuPlugin_l287) begin
+               if (when_MmuPlugin_l310) begin
                   MmuPlugin_ports_0_cache_0_valid <= 1'b1;
                end
-               if (when_MmuPlugin_l287_1) begin
+               if (when_MmuPlugin_l310_1) begin
                   MmuPlugin_ports_0_cache_1_valid <= 1'b1;
                end
-               if (when_MmuPlugin_l287_2) begin
+               if (when_MmuPlugin_l310_2) begin
                   MmuPlugin_ports_0_cache_2_valid <= 1'b1;
                end
-               if (when_MmuPlugin_l287_3) begin
+               if (when_MmuPlugin_l310_3) begin
                   MmuPlugin_ports_0_cache_3_valid <= 1'b1;
                end
             end
-            if (when_MmuPlugin_l281_1) begin
+            if (when_MmuPlugin_l304_1) begin
                MmuPlugin_ports_1_dirty <= 1'b1;
-               if (when_MmuPlugin_l287_4) begin
+               if (when_MmuPlugin_l310_4) begin
                   MmuPlugin_ports_1_cache_0_valid <= 1'b1;
                end
-               if (when_MmuPlugin_l287_5) begin
+               if (when_MmuPlugin_l310_5) begin
                   MmuPlugin_ports_1_cache_1_valid <= 1'b1;
                end
-               if (when_MmuPlugin_l287_6) begin
+               if (when_MmuPlugin_l310_6) begin
                   MmuPlugin_ports_1_cache_2_valid <= 1'b1;
                end
-               if (when_MmuPlugin_l287_7) begin
+               if (when_MmuPlugin_l310_7) begin
                   MmuPlugin_ports_1_cache_3_valid <= 1'b1;
                end
             end
          end
-         if (when_MmuPlugin_l311) begin
+         if (when_MmuPlugin_l334) begin
             MmuPlugin_ports_0_cache_0_valid <= 1'b0;
             MmuPlugin_ports_0_cache_1_valid <= 1'b0;
             MmuPlugin_ports_0_cache_2_valid <= 1'b0;
@@ -8021,22 +8028,22 @@ module VexRiscvAxi4LinuxPlicClint (
       if (IBusCachedPlugin_iBusRsp_stages_2_input_ready) begin
          IBusCachedPlugin_s2_tightlyCoupledHit <= IBusCachedPlugin_s1_tightlyCoupledHit;
       end
-      if (when_MmuPlugin_l124) begin
+      if (when_MmuPlugin_l136) begin
          MmuPlugin_ports_0_requireMmuLockup <= MmuPlugin_ports_0_requireMmuLockupCalc;
       end
-      if (when_MmuPlugin_l124_1) begin
+      if (when_MmuPlugin_l136_1) begin
          MmuPlugin_ports_0_cacheHits <= MmuPlugin_ports_0_cacheHitsCalc;
       end
-      if (when_MmuPlugin_l124_2) begin
+      if (when_MmuPlugin_l136_2) begin
          MmuPlugin_ports_1_requireMmuLockup <= MmuPlugin_ports_1_requireMmuLockupCalc;
       end
-      if (when_MmuPlugin_l124_3) begin
+      if (when_MmuPlugin_l136_3) begin
          MmuPlugin_ports_1_cacheHits <= MmuPlugin_ports_1_cacheHitsCalc;
       end
       MmuPlugin_shared_dBusRspStaged_payload_data  <= MmuPlugin_dBusAccess_rsp_payload_data;
       MmuPlugin_shared_dBusRspStaged_payload_error <= MmuPlugin_dBusAccess_rsp_payload_error;
       MmuPlugin_shared_dBusRspStaged_payload_redo  <= MmuPlugin_dBusAccess_rsp_payload_redo;
-      if (when_MmuPlugin_l211) begin
+      if (when_MmuPlugin_l234) begin
          MmuPlugin_shared_pteBuffer_V    <= MmuPlugin_shared_dBusRsp_pte_V;
          MmuPlugin_shared_pteBuffer_R    <= MmuPlugin_shared_dBusRsp_pte_R;
          MmuPlugin_shared_pteBuffer_W    <= MmuPlugin_shared_dBusRsp_pte_W;
@@ -8051,7 +8058,7 @@ module VexRiscvAxi4LinuxPlicClint (
       end
       case (MmuPlugin_shared_state_1)
          MmuPlugin_shared_State_IDLE: begin
-            if (when_MmuPlugin_l223) begin
+            if (when_MmuPlugin_l246) begin
                MmuPlugin_shared_portSortedOh <= MmuPlugin_shared_refills;
                MmuPlugin_shared_vpn_1        <= _zz_MmuPlugin_shared_vpn_0[31 : 22];
                MmuPlugin_shared_vpn_0        <= _zz_MmuPlugin_shared_vpn_0[21 : 12];
@@ -8066,9 +8073,9 @@ module VexRiscvAxi4LinuxPlicClint (
          default: begin
          end
       endcase
-      if (when_MmuPlugin_l279) begin
-         if (when_MmuPlugin_l281) begin
-            if (when_MmuPlugin_l287) begin
+      if (when_MmuPlugin_l302) begin
+         if (when_MmuPlugin_l304) begin
+            if (when_MmuPlugin_l310) begin
                MmuPlugin_ports_0_cache_0_exception <= ((MmuPlugin_shared_dBusRsp_exception || ((MmuPlugin_shared_state_1 == MmuPlugin_shared_State_L1_RSP) && (MmuPlugin_shared_dBusRsp_pte_PPN0 != 10'h000))) || (! MmuPlugin_shared_dBusRsp_pte_A));
                MmuPlugin_ports_0_cache_0_virtualAddress_0 <= MmuPlugin_shared_vpn_0;
                MmuPlugin_ports_0_cache_0_virtualAddress_1 <= MmuPlugin_shared_vpn_1;
@@ -8080,7 +8087,7 @@ module VexRiscvAxi4LinuxPlicClint (
                MmuPlugin_ports_0_cache_0_allowUser <= MmuPlugin_shared_dBusRsp_pte_U;
                MmuPlugin_ports_0_cache_0_superPage <= (MmuPlugin_shared_state_1 == MmuPlugin_shared_State_L1_RSP);
             end
-            if (when_MmuPlugin_l287_1) begin
+            if (when_MmuPlugin_l310_1) begin
                MmuPlugin_ports_0_cache_1_exception <= ((MmuPlugin_shared_dBusRsp_exception || ((MmuPlugin_shared_state_1 == MmuPlugin_shared_State_L1_RSP) && (MmuPlugin_shared_dBusRsp_pte_PPN0 != 10'h000))) || (! MmuPlugin_shared_dBusRsp_pte_A));
                MmuPlugin_ports_0_cache_1_virtualAddress_0 <= MmuPlugin_shared_vpn_0;
                MmuPlugin_ports_0_cache_1_virtualAddress_1 <= MmuPlugin_shared_vpn_1;
@@ -8092,7 +8099,7 @@ module VexRiscvAxi4LinuxPlicClint (
                MmuPlugin_ports_0_cache_1_allowUser <= MmuPlugin_shared_dBusRsp_pte_U;
                MmuPlugin_ports_0_cache_1_superPage <= (MmuPlugin_shared_state_1 == MmuPlugin_shared_State_L1_RSP);
             end
-            if (when_MmuPlugin_l287_2) begin
+            if (when_MmuPlugin_l310_2) begin
                MmuPlugin_ports_0_cache_2_exception <= ((MmuPlugin_shared_dBusRsp_exception || ((MmuPlugin_shared_state_1 == MmuPlugin_shared_State_L1_RSP) && (MmuPlugin_shared_dBusRsp_pte_PPN0 != 10'h000))) || (! MmuPlugin_shared_dBusRsp_pte_A));
                MmuPlugin_ports_0_cache_2_virtualAddress_0 <= MmuPlugin_shared_vpn_0;
                MmuPlugin_ports_0_cache_2_virtualAddress_1 <= MmuPlugin_shared_vpn_1;
@@ -8104,7 +8111,7 @@ module VexRiscvAxi4LinuxPlicClint (
                MmuPlugin_ports_0_cache_2_allowUser <= MmuPlugin_shared_dBusRsp_pte_U;
                MmuPlugin_ports_0_cache_2_superPage <= (MmuPlugin_shared_state_1 == MmuPlugin_shared_State_L1_RSP);
             end
-            if (when_MmuPlugin_l287_3) begin
+            if (when_MmuPlugin_l310_3) begin
                MmuPlugin_ports_0_cache_3_exception <= ((MmuPlugin_shared_dBusRsp_exception || ((MmuPlugin_shared_state_1 == MmuPlugin_shared_State_L1_RSP) && (MmuPlugin_shared_dBusRsp_pte_PPN0 != 10'h000))) || (! MmuPlugin_shared_dBusRsp_pte_A));
                MmuPlugin_ports_0_cache_3_virtualAddress_0 <= MmuPlugin_shared_vpn_0;
                MmuPlugin_ports_0_cache_3_virtualAddress_1 <= MmuPlugin_shared_vpn_1;
@@ -8117,8 +8124,8 @@ module VexRiscvAxi4LinuxPlicClint (
                MmuPlugin_ports_0_cache_3_superPage <= (MmuPlugin_shared_state_1 == MmuPlugin_shared_State_L1_RSP);
             end
          end
-         if (when_MmuPlugin_l281_1) begin
-            if (when_MmuPlugin_l287_4) begin
+         if (when_MmuPlugin_l304_1) begin
+            if (when_MmuPlugin_l310_4) begin
                MmuPlugin_ports_1_cache_0_exception <= ((MmuPlugin_shared_dBusRsp_exception || ((MmuPlugin_shared_state_1 == MmuPlugin_shared_State_L1_RSP) && (MmuPlugin_shared_dBusRsp_pte_PPN0 != 10'h000))) || (! MmuPlugin_shared_dBusRsp_pte_A));
                MmuPlugin_ports_1_cache_0_virtualAddress_0 <= MmuPlugin_shared_vpn_0;
                MmuPlugin_ports_1_cache_0_virtualAddress_1 <= MmuPlugin_shared_vpn_1;
@@ -8130,7 +8137,7 @@ module VexRiscvAxi4LinuxPlicClint (
                MmuPlugin_ports_1_cache_0_allowUser <= MmuPlugin_shared_dBusRsp_pte_U;
                MmuPlugin_ports_1_cache_0_superPage <= (MmuPlugin_shared_state_1 == MmuPlugin_shared_State_L1_RSP);
             end
-            if (when_MmuPlugin_l287_5) begin
+            if (when_MmuPlugin_l310_5) begin
                MmuPlugin_ports_1_cache_1_exception <= ((MmuPlugin_shared_dBusRsp_exception || ((MmuPlugin_shared_state_1 == MmuPlugin_shared_State_L1_RSP) && (MmuPlugin_shared_dBusRsp_pte_PPN0 != 10'h000))) || (! MmuPlugin_shared_dBusRsp_pte_A));
                MmuPlugin_ports_1_cache_1_virtualAddress_0 <= MmuPlugin_shared_vpn_0;
                MmuPlugin_ports_1_cache_1_virtualAddress_1 <= MmuPlugin_shared_vpn_1;
@@ -8142,7 +8149,7 @@ module VexRiscvAxi4LinuxPlicClint (
                MmuPlugin_ports_1_cache_1_allowUser <= MmuPlugin_shared_dBusRsp_pte_U;
                MmuPlugin_ports_1_cache_1_superPage <= (MmuPlugin_shared_state_1 == MmuPlugin_shared_State_L1_RSP);
             end
-            if (when_MmuPlugin_l287_6) begin
+            if (when_MmuPlugin_l310_6) begin
                MmuPlugin_ports_1_cache_2_exception <= ((MmuPlugin_shared_dBusRsp_exception || ((MmuPlugin_shared_state_1 == MmuPlugin_shared_State_L1_RSP) && (MmuPlugin_shared_dBusRsp_pte_PPN0 != 10'h000))) || (! MmuPlugin_shared_dBusRsp_pte_A));
                MmuPlugin_ports_1_cache_2_virtualAddress_0 <= MmuPlugin_shared_vpn_0;
                MmuPlugin_ports_1_cache_2_virtualAddress_1 <= MmuPlugin_shared_vpn_1;
@@ -8154,7 +8161,7 @@ module VexRiscvAxi4LinuxPlicClint (
                MmuPlugin_ports_1_cache_2_allowUser <= MmuPlugin_shared_dBusRsp_pte_U;
                MmuPlugin_ports_1_cache_2_superPage <= (MmuPlugin_shared_state_1 == MmuPlugin_shared_State_L1_RSP);
             end
-            if (when_MmuPlugin_l287_7) begin
+            if (when_MmuPlugin_l310_7) begin
                MmuPlugin_ports_1_cache_3_exception <= ((MmuPlugin_shared_dBusRsp_exception || ((MmuPlugin_shared_state_1 == MmuPlugin_shared_State_L1_RSP) && (MmuPlugin_shared_dBusRsp_pte_PPN0 != 10'h000))) || (! MmuPlugin_shared_dBusRsp_pte_A));
                MmuPlugin_ports_1_cache_3_virtualAddress_0 <= MmuPlugin_shared_vpn_0;
                MmuPlugin_ports_1_cache_3_virtualAddress_1 <= MmuPlugin_shared_vpn_1;
