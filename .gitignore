@@ -10,6 +10,7 @@
 !/.gitignore
 !/.gitmodules
 !/.github
+!/.ignore_file_headers
 !/config.mk
 !/Makefile
 !/README.md

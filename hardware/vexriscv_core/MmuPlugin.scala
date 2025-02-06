@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2025 IObundle
+//
+// SPDX-License-Identifier: MIT
+
 package vexriscv.plugin
 
 import vexriscv.{VexRiscv, _}
