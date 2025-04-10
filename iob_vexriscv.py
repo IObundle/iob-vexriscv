@@ -225,7 +225,7 @@ def setup(py_params_dict):
       .clint_awvalid(clint_axil_awvalid),
       .clint_awready(clint_axil_awready),
       .clint_awaddr({clint_axil_awaddr, 2'b0}),
-      .clint_awprot(clint_axil_awprot),
+      .clint_awprot(3'd0),
       .clint_wvalid(clint_axil_wvalid),
       .clint_wready(clint_axil_wready),
       .clint_wdata(clint_axil_wdata),
@@ -236,7 +236,7 @@ def setup(py_params_dict):
       .clint_arvalid(clint_axil_arvalid),
       .clint_arready(clint_axil_arready),
       .clint_araddr({clint_axil_araddr, 2'b0}),
-      .clint_arprot(clint_axil_arprot),
+      .clint_arprot(3'd0),
       .clint_rvalid(clint_axil_rvalid),
       .clint_rready(clint_axil_rready),
       .clint_rdata(clint_axil_rdata),
@@ -245,7 +245,7 @@ def setup(py_params_dict):
       .plic_awvalid(plic_axil_awvalid),
       .plic_awready(plic_axil_awready),
       .plic_awaddr({plic_axil_awaddr, 2'b0}),
-      .plic_awprot(plic_axil_awprot),
+      .plic_awprot(3'd0),
       .plic_wvalid(plic_axil_wvalid),
       .plic_wready(plic_axil_wready),
       .plic_wdata(plic_axil_wdata),
@@ -256,7 +256,7 @@ def setup(py_params_dict):
       .plic_arvalid(plic_axil_arvalid),
       .plic_arready(plic_axil_arready),
       .plic_araddr({plic_axil_araddr, 2'b0}),
-      .plic_arprot(plic_axil_arprot),
+      .plic_arprot(3'd0),
       .plic_rvalid(plic_axil_rvalid),
       .plic_rready(plic_axil_rready),
       .plic_rdata(plic_axil_rdata),
@@ -282,7 +282,7 @@ def setup(py_params_dict):
       .iBusAxi_arlock(ibus_axi_arlock_o),
       .iBusAxi_arcache(ibus_axi_arcache_o),
       .iBusAxi_arqos(ibus_axi_arqos_o),
-      .iBusAxi_arprot(ibus_axi_arprot_o),
+      // .iBusAxi_arprot(ibus_axi_arprot_o),
       .iBusAxi_rvalid(ibus_axi_rvalid_i),
       .iBusAxi_rready(ibus_axi_rready_o),
       .iBusAxi_rdata(ibus_axi_rdata_i),
@@ -301,7 +301,7 @@ def setup(py_params_dict):
       .dBusAxi_awlock(dbus_axi_awlock_o),
       .dBusAxi_awcache(dbus_axi_awcache_o),
       .dBusAxi_awqos(dbus_axi_awqos_o),
-      .dBusAxi_awprot(dbus_axi_awprot_o),
+      // .dBusAxi_awprot(dbus_axi_awprot_o),
       .dBusAxi_wvalid(dbus_axi_wvalid_o),
       .dBusAxi_wready(dbus_axi_wready_i),
       .dBusAxi_wdata(dbus_axi_wdata_o),
@@ -322,7 +322,7 @@ def setup(py_params_dict):
       .dBusAxi_arlock(dbus_axi_arlock_o),
       .dBusAxi_arcache(dbus_axi_arcache_o),
       .dBusAxi_arqos(dbus_axi_arqos_o),
-      .dBusAxi_arprot(dbus_axi_arprot_o),
+      // .dBusAxi_arprot(dbus_axi_arprot_o),
       .dBusAxi_rvalid(dbus_axi_rvalid_i),
       .dBusAxi_rready(dbus_axi_rready_o),
       .dBusAxi_rdata(dbus_axi_rdata_i),
@@ -347,7 +347,7 @@ def setup(py_params_dict):
    assign ibus_axi_awlock_o = 1'b0;
    assign ibus_axi_awcache_o = {4{1'b0}};
    assign ibus_axi_awqos_o = {4{1'b0}};
-   assign ibus_axi_awprot_o = {3{1'b0}};
+   // assign ibus_axi_awprot_o = {3{1'b0}};
    assign ibus_axi_wvalid_o = 1'b0;
    assign ibus_axi_wdata_o = {AXI_DATA_W{1'b0}};
    assign ibus_axi_wstrb_o = {AXI_DATA_W / 8{1'b0}};
