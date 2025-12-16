@@ -185,6 +185,8 @@ def setup(py_params_dict):
                 "parameters": {
                     "AXIL_ADDR_W": 16,
                     "AXIL_DATA_W": "AXI_DATA_W",
+                    "ADDR_W": 16,
+                    "DATA_W": "AXI_DATA_W",
                 },
                 "connect": {
                     "iob_s": "clint_cbus_s",
@@ -198,6 +200,8 @@ def setup(py_params_dict):
                 "parameters": {
                     "AXIL_ADDR_W": 22,
                     "AXIL_DATA_W": "AXI_DATA_W",
+                    "ADDR_W": 22,
+                    "DATA_W": "AXI_DATA_W",
                 },
                 "connect": {
                     "iob_s": "plic_cbus_s",
