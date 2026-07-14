@@ -104,32 +104,20 @@ def setup(py_params_dict):
                 },
             },
             {
-                "name": "clint_cbus_s",
-                "descr": "CLINT CSRs bus",
-                "signals": {
-                    "type": "iob",
-                    "prefix": "clint_",
-                    "ADDR_W": 16,
-                },
-            },
-            {
-                "name": "plic_cbus_s",
-                "descr": "PLIC CSRs bus",
-                "signals": {
-                    "type": "iob",
-                    "prefix": "plic_",
-                    "ADDR_W": 22,
-                },
-            },
-            {
-                "name": "plic_interrupts_i",
-                "descr": "PLIC interrupts",
+                "name": "interrupt_i",
+                "descr": "Standard RISC‑V interrupt pending bits",
                 "signals": [
-                    {
-                        "name": "plic_interrupts_i",
-                        "descr": "PLIC interrupts",
-                        "width": "32",
-                    },
+                    {"name": "msip_i", "descr": "Machine software interrupt.", "width": "1"},
+                    {"name": "mtip_i", "descr": "Machine timer interrupt.", "width": "1"},
+                    {"name": "meip_i", "descr": "Machine external interrupt.", "width": "1"},
+                    {"name": "seip_i", "descr": "Supervisor external interrupt.", "width": "1"},
+                ],
+            },
+            {
+                "name": "timebase_i",
+                "descr": "Timebase interface",
+                "signals": [
+                    {"name": "mtime_i", "descr": "Input from external 64-bit counter for time CSRs", "width": "64"},
                 ],
             },
         ],
@@ -156,58 +144,6 @@ def setup(py_params_dict):
                     {"name": "dbus_axi_arregion_int", "width": "4"},
                 ],
             },
-            {
-                "name": "clint_cbus_axil",
-                "descr": "CLINT CSRs bus",
-                "signals": {
-                    "type": "axil",
-                    "prefix": "clint_",
-                    "ADDR_W": 16,
-                    "DATA_W": "AXI_DATA_W",
-                },
-            },
-            {
-                "name": "plic_cbus_axil",
-                "descr": "PLIC CSRs bus",
-                "signals": {
-                    "type": "axil",
-                    "prefix": "plic_",
-                    "ADDR_W": 22,
-                    "DATA_W": "AXI_DATA_W",
-                },
-            },
-        ],
-        "subblocks": [
-            {
-                "core_name": "iob_iob2axil",
-                "instance_name": "clint_iob2axil",
-                "instance_description": "Convert IOb to AXI lite for CLINT",
-                "parameters": {
-                    "AXIL_ADDR_W": 16,
-                    "AXIL_DATA_W": "AXI_DATA_W",
-                    "ADDR_W": 16,
-                    "DATA_W": "AXI_DATA_W",
-                },
-                "connect": {
-                    "iob_s": "clint_cbus_s",
-                    "axil_m": "clint_cbus_axil",
-                },
-            },
-            {
-                "core_name": "iob_iob2axil",
-                "instance_name": "plic_iob2axil",
-                "instance_description": "Convert IOb to AXI lite for PLIC",
-                "parameters": {
-                    "AXIL_ADDR_W": 22,
-                    "AXIL_DATA_W": "AXI_DATA_W",
-                    "ADDR_W": 22,
-                    "DATA_W": "AXI_DATA_W",
-                },
-                "connect": {
-                    "iob_s": "plic_cbus_s",
-                    "axil_m": "plic_cbus_axil",
-                },
-            },
         ],
         "snippets": [
             {
@@ -217,57 +153,22 @@ def setup(py_params_dict):
     wire [7:0] dbus_axi_awlen_int;
 
 
-  // Instantiation of VexRiscv, Plic, and Clint
-  VexRiscvAxi4LinuxPlicClint CPU (
-      // CLINT
-      .clint_awvalid(clint_axil_awvalid),
-      .clint_awready(clint_axil_awready),
-      .clint_awaddr(clint_axil_awaddr),
-      .clint_awprot(3'd0),
-      .clint_wvalid(clint_axil_wvalid),
-      .clint_wready(clint_axil_wready),
-      .clint_wdata(clint_axil_wdata),
-      .clint_wstrb(clint_axil_wstrb),
-      .clint_bvalid(clint_axil_bvalid),
-      .clint_bready(clint_axil_bready),
-      .clint_bresp(clint_axil_bresp),
-      .clint_arvalid(clint_axil_arvalid),
-      .clint_arready(clint_axil_arready),
-      .clint_araddr(clint_axil_araddr),
-      .clint_arprot(3'd0),
-      .clint_rvalid(clint_axil_rvalid),
-      .clint_rready(clint_axil_rready),
-      .clint_rdata(clint_axil_rdata),
-      .clint_rresp(clint_axil_rresp),
-      // PLIC
-      .plic_awvalid(plic_axil_awvalid),
-      .plic_awready(plic_axil_awready),
-      .plic_awaddr(plic_axil_awaddr),
-      .plic_awprot(3'd0),
-      .plic_wvalid(plic_axil_wvalid),
-      .plic_wready(plic_axil_wready),
-      .plic_wdata(plic_axil_wdata),
-      .plic_wstrb(plic_axil_wstrb),
-      .plic_bvalid(plic_axil_bvalid),
-      .plic_bready(plic_axil_bready),
-      .plic_bresp(plic_axil_bresp),
-      .plic_arvalid(plic_axil_arvalid),
-      .plic_arready(plic_axil_arready),
-      .plic_araddr(plic_axil_araddr),
-      .plic_arprot(3'd0),
-      .plic_rvalid(plic_axil_rvalid),
-      .plic_rready(plic_axil_rready),
-      .plic_rdata(plic_axil_rdata),
-      .plic_rresp(plic_axil_rresp),
-      .plicInterrupts(plic_interrupts_i),
-"""
-                + f"""
-      // Configuration ports
+  // Instantiation of VexRiscv core
+  VexRiscvAxi4Linux CPU (
+      // Interrupt sources
+      .msip(msip_i),
+      .mtip(mtip_i),
+      .meip(meip_i),
+      .seip(seip_i),
+      // Timbase input
+      .mtime(mtime_i),
+""" + f"""\
+      // CPU reset address
       .externalResetVector(32'h{params["reset_addr"]:x}),
+      // Uncached memory
       .ioStartAddr(32'h{params["uncached_start_addr"]:x}),
       .ioSize(32'h{params["uncached_size"]:x}),
-"""
-                + """
+""" + """\
       // Instruction Bus
       .iBusAxi_arvalid(ibus_axi_arvalid_o),
       .iBusAxi_arready(ibus_axi_arready_i),
@@ -367,7 +268,7 @@ def setup(py_params_dict):
         ],
     }
 
-    # Disable linter for `VexRiscvAxi4LinuxPlicClint.v` source.
+    # Disable linter for `VexRiscvAxi4Linux.v` source.
     if py_params_dict.get("py2hwsw_target", "") == "setup":
         build_dir = py_params_dict.get("build_dir")
         os.makedirs(f"{build_dir}/hardware/lint/verilator", exist_ok=True)
@@ -375,7 +276,7 @@ def setup(py_params_dict):
             file.write(
                 f"""
 // Lines generated by {os.path.basename(__file__)}
-lint_off -file "*/VexRiscvAxi4LinuxPlicClint.v"
+lint_off -file "*/VexRiscvAxi4Linux.v"
 """
             )
 
