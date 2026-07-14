@@ -25,6 +25,9 @@ endif
 vexriscv:
 	cp $(VEX_HARDWARE_DIR)/vexriscv_core/$(CPU).scala $(VEX_SUBMODULES_DIR)/VexRiscv/src/main/scala/vexriscv/demo/
 	cp $(VEX_HARDWARE_DIR)/vexriscv_core/MmuPlugin.scala $(VEX_SUBMODULES_DIR)/VexRiscv/src/main/scala/vexriscv/plugin/
+	# Copy fixed IBus and DBus cached plugins
+	cp $(VEX_HARDWARE_DIR)/vexriscv_core/IBusCachedPlugin.scala $(VEX_SUBMODULES_DIR)/VexRiscv/src/main/scala/vexriscv/plugin/
+	cp $(VEX_HARDWARE_DIR)/vexriscv_core/DBusCachedPlugin.scala $(VEX_SUBMODULES_DIR)/VexRiscv/src/main/scala/vexriscv/plugin/
 	cd submodules/VexRiscv && \
 	sbt -java-home $(JDK_HOME) "runMain vexriscv.demo.$(CPU) $(SPINALHDL_ARGS)" && \
 	cp $(CPU).v $(VEXRISCV_SRC_DIR)/$(CPU)$(CPU_SUFFIX).v

@@ -1041,11 +1041,11 @@ module VexRiscvAxi4Linux (
   wire                IBusCachedPlugin_rsp_iBusRspOutputHalt;
   wire                IBusCachedPlugin_rsp_issueDetected;
   reg                 IBusCachedPlugin_rsp_redoFetch;
-  wire                when_IBusCachedPlugin_l245;
-  wire                when_IBusCachedPlugin_l250;
-  wire                when_IBusCachedPlugin_l256;
-  wire                when_IBusCachedPlugin_l262;
-  wire                when_IBusCachedPlugin_l273;
+  wire                when_IBusCachedPlugin_l246;
+  wire                when_IBusCachedPlugin_l251;
+  wire                when_IBusCachedPlugin_l257;
+  wire                when_IBusCachedPlugin_l263;
+  wire                when_IBusCachedPlugin_l274;
   reg        [31:0]   DBusCachedPlugin_rspCounter;
   wire                when_DBusCachedPlugin_l353;
   wire                when_DBusCachedPlugin_l361;
@@ -1055,8 +1055,8 @@ module VexRiscvAxi4Linux (
   wire                when_DBusCachedPlugin_l395;
   wire                when_DBusCachedPlugin_l411;
   wire                when_DBusCachedPlugin_l473;
-  wire                when_DBusCachedPlugin_l534;
-  wire                when_DBusCachedPlugin_l554;
+  wire                when_DBusCachedPlugin_l539;
+  wire                when_DBusCachedPlugin_l559;
   wire       [31:0]   writeBack_DBusCachedPlugin_rspData;
   wire       [7:0]    writeBack_DBusCachedPlugin_rspSplits_0;
   wire       [7:0]    writeBack_DBusCachedPlugin_rspSplits_1;
@@ -1064,17 +1064,17 @@ module VexRiscvAxi4Linux (
   wire       [7:0]    writeBack_DBusCachedPlugin_rspSplits_3;
   reg        [31:0]   writeBack_DBusCachedPlugin_rspShifted;
   reg        [31:0]   writeBack_DBusCachedPlugin_rspRf;
-  wire                when_DBusCachedPlugin_l571;
+  wire                when_DBusCachedPlugin_l576;
   wire       [1:0]    switch_Misc_l245_2;
   wire                _zz_writeBack_DBusCachedPlugin_rspFormated;
   reg        [31:0]   _zz_writeBack_DBusCachedPlugin_rspFormated_1;
   wire                _zz_writeBack_DBusCachedPlugin_rspFormated_2;
   reg        [31:0]   _zz_writeBack_DBusCachedPlugin_rspFormated_3;
   reg        [31:0]   writeBack_DBusCachedPlugin_rspFormated;
-  wire                when_DBusCachedPlugin_l581;
+  wire                when_DBusCachedPlugin_l586;
   reg                 DBusCachedPlugin_forceDatapath;
-  wire                when_DBusCachedPlugin_l605;
-  wire                when_DBusCachedPlugin_l606;
+  wire                when_DBusCachedPlugin_l610;
+  wire                when_DBusCachedPlugin_l611;
   wire                MmuPlugin_dBusAccess_cmd_fire;
   reg                 MmuPlugin_status_sum;
   reg                 MmuPlugin_status_mxr;
@@ -2360,7 +2360,7 @@ module VexRiscvAxi4Linux (
     .io_cpu_prefetch_pc                    (IBusCachedPlugin_iBusRsp_stages_0_input_payload[31:0]     ), //i
     .io_cpu_fetch_isValid                  (IBusCachedPlugin_cache_io_cpu_fetch_isValid               ), //i
     .io_cpu_fetch_isStuck                  (IBusCachedPlugin_cache_io_cpu_fetch_isStuck               ), //i
-    .io_cpu_fetch_isRemoved                (                                                          ), //i
+    .io_cpu_fetch_isRemoved                (1'b0                                                      ), //i
     .io_cpu_fetch_pc                       (IBusCachedPlugin_iBusRsp_stages_1_input_payload[31:0]     ), //i
     .io_cpu_fetch_data                     (IBusCachedPlugin_cache_io_cpu_fetch_data[31:0]            ), //o
     .io_cpu_fetch_mmuRsp_physicalAddress   (IBusCachedPlugin_mmuBus_rsp_physicalAddress[31:0]         ), //i
@@ -2449,15 +2449,15 @@ module VexRiscvAxi4Linux (
     .io_cpu_writeBack_unalignedAccess       (dataCache_1_io_cpu_writeBack_unalignedAccess     ), //o
     .io_cpu_writeBack_accessError           (dataCache_1_io_cpu_writeBack_accessError         ), //o
     .io_cpu_writeBack_keepMemRspData        (dataCache_1_io_cpu_writeBack_keepMemRspData      ), //o
-    .io_cpu_writeBack_fence_SW              (                                                 ), //i
-    .io_cpu_writeBack_fence_SR              (                                                 ), //i
-    .io_cpu_writeBack_fence_SO              (                                                 ), //i
-    .io_cpu_writeBack_fence_SI              (                                                 ), //i
-    .io_cpu_writeBack_fence_PW              (                                                 ), //i
-    .io_cpu_writeBack_fence_PR              (                                                 ), //i
-    .io_cpu_writeBack_fence_PO              (                                                 ), //i
-    .io_cpu_writeBack_fence_PI              (                                                 ), //i
-    .io_cpu_writeBack_fence_FM              (                                                 ), //i
+    .io_cpu_writeBack_fence_SW              (1'b0                                             ), //i
+    .io_cpu_writeBack_fence_SR              (1'b0                                             ), //i
+    .io_cpu_writeBack_fence_SO              (1'b0                                             ), //i
+    .io_cpu_writeBack_fence_SI              (1'b0                                             ), //i
+    .io_cpu_writeBack_fence_PW              (1'b0                                             ), //i
+    .io_cpu_writeBack_fence_PR              (1'b0                                             ), //i
+    .io_cpu_writeBack_fence_PO              (1'b0                                             ), //i
+    .io_cpu_writeBack_fence_PI              (1'b0                                             ), //i
+    .io_cpu_writeBack_fence_FM              (4'b0000                                          ), //i
     .io_cpu_writeBack_exclusiveOk           (dataCache_1_io_cpu_writeBack_exclusiveOk         ), //o
     .io_cpu_redo                            (dataCache_1_io_cpu_redo                          ), //o
     .io_cpu_flush_valid                     (dataCache_1_io_cpu_flush_valid                   ), //i
@@ -3551,7 +3551,7 @@ module VexRiscvAxi4Linux (
   assign memory_IS_DBUS_SHARING = execute_to_memory_IS_DBUS_SHARING;
   always @(*) begin
     _zz_decode_RS2_2 = writeBack_REGFILE_WRITE_DATA;
-    if(when_DBusCachedPlugin_l581) begin
+    if(when_DBusCachedPlugin_l586) begin
       _zz_decode_RS2_2 = writeBack_DBusCachedPlugin_rspFormated;
     end
     if(when_MulPlugin_l147) begin
@@ -3576,7 +3576,7 @@ module VexRiscvAxi4Linux (
   always @(*) begin
     execute_MEMORY_AMO = decode_to_execute_MEMORY_AMO;
     if(MmuPlugin_dBusAccess_cmd_valid) begin
-      if(when_DBusCachedPlugin_l605) begin
+      if(when_DBusCachedPlugin_l610) begin
         execute_MEMORY_AMO = 1'b0;
       end
     end
@@ -3585,7 +3585,7 @@ module VexRiscvAxi4Linux (
   always @(*) begin
     execute_MEMORY_LRSC = decode_to_execute_MEMORY_LRSC;
     if(MmuPlugin_dBusAccess_cmd_valid) begin
-      if(when_DBusCachedPlugin_l605) begin
+      if(when_DBusCachedPlugin_l610) begin
         execute_MEMORY_LRSC = 1'b0;
       end
     end
@@ -3605,28 +3605,28 @@ module VexRiscvAxi4Linux (
   assign decode_FLUSH_ALL = _zz_decode_IS_CSR[0];
   always @(*) begin
     IBusCachedPlugin_rsp_issueDetected_4 = IBusCachedPlugin_rsp_issueDetected_3;
-    if(when_IBusCachedPlugin_l262) begin
+    if(when_IBusCachedPlugin_l263) begin
       IBusCachedPlugin_rsp_issueDetected_4 = 1'b1;
     end
   end
 
   always @(*) begin
     IBusCachedPlugin_rsp_issueDetected_3 = IBusCachedPlugin_rsp_issueDetected_2;
-    if(when_IBusCachedPlugin_l256) begin
+    if(when_IBusCachedPlugin_l257) begin
       IBusCachedPlugin_rsp_issueDetected_3 = 1'b1;
     end
   end
 
   always @(*) begin
     IBusCachedPlugin_rsp_issueDetected_2 = IBusCachedPlugin_rsp_issueDetected_1;
-    if(when_IBusCachedPlugin_l250) begin
+    if(when_IBusCachedPlugin_l251) begin
       IBusCachedPlugin_rsp_issueDetected_2 = 1'b1;
     end
   end
 
   always @(*) begin
     IBusCachedPlugin_rsp_issueDetected_1 = IBusCachedPlugin_rsp_issueDetected;
-    if(when_IBusCachedPlugin_l245) begin
+    if(when_IBusCachedPlugin_l246) begin
       IBusCachedPlugin_rsp_issueDetected_1 = 1'b1;
     end
   end
@@ -3766,7 +3766,7 @@ module VexRiscvAxi4Linux (
 
   always @(*) begin
     writeBack_arbitration_haltItself = 1'b0;
-    if(when_DBusCachedPlugin_l554) begin
+    if(when_DBusCachedPlugin_l559) begin
       writeBack_arbitration_haltItself = 1'b1;
     end
   end
@@ -4061,7 +4061,7 @@ module VexRiscvAxi4Linux (
   assign IBusCachedPlugin_iBusRsp_stages_1_output_payload = IBusCachedPlugin_iBusRsp_stages_1_input_haltWhen_payload;
   always @(*) begin
     IBusCachedPlugin_iBusRsp_stages_2_halt = 1'b0;
-    if(when_IBusCachedPlugin_l273) begin
+    if(when_IBusCachedPlugin_l274) begin
       IBusCachedPlugin_iBusRsp_stages_2_halt = 1'b1;
     end
   end
@@ -4369,47 +4369,47 @@ module VexRiscvAxi4Linux (
   assign IBusCachedPlugin_rsp_issueDetected = 1'b0;
   always @(*) begin
     IBusCachedPlugin_rsp_redoFetch = 1'b0;
-    if(when_IBusCachedPlugin_l245) begin
+    if(when_IBusCachedPlugin_l246) begin
       IBusCachedPlugin_rsp_redoFetch = 1'b1;
     end
-    if(when_IBusCachedPlugin_l256) begin
+    if(when_IBusCachedPlugin_l257) begin
       IBusCachedPlugin_rsp_redoFetch = 1'b1;
     end
   end
 
   always @(*) begin
     IBusCachedPlugin_cache_io_cpu_fill_valid = (IBusCachedPlugin_rsp_redoFetch && (! IBusCachedPlugin_cache_io_cpu_decode_mmuRefilling));
-    if(when_IBusCachedPlugin_l256) begin
+    if(when_IBusCachedPlugin_l257) begin
       IBusCachedPlugin_cache_io_cpu_fill_valid = 1'b1;
     end
   end
 
   always @(*) begin
     IBusCachedPlugin_decodeExceptionPort_valid = 1'b0;
-    if(when_IBusCachedPlugin_l250) begin
+    if(when_IBusCachedPlugin_l251) begin
       IBusCachedPlugin_decodeExceptionPort_valid = IBusCachedPlugin_iBusRsp_readyForError;
     end
-    if(when_IBusCachedPlugin_l262) begin
+    if(when_IBusCachedPlugin_l263) begin
       IBusCachedPlugin_decodeExceptionPort_valid = IBusCachedPlugin_iBusRsp_readyForError;
     end
   end
 
   always @(*) begin
     IBusCachedPlugin_decodeExceptionPort_payload_code = 4'bxxxx;
-    if(when_IBusCachedPlugin_l250) begin
+    if(when_IBusCachedPlugin_l251) begin
       IBusCachedPlugin_decodeExceptionPort_payload_code = 4'b1100;
     end
-    if(when_IBusCachedPlugin_l262) begin
+    if(when_IBusCachedPlugin_l263) begin
       IBusCachedPlugin_decodeExceptionPort_payload_code = 4'b0001;
     end
   end
 
   assign IBusCachedPlugin_decodeExceptionPort_payload_badAddr = {IBusCachedPlugin_iBusRsp_stages_2_input_payload[31 : 2],2'b00};
-  assign when_IBusCachedPlugin_l245 = ((IBusCachedPlugin_cache_io_cpu_decode_isValid && IBusCachedPlugin_cache_io_cpu_decode_mmuRefilling) && (! IBusCachedPlugin_rsp_issueDetected));
-  assign when_IBusCachedPlugin_l250 = ((IBusCachedPlugin_cache_io_cpu_decode_isValid && IBusCachedPlugin_cache_io_cpu_decode_mmuException) && (! IBusCachedPlugin_rsp_issueDetected_1));
-  assign when_IBusCachedPlugin_l256 = ((IBusCachedPlugin_cache_io_cpu_decode_isValid && IBusCachedPlugin_cache_io_cpu_decode_cacheMiss) && (! IBusCachedPlugin_rsp_issueDetected_2));
-  assign when_IBusCachedPlugin_l262 = ((IBusCachedPlugin_cache_io_cpu_decode_isValid && IBusCachedPlugin_cache_io_cpu_decode_error) && (! IBusCachedPlugin_rsp_issueDetected_3));
-  assign when_IBusCachedPlugin_l273 = (IBusCachedPlugin_rsp_issueDetected_4 || IBusCachedPlugin_rsp_iBusRspOutputHalt);
+  assign when_IBusCachedPlugin_l246 = ((IBusCachedPlugin_cache_io_cpu_decode_isValid && IBusCachedPlugin_cache_io_cpu_decode_mmuRefilling) && (! IBusCachedPlugin_rsp_issueDetected));
+  assign when_IBusCachedPlugin_l251 = ((IBusCachedPlugin_cache_io_cpu_decode_isValid && IBusCachedPlugin_cache_io_cpu_decode_mmuException) && (! IBusCachedPlugin_rsp_issueDetected_1));
+  assign when_IBusCachedPlugin_l257 = ((IBusCachedPlugin_cache_io_cpu_decode_isValid && IBusCachedPlugin_cache_io_cpu_decode_cacheMiss) && (! IBusCachedPlugin_rsp_issueDetected_2));
+  assign when_IBusCachedPlugin_l263 = ((IBusCachedPlugin_cache_io_cpu_decode_isValid && IBusCachedPlugin_cache_io_cpu_decode_error) && (! IBusCachedPlugin_rsp_issueDetected_3));
+  assign when_IBusCachedPlugin_l274 = (IBusCachedPlugin_rsp_issueDetected_4 || IBusCachedPlugin_rsp_iBusRspOutputHalt);
   assign IBusCachedPlugin_iBusRsp_output_valid = IBusCachedPlugin_iBusRsp_stages_2_output_valid;
   assign IBusCachedPlugin_iBusRsp_stages_2_output_ready = IBusCachedPlugin_iBusRsp_output_ready;
   assign IBusCachedPlugin_iBusRsp_output_payload_rsp_inst = IBusCachedPlugin_cache_io_cpu_decode_data;
@@ -4441,8 +4441,8 @@ module VexRiscvAxi4Linux (
   always @(*) begin
     dataCache_1_io_cpu_execute_isValid = (execute_arbitration_isValid && execute_MEMORY_ENABLE);
     if(MmuPlugin_dBusAccess_cmd_valid) begin
-      if(when_DBusCachedPlugin_l605) begin
-        if(when_DBusCachedPlugin_l606) begin
+      if(when_DBusCachedPlugin_l610) begin
+        if(when_DBusCachedPlugin_l611) begin
           dataCache_1_io_cpu_execute_isValid = 1'b1;
         end
       end
@@ -4452,7 +4452,7 @@ module VexRiscvAxi4Linux (
   always @(*) begin
     dataCache_1_io_cpu_execute_address = execute_SRC_ADD;
     if(MmuPlugin_dBusAccess_cmd_valid) begin
-      if(when_DBusCachedPlugin_l605) begin
+      if(when_DBusCachedPlugin_l610) begin
         dataCache_1_io_cpu_execute_address = MmuPlugin_dBusAccess_cmd_payload_address;
       end
     end
@@ -4461,7 +4461,7 @@ module VexRiscvAxi4Linux (
   always @(*) begin
     dataCache_1_io_cpu_execute_args_wr = execute_MEMORY_WR;
     if(MmuPlugin_dBusAccess_cmd_valid) begin
-      if(when_DBusCachedPlugin_l605) begin
+      if(when_DBusCachedPlugin_l610) begin
         dataCache_1_io_cpu_execute_args_wr = 1'b0;
       end
     end
@@ -4484,7 +4484,7 @@ module VexRiscvAxi4Linux (
   always @(*) begin
     dataCache_1_io_cpu_execute_args_size = execute_DBusCachedPlugin_size;
     if(MmuPlugin_dBusAccess_cmd_valid) begin
-      if(when_DBusCachedPlugin_l605) begin
+      if(when_DBusCachedPlugin_l610) begin
         dataCache_1_io_cpu_execute_args_size = MmuPlugin_dBusAccess_cmd_payload_size;
       end
     end
@@ -4557,7 +4557,7 @@ module VexRiscvAxi4Linux (
   assign dataCache_1_io_cpu_writeBack_storeData[31 : 0] = writeBack_MEMORY_STORE_DATA_RF;
   always @(*) begin
     DBusCachedPlugin_redoBranch_valid = 1'b0;
-    if(when_DBusCachedPlugin_l534) begin
+    if(when_DBusCachedPlugin_l539) begin
       if(dataCache_1_io_cpu_redo) begin
         DBusCachedPlugin_redoBranch_valid = 1'b1;
       end
@@ -4567,7 +4567,7 @@ module VexRiscvAxi4Linux (
   assign DBusCachedPlugin_redoBranch_payload = writeBack_PC;
   always @(*) begin
     DBusCachedPlugin_exceptionBus_valid = 1'b0;
-    if(when_DBusCachedPlugin_l534) begin
+    if(when_DBusCachedPlugin_l539) begin
       if(dataCache_1_io_cpu_writeBack_accessError) begin
         DBusCachedPlugin_exceptionBus_valid = 1'b1;
       end
@@ -4586,7 +4586,7 @@ module VexRiscvAxi4Linux (
   assign DBusCachedPlugin_exceptionBus_payload_badAddr = writeBack_REGFILE_WRITE_DATA;
   always @(*) begin
     DBusCachedPlugin_exceptionBus_payload_code = 4'bxxxx;
-    if(when_DBusCachedPlugin_l534) begin
+    if(when_DBusCachedPlugin_l539) begin
       if(dataCache_1_io_cpu_writeBack_accessError) begin
         DBusCachedPlugin_exceptionBus_payload_code = {1'd0, _zz_DBusCachedPlugin_exceptionBus_payload_code};
       end
@@ -4599,8 +4599,8 @@ module VexRiscvAxi4Linux (
     end
   end
 
-  assign when_DBusCachedPlugin_l534 = (writeBack_arbitration_isValid && writeBack_MEMORY_ENABLE);
-  assign when_DBusCachedPlugin_l554 = (dataCache_1_io_cpu_writeBack_isValid && dataCache_1_io_cpu_writeBack_haltIt);
+  assign when_DBusCachedPlugin_l539 = (writeBack_arbitration_isValid && writeBack_MEMORY_ENABLE);
+  assign when_DBusCachedPlugin_l559 = (dataCache_1_io_cpu_writeBack_isValid && dataCache_1_io_cpu_writeBack_haltIt);
   assign writeBack_DBusCachedPlugin_rspData = dataCache_1_io_cpu_writeBack_data;
   assign writeBack_DBusCachedPlugin_rspSplits_0 = writeBack_DBusCachedPlugin_rspData[7 : 0];
   assign writeBack_DBusCachedPlugin_rspSplits_1 = writeBack_DBusCachedPlugin_rspData[15 : 8];
@@ -4615,12 +4615,12 @@ module VexRiscvAxi4Linux (
 
   always @(*) begin
     writeBack_DBusCachedPlugin_rspRf = writeBack_DBusCachedPlugin_rspShifted[31 : 0];
-    if(when_DBusCachedPlugin_l571) begin
+    if(when_DBusCachedPlugin_l576) begin
       writeBack_DBusCachedPlugin_rspRf = {31'd0, _zz_writeBack_DBusCachedPlugin_rspRf};
     end
   end
 
-  assign when_DBusCachedPlugin_l571 = (writeBack_MEMORY_LRSC && writeBack_MEMORY_WR);
+  assign when_DBusCachedPlugin_l576 = (writeBack_MEMORY_LRSC && writeBack_MEMORY_WR);
   assign switch_Misc_l245_2 = writeBack_INSTRUCTION[13 : 12];
   assign _zz_writeBack_DBusCachedPlugin_rspFormated = (writeBack_DBusCachedPlugin_rspRf[7] && (! writeBack_INSTRUCTION[14]));
   always @(*) begin
@@ -4686,12 +4686,12 @@ module VexRiscvAxi4Linux (
     endcase
   end
 
-  assign when_DBusCachedPlugin_l581 = (writeBack_arbitration_isValid && writeBack_MEMORY_ENABLE);
+  assign when_DBusCachedPlugin_l586 = (writeBack_arbitration_isValid && writeBack_MEMORY_ENABLE);
   always @(*) begin
     MmuPlugin_dBusAccess_cmd_ready = 1'b0;
     if(MmuPlugin_dBusAccess_cmd_valid) begin
-      if(when_DBusCachedPlugin_l605) begin
-        if(when_DBusCachedPlugin_l606) begin
+      if(when_DBusCachedPlugin_l610) begin
+        if(when_DBusCachedPlugin_l611) begin
           MmuPlugin_dBusAccess_cmd_ready = (! execute_arbitration_isStuck);
         end
       end
@@ -4701,14 +4701,14 @@ module VexRiscvAxi4Linux (
   always @(*) begin
     DBusCachedPlugin_forceDatapath = 1'b0;
     if(MmuPlugin_dBusAccess_cmd_valid) begin
-      if(when_DBusCachedPlugin_l605) begin
+      if(when_DBusCachedPlugin_l610) begin
         DBusCachedPlugin_forceDatapath = 1'b1;
       end
     end
   end
 
-  assign when_DBusCachedPlugin_l605 = (! (|{(writeBack_arbitration_isValid || CsrPlugin_exceptionPendings_3),{(memory_arbitration_isValid || CsrPlugin_exceptionPendings_2),(execute_arbitration_isValid || CsrPlugin_exceptionPendings_1)}}));
-  assign when_DBusCachedPlugin_l606 = (! dataCache_1_io_cpu_execute_refilling);
+  assign when_DBusCachedPlugin_l610 = (! (|{(writeBack_arbitration_isValid || CsrPlugin_exceptionPendings_3),{(memory_arbitration_isValid || CsrPlugin_exceptionPendings_2),(execute_arbitration_isValid || CsrPlugin_exceptionPendings_1)}}));
+  assign when_DBusCachedPlugin_l611 = (! dataCache_1_io_cpu_execute_refilling);
   assign MmuPlugin_dBusAccess_cmd_fire = (MmuPlugin_dBusAccess_cmd_valid && MmuPlugin_dBusAccess_cmd_ready);
   assign MmuPlugin_dBusAccess_rsp_valid = ((writeBack_IS_DBUS_SHARING && (! dataCache_1_io_cpu_writeBack_isWrite)) && (dataCache_1_io_cpu_redo || (! dataCache_1_io_cpu_writeBack_haltIt)));
   assign MmuPlugin_dBusAccess_rsp_payload_data = writeBack_DBusCachedPlugin_rspRf;
