@@ -17,6 +17,14 @@ import vexriscv.{Riscv, VexRiscv, VexRiscvConfig, plugin}
 object VexRiscvAxi4Linux{
   def main(args: Array[String]) {
     val generatePlicClint = args.contains("plic-clint")
+    val branchPrediction = args.find(_.startsWith("branch-prediction=")).map(_.split("=")(1)).getOrElse("NONE")
+    val prediction = branchPrediction.toUpperCase match {
+      case "NONE"           => NONE
+      case "STATIC"         => STATIC
+      case "DYNAMIC"        => DYNAMIC
+      case "DYNAMIC_TARGET" => DYNAMIC_TARGET
+      case other            => throw new IllegalArgumentException(s"Unknown branch prediction strategy: $other (expected NONE, STATIC, DYNAMIC or DYNAMIC_TARGET)")
+    }
     val report = SpinalVerilog{
 
       //CPU configuration
@@ -24,7 +32,7 @@ object VexRiscvAxi4Linux{
         plugins = List(
           new IBusCachedPlugin(
             resetVector = null,
-            prediction = NONE,
+            prediction = prediction,
             compressedGen = true,
             injectorStage = true,
             config = InstructionCacheConfig(
