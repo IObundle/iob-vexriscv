@@ -2500,6 +2500,9 @@ module VexRiscvAxi4Linux (
   assign _zz_CsrPlugin_csrMapping_readDataInit_50 = (_zz_CsrPlugin_csrMapping_readDataInit_27 | _zz_CsrPlugin_csrMapping_readDataInit_28);
   assign _zz_CsrPlugin_csrMapping_readDataInit_51 = (_zz_CsrPlugin_csrMapping_readDataInit_29 | _zz_CsrPlugin_csrMapping_readDataInit_30);
   assign _zz_CsrPlugin_csrMapping_readDataInit_39 = 32'h0;
+  initial begin
+    $readmemb("VexRiscvAxi4Linux.v_toplevel_IBusCachedPlugin_predictor_history.bin",IBusCachedPlugin_predictor_history);
+  end
   always @(posedge clk) begin
     if(_zz_2) begin
       IBusCachedPlugin_predictor_history[IBusCachedPlugin_predictor_historyWriteDelayPatched_payload_address] <= _zz_IBusCachedPlugin_predictor_history_port;
