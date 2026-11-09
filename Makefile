@@ -2,6 +2,10 @@
 #
 # SPDX-License-Identifier: MIT
 
+#------------------------------------------------------------
+# Vexriscv core generation targets
+#------------------------------------------------------------
+
 #PATHS
 VEXRISCV_DIR ?= $(shell pwd)
 VEX_HARDWARE_DIR:=$(VEXRISCV_DIR)/hardware
@@ -31,6 +35,7 @@ SPINALHDL_ARGS += branch-prediction=$(BRANCH_PREDICTION)
 endif
 
 # Primary targets
+# Use 'nix-shell vex_shell.nix' to run this target
 vexriscv:
 	cp $(VEX_HARDWARE_DIR)/vexriscv_core/$(CPU).scala $(VEX_SUBMODULES_DIR)/VexRiscv/src/main/scala/vexriscv/demo/
 	cp $(VEX_HARDWARE_DIR)/vexriscv_core/MmuPlugin.scala $(VEX_SUBMODULES_DIR)/VexRiscv/src/main/scala/vexriscv/plugin/
@@ -50,3 +55,53 @@ clean-vexriscv:
 	rm $(VEXRISCV_SRC_DIR)/$(CPU).v
 
 clean-all: clean-vexriscv
+
+
+#------------------------------------------------------------
+# Py2HWSW Targets
+#------------------------------------------------------------
+
+
+CORE := iob_vexriscv
+GENERATED_NAME := iob_vexriscv
+
+# Fill PY_PARAMS if not defined
+ifeq ($(PY_PARAMS),)
+ifneq ($(GENERATED_NAME),)
+PY_PARAMS:=$(PY_PARAMS):name=$(GENERATED_NAME)
+endif
+# Remove first char (:) from PY_PARAMS
+PY_PARAMS:=$(shell echo $(PY_PARAMS) | cut -c2-)
+endif # ifndef PY_PARAMS
+
+BUILD_DIR ?= $(shell nix-shell --run "py2hwsw $(CORE) print_build_dir --py_params '$(PY_PARAMS)'")
+VERSION ?= $(shell nix-shell --run "py2hwsw $(CORE) print_core_version --py_params '$(PY_PARAMS)'")
+
+setup:
+	nix-shell --run "py2hwsw $(CORE) setup --no_verilog_lint --build_dir '$(BUILD_DIR)' --py_params '$(PY_PARAMS)' $(EXTRA_ARGS)"
+
+.PHONY: setup
+
+clean:
+	nix-shell --run "py2hwsw $(CORE) clean --build_dir '$(BUILD_DIR)'"
+	@rm -rf ../*.summary ../*.rpt fusesoc_exports *.core
+	@find . -name \*~ -delete
+
+.PHONY: clean
+
+# 
+# FuseSoC Targets
+#
+
+fusesoc-export: clean setup
+	nix-shell --run "py2hwsw $(CORE) export_fusesoc --build_dir '$(BUILD_DIR)' --py_params '$(PY_PARAMS)'"
+
+.PHONY: fusesoc-export
+
+# Release Artifacts
+
+release-artifacts:
+	make fusesoc-export
+	tar -czf $(CORE)_V$(VERSION).tar.gz -C ./fusesoc_exports .
+
+.PHONY: release-artifacts

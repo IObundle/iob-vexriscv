@@ -7,14 +7,16 @@
 // CPU-specific software operations: each CPU module provides this header, so
 // the bootloader and the firmware stay CPU agnostic. Usable from C.
 //
-//   iob_cpu_flush_dcache: write the entire data cache back to memory and invalidate it
-//   iob_cpu_flush_dcache_range: write a specific data cache range back to memory and invalidate it
-//   iob_cpu_invalidate_icache: make the instruction cache see the memory contents (invalidate only)
+//   iob_cpu_flush_dcache: write the entire data cache back to memory and
+//   invalidate it iob_cpu_flush_dcache_range: write a specific data cache range
+//   back to memory and invalidate it iob_cpu_invalidate_icache: make the
+//   instruction cache see the memory contents (invalidate only)
 //
 // VexRiscv: the data cache has no standard flush; 0x500F is its custom data
 // cache flush + invalidate (flushes entire cache). fence.i only invalidates
 // the instruction cache.
-// VexRiscv ignores start/len arguments for range flush as it flushes the entire cache.
+// VexRiscv ignores start/len arguments for range flush as it flushes the entire
+// cache.
 //
 // For assembly (.S): include "iob_cpu.s" instead
 #ifndef IOB_CPU_H
