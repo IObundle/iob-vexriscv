@@ -8,9 +8,9 @@ import shutil
 
 def setup(py_params_dict):
     # Each generated cpu verilog module must have a unique name due to different python parameters (can't have two differnet verilog modules with same name).
-    assert "name" in py_params_dict, print(
-        "Error: Missing name for generated vexriscv module."
-    )
+    assert (
+        "name" in py_params_dict or py_params_dict.get("py2hwsw_target", "") != "setup"
+    ), print("Error: Missing name for generated vexriscv module.")
 
     params = {
         "reset_addr": 0x00000000,
@@ -24,7 +24,7 @@ def setup(py_params_dict):
             params[param] = py_params_dict[param]
 
     attributes_dict = {
-        "name": py_params_dict["name"],
+        "name": py_params_dict.get("name", "iob_vexriscv"),
         "version": "0.1.0",
         "generate_hw": True,
         "confs": [
@@ -108,17 +108,37 @@ def setup(py_params_dict):
                 "name": "interrupt_i",
                 "descr": "Standard RISC‑V interrupt pending bits",
                 "signals": [
-                    {"name": "msip_i", "descr": "Machine software interrupt.", "width": "1"},
-                    {"name": "mtip_i", "descr": "Machine timer interrupt.", "width": "1"},
-                    {"name": "meip_i", "descr": "Machine external interrupt.", "width": "1"},
-                    {"name": "seip_i", "descr": "Supervisor external interrupt.", "width": "1"},
+                    {
+                        "name": "msip_i",
+                        "descr": "Machine software interrupt.",
+                        "width": "1",
+                    },
+                    {
+                        "name": "mtip_i",
+                        "descr": "Machine timer interrupt.",
+                        "width": "1",
+                    },
+                    {
+                        "name": "meip_i",
+                        "descr": "Machine external interrupt.",
+                        "width": "1",
+                    },
+                    {
+                        "name": "seip_i",
+                        "descr": "Supervisor external interrupt.",
+                        "width": "1",
+                    },
                 ],
             },
             {
                 "name": "timebase_i",
                 "descr": "Timebase interface",
                 "signals": [
-                    {"name": "mtime_i", "descr": "Input from external 64-bit counter for time CSRs", "width": "64"},
+                    {
+                        "name": "mtime_i",
+                        "descr": "Input from external 64-bit counter for time CSRs",
+                        "width": "64",
+                    },
                 ],
             },
         ],
@@ -163,13 +183,15 @@ def setup(py_params_dict):
       .seip(seip_i),
       // Timbase input
       .mtime(mtime_i),
-""" + f"""\
+"""
+                + f"""\
       // CPU reset address
       .externalResetVector(32'h{params["reset_addr"]:x}),
       // Uncached memory
       .ioStartAddr(32'h{params["uncached_start_addr"]:x}),
       .ioSize(32'h{params["uncached_size"]:x}),
-""" + """\
+"""
+                + """\
       // Instruction Bus
       .iBusAxi_arvalid(ibus_axi_arvalid_o),
       .iBusAxi_arready(ibus_axi_arready_i),
